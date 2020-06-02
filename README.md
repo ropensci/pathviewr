@@ -42,5 +42,13 @@ instead. That said, it's not a big deal so long as you are generally
 consistent with your choice
 - `spelling::spell_check_package()` is your best friend
 
+## Package writing resources
+- [R packages](https://r-pkgs.org/index.html) by Hadley Wickham & Jenny Bryan
+- [rOpenSci package guide](https://devguide.ropensci.org/)
+- `roxygen2` [vignette](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html) (one of many -- see the package)
+- A handy [Markdown guide](https://dotcms.com/docs/latest/markdown-syntax)
+- [GitHub emoji cheat sheet](https://gist.github.com/rxaviers/7360908), the source
+of all my turtles
+
 🐢
 
