@@ -1,6 +1,14 @@
 # pathviewR
 Insert description here
 
+## Some notes on organization
+- The `/R` folder is for function scripts (and accompanying `roxygen2` 
+documentation) only. Please do not add example scripts or any other 
+files in this folder
+- The `/example_scripts` is meant to house scripts that we write to 
+not only showcase our functions to each other but also have examples we can
+run through to make sure things are working properly. This will be taken
+to an advanced level via the `testthat` package later on.
 
 ## Guidelines for writing code
 These are informed by [the rOpenSci guide](https://devguide.ropensci.org/) 
