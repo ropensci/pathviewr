@@ -26,6 +26,11 @@ instead of `argument = T`
 	- Try to avoid using function names that appear in other packages, esp 
   those in popular packages like `ggplot2` or `dplyr`, e.g. don't make a 
   `read_csv()`
+- To auto-generate the Help file (and other useful stuff) we will rely on the
+`roxygen2` package. This will entail adding `roxygen`-style comments above 
+each of our functions. [Here is a useful vignette]
+(https://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html) on the 
+topic.
 - Anywhere you rely on a function from another package, you must use 
 explicit naming in a `package_name::function()` format, e.g. 
 `readxl::read_excel()`
