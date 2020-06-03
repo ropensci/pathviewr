@@ -44,16 +44,6 @@ devtools::load_all()
 
 jul_29 <- read_motiv_csv('./inst/extdata/july-29_group-I_16-20.csv')
 
-############################ inspect data objects ##############################
-## `motiv` objects basically act as tibbles, but have some other properties
-
-jul_29
-names(jul_29)
-## attributes() is useful but produces lengthy output so it's commented out here
-attributes(jul_29)
-get_header_motiv(jul_29)
-
-
 ################################## rename axes #################################
 ## I get confused by the axis definitions. So I use the `relabel_motiv_axes()`
 ## utility function to rename the variables
@@ -63,6 +53,8 @@ jul_29 <- relabel_motiv_axes(jul_29,
                              tunnel_width = "_X",
                              tunnel_height = "_Y")
 
+## Note that we now have an auto-generated Help file via roxygen:
+?relabel_motiv_axes
 
 ####################### gather data into simpler format ########################
 ## The gathering function will take all data from a given session and
