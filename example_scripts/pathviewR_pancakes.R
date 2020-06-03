@@ -42,7 +42,7 @@ devtools::load_all()
 ################################# data import ##################################
 ## Using example file from Melissa
 
-jul_29 <- read_motiv_csv('./data/july-29_group-I_16-20.csv')
+jul_29 <- read_motiv_csv('./inst/extdata/july-29_group-I_16-20.csv')
 
 ############################ inspect data objects ##############################
 ## `motiv` objects basically act as tibbles, but have some other properties
