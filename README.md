@@ -54,7 +54,11 @@ consistent with your choice
 
 ## Package writing resources
 - [R packages](https://r-pkgs.org/index.html) by Hadley Wickham & Jenny Bryan
+	- A slightly [earlier version](http://r-pkgs.had.co.nz/) of this guide
+	(which I used when developing workloopR)
 - [rOpenSci package guide](https://devguide.ropensci.org/)
+	- And if you want to see workloopR (as an example and something I'll 
+	periodically steal code from) see [here](https://github.com/ropensci/workloopR)
 - `roxygen2` [vignette](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd.html) (one of many -- see the package)
 - A handy [Markdown guide](https://dotcms.com/docs/latest/markdown-syntax)
 - [GitHub emoji cheat sheet](https://gist.github.com/rxaviers/7360908), the source
