@@ -1,4 +1,4 @@
-## Last updated: 2020-06-02 VBB
+## Last updated: 2020-06-03 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.

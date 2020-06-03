@@ -145,61 +145,53 @@ gather_tunnel_data <- function(obj_name,
   ## Gather positions
     ## Lengths
     tmp_len <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Position_length",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Position_length", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Position_lengths <- tmp_len$value
     ## Widths
     tmp_wid <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Position_width",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Position_width", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Position_widths <- tmp_wid$value
     ## Heights
     tmp_hei <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Position_height",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Position_height", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Position_heights <- tmp_hei$value
 
   ## Gather rotations
     ## Lengths
     tmp_rotl <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Rotation_length",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Rotation_length", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Rotation_lengths <- tmp_rotl$value
     ## Widths
     tmp_rotw <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Rotation_width",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Rotation_width", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Rotation_widths <- tmp_rotw$value
     ## Heights
     tmp_roth <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Rotation_height",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Rotation_height", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Rotation_heights <- tmp_roth$value
     ## W
     tmp_rotw <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Rotation_W",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Rotation_W", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Rotation_Ws <- tmp_rotw$value
 
   ## Gather Mean Marker Error
     tmp_mark <-
-      obj_name %>%
-      dplyr::select(tidyselect::contains("Mean Marker Error",
-                                         ignore.case = FALSE)) %>%
+      obj_name[,grepl("Mean Marker Error", colnames(obj_name),
+                      ignore.case = FALSE)] %>%
       tidyr::gather()
     gathered_data$Mean_Marker_Error <- tmp_mark$value
 
