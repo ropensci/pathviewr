@@ -5,7 +5,8 @@
 
 ############################### package loading ################################
 ## Specify the packages you'll use in the script
-packages <- c("tidyverse",
+packages <- c("devtools",
+              "tidyverse",
               "readxl",
               "ggthemes",
               "viridis",
@@ -29,27 +30,14 @@ package.check <- lapply(packages, # applies the function to a list and returns
 
 
 ################################ script sourcing ###############################
-## Run this first!
-## Looks through the R scripts folder and sources all .R files, i.e. all the
-## custom functions that have been written to process these data.
+## Now that we've package-ized things, we not longer use source() to load up
+## our functions. Instead, we can load our pathviewR package via
+## devtools::load_all(). See sec 2.8 in the R packages guide by Wickham & Bryan
+## for more on this.
 
-## First define the directory to inspect
-scripts_path <- "./R/"
+devtools::load_all()
 
-## Now list all the .R files
-scripts_list <- list.files(path = scripts_path,
-                           pattern = "*.R", # use quotes plus regexp to pick all
-                           # .R files
-                           full.names = TRUE,
-                           recursive = TRUE
-                           )
-
-## Use purrr::walk() to source() all of the script files
-walk(scripts_list, source)
-
-## By storing groups of functions in separate .R files, they can be neatly
-## organized and brought into the environment for an analysis script with
-## source() as above.
+## Now all of our functions are available to us. Pretty nifty
 
 ################################# data import ##################################
 ## Using example file from Melissa
