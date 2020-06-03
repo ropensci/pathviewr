@@ -204,7 +204,7 @@ gather_tunnel_data <- function(obj_name,
     }
 
   ## Coerce to tibble
-  gathered_data <- as_tibble(gathered_data)
+  gathered_data <- tibble::as_tibble(gathered_data)
 
   ## Add metadata as attributes()
   attr(obj_name,"file_id") ->      attr(gathered_data,"file_id")
@@ -277,7 +277,7 @@ trim_tunnel_outliers <- function(obj_name,
     filt_lengths %>%
     dplyr::filter(Position_widths < widths_max) %>%
     dplyr::filter(Position_widths > widths_min) %>%
-    as_tibble()
+    tibble::as_tibble()
 
   ## Add metadata as attributes()
   attr(obj_name,"file_id") ->      attr(filt_widths,"file_id")
@@ -424,7 +424,7 @@ rotate_tunnel <- function(obj_name,
   ## (all other variables should remain the same)
 
   ## Coerce to tibble
-  obj_new <- as_tibble(obj_new)
+  obj_new <- tibble::as_tibble(obj_new)
 
   ## Add new info to attributes that lists the original (approximate) perch
   ## positions, tunnel center point, angle of rotation, and new (approxmate)
@@ -552,7 +552,7 @@ standardize_tunnel <- function(obj_name,
   ## (all other variables should remain the same)
 
   ## Coerce to tibble
-  obj_new <- as_tibble(obj_new)
+  obj_new <- tibble::as_tibble(obj_new)
 
   ## Add new info to attributes that lists the original (approximate) perch
   ## positions, tunnel center point, angle of rotation, and new (approxmate)
@@ -610,7 +610,7 @@ select_x_percent <- function(obj_name,
     dplyr::filter(Position_lengths > (-1 * lengths_needed))
 
   ## Coerce to tibble
-  obj_name <- as_tibble(obj_name)
+  obj_name <- tibble::as_tibble(obj_name)
 
   ## Leave a note about the proportion used
   attr(obj_name,"percent_selected") <- desired_percent
@@ -660,7 +660,7 @@ separate_trajectories <- function(obj_name,
   obj_name$rb_traj <- paste0(obj_name$rigid_body,"_",obj_name$traj_id)
 
   ## Coerce to tibble
-  obj_name <- as_tibble(obj_name)
+  obj_name <- tibble::as_tibble(obj_name)
 
   ## Leave a note about the max frame gap used
   attr(obj_name,"max_frame_gap") <- max_frame_gap
@@ -734,7 +734,7 @@ get_full_trajectories <- function(obj_name,
   ## Join the columns to add in direction
   obj_defined <-
     dplyr::right_join(obj_continuous, filt_summary, by = "traj_id") %>%
-      as_tibble()
+    tibble::as_tibble()
 
   ## Leave a note about the span used
   attr(obj_defined, "span") <- span
@@ -996,7 +996,7 @@ select_x_percent_M <- function(obj_name,
     obj_name %>%
     dplyr::filter(Position_lengths < midpoint + lengths_needed) %>%
     dplyr::filter(Position_lengths > (midpoint - lengths_needed)) %>%
-    as_tibble()
+    tibble::as_tibble()
 
   ## Leave a note about the proportion used
   attr(obj_name,"percent_selected") <- desired_percent
@@ -1043,7 +1043,7 @@ determine_fg_M <- function(obj_name,
   }
 
   #generate user friendly table and plot
-  mfg_tib <- tibble(nrows,mfg_id,file_id = "obj_name")
+  mfg_tib <- tibble::tibble(nrows,mfg_id,file_id = "obj_name")
   mfg_plot <- plot(mfg_tib$mfg_id, mfg_tib$nrows)
 
   #ideally would then auto-select frame gap based on analysis of curve/plateau?
@@ -1110,7 +1110,7 @@ get_full_trajectories_M <- function(obj_name,
   ## Join the columns to add in direction
   obj_defined <-
     right_join(obj_continuous, filt_summary, by = "traj_id") %>%
-    as_tibble()
+    tibble::as_tibble()
 
   ## Leave a note about the span used
   attr(obj_defined, "span") <- span
