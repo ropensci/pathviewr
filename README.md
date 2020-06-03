@@ -1,5 +1,15 @@
-# pathviewR
-Insert description here
+pathviewR: Insert description here
+============================================================================
+  <!-- badges: start -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) 
+
+## Installation
+
+This package can be installed via:
+``` r
+#install.packages("devtools") # if devtools is not installed
+devtools::install_github("vbaliga/pathviewR")
+```
 
 ## Some notes on organization
 - The `/R` folder is for function scripts (and accompanying `roxygen2` 
