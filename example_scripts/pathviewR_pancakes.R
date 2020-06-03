@@ -43,6 +43,18 @@ devtools::load_all()
 ## Using example file from Melissa
 
 jul_29 <- read_motiv_csv('./inst/extdata/july-29_group-I_16-20.csv')
+## Note: as of 2020-06-03 we are no longer coercing objects into the class
+## 'motiv'. This is because of a change to tidyverse, which makes it hard
+## to use non-tibble objects in its functions. Although our functions had
+## made objects that had multple classes (namely, tibbles as well as motiv
+## objects), the way class hierarchy is now handled makes it all more
+## complicated to pass through tidyverse. I'm pretty salty about this, but
+## it is what it is. Anyway, I'll start storing our steps in the attributes
+## of the objects instead of classes -- hopefully this will work out better.
+## To demonstrate:
+class(jul_29) # should be a tibble
+attr(jul_29, "pathviewR_steps") # "motiv"
+
 
 ################################## rename axes #################################
 ## I get confused by the axis definitions. So I use the `relabel_motiv_axes()`
@@ -189,13 +201,13 @@ plot(jul_29_labeled$Position_lengths,
 
 jul_29_full <-
   jul_29_labeled %>% get_full_trajectories(span = 0.95)
-
+attr(jul_29_full, "pathviewR_steps")
 
 ######################### one function to rule them all ########################
 ## Let's see if we can make an all-in-one that behaves nicely when the user
 ## would like to specify non-default values to the arguments.
 
-jul_29_path <- './data/july-29_group-I_16-20.csv'
+jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
 ## Testing first with all defaults (no supplied arguments)
 jul_29_all_defaults <-

@@ -117,10 +117,8 @@ read_motiv_csv <-
     ## Make the object (a tibble)
     data <- tibble::as_tibble(dataz)
 
-    ## Add "motiv" as a class, which may be useful for package-ization later
-    class(data) <- c(class(data), "motiv")
-
     ## Add metadata as attributes()
+    attr(data,"pathviewR_steps") <- "motiv"
     attr(data,"file_id") <- file_id
     attr(data,"file_mtime") <- mtime
     attr(data,"header") <- header
@@ -139,8 +137,8 @@ read_motiv_csv <-
 get_header_motiv <-function(obj_name,
                             ...) {
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Get the header

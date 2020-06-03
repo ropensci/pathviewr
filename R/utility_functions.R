@@ -68,8 +68,8 @@ relabel_motiv_axes <- function(obj_name,
                                tunnel_height = "_Y",
                                ...){
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Inputs should be character vectors
@@ -93,7 +93,8 @@ relabel_motiv_axes <- function(obj_name,
   namez -> names(obj_name)
 
   ## Leave a note that the axes have been renamed
-  class(obj_name) <- c(class(obj_name), "renamed_tunnel")
+  attr(obj_name,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "renamed_tunnel")
 
   ## Export
   return(obj_name)
@@ -108,12 +109,12 @@ gather_tunnel_data <- function(obj_name,
                                ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Check that its axes have been renamed
-  if (!any(class(obj_name) == "renamed_tunnel")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
     stop("Please rename axes via relabel_motiv_axes() prior to using this")
   }
 
@@ -202,6 +203,9 @@ gather_tunnel_data <- function(obj_name,
       gathered_data <- gathered_data
     }
 
+  ## Coerce to tibble
+  gathered_data <- as_tibble(gathered_data)
+
   ## Add metadata as attributes()
   attr(obj_name,"file_id") ->      attr(gathered_data,"file_id")
   attr(obj_name,"file_mtime") ->   attr(gathered_data,"file_mtime")
@@ -212,7 +216,8 @@ gather_tunnel_data <- function(obj_name,
   attr(obj_name,"d2") ->           attr(gathered_data,"d2")
 
   ## Leave a note that we reshaped the data
-  class(gathered_data) <- c(class(obj_name), "gathered_tunnel")
+  attr(gathered_data,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "gathered_tunnel")
 
   ## Export
   return(gathered_data)
@@ -239,17 +244,17 @@ trim_tunnel_outliers <- function(obj_name,
                                  ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Check that its axes have been renamed
-  if (!any(class(obj_name) == "renamed_tunnel")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
     stop("Please rename axes via relabel_motiv_axes() prior to using this")
   }
 
   ## Check that the data columns have been gathered
-  if (!any(class(obj_name) == "gathered_tunnel")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
     stop("Please use gather_tunnel_data() to gather columns first")
   }
 
@@ -271,7 +276,8 @@ trim_tunnel_outliers <- function(obj_name,
   filt_widths <-
     filt_lengths %>%
     dplyr::filter(Position_widths < widths_max) %>%
-    dplyr::filter(Position_widths > widths_min)
+    dplyr::filter(Position_widths > widths_min) %>%
+    as_tibble()
 
   ## Add metadata as attributes()
   attr(obj_name,"file_id") ->      attr(filt_widths,"file_id")
@@ -282,9 +288,9 @@ trim_tunnel_outliers <- function(obj_name,
   attr(obj_name,"d1") ->           attr(filt_widths,"d1")
   attr(obj_name,"d2") ->           attr(filt_widths,"d2")
 
-
   ## Leave a note that we trimmed tunnel outliers
-  class(filt_widths) <- c(class(obj_name), "artifacts_removed")
+  attr(filt_widths,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "artifacts_removed")
 
   ## Export
   return(filt_widths)
@@ -323,12 +329,12 @@ rotate_tunnel <- function(obj_name,
                           ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Check that its axes have been renamed
-  if (!any(class(obj_name) == "artifacts_removed")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "artifacts_removed")) {
     stop("Please use trim_tunnel_outliers() prior to using this")
   }
 
@@ -417,6 +423,9 @@ rotate_tunnel <- function(obj_name,
   obj_new$Position_heights <- obj_name$Position_heights - tunnel_centerpoint[3]
   ## (all other variables should remain the same)
 
+  ## Coerce to tibble
+  obj_new <- as_tibble(obj_new)
+
   ## Add new info to attributes that lists the original (approximate) perch
   ## positions, tunnel center point, angle of rotation, and new (approxmate)
   ## perch positions after rotation
@@ -429,7 +438,8 @@ rotate_tunnel <- function(obj_name,
   attr(obj_new,"perch2_current_midpoint") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
-  class(obj_new) <- c(class(obj_name), "tunnel_rotated")
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "tunnel_rotated")
 
   ## Export
   return(obj_new)
@@ -449,8 +459,8 @@ standardize_tunnel <- function(obj_name,
                                ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   landmark1_med_pos <- obj_name %>%
@@ -541,6 +551,9 @@ standardize_tunnel <- function(obj_name,
   obj_new$Position_heights <- obj_name$Position_heights - tunnel_centerpoint[3]
   ## (all other variables should remain the same)
 
+  ## Coerce to tibble
+  obj_new <- as_tibble(obj_new)
+
   ## Add new info to attributes that lists the original (approximate) perch
   ## positions, tunnel center point, angle of rotation, and new (approxmate)
   ## perch positions after rotation
@@ -553,7 +566,8 @@ standardize_tunnel <- function(obj_name,
   attr(obj_new,"perch2_current_midpoint") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
-  class(obj_new) <- c(class(obj_name), "tunnel_rotated")
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "tunnel_rotated")
 
   ## Export
   return(obj_new)
@@ -568,8 +582,8 @@ select_x_percent <- function(obj_name,
                              ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   # ## Check that its axes have been renamed
@@ -595,13 +609,17 @@ select_x_percent <- function(obj_name,
     dplyr::filter(Position_lengths < lengths_needed) %>%
     dplyr::filter(Position_lengths > (-1 * lengths_needed))
 
+  ## Coerce to tibble
+  obj_name <- as_tibble(obj_name)
+
   ## Leave a note about the proportion used
   attr(obj_name,"percent_selected") <- desired_percent
   attr(obj_name,"full_tunnel_length") <- tunnel_length
   attr(obj_name,"selected_tunnel_length") <- tunnel_length * prop
 
   ## Leave a note that we rotated and translated the data set
-  class(obj_name) <- c(class(obj_name), "percent_selected")
+  attr(obj_name,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "percent_selected")
 
   ## Export
   return(obj_name)
@@ -617,12 +635,12 @@ separate_trajectories <- function(obj_name,
                                   ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   # ## Check that its axes have been renamed
-  if (!any(class(obj_name) == "tunnel_rotated")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_rotated")) {
     stop("Please use rotate_tunnel() to align data prior to using this")
   }
 
@@ -641,11 +659,15 @@ separate_trajectories <- function(obj_name,
   ## to unique rigid bodies
   obj_name$rb_traj <- paste0(obj_name$rigid_body,"_",obj_name$traj_id)
 
+  ## Coerce to tibble
+  obj_name <- as_tibble(obj_name)
+
   ## Leave a note about the max frame gap used
   attr(obj_name,"max_frame_gap") <- max_frame_gap
 
   ## Leave a note that we rotated and translated the data set
-  class(obj_name) <- c(class(obj_name), "trajectories_labeled")
+  attr(obj_name,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "trajectories_labeled")
 
   ## Export
   return(obj_name)
@@ -662,12 +684,12 @@ get_full_trajectories <- function(obj_name,
                                   ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Check that its axes have been renamed
-  if (!any(class(obj_name) == "trajectories_labeled")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
     stop("Please use separate_trajectories() prior to using this")
   }
 
@@ -711,13 +733,15 @@ get_full_trajectories <- function(obj_name,
 
   ## Join the columns to add in direction
   obj_defined <-
-    dplyr::right_join(obj_continuous, filt_summary, by = "traj_id")
+    dplyr::right_join(obj_continuous, filt_summary, by = "traj_id") %>%
+      as_tibble()
 
   ## Leave a note about the span used
   attr(obj_defined, "span") <- span
 
   ## Leave a note that full trajectories were retained
-  class(obj_defined) <- c(class(obj_name), "full_trajectories")
+  attr(obj_defined,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "full_trajectories")
 
   ## Export
   return(obj_defined)
@@ -945,8 +969,8 @@ select_x_percent_M <- function(obj_name,
                                ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   # ## Check that its axes have been renamed
@@ -971,7 +995,8 @@ select_x_percent_M <- function(obj_name,
   obj_name <-
     obj_name %>%
     dplyr::filter(Position_lengths < midpoint + lengths_needed) %>%
-    dplyr::filter(Position_lengths > (midpoint - lengths_needed))
+    dplyr::filter(Position_lengths > (midpoint - lengths_needed)) %>%
+    as_tibble()
 
   ## Leave a note about the proportion used
   attr(obj_name,"percent_selected") <- desired_percent
@@ -979,7 +1004,8 @@ select_x_percent_M <- function(obj_name,
   attr(obj_name,"selected_tunnel_length") <- tunnel_length * prop
 
   ## Leave a note that we rotated and translated the data set
-  class(obj_name) <- c(class(obj_name), "percent_selected_M")
+  attr(obj_name,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "percent_selected_M")
 
   ## Export
   return(obj_name)
@@ -996,8 +1022,8 @@ determine_fg_M <- function(obj_name,
                            ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   # make a bunch of empty vectors to dump info
@@ -1027,7 +1053,7 @@ determine_fg_M <- function(obj_name,
 }
 
 
-############################# get_full_trajectories ############################
+############################# get_full_trajectories_M ##########################
 ## Specify a minimum span of the (selected) tunnel and then keep trajectories
 ## that are wider than that span and go from one end to the other
 
@@ -1036,12 +1062,12 @@ get_full_trajectories_M <- function(obj_name,
                                     ...){
 
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
+    stop("This doesn't seem to be a motiv object")
   }
 
   ## Check that its axes have been renamed
-  if (!any(class(obj_name) == "trajectories_labeled")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
     stop("Please use separate_trajectories() prior to using this")
   }
 
@@ -1083,13 +1109,15 @@ get_full_trajectories_M <- function(obj_name,
 
   ## Join the columns to add in direction
   obj_defined <-
-    right_join(obj_continuous, filt_summary, by = "traj_id")
+    right_join(obj_continuous, filt_summary, by = "traj_id") %>%
+    as_tibble()
 
   ## Leave a note about the span used
   attr(obj_defined, "span") <- span
 
   ## Leave a note that full trajectories were retained
-  class(obj_defined) <- c(class(obj_name), "full_trajectories")
+  attr(obj_defined,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "full_trajectories_M")
 
   ## Export
   return(obj_defined)
