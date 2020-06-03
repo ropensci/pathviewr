@@ -2,16 +2,65 @@
 ## Last updated: 2020-06-02 VBB
 
 ############################### relabel_motiv_axes #############################
-## My intuition is that X should be tunnel width, Y should be tunnel length
-## and Z should be tunnel height. But the axes may not have been defined as such
-## during the recording.
-##
-## This function takes a `motiv` object and allows the user to rename the
-## variables.
-##
-## Each argument must have a leading underscore ("_") and each argument must
-## have an entry. E.g. tunnel_length = "_Y" will replace all instances of _Y
-## with _length in the names of variables.
+
+#' Relabel the dimensions as length, width, and height
+#'
+#' Axes are commonly labeled as "X", "Y", and "Z" in recording software yet
+#' you may desire to relabel these as "length", "width", and "height".
+#' \code{relabel_motiv_axes()} is a function that takes a \code{motiv} object
+#' and allows the user to rename the variables.
+#'
+#' @param obj_name An object of class \code{motiv}
+#' @param tunnel_length The dimension that corresponds to tunnel length. Set to
+#' \code{tunnel_length = "_Z"} by default. Argument should contain a character
+#' vector with a leading underscore (see Details)
+#' @param tunnel_width The dimension that corresponds to tunnel width. Follows
+#' the same conventions as \code{tunnel_length} and defaults to
+#' \code{tunnel_length = "_X"}
+#' @param tunnel_height The dimension that corresponds to tunnel height. Follows
+#' the same conventions as \code{tunnel_length} and defaults to
+#' \code{tunnel_length = "_Y"}
+#' @param ... Additional arguments to be passed to \code{read_motiv_csv()}.
+#'
+#' @details Each argument must have a leading underscore ("_") and each
+#' argument must have an entry. E.g. tunnel_length = "_Y" will replace all
+#' instances of _Y with _length in the names of variables.
+#'
+#' @return An object of class \code{motiv} with variables that have been
+#' renamed.
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family utility functions
+#'
+#' @examples
+#'
+#' library(pathviewR)
+#'
+#' ## Import the \code{july 29} example data included in the package
+#' jul_29 <-
+#'   read_motiv_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Names of variables are labeled with _X, _Y, _Z, which we'd like to rename
+#' names(jul_29)
+#'
+#' ## Now use relabel_motiv_axes() to rename these variables using _length,
+#' _width, and _height instead
+#' jul_29_relabeled <-
+#'   relabel_motiv_axes(jul_29,
+#'                      tunnel_length = "_Z",
+#'                      tunnel_width = "_X",
+#'                      tunnel_height = "_Y")
+#'
+#' ## See the result
+#' names(jul_29_relabeled)
+#'
+#' @seealso
+#' \code{\link{read_motiv_csv}}
+#'
+#' @export
+
 
 relabel_motiv_axes <- function(obj_name,
                                tunnel_length = "_Z",
