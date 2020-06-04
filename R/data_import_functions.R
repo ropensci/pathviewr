@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-02 VBB
+## Last updated: 2020-06-04 VBB
 
 
 ################################# read_motiv_csv ###############################
@@ -189,16 +189,25 @@ read_motiv_markers <-
     ## Make a list of the unique rigid bodies
     marker_id <- levels(as.factor(marker_id_line[-c(1, 2)]))
 
-    ## Rename Marker IDs and also extract Bird ID
+
+  ## Note: 2020-06-04 this is the major point of deviation when importing
+  ## data with markers vs. those with rigid bodies. Markers have a
+  ## subject:marker nomenclature whereas rigid bodies just have the rigid
+  ## body names. So, we'll need to either have an argument in the function
+  ## to let the user decide to import as rigid body or as marker set. A
+  ## better way is to use the info in the "Type" line to automatically set
+  ## this.
+
+    ## Rename Marker IDs and also extract Subject ID
     namez <- marker_id
     ##  Regular expressions are the woooooorst
-    bird_id_colon <- stringr::str_extract(namez, ".+?(?<=:)")[1]
-    bird_id <- sub(":", "", bird_id_colon)
-    marker_id <- sub(bird_id_colon, "", namez)
-    marker_id_line <- sub(bird_id_colon, "", marker_id_line)
+    subect_id_colon <- stringr::str_extract(namez, ".+?(?<=:)")[1]
+    subject_id <- sub(":", "", subject_id_colon)
+    marker_id <- sub(subject_id_colon, "", namez)
+    marker_id_line <- sub(subject_id_colon, "", marker_id_line)
 
-    ## Might as well add bird_id to header
-    bird_df <- data.frame("Bird ID", bird_id)
+    ## Might as well add subject_id to header
+    subject_df <- data.frame("Subject ID", subject_id)
     names(bird_df) <- c("metadata", "value")
     header <- rbind(header, bird_df)
 
