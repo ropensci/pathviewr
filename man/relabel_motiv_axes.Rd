@@ -48,7 +48,7 @@ instances of _Y with _length in the names of variables.
 
 library(pathviewR)
 
-## Import the \code{july 29} example data included in the package
+## Import the july 29 example data included in the package
 jul_29 <-
   read_motiv_csv(system.file("extdata", "july-29_group-I_16-20.csv",
                              package = 'pathviewR'))
