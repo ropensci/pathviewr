@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-04 VBB
+## Last updated: 2020-06-05 VBB
 
 
 ################################# read_motiv_csv ###############################
@@ -132,55 +132,65 @@ read_motiv_csv <-
   }
 
 
-############################### read_motiv_markers #############################
-## Import data from a CSV and create a `motiv` object
-## Specific to trials in which no rigid bodies were used
+############################### read_motive_csv ################################
+## Import data from a CSV and create a tibble with a `viewr` attribute
 ## Basically behaves as a tibble but with metadata stored as attributes
 
-## Note 2020-06-04: it would be good to combine this with read_motiv_csv() and
-## have one flexible import function to rule them all (and in the darkness
-## bind them)
+## 2020-06-05: Gonna keep read_motiv_csv() untouched so we have a reliable
+## import function for most of our use cases. Will start morphing this one
+## into a more generalized Motive import function that will flexibly adapt
+## to either rigid body or marker set cases. Until this comment disappears,
+## consider the below a "work in progress" and use with caution!
 
-read_motiv_markers <-
+read_motive_csv <-
   function(file_name,
            file_id = NA,
+           data_type = "autodetect",
            ...){
 
     ## Import checks
-    if (missing(file_name))
-      stop("A file_name is required")
-    if (!file.exists(file_name))
-      stop(paste0("File ", file_name, " not found!"))
+      if (missing(file_name))
+        stop("A file_name is required")
+      if (!file.exists(file_name))
+        stop(paste0("File ", file_name, " not found!"))
+
+    ## Check if data_type is one of the known cases
+    ## Must be "autodetect", "rigid_body", "marker_set"
+    ## Will develop this later
 
     ## Open connection to file for reading in text mode
-    file_con <- file(file_name, "r")
+      file_con <- file(file_name, "r")
 
     ## Match file_id to file_name if no file_id is supplied
-    if (is.na(file_id)) file_id <- basename(file_name)
+      if (is.na(file_id)) file_id <- basename(file_name)
 
     ## Get maketime of file (may not be accurate...use with caution!)
-    mtime <- file.info(file_name)$mtime
+      mtime <- file.info(file_name)$mtime
 
     ## Setup for reading in file
-    header <- c()
-    marker_id <- c()
-    marker_id_line <- c()
-    data_names_part_one <- c()
-    data_names_part_two <- c()
-    data_names <- c()
+      header <- c()
+      data_id <- c()
+      data_id_line <- c()
+      data_names_part_one <- c()
+      data_names_part_two <- c()
+      data_names <- c()
 
-    ## Read in header (line 1)
-    header <- c(header, readLines(file_con, 1))
+    ## Read in header; usually just line 1 but grepl() makes this flexbile
+      while(!grepl(",Type", (l <- readLines(file_con,1)))){
+        header <- c(header, l)
+      }
     ## Split the character vector and make a data.frame of it
-    header <-
-      strsplit(header[[1]], ",")[[1]] %>%
-      data.frame(stringsAsFactors = FALSE)
+      header <-
+        ## Chopping out the last entry of header via `length(header)-1` because
+        ## the final line is (usually) empty. Revise here if we see errors!!!
+        strsplit(header[[1]], ",")[[length(header)-1]] %>%
+        data.frame(stringsAsFactors = FALSE)
     ## Convert the 1-col data frame into a 2-col data frame:
-    odds <- seq_along(header$.) %% 2 == 1
-    metadata <- header$.[odds] # odd-numbered rows are metadata
-    value <- header$.[!odds] # even-numbered rows are corresponding values
-    header <- data.frame(metadata, value,
-                         stringsAsFactors = FALSE)
+      odds <- seq_along(header$.) %% 2 == 1
+      metadata <- header$.[odds] # odd-numbered rows are metadata
+      value <- header$.[!odds] # even-numbered rows are corresponding values
+      header <- data.frame(metadata, value,
+                           stringsAsFactors = FALSE)
 
     ## Marker IDs
     l <- readLines(file_con, 3)
@@ -269,7 +279,7 @@ read_motiv_markers <-
     ## Rename columns
     colnames(dataz) <- data_names
 
-    ## Close up
+    ## Be neat and close up the file connection
     close(file_con)
 
     ## Make the object (a tibble)

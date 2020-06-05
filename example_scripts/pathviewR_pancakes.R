@@ -1,4 +1,4 @@
-## Last updated: 2020-06-03 VBB
+## Last updated: 2020-06-05 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -41,6 +41,9 @@ devtools::load_all()
 
 ################################# data import ##################################
 ## Using example file from Melissa
+
+## Copied from below, for convenience
+jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
 jul_29 <- read_motiv_csv('./inst/extdata/july-29_group-I_16-20.csv')
 ## Note: as of 2020-06-03 we are no longer coercing objects into the class
