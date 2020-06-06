@@ -54,7 +54,7 @@ read_motiv_csv <-
     ## Save the line itself for use later
     rigid_bodies_line <- strsplit(l[3], ",")[[1]]
     ## Make a list of the unique rigid bodies
-    rigid_bodies <- levels(as.factor(rigid_bodies_line[-c(1, 2)]))
+    rigid_bodies <- base::unique(rigid_bodies_line[-c(1, 2)])
 
     ## Data names line 6
     l <- readLines(file_con, 2)
@@ -145,7 +145,7 @@ read_motiv_csv <-
 read_motive_csv <-
   function(file_name,
            file_id = NA,
-           data_type = "autodetect",
+           #data_type = "autodetect",
            ...){
 
     ## Import checks
@@ -169,6 +169,7 @@ read_motive_csv <-
 
     ## Setup for reading in file
       header <- c()
+      names_line <- c()
       data_id <- c()
       data_id_line <- c()
       data_names_part_one <- c()
@@ -176,7 +177,7 @@ read_motive_csv <-
       data_names <- c()
 
     ## Read in header; usually just line 1 but grepl() makes this flexbile
-      while(!grepl(",Type", (l <- readLines(file_con,1)))){
+      while(!grepl(",Type", (l <- readLines(file_con, 1)))){
         header <- c(header, l)
       }
     ## Split the character vector and make a data.frame of it
@@ -192,21 +193,43 @@ read_motive_csv <-
       header <- data.frame(metadata, value,
                            stringsAsFactors = FALSE)
 
+    ## Warn about Motive version
+    if (!value[1] == "1.23"){
+      warning(
+        "pathviewR was built to read CSVs exported using Motive's
+Format Version 1.23 and is not guaranteed to work with other versions.
+Please file an Issue on our Github page if you encounter any problems",
+        call. = FALSE)
+    }
+
+    ## The next line (already read and stored into `l`) should contain info
+    ## on the type of data in each column (hopefully either "Rigid Body" or
+    ## "Marker")
+      type_line <- l
+      type_vec <- strsplit(type_line[1], ",")[[1]]
+      types <- type_vec[-c(1, 2)]
+
+    ## Rigid body & marker names (line 4)
+      while(!grepl(",ID", (l <- readLines(file_con, 1)))){
+        names_line <- c(names_line, l)
+      }
+    ## Save the line itself for use later
+      names_vec <- strsplit(names_line[1], ",")[[1]]
+    ## Make a list of the unique rigid bodies and markers
+      names <- base::unique(names_vec[-c(1, 2)])
+    ## The ID line (typically line 5) is stored in `l` currently
+      id_line <- l
+      id_vec <- strsplit(id_line[1], ",")[[1]]
+      ids <- id_vec[-c(1, 2)]
+
+### PAUSING HERE FOR NOW. PICK UP FROM THIS POINT NEXT TIME!
+
     ## Marker IDs
     l <- readLines(file_con, 3)
     ## Save the line itself for use later
     marker_id_line <- strsplit(l[3], ",")[[1]]
     ## Make a list of the unique rigid bodies
-    marker_id <- levels(as.factor(marker_id_line[-c(1, 2)]))
-
-
-  ## Note: 2020-06-04 this is the major point of deviation when importing
-  ## data with markers vs. those with rigid bodies. Markers have a
-  ## subject:marker nomenclature whereas rigid bodies just have the rigid
-  ## body names. So, we'll need to either have an argument in the function
-  ## to let the user decide to import as rigid body or as marker set. A
-  ## better way is to use the info in the "Type" line to automatically set
-  ## this.
+    marker_id <- unique(marker_id_line[-c(1, 2)])
 
     ## Rename Marker IDs and also extract Subject ID
     namez <- marker_id
@@ -285,18 +308,15 @@ read_motive_csv <-
     ## Make the object (a tibble)
     data <- tibble::as_tibble(dataz)
 
-    ## Add "motiv" as a class, which may be useful for package-ization later
-    class(data) <- c(class(data), "motiv")
-
     ## Add metadata as attributes()
-    attr(data, "file_id") <- file_id
-    attr(data, "file_mtime") <- mtime
-    attr(data, "bird_id") <- bird_id
-    attr(data, "header") <- header
-    attr(data, "marker_ids") <- marker_id
-    attr(data, "data_names") <- data_names
-    attr(data, "d1") <- data_names_part_one
-    attr(data, "d2") <- data_names_part_two
+    attr(data,"pathviewR_steps") <- "motiv"
+    attr(data,"file_id") <- file_id
+    attr(data,"file_mtime") <- mtime
+    attr(data,"header") <- header
+    attr(data,"rigid_bodies") <- rigid_bodies
+    attr(data,"data_names") <- data_names
+    attr(data,"d1") <- data_names_part_one
+    attr(data,"d2") <- data_names_part_two
 
     ## Export
     return(data)
