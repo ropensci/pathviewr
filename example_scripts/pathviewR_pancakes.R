@@ -1,4 +1,4 @@
-## Last updated: 2020-06-05 VBB
+## Last updated: 2020-06-09 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -58,6 +58,10 @@ jul_29 <- read_motiv_csv('./inst/extdata/july-29_group-I_16-20.csv')
 class(jul_29) # should be a tibble
 attr(jul_29, "pathviewR_steps") # "motiv"
 
+## New import function
+## Not yet ready for primetime, but adding it here so I can play around
+## with it
+jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
 
 ################################## rename axes #################################
 ## I get confused by the axis definitions. So I use the `relabel_motiv_axes()`
