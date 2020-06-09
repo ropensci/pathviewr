@@ -136,16 +136,16 @@ read_motiv_csv <-
 ## Import data from a CSV and create a tibble with a `viewr` attribute
 ## Basically behaves as a tibble but with metadata stored as attributes
 
-## 2020-06-05: Gonna keep read_motiv_csv() untouched so we have a reliable
-## import function for most of our use cases. Will start morphing this one
-## into a more generalized Motive import function that will flexibly adapt
-## to either rigid body or marker set cases. Until this comment disappears,
-## consider the below a "work in progress" and use with caution!
+## 2020-06-09: OK I think the function below mostly works. I haven't
+## really tested it thoroughly, but in principle it should be able to
+## flexibly handle Motive CSVs that have rigid bodies and/or markers
+## (including files that mix the two). I've written some comments on
+## checks that could be inserted to ensure things are working.
 
 read_motive_csv <-
   function(file_name,
            file_id = NA,
-           #data_type = "autodetect",
+           simplify_marker_naming = TRUE,
            ...){
 
     ## Import checks
@@ -153,10 +153,6 @@ read_motive_csv <-
         stop("A file_name is required")
       if (!file.exists(file_name))
         stop(paste0("File ", file_name, " not found!"))
-
-    ## Check if data_type is one of the known cases
-    ## Must be "autodetect", "rigid_body", "marker_set"
-    ## Will develop this later
 
     ## Open connection to file for reading in text mode
       file_con <- file(file_name, "r")
@@ -170,8 +166,6 @@ read_motive_csv <-
     ## Setup for reading in file
       header <- c()
       names_line <- c()
-      data_id <- c()
-      data_id_line <- c()
       data_names_part_one <- c()
       data_names_part_two <- c()
       data_names <- c()
@@ -196,9 +190,10 @@ read_motive_csv <-
     ## Warn about Motive version
     if (!value[1] == "1.23"){
       warning(
-        "pathviewR was built to read CSVs exported using Motive's
-Format Version 1.23 and is not guaranteed to work with other versions.
-Please file an Issue on our Github page if you encounter any problems",
+        "This function was written to read CSVs exported using Motive's
+Format Version 1.23 and is not guaranteed to work with those from other
+versions. Please file an Issue on our Github page if you encounter any
+problems.",
         call. = FALSE)
     }
 
@@ -208,6 +203,13 @@ Please file an Issue on our Github page if you encounter any problems",
       type_line <- l
       type_vec <- strsplit(type_line[1], ",")[[1]]
       types <- type_vec[-c(1, 2)]
+
+#### NOTE!!
+  ## Add a check here for Types. They must be either "Rigid Body" or
+  ## "Marker". If another type is found, the function needs to stop
+  ## and then tell the user that a non-Rigid Body non-Marker type
+  ## was encountered and our software is not designed to handle these
+  ## cases.
 
     ## Rigid body & marker names (line 4)
       while(!grepl(",ID", (l <- readLines(file_con, 1)))){
@@ -222,31 +224,46 @@ Please file an Issue on our Github page if you encounter any problems",
       id_vec <- strsplit(id_line[1], ",")[[1]]
       ids <- id_vec[-c(1, 2)]
 
-### PAUSING HERE FOR NOW. PICK UP FROM THIS POINT NEXT TIME!
+    ## Create a data.frame that lays out object IDs, types, and names
+      ids_types_names <- data.frame(id_vec,
+                                    type_vec,
+                                    names_vec,
+                                    simplify = NA, # container to be filled
+                                    subjects = NA  # container to be filled
+                                    )
 
-    ## Marker IDs
-    l <- readLines(file_con, 3)
-    ## Save the line itself for use later
-    marker_id_line <- strsplit(l[3], ",")[[1]]
-    ## Make a list of the unique rigid bodies
-    marker_id <- unique(marker_id_line[-c(1, 2)])
+    ## Now add the actual markers' names to the "simplify" column of
+    ## ids_types_names. I'm sure this can be re-written to avoid a
+    ## for() loop, but I'm keeping it like this for now because it
+    ## makes sense to me.
+      for (i in 1:nrow(ids_types_names)){
+        ## If i-th entry of $type_vec is "Marker"
+        base::ifelse(ids_types_names$type_vec[i] == "Marker",
+        ## Then place the marker name in $simplify
+                     ids_types_names$simplify[i] <- stringr::str_split(
+                       ids_types_names$names_vec[i], ":")[[1]][2], # 2nd half
+        ## Otherwise, copy the contents of $names_vec
+                     ids_types_names$simplify[i] <-
+                       ids_types_names$names_vec[i]
+                     )
+      }
 
-    ## Rename Marker IDs and also extract Subject ID
-    namez <- marker_id
-    ##  Regular expressions are the woooooorst
-    subect_id_colon <- stringr::str_extract(namez, ".+?(?<=:)")[1]
-    subject_id <- sub(":", "", subject_id_colon)
-    marker_id <- sub(subject_id_colon, "", namez)
-    marker_id_line <- sub(subject_id_colon, "", marker_id_line)
-
-    ## Might as well add subject_id to header
-    subject_df <- data.frame("Subject ID", subject_id)
-    names(bird_df) <- c("metadata", "value")
-    header <- rbind(header, bird_df)
+    ## Similarly, use the subject ID in subjects column
+      for (i in 1:nrow(ids_types_names)){
+        ## If i-th entry of $type_vec is not a "Rigid Body
+        base::ifelse(ids_types_names$type_vec[i] != "Rigid Body",
+        ## Then place the marker name in $subjects
+                     ids_types_names$subjects[i] <- stringr::str_split(
+                       ids_types_names$names_vec[i], ":")[[1]][1], # 1st half
+        ## Otherwise, copy the contents of $names_vec
+                     ids_types_names$subjects[i] <-
+                       ids_types_names$names_vec[i]
+        )
+      }
 
     ## Data names line 6
-    l <- readLines(file_con, 2)
-    data_names_part_one <- strsplit(l[2], ",")[[1]]
+    l <- readLines(file_con, 1)
+    data_names_part_one <- strsplit(l, ",")[[1]]
 
     ## Data names line 7
     l <- readLines(file_con, 1)
@@ -261,6 +278,13 @@ Please file an Issue on our Github page if you encounter any problems",
       data_names_part_two <- data_names_part_two # keep the same
     }
 
+    ## Handle choice of simplify_marker_naming = TRUE or FALSE
+    if (simplify_marker_naming == TRUE){
+      marker_id_line <- ids_types_names$simplify
+    } else {
+      marker_id_line <- names_vec
+    }
+
     ## Make data frame to help with data names
     data_names_frame <- data.frame(v1 = marker_id_line,
                                    v2 = data_names_part_one,
@@ -269,21 +293,21 @@ Please file an Issue on our Github page if you encounter any problems",
     ## it in the next step
 
     ## Stitch it together
-    ## Using a for() loop for now; I'm sure purrr::map() can be used instead
-    ## but who cares
     for (i in 1:nrow(data_names_frame)) {
       data_names[[i]] <- paste0(data_names_frame[i, 1],
                                 "_",
-                                #data_names_frame[i, 2],
-                                #"_",
+                                data_names_frame[i, 2],
+                                "_",
                                 data_names_frame[i, 3])
     }
 
     ## Some hacky cleanup
     ## Not ideal but it works
-    data_names <- sub("_Frame", "frame", data_names)
+    data_names <- sub("__Frame", "frame", data_names)
     data_names <- sub(" ", "_", data_names)
-    data_names <- sub("Name_Time_\\(Seconds\\)", "time_sec", data_names)
+    data_names <- sub("Name__Time_\\(Seconds\\)", "time_sec", data_names)
+    data_names <- sub("Mean Marker Error_", "Mean_Marker_Error", data_names)
+    data_names <- sub("Mean_Marker Error_", "Mean_Marker_Error", data_names)
 
     ## Read in data
     dataz <- data.table::fread(
@@ -309,14 +333,18 @@ Please file an Issue on our Github page if you encounter any problems",
     data <- tibble::as_tibble(dataz)
 
     ## Add metadata as attributes()
-    attr(data,"pathviewR_steps") <- "motiv"
-    attr(data,"file_id") <- file_id
-    attr(data,"file_mtime") <- mtime
-    attr(data,"header") <- header
-    attr(data,"rigid_bodies") <- rigid_bodies
-    attr(data,"data_names") <- data_names
-    attr(data,"d1") <- data_names_part_one
-    attr(data,"d2") <- data_names_part_two
+    attr(data, "pathviewR_steps") <- "viewr"
+    attr(data, "file_id") <- file_id
+    attr(data, "file_mtime") <- mtime
+    attr(data, "header") <- header
+    attr(data, "Motive_IDs") <- ids
+    attr(data, "subject_names_full") <- names_vec[-c(1,2)]
+    attr(data, "subject_names_simple") <- names
+    attr(data, "data_names") <- data_names
+    attr(data, "data_types_full") <- types
+    attr(data, "data_types_simple") <- base::unique(types)
+    attr(data, "d1") <- data_names_part_one
+    attr(data, "d2") <- data_names_part_two
 
     ## Export
     return(data)
