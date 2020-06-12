@@ -1,33 +1,32 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-02 VBB
+## Last updated: 2020-06-12 VBB
 
-############################### relabel_motiv_axes #############################
+############################### relabel_viewr_axes #############################
 
 #' Relabel the dimensions as length, width, and height
 #'
-#' Axes are commonly labeled as "X", "Y", and "Z" in recording software yet
+#' Axes are commonly labeled as "x", "y", and "z" in recording software yet
 #' you may desire to relabel these as "length", "width", and "height".
-#' \code{relabel_motiv_axes()} is a function that takes a \code{motiv} object
+#' \code{relabel_viewr_axes()} is a function that takes a \code{viewr} object
 #' and allows the user to rename the variables.
 #'
-#' @param obj_name An object of class \code{motiv}
+#' @param obj_name A tibble or data.frame with attribute \code{viewr}
 #' @param tunnel_length The dimension that corresponds to tunnel length. Set to
-#' \code{tunnel_length = "_Z"} by default. Argument should contain a character
+#' \code{tunnel_length = "_z"} by default. Argument should contain a character
 #' vector with a leading underscore (see Details)
 #' @param tunnel_width The dimension that corresponds to tunnel width. Follows
 #' the same conventions as \code{tunnel_length} and defaults to
-#' \code{tunnel_length = "_X"}
+#' \code{tunnel_length = "_x"}
 #' @param tunnel_height The dimension that corresponds to tunnel height. Follows
 #' the same conventions as \code{tunnel_length} and defaults to
-#' \code{tunnel_length = "_Y"}
-#' @param ... Additional arguments to be passed to \code{read_motiv_csv()}.
+#' \code{tunnel_length = "_y"}
+#' @param ... Additional arguments to be passed to \code{read_motive_csv()}.
 #'
 #' @details Each argument must have a leading underscore ("_") and each
 #' argument must have an entry. E.g. tunnel_length = "_Y" will replace all
 #' instances of _Y with _length in the names of variables.
 #'
-#' @return An object of class \code{motiv} with variables that have been
-#' renamed.
+#' @return A tibble or data.frame with variables that have been renamed.
 #'
 #' @author Vikram B. Baliga
 #'
@@ -39,37 +38,37 @@
 #'
 #' ## Import the july 29 example data included in the package
 #' jul_29 <-
-#'   read_motiv_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
 #'                              package = 'pathviewR'))
 #'
-#' ## Names of variables are labeled with _X, _Y, _Z, which we'd like to rename
+#' ## Names of variables are labeled with _x, _y, _z, which we'd like to rename
 #' names(jul_29)
 #'
-#' ## Now use relabel_motiv_axes() to rename these variables using _length,
+#' ## Now use relabel_viewr_axes() to rename these variables using _length,
 #' _width, and _height instead
 #' jul_29_relabeled <-
-#'   relabel_motiv_axes(jul_29,
-#'                      tunnel_length = "_Z",
-#'                      tunnel_width = "_X",
-#'                      tunnel_height = "_Y")
+#'   relabel_viewr_axes(jul_29,
+#'                      tunnel_length = "_z",
+#'                      tunnel_width = "_x",
+#'                      tunnel_height = "_y")
 #'
 #' ## See the result
 #' names(jul_29_relabeled)
 #'
 #' @seealso
-#' \code{\link{read_motiv_csv}}
+#' \code{\link{read_motive_csv}}
 #'
 #' @export
 
 
-relabel_motiv_axes <- function(obj_name,
-                               tunnel_length = "_Z",
-                               tunnel_width = "_X",
-                               tunnel_height = "_Y",
+relabel_viewr_axes <- function(obj_name,
+                               tunnel_length = "_z",
+                               tunnel_width = "_x",
+                               tunnel_height = "_y",
                                ...){
   ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Inputs should be character vectors
@@ -115,7 +114,7 @@ gather_tunnel_data <- function(obj_name,
 
   ## Check that its axes have been renamed
   if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_motiv_axes() prior to using this")
+    stop("Please rename axes via relabel_viewr_axes() prior to using this")
   }
 
   ## Get number of rigid bodies
@@ -250,7 +249,7 @@ trim_tunnel_outliers <- function(obj_name,
 
   ## Check that its axes have been renamed
   if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_motiv_axes() prior to using this")
+    stop("Please rename axes via relabel_viewr_axes() prior to using this")
   }
 
   ## Check that the data columns have been gathered
@@ -768,7 +767,7 @@ import_and_clean_motiv <- function(file_name,
   valid_args <- c(
     ## read_motiv_csv()
     "file_name", "file_id",
-    ## relabel_motiv_axes()
+    ## relabel_viewr_axes()
     "tunnel_length", "tunnel_width", "tunnel_height",
     ## trim_tunnel_outliers()
     "lengths_min", "lengths_max",
@@ -798,7 +797,7 @@ import_and_clean_motiv <- function(file_name,
   obj <-
     file_name %>%
     read_motiv_csv(...) %>%
-    relabel_motiv_axes(...) %>%
+    relabel_viewr_axes(...) %>%
     gather_tunnel_data(...) %>%
     trim_tunnel_outliers(...) %>%
     rotate_tunnel(...) %>%

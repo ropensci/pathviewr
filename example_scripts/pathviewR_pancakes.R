@@ -1,4 +1,4 @@
-## Last updated: 2020-06-09 VBB
+## Last updated: 2020-06-12 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -62,6 +62,28 @@ attr(jul_29, "pathviewR_steps") # "motiv"
 ## Not yet ready for primetime, but adding it here so I can play around
 ## with it
 jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
+jul_29_unsimple <- read_motive_csv(jul_29_path, simplify_marker_naming = FALSE)
+sham_dat <- read_motive_csv("./inst/extdata/sham_data_set.csv")
+sham_dat_unsimple <- read_motive_csv("./inst/extdata/sham_data_set.csv",
+                                    simplify_marker_naming = FALSE)
+wing_rom <-
+  read_motive_csv("./inst/extdata/2020-03-07_Ard_her_20-317L_4jts_7wng_ROM_001.csv")
+wing_rom_unsimple <-
+  read_motive_csv("./inst/extdata/2020-03-07_Ard_her_20-317L_4jts_7wng_ROM_001.csv", simplify_marker_naming = FALSE)
+
+## Via names() we can see what the `simplify_marker_naming` argument does
+names(jul_29)
+names(jul_29_unsimple) # should be identical to the above
+names(sham_dat) # no "Ard_her_20-317L_4jt7wing:" in marker names; RBs unaffected
+names(sham_dat_unsimple) # Explicit naming
+names(wing_rom) # Marker names only
+names(wing_rom_unsimple) # Subject:marker explicit naming
+
+## The idea is to allow users to opt for a simpler (marker-only) naming
+## of variables IFF there is only one "subject" within the data. If
+## multiple subjects each had markers, going for the simplify option is
+## likely a very bad idea. We should remember to express this in the
+## documentation.
 
 ################################## rename axes #################################
 ## I get confused by the axis definitions. So I use the `relabel_motiv_axes()`

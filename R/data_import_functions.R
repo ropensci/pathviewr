@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-09 VBB
+## Last updated: 2020-06-12 VBB
 
 
 ################################# read_motiv_csv ###############################
@@ -303,11 +303,36 @@ problems.",
 
     ## Some hacky cleanup
     ## Not ideal but it works
-    data_names <- sub("__Frame", "frame", data_names)
-    data_names <- sub(" ", "_", data_names)
-    data_names <- sub("Name__Time_\\(Seconds\\)", "time_sec", data_names)
-    data_names <- sub("Mean Marker Error_", "Mean_Marker_Error", data_names)
-    data_names <- sub("Mean_Marker Error_", "Mean_Marker_Error", data_names)
+    data_names <- sub("__Frame", "frame", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub(" ", "_", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Name__Time_\\(Seconds\\)", "time_sec", data_names,
+                      ignore.case = FALSE)
+    ## We'd like to snake_case-ify names of variables, but I currently am
+    ## averse to altering the names of subjects, too. So I will opt to
+    ## be inconsistent here re:converting to lower case for the moment.
+    ## Should we opt to extend snake_case-ing to subjects, I expect
+    ## most of what follows can be written with code that's more efficient
+    data_names <- sub("Mean Marker Error_", "mean_marker_error", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Mean_Marker Error_", "mean_marker_error", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Position_X", "position_x", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Position_Y", "position_y", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Position_Z", "position_z", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Rotation_X", "rotation_x", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Rotation_Y", "rotation_y", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Rotation_Z", "rotation_z", data_names,
+                      ignore.case = FALSE)
+    data_names <- sub("Rotation_W", "rotation_w", data_names,
+                      ignore.case = FALSE)
+
 
     ## Read in data
     dataz <- data.table::fread(
