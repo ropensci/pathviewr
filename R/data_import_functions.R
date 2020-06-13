@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-12 VBB
+## Last updated: 2020-06-13 VBB
 
 
 ################################# read_motiv_csv ###############################
@@ -133,14 +133,78 @@ read_motiv_csv <-
 
 
 ############################### read_motive_csv ################################
-## Import data from a CSV and create a tibble with a `viewr` attribute
-## Basically behaves as a tibble but with metadata stored as attributes
-
-## 2020-06-09: OK I think the function below mostly works. I haven't
-## really tested it thoroughly, but in principle it should be able to
-## flexibly handle Motive CSVs that have rigid bodies and/or markers
-## (including files that mix the two). I've written some comments on
-## checks that could be inserted to ensure things are working.
+#' Import data from a CSV exported from Optitrack's Motive software
+#'
+#' \code{read_motive_csv()} is designed to import data from a CSV that has been
+#' exported from Optitrack's Motive software. The resultant object is a tibble
+#' that additionally has important metadata stored as attributes (see Details).
+#'
+#' @param file_name A file (or path to file) in CSV format
+#' @param file_id (Optional) identifier for this file. If not supplied, this
+#' defaults to \code{basename(file_name)}.
+#' @param simplify_marker_naming If Markers are encountered, should they be
+#' renamed from "Subject:marker" to "marker"? Defaults to TRUE
+#' @param ... Additional arguments to be passed to \code{data.table::fread()}
+#'
+#' @details Uses \code{data.table::fread()} to import data from a CSV file and
+#' ultimately store it in a tibble. This object is also labeled with the
+#' attribute \code{pathviewR_steps} with value \code{viewr} to indicate that it
+#' has been imported by \code{pathviewR} and should be friendly towards use with
+#' other functions in our package. Additionally, the following metadata are
+#' stored in the tibble's attributes: header information from the Motive CSV
+#' file (\code{header}), original IDs for each object (\code{Motive_IDs}), the
+#' name of each subject in each data column (\code{subject_names_full}) and
+#' unique values of subject names (\code{subject_names_simple}), the type of
+#' data (rigid body or marker) that appears in each column
+#' (\code{data_types_full}) and overall (\code{data_types_simple}), and original
+#' data column names in the CSV (\code{d1, d2}). See Example below for example
+#' code to inspect attributes.
+#'
+#' @section Warning:
+#' This function was written to read CSVs exported using Motive's Format Version
+#' 1.23 and is not guaranteed to work with those from other versions. Please
+#' file an Issue on our Github page if you encounter any problems.
+#'
+#' @return A tibble with numerical data in columns. The first two columns will
+#' have frame numbers and time (assumed to be in secs), respectively. Columns 3
+#' and beyond will contain the numerical data on the position or rotation of
+#' rigid bodies and/or markers that appear in the Motive CSV file. Each row
+#' corresponds to the position or rotation all objects at a given time (frame).
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family data import functions
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the july 29 example data included in the package
+#' jul_29 <-
+#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Names of variables in the resulting tibble
+#' names(jul_29)
+#'
+#' ## A variety of metadata are stored as attributes. Of particular interest:
+#' attr(jul_29, "pathviewR_steps")
+#' attr(jul_29, "file_id")
+#' attr(jul_29, "file_mtime")
+#' attr(jul_29, "header")
+#' attr(jul_29, "Motive_IDs")
+#' attr(jul_29, "subject_names_full")
+#' attr(jul_29, "subject_names_simple")
+#' attr(jul_29, "jul_29_names")
+#' attr(jul_29, "jul_29_types_full")
+#' attr(jul_29, "jul_29_types_simple")
+#'
+#' ## Of course, all attributes can be viewed as a (long) list via:
+#' attributes(jul_29)
+#'
+#' @seealso
+#' \code{\link{get_header_viewr}} to quickly see header info from the CSV
+#' \code{\link{relabel_viewr_axes}} to rename coordinate axes
 
 read_motive_csv <-
   function(file_name,
@@ -340,7 +404,8 @@ problems.",
       header = FALSE,
       sep = ",",
       dec = ".",
-      stringsAsFactors = FALSE
+      stringsAsFactors = FALSE,
+      ...
     )
     ## Quickly check for non-numerics and warn if found
     if (any(!apply(dataz, 2, is.numeric))) {
@@ -376,64 +441,49 @@ problems.",
   }
 
 
-################################ get_header_motiv ##############################
-## Extract header info from imported `motiv` object
-get_header_motiv <-function(obj_name,
-                            ...) {
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+################################# get_header_viewr #############################
+#' Extract header info from imported viewr object
+#'
+#' A function to quickly return the information stored in the header of the
+#' original data file imported via \code{pathviewR}'s \code{read_} functions.
+#'
+#' @param obj_name A tibble imported via \code{pathviewR}'s \code{read_}
+#' functions with value \code{viewr} appearing in the attribute
+#' \code{pathviewR_steps}
+#' @param ... Additional arguments that may be passed to other \code{pathviewR}
+#' functions
+#'
+#' @return The value of the \code{header} attribute, or NULL if no exact match
+#' is found and no or more than one partial match is found.
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family data import functions
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the july 29 example data included in the package
+#' jul_29 <-
+#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Now display the Header information
+#' get_header_viewr(jul_29)
+#'
+#' @seealso
+#' \code{\link{read_motive_csv}} to import data exported from Motive, in CSV
+#' format
+
+get_header_viewr <- function(obj_name,
+                             ...) {
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Get the header
   return(attr(obj_name,"header"))
 }
 
-
-
-##### HERE BE DRAGONS ######
-## Code that may be useful once we try to "package-ize" all this
-## Basically, it would be good to use grepl() to automate reading the headers
-## to intelligently determine how and where information is stored. This will be
-## important if headers vary in length for some reason.
-
-# ## Read in Header (line 1)
-# while (!grepl(",Type", (l <- readLines(file_con, 1)))) {
-#   header <- c(header, l)
-# }
-# header <-
-#   strsplit(header[[1]], ",")[[1]] %>%
-#   #matrix(ncol = 2, byrow = TRUE) %>%
-#   data.frame(stringsAsFactors = FALSE)
-# #colnames(header) <- c("metadata" , "value")
-#
-# ## Now list rigid body IDs
-# while (!grepl(",ID", (l <- readLines(file_con, 1)))) {
-#   rigid_bodies <- c(rigid_bodies, l)
-# }
-# rigid_bodies <- strsplit(rigid_bodies[[1]], ",")[[1]]
-# #rigid_bodies <- levels(as.factor(rigid_bodies[-c(1, 2)]))
-#
-# ## Get names of variables; this will need to happen in multiple steps
-# while (!grepl("Frame,", (l <- readLines(file_con, 1)))) {
-#   data_names_part_one <- c(rigid_bodies, l)
-# }
-# ## First line:
-# data_names_part_one <- strsplit(data_names_part_one[[3]], ",")[[1]]
-# ## Second line:
-# data_names_part_two <- strsplit(l, ",")[[1]]
-#
-# ## Clean up missing parts
-# # d_n_o <- sub("^$", "_", data_names_part_one)
-# # d_n_t <- sub("^$", "_", data_names_part_two)
-# d_n_o <- data_names_part_one
-# d_n_t <- data_names_part_two
-# d_d_f <- cbind(d_n_o, d_n_t)
-#
-# data_names <- c()
-# for (i in 1:nrow(d_d_f)) {
-#   data_names[[i]] <- paste0(d_d_f[i, 1],
-#                             "_",
-#                             d_d_f[i, 2])
-# }
-# data_names <- sub("Error_Frame", "Error", data_names)
