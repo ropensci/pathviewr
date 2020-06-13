@@ -169,7 +169,8 @@ read_motiv_csv <-
 #' have frame numbers and time (assumed to be in secs), respectively. Columns 3
 #' and beyond will contain the numerical data on the position or rotation of
 #' rigid bodies and/or markers that appear in the Motive CSV file. Each row
-#' corresponds to the position or rotation all objects at a given time (frame).
+#' corresponds to the position or rotation of all objects at a given time
+#' (frame).
 #' @export
 #'
 #' @author Vikram B. Baliga
@@ -203,7 +204,7 @@ read_motiv_csv <-
 #' attributes(jul_29)
 #'
 #' @seealso
-#' \code{\link{get_header_viewr}} to quickly see header info from the CSV
+#' \code{\link{get_header_viewr}} to quickly see header info from the CSV;
 #' \code{\link{relabel_viewr_axes}} to rename coordinate axes
 
 read_motive_csv <-
