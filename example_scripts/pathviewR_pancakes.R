@@ -8,6 +8,7 @@
 packages <- c("devtools",
               "tidyverse",
               "readxl",
+              "R.matlab",
               "ggthemes",
               "viridis",
               "gridExtra",
@@ -268,3 +269,16 @@ attributes(jul_29_percent74_span0.95)
 
 ## Note: lookup table code intentionally removed on 2020-06-02 because it
 ## will need to be re-written for the way we'll organize the package.
+
+
+
+
+#################################### roz2016 ###################################
+## Going to start adding things to help me integrate flydra data into this
+## package.
+
+## rhdf5 is on Bioconductor and neede to open H5 files
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = "3.11")
+BiocManager::install("rhdf5")
