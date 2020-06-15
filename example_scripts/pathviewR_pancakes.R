@@ -277,8 +277,39 @@ attributes(jul_29_percent74_span0.95)
 ## Going to start adding things to help me integrate flydra data into this
 ## package.
 
-## rhdf5 is on Bioconductor and neede to open H5 files
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install(version = "3.11")
-BiocManager::install("rhdf5")
+## rhdf5 is on Bioconductor and needed to open H5 files
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#   install.packages("BiocManager")
+# BiocManager::install(version = "3.11")
+# BiocManager::install("rhdf5")
+
+library(rhdf5)
+## import H5 file
+  ex1_h5 <-
+    rhdf5::h5ls("./inst/extdata/roz2016/DATA20160619_124428.h5")
+  ex1_h5_kalmanized <-
+    rhdf5::h5ls("./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5")
+  ex1_h5_smoothcache <-
+    rhdf5::h5ls(
+      "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.kh5-smoothcache")
+## the .mat file can be read via R.matlab::readMat()
+  ex1_h5_mat <-
+    R.matlab::readMat(
+      "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat")
+
+## So observations are 33294 rows long but kalman vars are 33066. Why? Where
+## does this difference of 228 rows arise?
+  plot(ex1_h5_mat$kalman.x[1:33066], ex1_h5_mat$kalman.y[1:33066])
+  plot(ex1_h5_mat$observation.x[1:33294], ex1_h5_mat$observation.y[1:33294])
+## Comparing these two plots makes me think that two things were done:
+## 1) Trajectories were smoothed via a kalman filter (duh)
+## 2) Gaps in trajectories were also filled via said filter. Will need to think
+## about whether I agree with doing this. Guess it's ok for now.
+##
+## Accordingly, the sizes of the two data sets need not be identical. And even
+## more importantly, there won't be an a priori expectation of how the two sets
+## differ in length -- rather, it will be an emergent property of how & when the
+## trajectory gaps arose. Oof.
+
+## Also:
+  sum(as.numeric(ex1_h5_smoothcache$dim[-1])) # equals 33066!!
