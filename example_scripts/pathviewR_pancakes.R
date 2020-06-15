@@ -284,12 +284,13 @@ attributes(jul_29_percent74_span0.95)
 # BiocManager::install("rhdf5")
 
 library(rhdf5)
-## import H5 file
-  ex1_h5 <-
+## import metadata from H5 files
+## rhdf5::h5ls() is used to determine how H5 files are structured
+  ex1_h5_ls <-
     rhdf5::h5ls("./inst/extdata/roz2016/DATA20160619_124428.h5")
-  ex1_h5_kalmanized <-
+  ex1_h5_kalmanized_ls <-
     rhdf5::h5ls("./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5")
-  ex1_h5_smoothcache <-
+  ex1_h5_smoothcache_ls <-
     rhdf5::h5ls(
       "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.kh5-smoothcache")
 ## the .mat file can be read via R.matlab::readMat()
@@ -313,3 +314,22 @@ library(rhdf5)
 
 ## Also:
   sum(as.numeric(ex1_h5_smoothcache$dim[-1])) # equals 33066!!
+
+## Some more fun with metadata
+## The rows within ex1_h5_ls$name provide the names of grouped metadata
+## This info can be used in conjunction with rhdf5::h5read() to formally
+## import these metadata, e.g.
+  ex1_cam_info <- rhdf5::h5read("./inst/extdata/roz2016/DATA20160619_124428.h5",
+                                name = "cam_info")
+  ex1_data2d <- rhdf5::h5read("./inst/extdata/roz2016/DATA20160619_124428.h5",
+                              name = "data2d_distorted") #this one fails :(
+
+## Thoughts on next steps:
+## A read_flydra_mat() function can be written to use R.matlab::readMat() to
+## import the .MAT file. The .MAT file does not contain all the necessary
+## metadata; these will need to be imported from the accompanying H5 files.
+##
+## An as_viewr() function can be written in parallel that is inspired by the
+## way read_flydra_mat() is composed. An end user will likely have data
+## organized as a data.frame or tibble already, but what they will need explicit
+## instruction on is what & how metadata should be included & formatted.
