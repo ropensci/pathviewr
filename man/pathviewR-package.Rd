@@ -12,7 +12,13 @@ What the package does (one paragraph).
 Description of package TBD
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Vikram B. Baliga \email{vbaliga87@gmail.com} (\href{https://orcid.org/0000-0002-9367-8974}{ORCID})
+
+Authors:
+\itemize{
+  \item Melissa S. Armstrong \email{FILLME@EMAIL.DOMAIN} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID})
+  \item Eric Press \email{FILLME@EMAIL.DOMAIN} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID})
+}
 
 }
 \keyword{internal}

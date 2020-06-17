@@ -2,11 +2,22 @@ Package: pathviewR
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(person(given = "Melissa S.", 
+             family = "Armstrong",
+             role = "aut",
+             email = "FILLME@EMAIL.DOMAIN",
+             comment = c(ORCID = "XXXX-XXXX-XXXX-XXXX")), 
+      person(given = "Vikram B.",
+             family = "Baliga", 
+             role = c("aut", "cre"),
+             email = "vbaliga87@gmail.com",
+             comment = c(ORCID = "0000-0002-9367-8974")),
+      person(given = "Eric", 
+             family = "Press",
+             role = "aut",
+             email = "FILLME@EMAIL.DOMAIN",
+             comment = c(ORCID = "XXXX-XXXX-XXXX-XXXX"))
+      )
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
