@@ -87,16 +87,16 @@ names(wing_rom_unsimple) # Subject:marker explicit naming
 ## documentation.
 
 ################################## rename axes #################################
-## I get confused by the axis definitions. So I use the `relabel_motiv_axes()`
+## I get confused by the axis definitions. So I use the `relabel_viewr_axes()`
 ## utility function to rename the variables
 
-jul_29 <- relabel_motiv_axes(jul_29,
+jul_29 <- relabel_viewr_axes(jul_29,
                              tunnel_length = "_Z",
                              tunnel_width = "_X",
                              tunnel_height = "_Y")
 
 ## Note that we now have an auto-generated Help file via roxygen:
-?relabel_motiv_axes
+?relabel_viewr_axes
 
 ####################### gather data into simpler format ########################
 ## The gathering function will take all data from a given session and

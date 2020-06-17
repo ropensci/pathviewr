@@ -66,7 +66,7 @@ relabel_viewr_axes <- function(obj_name,
                                tunnel_width = "_x",
                                tunnel_height = "_y",
                                ...){
-  ## Check that it's a motiv object
+  ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
@@ -107,9 +107,9 @@ gather_tunnel_data <- function(obj_name,
                                NA_drop = TRUE,
                                ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that its axes have been renamed
@@ -242,9 +242,9 @@ trim_tunnel_outliers <- function(obj_name,
                                  heights_max = 0.5,
                                  ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that its axes have been renamed
@@ -327,9 +327,9 @@ rotate_tunnel <- function(obj_name,
                           perch2_wid_max = 0.35,
                           ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that its axes have been renamed
@@ -457,9 +457,9 @@ standardize_tunnel <- function(obj_name,
                                landmark_two = "perch2",
                                ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   landmark1_med_pos <- obj_name %>%
@@ -580,9 +580,9 @@ select_x_percent <- function(obj_name,
                              desired_percent = 33,
                              ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   # ## Check that its axes have been renamed
@@ -633,9 +633,9 @@ separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
                                   ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   # ## Check that its axes have been renamed
@@ -682,9 +682,9 @@ get_full_trajectories <- function(obj_name,
                                   span = 0.8,
                                   ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that its axes have been renamed
@@ -753,7 +753,7 @@ get_full_trajectories <- function(obj_name,
 ## ease of use. Unsure if this is the best way to go, but let's give it a try
 ## anyway.
 
-import_and_clean_motiv <- function(file_name,
+import_and_clean_viewr <- function(file_name,
                                   file_id = NA,
                                   ...){
 
@@ -765,7 +765,7 @@ import_and_clean_motiv <- function(file_name,
 
   ## Check that any arguments supplied are valid; return a warning if not
   valid_args <- c(
-    ## read_motiv_csv()
+    ## read_motive_csv()
     "file_name", "file_id",
     ## relabel_viewr_axes()
     "tunnel_length", "tunnel_width", "tunnel_height",
@@ -796,7 +796,7 @@ import_and_clean_motiv <- function(file_name,
   ## Run it through the pipe
   obj <-
     file_name %>%
-    read_motiv_csv(...) %>%
+    read_motive_csv(...) %>%
     relabel_viewr_axes(...) %>%
     gather_tunnel_data(...) %>%
     trim_tunnel_outliers(...) %>%
@@ -967,9 +967,9 @@ select_x_percent_M <- function(obj_name,
                                desired_percent = 33,
                                ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   # ## Check that its axes have been renamed
@@ -1020,9 +1020,9 @@ determine_fg_M <- function(obj_name,
                            loops = 20,
                            ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   # make a bunch of empty vectors to dump info
@@ -1060,9 +1060,9 @@ get_full_trajectories_M <- function(obj_name,
                                     span = 0.8,
                                     ...){
 
-  ## Check that it's a motiv object
-  if (!any(attr(obj_name,"pathviewR_steps") == "motiv")) {
-    stop("This doesn't seem to be a motiv object")
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that its axes have been renamed
