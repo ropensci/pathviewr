@@ -1,4 +1,4 @@
-## Last updated: 2020-06-12 VBB
+## Last updated: 2020-06-17 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -91,9 +91,9 @@ names(wing_rom_unsimple) # Subject:marker explicit naming
 ## utility function to rename the variables
 
 jul_29 <- relabel_viewr_axes(jul_29,
-                             tunnel_length = "_Z",
-                             tunnel_width = "_X",
-                             tunnel_height = "_Y")
+                             tunnel_length = "_z",
+                             tunnel_width = "_x",
+                             tunnel_height = "_y")
 
 ## Note that we now have an auto-generated Help file via roxygen:
 ?relabel_viewr_axes
