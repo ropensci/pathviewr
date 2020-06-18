@@ -102,23 +102,23 @@ jul_29_gathered <- gather_tunnel_data(jul_29)
 
 ## Plotting first!! (commented out for ease of use)
   # ## Plot of length vs height for July 29
-  plot(jul_29_gathered$position_lengths,
-       jul_29_gathered$position_heights,
-        asp=1)
-     abline(v = -0.06) # length min
-     abline(v = 2.6)   # length max
-     abline(h = -0.25) # height min
-     abline(h = 0.35)  # height max
-   ## Length vs width
-   ## Keeping width estimates very wide since crazy artifacts don't really
-   ## manifest in this dimension
-   plot(jul_29_gathered$position_lengths,
-        jul_29_gathered$position_widths,
-        asp=1)
-     abline(v = -0.06) # length min
-     abline(v = 2.6)   # length max
-     abline(h = 0.8)   # width max (very generous)
-     abline(h = -0.8)  # width min (very generous)
+  # plot(jul_29_gathered$position_lengths,
+  #      jul_29_gathered$position_heights,
+  #       asp=1)
+  #    abline(v = -0.06) # length min
+  #    abline(v = 2.6)   # length max
+  #    abline(h = -0.25) # height min
+  #    abline(h = 0.35)  # height max
+  #  ## Length vs width
+  #  ## Keeping width estimates very wide since crazy artifacts don't really
+  #  ## manifest in this dimension
+  #  plot(jul_29_gathered$position_lengths,
+  #       jul_29_gathered$position_widths,
+  #       asp=1)
+  #    abline(v = -0.06) # length min
+  #    abline(v = 2.6)   # length max
+  #    abline(h = 0.8)   # width max (very generous)
+  #    abline(h = -0.8)  # width min (very generous)
 
 ## Now use trim_tunnel_outliers() to trim out artifacts
 ## Defaults were defined by what worked for July 29th
@@ -135,11 +135,9 @@ plot(jul_29_trimmed$position_lengths,
 ################################# rotate tunnel ################################
 ## Use rotate_tunnel() to do two things simulatenously:
 ## 1) align perches on either end
-## 2) make the center of the tunnel (0,0,0) for (length, width, height)
-##
-## 2020-02-20 Height is now standardized by (approximate) perch height; values
-## greater than 0 are above the perch and values less than 0 are below the
-## perch level.
+## 2) make the center of the tunnel (0,0,0) for (length, width, height). Height
+## is now standardized by (approximate) perch height; values greater than 0 are
+## above the perch and values less than 0 are below the perch level.
 
 ## IMPORTANT NOTE: ALL THE DEFAULT VALUES IN THE FUNCTION ARE BASED ON WHAT
 ## WORKS FOR JULY 29. THESE VALUES WILL (LIKELY) NEED TO BE CHANGED FOR OTHER
@@ -249,8 +247,6 @@ attributes(jul_29_percent74_span0.95)
 
 ## Note: lookup table code intentionally removed on 2020-06-02 because it
 ## will need to be re-written for the way we'll organize the package.
-
-
 
 
 #################################### roz2016 ###################################
