@@ -658,7 +658,7 @@ separate_trajectories <- function(obj_name,
     stop("Please use rotate_tunnel() to align data prior to using this")
   }
 
-  obj_name$Frame -> framez
+  obj_name$frame -> framez
   df <-
     framez %>%
     tibble::tibble(dat = .) # automatically gives name "." for frames so rename
@@ -671,7 +671,7 @@ separate_trajectories <- function(obj_name,
 
   ## Also combine the rigid body ID so that we're sure trajectories correspond
   ## to unique rigid bodies
-  obj_name$rb_traj <- paste0(obj_name$rigid_body,"_",obj_name$traj_id)
+  obj_name$sub_traj <- paste0(obj_name$subject,"_",obj_name$traj_id)
 
   ## Coerce to tibble
   obj_name <- tibble::as_tibble(obj_name)
@@ -768,6 +768,10 @@ get_full_trajectories <- function(obj_name,
 ## ease of use. Unsure if this is the best way to go, but let's give it a try
 ## anyway.
 
+## NOTE 2020-06-17 We will need to accomodate for future import functions such
+## as read_flydra_mat() (or whatever it will be named). Ideally this will be
+## autodetected based on file type and switched internally.
+
 import_and_clean_viewr <- function(file_name,
                                   file_id = NA,
                                   ...){
@@ -778,12 +782,14 @@ import_and_clean_viewr <- function(file_name,
   if (!file.exists(file_name))
     stop(paste0("File ", file_name, " not found!"))
 
+  ## ADD CHECK HERE FOR FILETYPE (CSV OR MAT) AND THEN HANDLE ACCORDINGLY
+
   ## Check that any arguments supplied are valid; return a warning if not
   valid_args <- c(
     ## read_motive_csv()
     "file_name", "file_id",
     ## relabel_viewr_axes()
-    "tunnel_length", "tunnel_width", "tunnel_height",
+    "tunnel_length", "tunnel_width", "tunnel_height", "real",
     ## trim_tunnel_outliers()
     "lengths_min", "lengths_max",
     "widths_min", "widths_max",

@@ -175,8 +175,8 @@ jul_29_selected <-
 ##
 ## Trajectory IDs are stored in the "traj_id" column.
 ##
-## EDIT 2020-03-25 $rb_traj now has concatenation of rigid body IDs and
-## trajectory IDs
+## EDIT 2020-06-17 $sub_traj now has concatenation of subject IDs and
+## trajectory IDs (formerly $rb_traj)
 
 ## Trajectories are defined when 5 frames in a row are missing
 jul_29_labeled <-
@@ -184,18 +184,18 @@ jul_29_labeled <-
 
 # ## Plot with unique colors for combinations of rigid bodies and trajectories
 # ## We run out of colors, so they're recycled. Interpret carefully...
-plot(jul_29_labeled$Position_lengths,
-     jul_29_labeled$Position_widths,
-     asp = 1, col = as.factor(jul_29_labeled$rb_traj))
+plot(jul_29_labeled$position_lengths,
+     jul_29_labeled$position_widths,
+     asp = 1, col = as.factor(jul_29_labeled$sub_traj))
 
 ## Or simply by rigid body ID
-plot(jul_29_labeled$Position_lengths,
-     jul_29_labeled$Position_widths,
-     asp = 1, col = as.factor(jul_29_labeled$rigid_body))
+plot(jul_29_labeled$position_lengths,
+     jul_29_labeled$position_widths,
+     asp = 1, col = as.factor(jul_29_labeled$subject))
 
 ## Or simply by trajctory ID
-plot(jul_29_labeled$Position_lengths,
-     jul_29_labeled$Position_widths,
+plot(jul_29_labeled$position_lengths,
+     jul_29_labeled$position_widths,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
 
@@ -221,14 +221,14 @@ jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
 ## Testing first with all defaults (no supplied arguments)
 jul_29_all_defaults <-
-  jul_29_path %>% import_and_clean_motiv()
+  jul_29_path %>% import_and_clean_viewr()
 jul_29_all_defaults # seems to work
 class(jul_29_all_defaults) # looks complete
 attributes(jul_29_all_defaults)
 
 ## Let's try a different X% of the tunnel
 jul_29_percent74 <-
-  jul_29_path %>% import_and_clean_motiv(desired_percent = 74)
+  jul_29_path %>% import_and_clean_viewr(desired_percent = 74)
 jul_29_percent74 # exists
 class(jul_29_percent74) # looks complete
 attributes(jul_29_percent74)
@@ -240,7 +240,7 @@ attributes(jul_29_percent74)
 
 ## Change the X% and span parameters
 jul_29_percent74_span0.95 <-
-  jul_29_path %>% import_and_clean_motiv(desired_percent = 74,
+  jul_29_path %>% import_and_clean_viewr(desired_percent = 74,
                                         span = 0.95)
 jul_29_percent74_span0.95 # exists
 class(jul_29_percent74_span0.95) # looks complete
@@ -293,7 +293,7 @@ library(rhdf5)
 ## trajectory gaps arose. Oof.
 
 ## Also:
-  sum(as.numeric(ex1_h5_smoothcache$dim[-1])) # equals 33066!!
+  sum(as.numeric(ex1_h5_smoothcache_ls$dim[-1])) # equals 33066!!
 
 ## Some more fun with metadata
 ## The rows within ex1_h5_ls$name provide the names of grouped metadata
