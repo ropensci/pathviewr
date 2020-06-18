@@ -25,7 +25,7 @@ TBD
 
 ## License
 
-TBD
+GPL (>= 3) + file LICENSE
 
 🐢
 
