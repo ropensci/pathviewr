@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-17 VBB
+## Last updated: 2020-06-18 VBB
 
 ############################### relabel_viewr_axes #############################
 
@@ -116,7 +116,45 @@ relabel_viewr_axes <- function(obj_name,
 
 
 ############################# gather_tunnel_data ###############################
-## Gather data columns
+
+#' Gather data columns into key-value pairs
+#'
+#' Reformat \code{viewr} data into a "tidy" format so that every row corresponds
+#' to the position (and potentially rotation) of a single subject during an
+#' observed frame and time.
+#'
+#' @param obj_name A tibble or data.frame with attribute \code{viewr} that has
+#' been passed through \code{relabel_viewr_axes()}
+#' @param NA_drop Should rows with NAs be dropped? Defaults to \code{TRUE}
+#' @param ... Additional arguments that can be passed to other \code{pathviewR}
+#' functions such as \code{relabel_viewr_axes()} or \code{read_motive_csv()}
+#'
+#' @return A tibble in "tidy" format which is formatted to have every row
+#' correspond to the position (and potentially rotation) of a single subject
+#' during an observed frame and time. Subjects' names are automatically parsed
+#' from original variable names (e.g. subject1_rotation_width extracts
+#' "subject1" as the subject name) and stored in a \code{Subjects} column in the
+#' returned tibble.
+#'
+#' @export
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the july 29 example data included in the package
+#' jul_29 <-
+#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## First use relabel_viewr_axes() to rename these variables using _length,
+#' _width, and _height instead
+#' jul_29_relabeled <- relabel_viewr_axes(jul_29)
+#'
+#' ## Now use gather_tunnel_data() to gather colums into tidy format
+#' jul_29_gathered <- gather_tunnel_data(jul_29)
+#'
+#' ## Column names reflect the way in which data were reformatted:
+#' names(jul_29_gathered)
 
 gather_tunnel_data <- function(obj_name,
                                NA_drop = TRUE,
@@ -198,10 +236,10 @@ gather_tunnel_data <- function(obj_name,
     gathered_data$rotation_heights <- tmp_roth$value
     ## W
     tmp_rotw <-
-      obj_name[,grepl("rotation_w", colnames(obj_name),
+      obj_name[,grepl("rotation_real", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_ws <- tmp_rotw$value
+    gathered_data$rotation_real <- tmp_rotw$value
 
   ## Gather mean marker error
     tmp_mark <-

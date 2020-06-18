@@ -1,4 +1,4 @@
-## Last updated: 2020-06-17 VBB
+## Last updated: 2020-06-18 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -80,7 +80,8 @@ names(wing_rom_unsimple) # Subject:marker explicit naming
 jul_29 <- relabel_viewr_axes(jul_29,
                              tunnel_length = "_z",
                              tunnel_width = "_x",
-                             tunnel_height = "_y")
+                             tunnel_height = "_y",
+                             real = "_w")
 
 ## Note that we now have an auto-generated Help file via roxygen:
 ?relabel_viewr_axes
@@ -92,6 +93,11 @@ jul_29 <- relabel_viewr_axes(jul_29,
 ## length columns for each rigid body.
 
 jul_29_gathered <- gather_tunnel_data(jul_29)
+
+#### NOTE: 2020-06-18 gather_tunnel_data() fails on the sham_dat (sham dataset)
+#### but this is because of an issue with the data itself: I forgot to copy one
+#### axis of position data for the s10 marker as I was making the csv file.
+#### Oopsie.
 
 
 ################################# trim outliers ################################
