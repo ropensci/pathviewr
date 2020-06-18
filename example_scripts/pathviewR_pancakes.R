@@ -42,28 +42,15 @@ devtools::load_all()
 
 ################################# data import ##################################
 ## Using example file from Melissa
-
-## Copied from below, for convenience
 jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
-jul_29 <- read_motiv_csv('./inst/extdata/july-29_group-I_16-20.csv')
-## Note: as of 2020-06-03 we are no longer coercing objects into the class
-## 'motiv'. This is because of a change to tidyverse, which makes it hard
-## to use non-tibble objects in its functions. Although our functions had
-## made objects that had multple classes (namely, tibbles as well as motiv
-## objects), the way class hierarchy is now handled makes it all more
-## complicated to pass through tidyverse. I'm pretty salty about this, but
-## it is what it is. Anyway, I'll start storing our steps in the attributes
-## of the objects instead of classes -- hopefully this will work out better.
-## To demonstrate:
-class(jul_29) # should be a tibble
-attr(jul_29, "pathviewR_steps") # "motiv"
-
-## New import function
-## Not yet ready for primetime, but adding it here so I can play around
-## with it
+## New import function. Let VBB know if there are issues!!!
 jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
+
+## Try without simplifying marker naming (should be no change for this file)
 jul_29_unsimple <- read_motive_csv(jul_29_path, simplify_marker_naming = FALSE)
+
+## Other data
 sham_dat <- read_motive_csv("./inst/extdata/sham_data_set.csv")
 sham_dat_unsimple <- read_motive_csv("./inst/extdata/sham_data_set.csv",
                                     simplify_marker_naming = FALSE)
@@ -104,13 +91,6 @@ jul_29 <- relabel_viewr_axes(jul_29,
 ## all position lengths are in Position_length, as opposed to separate
 ## length columns for each rigid body.
 
-## Best practice right now is to drop all NAs first (preceding section) and
-## then run the gather function. Otherwise there may be issues with sorting,
-## filtering, and gathering data.
-
-## EDIT on 2020-03-25 Let's actually try dropping NAs after gathering. I think
-## it might work out ok?
-
 jul_29_gathered <- gather_tunnel_data(jul_29)
 
 
@@ -122,8 +102,8 @@ jul_29_gathered <- gather_tunnel_data(jul_29)
 
 ## Plotting first!! (commented out for ease of use)
   # ## Plot of length vs height for July 29
-  plot(jul_29_gathered$Position_lengths,
-       jul_29_gathered$Position_heights,
+  plot(jul_29_gathered$position_lengths,
+       jul_29_gathered$position_heights,
         asp=1)
      abline(v = -0.06) # length min
      abline(v = 2.6)   # length max
@@ -132,8 +112,8 @@ jul_29_gathered <- gather_tunnel_data(jul_29)
    ## Length vs width
    ## Keeping width estimates very wide since crazy artifacts don't really
    ## manifest in this dimension
-   plot(jul_29_gathered$Position_lengths,
-        jul_29_gathered$Position_widths,
+   plot(jul_29_gathered$position_lengths,
+        jul_29_gathered$position_widths,
         asp=1)
      abline(v = -0.06) # length min
      abline(v = 2.6)   # length max
@@ -148,8 +128,8 @@ jul_29_trimmed <- trim_tunnel_outliers(jul_29_gathered)
 ## Can check that it worked by plotting length vs. height...etc again
 ## Won't show that here for brevity
 
-plot(jul_29_trimmed$Position_lengths,
-     jul_29_trimmed$Position_heights,
+plot(jul_29_trimmed$position_lengths,
+     jul_29_trimmed$position_heights,
      asp=1)
 
 ################################# rotate tunnel ################################

@@ -9,6 +9,7 @@ relabel_viewr_axes(
   tunnel_length = "_z",
   tunnel_width = "_x",
   tunnel_height = "_y",
+  real = "_w",
   ...
 )
 }
@@ -26,6 +27,10 @@ the same conventions as \code{tunnel_length} and defaults to
 \item{tunnel_height}{The dimension that corresponds to tunnel height. Follows
 the same conventions as \code{tunnel_length} and defaults to
 \code{tunnel_length = "_y"}}
+
+\item{real}{The dimension that corresponds to the "real" parameter in
+quaternion notation (for data with "rotation" values). Follows the same
+conventions as \code{tunnel_length} and defaults to \code{real = "_w"}}
 
 \item{...}{Additional arguments to be passed to \code{read_motive_csv()}.}
 }
@@ -61,7 +66,8 @@ jul_29_relabeled <-
   relabel_viewr_axes(jul_29,
                      tunnel_length = "_z",
                      tunnel_width = "_x",
-                     tunnel_height = "_y")
+                     tunnel_height = "_y",
+                     real = "_w")
 
 ## See the result
 names(jul_29_relabeled)

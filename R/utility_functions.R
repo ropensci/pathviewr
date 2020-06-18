@@ -20,6 +20,9 @@
 #' @param tunnel_height The dimension that corresponds to tunnel height. Follows
 #' the same conventions as \code{tunnel_length} and defaults to
 #' \code{tunnel_length = "_y"}
+#' @param real The dimension that corresponds to the "real" parameter in
+#' quaternion notation (for data with "rotation" values). Follows the same
+#' conventions as \code{tunnel_length} and defaults to \code{real = "_w"}
 #' @param ... Additional arguments to be passed to \code{read_motive_csv()}.
 #'
 #' @details Each argument must have a leading underscore ("_") and each
@@ -50,7 +53,8 @@
 #'   relabel_viewr_axes(jul_29,
 #'                      tunnel_length = "_z",
 #'                      tunnel_width = "_x",
-#'                      tunnel_height = "_y")
+#'                      tunnel_height = "_y",
+#'                      real = "_w")
 #'
 #' ## See the result
 #' names(jul_29_relabeled)
@@ -65,6 +69,7 @@ relabel_viewr_axes <- function(obj_name,
                                tunnel_length = "_z",
                                tunnel_width = "_x",
                                tunnel_height = "_y",
+                               real = "_w",
                                ...){
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -84,9 +89,19 @@ relabel_viewr_axes <- function(obj_name,
 
   namez <- names(obj_name)
   ## sub() doesn't seem to be pipe-friendly, so we'll do it this way...
+  namez <- sub(real,"_real",namez) # THIS STEP MUST COME BEFORE WIDTH RENAMING!
   namez <- sub(tunnel_width,"_width",namez)
   namez <- sub(tunnel_length,"_length",namez)
   namez <- sub(tunnel_height,"_height",namez)
+
+  ## Note for future selves: The above assumes that X, Y, and Z apply in the
+  ## same way to rotations as they do for positions. I am not familiar enough
+  ## with quaternion notation yet to say. Should e.g. rotation_x not cleanly
+  ## correspond to rotation along the "length" dimension of the tunnel, the
+  ## above can be made more specific via:
+  ## 1) changing arguments of this function to e.g.
+  ## tunnel_length = "position_z"
+  ## 2) changing sub() behavior to: sub(tunnel_length,"position_length",namez)
 
   ## Assign names
   namez -> names(obj_name)
@@ -117,14 +132,14 @@ gather_tunnel_data <- function(obj_name,
     stop("Please rename axes via relabel_viewr_axes() prior to using this")
   }
 
-  ## Get number of rigid bodies
-  bodiez <- length(attributes(obj_name)$subject_names_full)
+  ## Get number of unique subjects
+  bodiez <- length(attributes(obj_name)$subject_names_simple)
   if (bodiez == 0) {
     stop("No rigid bodies or markers detected. Please assess your data.")
   }
 
-  ## And the rigid body names
-  rbeez <- attributes(obj_name)$subject_names_full
+  ## And the unique subjects' names
+  rbeez <- attributes(obj_name)$subject_names_simple
 
   ## Start setting up a gathered data.frame
   ## Just frame, time, and Rigid Bodies for now
@@ -186,7 +201,7 @@ gather_tunnel_data <- function(obj_name,
       obj_name[,grepl("rotation_w", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_Ws <- tmp_rotw$value
+    gathered_data$rotation_ws <- tmp_rotw$value
 
   ## Gather mean marker error
     tmp_mark <-
