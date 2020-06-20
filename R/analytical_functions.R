@@ -69,6 +69,43 @@ deg2rad <- function(deg) {
 
 #################        calc_vis_angle_mod       ###################
 
+#' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
+#' \code{calc_vis_angle_mod()} calculates the visual angles created by lateral
+#' visual stimuli.
+#'
+#' @param obj_name A tibble or data.frame with attribute \code{viewr}
+#' @param vertex_angle The angle (in degrees) subtended by a vertical axis and
+#' the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
+#' \code{vertex_angle)} defaults to 45.
+#' @param gnd_plane The vertical distance (in meters) between the bottom of the
+#' "V" and the horizontal plane through the origin (0,0,0).
+#' @param stim_param_pos The length (in meters) of the visual stimulus presented
+#' on the positive side of the tunnel (i.e. \code{Position_widths >= 0}). For
+#' example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}
+#' @param stim_param_neg The same convention as \code{stim_param_pos} but for
+#' stimuli presented on the negative side of the tunnel
+#' (i.e. \code{Position_widths < 0}).
+#'
+#' @details \code{cal_vis_angle_mod} assumes fixed gaze at the point on the
+#' either side of the tunnel that minimizes the distance to visual stimuli and
+#' thereby maximizes visual angles. Currently, visual angles are overestimated
+#' when \code{Position_widths} lies outside the boundaries starting at the
+#' bottom of the "V" and extend at right angles from the planes created by
+#' either sideof the tunnel. As \code{vertex_angle} increases from 45 t0 90,
+#' this boundary where calc_vis_angle_mod is accurate becomes more restrictive.
+#'
+#' @return A tibble or data.frame with added variables for
+#' \code{vis_angle_pos_deg} and \code{vis_angle_neg_deg} reported in degrees.
+#'
+#' @author Eric R. Press
+#'
+#' @family analytical functions
+#'
+#' @examples
+#'
+#' @export
+
+
 ## Assuming gaze is fixed at the point on each screen such that the axis of gaze
 ## is orthogonal to the plane of each screen. This function minimizes the distance
 ## to the screen closer to the bird and therefore maximizes the visual angle
