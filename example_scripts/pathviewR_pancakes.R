@@ -94,12 +94,6 @@ jul_29 <- relabel_viewr_axes(jul_29,
 
 jul_29_gathered <- gather_tunnel_data(jul_29)
 
-#### NOTE: 2020-06-18 gather_tunnel_data() fails on the sham_dat (sham dataset)
-#### but this is because of an issue with the data itself: I forgot to copy one
-#### axis of position data for the s10 marker as I was making the csv file.
-#### Oopsie.
-
-
 ################################# trim outliers ################################
 ## Use trim_tunnel_outliers() to remove artifacts and other outlier data
 ## This function relies on the user supplying estimates of the min and max
