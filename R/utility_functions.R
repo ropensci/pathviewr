@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-18 VBB
+## Last updated: 2020-06-21 VBB
 
 ############################### relabel_viewr_axes #############################
 
@@ -386,8 +386,8 @@ rotate_tunnel <- function(obj_name,
   }
 
   ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "artifacts_removed")) {
-    stop("Please use trim_tunnel_outliers() prior to using this")
+  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
+    stop("Please rename axes via relabel_viewr_axes() prior to using this")
   }
 
   ## Now compute the approximate midpoints of each perch
@@ -486,8 +486,8 @@ rotate_tunnel <- function(obj_name,
   attr(obj_new,"tunnel_centerpoint_original") <- tunnel_centerpoint
   attr(obj_new,"rotation_degrees") <- tunnel_angle
   attr(obj_new,"rotation_radians") <- alpharad
-  attr(obj_new,"perch1_current_midpoint") <- perch1_trans_prime
-  attr(obj_new,"perch2_current_midpoint") <- perch2_trans_prime
+  attr(obj_new,"perch1_midpoint_current") <- perch1_trans_prime
+  attr(obj_new,"perch2_midpoint_current") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
   attr(obj_new,"pathviewR_steps") <-
@@ -502,8 +502,12 @@ rotate_tunnel <- function(obj_name,
 ## Alternative to rotate_tunnel. Writing a version here where perches (or other
 ## landmarks) are coded as rigid bodies from the get-go.
 ##
-## I anticipate that the run order will actually now go:
-## read -> relabel -> standardize -> gather -> trim -> selectX -> etcetc
+## 2020-06-21: re-writing this in light of all the updates to the preceding
+## steps (read -> relabel -> gather -> trim (trim is optional))
+##
+## We may also want to include this function in lieu of rotate_tunnel() when
+## all is said and done, since it is perhaps more likely that perches (or other
+## landmarks) will likely be labeled in other data sets
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -515,15 +519,30 @@ standardize_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
+  ## Check that its axes have been renamed
+  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
+    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  }
+
+  ## ADD CHECK THAT perch1position length < perch2 position_length; otherwise,
+  ## the rotation will apply to a mirror-image of the tunnel
+
+  ## Tunnels are standardized via information from perch positions. We think
+  ## that the most reasonable esimate for perches' positions are their median
+  ## values. So the next few blocks of code will determine the median positions
+  ## of each perch and then estimate the centerpoint of the tunnel to be between
+  ## the two perches (i.e. mean of each set of perch positions).
+
+  ## Make a data.frame of landmark_one (i.e. perch #1)'s positions
   landmark1_med_pos <- obj_name %>%
-    dplyr::filter(rigid_body == landmark_one) %>% # you mean dowel01?
+    dplyr::filter(subject == landmark_one) %>%
     dplyr::summarise(med_length = median(position_lengths),
                      med_width = median(position_widths),
                      med_height = median(position_heights)) %>%
-    as.data.frame() # make df of just median values of perches
+    as.data.frame()
 
   landmark2_med_pos <- obj_name %>%
-    dplyr::filter(rigid_body == landmark_two) %>%
+    dplyr::filter(subject == landmark_two) %>%
     dplyr::summarise(med_length = median(position_lengths),
                      med_width = median(position_widths),
                      med_height = median(position_heights)) %>%
@@ -532,11 +551,10 @@ standardize_tunnel <- function(obj_name,
   ## Now approximate the centerpoint of the tunnel
   tunnel_centerpoint <-
     rbind(landmark1_med_pos, landmark2_med_pos) %>% colMeans()
-  # binding dfs by binding rows not columns (cbind)
 
   ## Define an arbitrary point that is in line with the tunnel center on the
   ## width and height axes but an arbitrary distance (say 1 m) away. This will
-  ## be necessary for the angular calculation.
+  ## later be necessary for the angular calculation.
   tunnel_arbitrary <- c(tunnel_centerpoint[1] - 1,
                         tunnel_centerpoint[2],
                         tunnel_centerpoint[3])
@@ -566,7 +584,9 @@ standardize_tunnel <- function(obj_name,
   perch2_midpoint_translated <- as.numeric(
     as.numeric(landmark2_med_pos) - tunnel_centerpoint)
   tunnel_centerpoint_translated <- tunnel_centerpoint - tunnel_centerpoint
+  ## tunnel_centerpoint_translated should be (0, 0, 0)
   tunnel_arbitrary_translated <- tunnel_arbitrary - tunnel_centerpoint
+  ## tunnel_abitrary_translated should be (-1, 0, 0)
 
   ## Compute the new locations of perch midpoint estimates
   perch1_trans_prime <- c((perch1_midpoint_translated[1]*cos(-1*alpharad))-
@@ -609,13 +629,13 @@ standardize_tunnel <- function(obj_name,
   ## Add new info to attributes that lists the original (approximate) perch
   ## positions, tunnel center point, angle of rotation, and new (approxmate)
   ## perch positions after rotation
-  attr(obj_new,"perch1_midpoint_original") <- as.numeric(landmark1_med_pos)
-  attr(obj_new,"perch2_midpoint_original") <- as.numeric(landmark2_med_pos)
+  attr(obj_new,"landmark1_midpoint_original") <- as.numeric(landmark1_med_pos)
+  attr(obj_new,"landmark2_midpoint_original") <- as.numeric(landmark2_med_pos)
   attr(obj_new,"tunnel_centerpoint_original") <- tunnel_centerpoint
   attr(obj_new,"rotation_degrees") <- tunnel_angle
   attr(obj_new,"rotation_radians") <- alpharad
-  attr(obj_new,"perch1_current_midpoint") <- perch1_trans_prime
-  attr(obj_new,"perch2_current_midpoint") <- perch2_trans_prime
+  attr(obj_new,"landmark1_midpoint_current") <- perch1_trans_prime
+  attr(obj_new,"landmark2_midpoint_current") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
   attr(obj_new,"pathviewR_steps") <-

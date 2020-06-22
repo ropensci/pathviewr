@@ -1,4 +1,4 @@
-## Last updated: 2020-06-18 VBB
+## Last updated: 2020-06-21 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -42,22 +42,34 @@ devtools::load_all()
 
 ################################# data import ##################################
 ## Using example file from Melissa
-jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
+jul_29_path <-
+  './inst/extdata/july-29_group-I_16-20.csv'
 
 ## New import function. Let VBB know if there are issues!!!
-jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
+jul_29 <-
+  read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
 
 ## Try without simplifying marker naming (should be no change for this file)
-jul_29_unsimple <- read_motive_csv(jul_29_path, simplify_marker_naming = FALSE)
+jul_29_unsimple <-
+  read_motive_csv(jul_29_path, simplify_marker_naming = FALSE)
 
 ## Other data
-sham_dat <- read_motive_csv("./inst/extdata/sham_data_set.csv")
-sham_dat_unsimple <- read_motive_csv("./inst/extdata/sham_data_set.csv",
-                                    simplify_marker_naming = FALSE)
+sham_dat <-
+  read_motive_csv("./inst/extdata/sham_data_set.csv")
+sham_dat_unsimple <-
+  read_motive_csv("./inst/extdata/sham_data_set.csv",
+                  simplify_marker_naming = FALSE)
 wing_rom <-
-  read_motive_csv("./inst/extdata/2020-03-07_Ard_her_20-317L_4jts_7wng_ROM_001.csv")
+  read_motive_csv(
+    "./inst/extdata/2020-03-07_Ard_her_20-317L_4jts_7wng_ROM_001.csv")
 wing_rom_unsimple <-
-  read_motive_csv("./inst/extdata/2020-03-07_Ard_her_20-317L_4jts_7wng_ROM_001.csv", simplify_marker_naming = FALSE)
+  read_motive_csv(
+    "./inst/extdata/2020-03-07_Ard_her_20-317L_4jts_7wng_ROM_001.csv",
+    simplify_marker_naming = FALSE)
+elsa_dat <-
+  read_motive_csv(
+    "./inst/extdata/feb-20_mixed-group_10-35_trunc.csv"
+  )
 
 ## Via names() we can see what the `simplify_marker_naming` argument does
 names(jul_29)
@@ -73,6 +85,8 @@ names(wing_rom_unsimple) # Subject:marker explicit naming
 ## likely a very bad idea. We should remember to express this in the
 ## documentation.
 
+names(elsa_dat) # simpilfy works out just fine with this one
+
 ################################## rename axes #################################
 ## I get confused by the axis definitions. So I use the `relabel_viewr_axes()`
 ## utility function to rename the variables
@@ -86,6 +100,8 @@ jul_29 <- relabel_viewr_axes(jul_29,
 ## Note that we now have an auto-generated Help file via roxygen:
 ?relabel_viewr_axes
 
+elsa_renamed <- relabel_viewr_axes(elsa_dat) # use all defaults
+
 ####################### gather data into simpler format ########################
 ## The gathering function will take all data from a given session and
 ## organize it so that all data of a given type are within one column, i.e.
@@ -93,6 +109,7 @@ jul_29 <- relabel_viewr_axes(jul_29,
 ## length columns for each rigid body.
 
 jul_29_gathered <- gather_tunnel_data(jul_29)
+elsa_gathered <- gather_tunnel_data(elsa_renamed)
 
 ################################# trim outliers ################################
 ## Use trim_tunnel_outliers() to remove artifacts and other outlier data
@@ -125,12 +142,10 @@ jul_29_gathered <- gather_tunnel_data(jul_29)
 
 jul_29_trimmed <- trim_tunnel_outliers(jul_29_gathered)
 
-## Can check that it worked by plotting length vs. height...etc again
-## Won't show that here for brevity
-
-plot(jul_29_trimmed$position_lengths,
-     jul_29_trimmed$position_heights,
-     asp=1)
+# ## We can check that it worked by plotting length vs. height...etc again
+# plot(jul_29_trimmed$position_lengths,
+#      jul_29_trimmed$position_heights,
+#      asp=1)
 
 ################################# rotate tunnel ################################
 ## Use rotate_tunnel() to do two things simulatenously:
@@ -147,6 +162,50 @@ jul_29_rotated <-
 
 attributes(jul_29_rotated)
 
+
+############################### standardize tunnel #############################
+## An alternate to rotate_tunnel(), this version performs all the same steps
+## as rotate_tunnel() but does so by using pre-labeled markers or rigid bodies.
+##
+## IMPORTANT NOTE: THE LENGTH VALUE OF "landmark_one" MUST BE LOWER (I.E. TO
+## THE LEFT) THAND THE LENGTH VALUE OF "landmark_two". Otherwise, the function
+## will reflect all position_width values, creating a mirror-image effect,
+## before the subsequent rotation. I can look for a way to account for this, but
+## won't prioritize it now since it can be simply handled by making sure that
+## the perch with the lower length value is set to landmark_one
+
+## See note above; perch2 needs to be used for landmark_one
+elsa_standardized <- standardize_tunnel(elsa_gathered,
+                                        landmark_one = "perch2",
+                                        landmark_two = "perch1")
+
+## To check that it worked, first plot the original (_gathered) data:
+plot(elsa_gathered$position_lengths,
+     elsa_gathered$position_widths,
+     asp = 1)
+# ## identify() is amazing for figuring out which perch is which
+# ## Make sure the previous plot() is still active and is the most
+# ## recently-generated plot. Then use the following block to click inside that
+# ## plot on points you want identified. Then hit "Esc" and they will be labeled
+# identify(elsa_gathered$position_lengths,
+#          elsa_gathered$position_widths,
+#          labels = elsa_gathered$subject,
+#          plot = TRUE)
+
+## Now plot the standardized data
+plot(elsa_standardized$position_lengths,
+     elsa_standardized$position_widths,
+     asp = 1)
+# ## If you'd like to double-check, use identify() again to ensure the
+# ## mirror-image issue doesn't arise.
+# identify(elsa_standardized$position_lengths,
+#          elsa_standardized$position_widths,
+#          labels = elsa_standardized$subject,
+#          plot = TRUE)
+
+## In this example, there's almost no rotation necessary. But do note that
+## the center point is now set to (0, 0, 0), which is important for subsequent
+## steps
 
 ############################### select X percent ###############################
 ## Select the middle X percent of the tunnel, according to the length
