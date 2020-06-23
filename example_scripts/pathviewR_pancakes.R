@@ -398,3 +398,52 @@ library(rhdf5)
 ## way read_flydra_mat() is composed. An end user will likely have data
 ## organized as a data.frame or tibble already, but what they will need explicit
 ## instruction on is what & how metadata should be included & formatted.
+
+## 2020-06-23
+## Let's plot in 3D
+rgl::plot3d(x = ex1_h5_mat$kalman.x,
+            y = ex1_h5_mat$kalman.y,
+            z = ex1_h5_mat$kalman.z,
+            aspect = 1)
+## Perches seems to be on oppose ends of x-axis and z-axis seems to correspond
+## to height (up vs. down).
+
+## Let's start making what will ultimately be the flydra import function. This
+## should be considered a work in progress until it is imported into the
+## data_import_functions.R script. Porting it over there will imply that it has
+## reached sufficient maturity.
+
+read_flydra_data <-
+  function(mat_file,
+           file_id = NA,
+           ...) {
+
+    ## Import checks
+    if (missing(mat_file))
+      stop("A mat_file is required")
+    if (!file.exists(mat_file))
+      stop(paste0("File ", mat_file, " not found!"))
+
+    ## Match file_id to mat_file if no file_id is supplied
+      if (is.na(file_id)) file_id <- basename(mat_file)
+
+    ## Get maketime of file (may not be accurate...use with caution!)
+      mtime <- file.info(mat_file)$mtime
+
+    ## Read the MAT file via R.matlab::readMat()
+      data <-
+        R.matlab::readMat(mat_file)
+
+    return(data)
+  }
+
+## Test pancake
+test_mat <-
+  read_flydra_data(
+    mat_file = "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat")
+
+attributes(test_mat)
+attr(test_mat,"header")
+## This is awesome! Flydra already inserted the creation time stamp and Flydra
+## version number into the "header" attribute of this file.
+
