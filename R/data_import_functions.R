@@ -14,7 +14,6 @@
 #' defaults to \code{basename(file_name)}.
 #' @param simplify_marker_naming If Markers are encountered, should they be
 #' renamed from "Subject:marker" to "marker"? Defaults to TRUE
-#' @param ... Additional arguments to be passed to \code{data.table::fread()}
 #'
 #' @details Uses \code{data.table::fread()} to import data from a CSV file and
 #' ultimately store it in a tibble. This object is also labeled with the
@@ -275,8 +274,7 @@ problems.",
       header = FALSE,
       sep = ",",
       dec = ".",
-      stringsAsFactors = FALSE,
-      ...
+      stringsAsFactors = FALSE
     )
     ## Quickly check for non-numerics and warn if found
     if (any(!apply(dataz, 2, is.numeric))) {

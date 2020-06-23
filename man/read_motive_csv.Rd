@@ -14,8 +14,6 @@ defaults to \code{basename(file_name)}.}
 
 \item{simplify_marker_naming}{If Markers are encountered, should they be
 renamed from "Subject:marker" to "marker"? Defaults to TRUE}
-
-\item{...}{Additional arguments to be passed to \code{data.table::fread()}}
 }
 \value{
 A tibble with numerical data in columns. The first two columns will

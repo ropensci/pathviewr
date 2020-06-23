@@ -301,8 +301,7 @@ identical(jul_29_all_defaults, jul_29_all_defaults_explicit)
 ## Let's try a different X% of the tunnel
 jul_29_percent74 <-
   jul_29_path %>% import_and_clean_viewr(desired_percent = 74)
-## This fails! It mistakenly tries to use the desired_percent argument on
-## data.table::fread().
+# works!
 
 ## Done explicitly:
 jul_29_percent74_explicit <-
@@ -315,11 +314,29 @@ jul_29_percent74_explicit <-
   select_x_percent(desired_percent = 74) %>%
   separate_trajectories() %>%
   get_full_trajectories()
-## This works
 
-plot(jul_29_percent74_explicit$position_lengths,
-     jul_29_percent74_explicit$position_widths,
-     asp = 1, col = as.factor(jul_29_percent74_explicit$subject))
+## Are jul_29_percent74 and jul_29_percent74_explicit the same?
+identical(jul_29_percent74, jul_29_percent74_explicit)
+
+## Third example, use span = 0.95 along with desired_percent = 74
+jul_29_percent74_span95 <-
+  jul_29_path %>% import_and_clean_viewr(desired_percent = 74, span = 0.95)
+
+## Done explicitly:
+jul_29_percent74_span95_explicit <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  select_x_percent(desired_percent = 74) %>%
+  separate_trajectories() %>%
+  get_full_trajectories(span = 0.95)
+
+## Are jul_29_percent74_span95 and jul_29_percent74_span95_explicit the same?
+identical(jul_29_percent74_span95, jul_29_percent74_span95_explicit)
+## noice noice noice!!!
 
 #################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this
