@@ -1,4 +1,4 @@
-## Last updated: 2020-06-21 VBB
+## Last updated: 2020-06-23 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -283,30 +283,43 @@ jul_29_all_defaults # seems to work
 class(jul_29_all_defaults) # looks complete
 attributes(jul_29_all_defaults)
 
+## Done explicitly:
+jul_29_all_defaults_explicit <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  select_x_percent() %>%
+  separate_trajectories() %>%
+  get_full_trajectories()
+
+## Are jul_29_all_defaults and jul_29_all_defaults_explicit the same?
+identical(jul_29_all_defaults, jul_29_all_defaults_explicit)
+
 ## Let's try a different X% of the tunnel
 jul_29_percent74 <-
   jul_29_path %>% import_and_clean_viewr(desired_percent = 74)
-jul_29_percent74 # exists
-class(jul_29_percent74) # looks complete
-attributes(jul_29_percent74)
+## This fails! It mistakenly tries to use the desired_percent argument on
+## data.table::fread().
 
-## plot length vs. width
-  plot(jul_29_percent74$Position_lengths,
-       jul_29_percent74$Position_widths,
-       asp = 1, col = as.factor(jul_29_percent74$rigid_body))
+## Done explicitly:
+jul_29_percent74_explicit <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  select_x_percent(desired_percent = 74) %>%
+  separate_trajectories() %>%
+  get_full_trajectories()
+## This works
 
-## Change the X% and span parameters
-jul_29_percent74_span0.95 <-
-  jul_29_path %>% import_and_clean_viewr(desired_percent = 74,
-                                        span = 0.95)
-jul_29_percent74_span0.95 # exists
-class(jul_29_percent74_span0.95) # looks complete
-attributes(jul_29_percent74_span0.95)
-
-
-## Note: lookup table code intentionally removed on 2020-06-02 because it
-## will need to be re-written for the way we'll organize the package.
-
+plot(jul_29_percent74_explicit$position_lengths,
+     jul_29_percent74_explicit$position_widths,
+     asp = 1, col = as.factor(jul_29_percent74_explicit$subject))
 
 #################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this
