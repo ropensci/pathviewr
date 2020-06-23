@@ -492,16 +492,41 @@ attributes(test_mat)
 attr(test_mat,"header")
 attr(test_mat,"pathviewR_steps")
 
+## Where this bring us:
+## The way data were exported from flydra gives us the ability to skip over the
+## relabel_viewr_axes() and gather_tunnel_data() steps. I am also fairly
+## confident that we can skip the trim_tunnel_outliers() and most of the
+## rotate/standardize_tunnel() steps. That said, an important feature of the
+## rotate/standardize_tunnel() functions is that the coordinates are shifted so
+## that (0, 0, 0) is at the center of the data, which then sets up subsequent
+## functions like select_x_percent() to work from the middle of the tunnel
+## outwards. Using select_x_percent() on the flydra data now amounts to the
+## following:
+
+## Import data and proceed directly to select_x_percent()
 test_selected <-
   test_mat %>%
   select_x_percent(desired_percent = 50)
 
+## Full (non-selected) data plot:
 rgl::plot3d(x = test_mat$position_lengths,
             y = test_mat$position_widths,
             z = test_mat$position_heights,
             aspect = 1)
 
+## Post-select_x_percent()
 rgl::plot3d(x = test_selected$position_lengths,
             y = test_selected$position_widths,
             z = test_selected$position_heights,
             aspect = 1)
+## Because length = 0 is at one perch (one extreme end of the tunnel),
+## select_x_percent() clips the data incorrectly.
+
+## SO, that means that the flydra data will need to be standardized
+## such that (0, 0, 0) is the center of the data. This is probably easily done
+## for the _lengths and _widths axes, but _heights may take some thinking. I
+## believe (/ am very much hoping!) that the perch heights were written down in
+## Roz's notebook. We could then set the perch height to equal 0, thereby
+## leaving us with positive values indicating position above the perch level and
+## negative values indicating positions below perch level.
+
