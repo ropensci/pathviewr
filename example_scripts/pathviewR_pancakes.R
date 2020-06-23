@@ -416,6 +416,7 @@ rgl::plot3d(x = ex1_h5_mat$kalman.x,
 read_flydra_data <-
   function(mat_file,
            file_id = NA,
+           subject_name,
            ...) {
 
     ## Import checks
@@ -424,26 +425,83 @@ read_flydra_data <-
     if (!file.exists(mat_file))
       stop(paste0("File ", mat_file, " not found!"))
 
+    ## For now, we will assume that only one subject (one individual
+    ## hummingbird) is present in the data. Since these subject names were not
+    ## stored in the flydra data or accompanying H5 files (as far as I can see)
+    ## this will need to be supplied by the user
+    if (missing(subject_name))
+      stop("A subject_name is required")
+
     ## Match file_id to mat_file if no file_id is supplied
-      if (is.na(file_id)) file_id <- basename(mat_file)
+      if (is.na(file_id)) file_id <-
+          basename(mat_file)
 
     ## Get maketime of file (may not be accurate...use with caution!)
-      mtime <- file.info(mat_file)$mtime
+      mtime <-
+        file.info(mat_file)$mtime
 
     ## Read the MAT file via R.matlab::readMat()
-      data <-
+      mat_read <-
         R.matlab::readMat(mat_file)
 
+    ## The data we'd like to tibble-ize is spread across various components
+    ## of the list. We need to put it together manually.
+
+    ## First get the dimensions of the data
+      data_length <- length(mat_read$kalman.y)
+
+    ## Now put the data together
+      data <-
+        tibble(
+          ## I actally don't know the time intervals yet, so I am just putting
+          ## in a dummy sequence. Not sure if starting the array at 1 will cause
+          ## issues...
+          time = seq(from = 1, to = data_length, by = 1),
+          frame = seq(from = 1, to = data_length, by = 1),
+          subject = subject_name,
+          position_lengths = mat_read$kalman.x,
+          position_widths = mat_read$kalman.y,
+          position_heights = mat_read$kalman.z
+        )
+
+    ## Add metadata as attributes()
+    attr(data, "pathviewR_steps") <-
+      c("viewr", "renamed_tunnel", "gathered_tunnel")
+      ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
+      ## tibble is being created above and we are basically already in gathered
+      ##  format.
+    attr(data, "file_id") <- file_id
+    attr(data, "file_mtime") <- mtime
+      ## We will opt to store the original matlab file as an attribute since
+      ## it very likely contains things we may need later. Hard to say what
+      ## exactly right now; this is motivated by spidey-sense...
+    attr(data, "flydra_mat") <- mat_read
+    attr(data, "header") <- attr(mat_read, "header")
+
+    ## Export
     return(data)
   }
 
 ## Test pancake
 test_mat <-
   read_flydra_data(
-    mat_file = "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat")
+    "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat",
+    subject_name = "steve")
 
 attributes(test_mat)
 attr(test_mat,"header")
-## This is awesome! Flydra already inserted the creation time stamp and Flydra
-## version number into the "header" attribute of this file.
+attr(test_mat,"pathviewR_steps")
 
+test_selected <-
+  test_mat %>%
+  select_x_percent(desired_percent = 50)
+
+rgl::plot3d(x = test_mat$position_lengths,
+            y = test_mat$position_widths,
+            z = test_mat$position_heights,
+            aspect = 1)
+
+rgl::plot3d(x = test_selected$position_lengths,
+            y = test_selected$position_widths,
+            z = test_selected$position_heights,
+            aspect = 1)
