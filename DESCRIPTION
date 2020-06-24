@@ -12,7 +12,7 @@ Authors@R:
              role = c("aut", "cre"),
              email = "vbaliga87@gmail.com",
              comment = c(ORCID = "0000-0002-9367-8974")),
-      person(given = "Eric", 
+      person(given = "Eric R.", 
              family = "Press",
              role = "aut",
              email = "FILLME@EMAIL.DOMAIN",
@@ -24,3 +24,8 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0.9000
+Imports: 
+    R.matlab (>= 3.6.2),
+    data.table (>= 1.12.9)
+Suggests: 
+    rhdf5 (>= 2.32.0)

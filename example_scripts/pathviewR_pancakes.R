@@ -1,4 +1,4 @@
-## Last updated: 2020-06-23 VBB
+## Last updated: 2020-06-24 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -14,6 +14,7 @@ packages <- c("devtools",
               "gridExtra",
               "data.table",
               "RColorBrewer",
+              "rgl",
               "plot3D")
 ## Now for each package listed, first check to see if the package is already
 ## installed. If it is installed, it's simply loaded. If not, it's downloaded

@@ -17,7 +17,7 @@ Description of package TBD
 Authors:
 \itemize{
   \item Melissa S. Armstrong \email{FILLME@EMAIL.DOMAIN} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID})
-  \item Eric Press \email{FILLME@EMAIL.DOMAIN} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID})
+  \item Eric R. Press \email{FILLME@EMAIL.DOMAIN} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID})
 }
 
 }
