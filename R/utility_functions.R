@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-21 VBB
+## Last updated: 2020-06-25 MSA
 
 ############################### relabel_viewr_axes #############################
 
@@ -916,30 +916,6 @@ rmbird_byflightnum <- function(obj_name,
 }
 
 
-############################### scale traj avgs by individual ###############################
-## Goal here is to elminate individual bias for one side of tunnel vs. the other
-## Not sure yet if this should be done separately for each pair of treatments or for the bird as a whole across all treatments
-## if as a whole, would want to look for shifts in biases over time?
-avgnscale_bybird <- function(obj_name,
-                             ID){
-
-  CD_bird01_scale <- obj_name %>%
-    separate(rb_traj, c("bird", "traj")) %>%
-    filter(bird == ID)
-  CD_bird01_scale$traj_scale <- scale(CD_bird01_scale$traj_avg, center = T, scale = F)
-  CD_bird01_avgC <- CD_bird01_scale %>%
-    filter(treatment == "lat C") %>%
-    summarise(bird_avg = mean (traj_scale)) %>%
-    mutate(treatment = "lat C", bird = ID)
-  CD_bird01_avgD <- CD_bird01_scale %>%
-    filter(treatment == "lat D") %>%
-    summarise(bird_avg = mean (traj_scale)) %>%
-    mutate(treatment = "lat D", bird = ID)
-
-  rbind(CD_bird01_avgC,CD_bird01_avgD)
-}
-
-
 ############################### plot by bird ###############################
 ## Generate plots of each individual--hoping to loop to auto go through all birds in each treatment...
 
@@ -1129,76 +1105,3 @@ determine_fg_M <- function(obj_name,
   return(list(mfg_tib, mfg_plot))
 
 }
-
-
-############################# get_full_trajectories_M ##########################
-## Specify a minimum span of the (selected) tunnel and then keep trajectories
-## that are wider than that span and go from one end to the other
-
-get_full_trajectories_M <- function(obj_name,
-                                    span = 0.8,
-                                    ...){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
-    stop("Please use separate_trajectories() prior to using this")
-  }
-
-  summary_obj <-
-    obj_name %>%
-    group_by(traj_id) %>%
-    summarise(traj_length = n(),
-              start_length = position_lengths[1],
-              end_length = position_lengths[traj_length],
-              length_diff = abs(end_length - start_length),
-              start_length_sign = sign(start_length),
-              end_length_sign = sign(end_length))
-
-  ## Define rightwards as starting at negative length values and going
-  ## towards positive
-  summary_obj$direction <-
-    ifelse(summary_obj$start_length < 0, "rightwards", "leftwards")
-
-  ## If selected lengths have been stripped away, compute the maximum
-  ## length again
-  if (is.null(attr(obj_name, "selected_tunnel_length"))) {
-    max_length <- sum(abs(range(obj_name$position_lengths)[1]),
-                      abs(range(obj_name$position_lengths)[2]))
-  } else {
-    # Otherwise, use the selected_tunnel_length
-    max_length <- attr(obj_name,"selected_tunnel_length")
-  }
-
-  ## Filter data by the ONE criteria
-  filt_summary <-
-    summary_obj %>%
-    group_by(traj_id) %>%
-    ## Each trajectory must span a minimum porportion of the selected tunnel
-    dplyr::filter(length_diff > (span * max_length))
-
-  obj_continuous <-
-    obj_name %>%
-    dplyr::filter(traj_id %in% filt_summary$traj_id)
-
-  ## Join the columns to add in direction
-  obj_defined <-
-    right_join(obj_continuous, filt_summary, by = "traj_id") %>%
-    tibble::as_tibble()
-
-  ## Leave a note about the span used
-  attr(obj_defined, "span") <- span
-
-  ## Leave a note that full trajectories were retained
-  attr(obj_defined,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "full_trajectories_M")
-
-  ## Export
-  return(obj_defined)
-
-}
-
