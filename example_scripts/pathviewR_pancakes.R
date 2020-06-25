@@ -390,6 +390,14 @@ library(rhdf5)
   ex1_data2d <- rhdf5::h5read("./inst/extdata/roz2016/DATA20160619_124428.h5",
                               name = "data2d_distorted") #this one fails :(
 
+  ex1_kalmanized_trigger_clock <-
+    rhdf5::h5read('./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5',
+                  name = "trigger_clock_info")
+
+  ex1_kalmanized_textlog <-
+    rhdf5::h5read('./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5',
+                  name = "textlog")
+
 ## Thoughts on next steps:
 ## A read_flydra_mat() function can be written to use R.matlab::readMat() to
 ## import the .MAT file. The .MAT file does not contain all the necessary
@@ -458,7 +466,8 @@ read_flydra_data <-
           ## in a dummy sequence. Not sure if starting the array at 1 will cause
           ## issues...
           time = seq(from = 1, to = data_length, by = 1),
-          frame = seq(from = 1, to = data_length, by = 1),
+          # using kalman frame instead of observed frame
+          frame = mat_read$kalman.frame,
           subject = subject_name,
           position_lengths = mat_read$kalman.x,
           position_widths = mat_read$kalman.y,
