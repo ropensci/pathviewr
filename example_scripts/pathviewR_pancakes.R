@@ -462,12 +462,12 @@ read_flydra_data <-
     ## Now put the data together
       data <-
         tibble(
+          # using kalman frame instead of observed frame
+          frame = mat_read$kalman.frame,
           ## I actally don't know the time intervals yet, so I am just putting
           ## in a dummy sequence. Not sure if starting the array at 1 will cause
           ## issues...
-          time = seq(from = 1, to = data_length, by = 1),
-          # using kalman frame instead of observed frame
-          frame = mat_read$kalman.frame,
+          time_sec = seq(from = 1, to = data_length, by = 1),
           subject = subject_name,
           position_lengths = mat_read$kalman.x,
           position_widths = mat_read$kalman.y,
