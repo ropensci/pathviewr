@@ -1,4 +1,4 @@
-## Last updated: 2020-06-24 VBB
+## Last updated: 2020-06-25 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -120,8 +120,8 @@ elsa_gathered <- gather_tunnel_data(elsa_renamed)
 
 ## Plotting first!! (commented out for ease of use)
   # ## Plot of length vs height for July 29
-  # plot(jul_29_gathered$position_lengths,
-  #      jul_29_gathered$position_heights,
+  # plot(jul_29_gathered$position_length,
+  #      jul_29_gathered$position_height,
   #       asp=1)
   #    abline(v = -0.06) # length min
   #    abline(v = 2.6)   # length max
@@ -130,8 +130,8 @@ elsa_gathered <- gather_tunnel_data(elsa_renamed)
   #  ## Length vs width
   #  ## Keeping width estimates very wide since crazy artifacts don't really
   #  ## manifest in this dimension
-  #  plot(jul_29_gathered$position_lengths,
-  #       jul_29_gathered$position_widths,
+  #  plot(jul_29_gathered$position_length,
+  #       jul_29_gathered$position_width,
   #       asp=1)
   #    abline(v = -0.06) # length min
   #    abline(v = 2.6)   # length max
@@ -144,8 +144,8 @@ elsa_gathered <- gather_tunnel_data(elsa_renamed)
 jul_29_trimmed <- trim_tunnel_outliers(jul_29_gathered)
 
 # ## We can check that it worked by plotting length vs. height...etc again
-# plot(jul_29_trimmed$position_lengths,
-#      jul_29_trimmed$position_heights,
+# plot(jul_29_trimmed$position_length,
+#      jul_29_trimmed$position_height,
 #      asp=1)
 
 ################################# rotate tunnel ################################
@@ -181,26 +181,26 @@ elsa_standardized <- standardize_tunnel(elsa_gathered,
                                         landmark_two = "perch1")
 
 ## To check that it worked, first plot the original (_gathered) data:
-plot(elsa_gathered$position_lengths,
-     elsa_gathered$position_widths,
+plot(elsa_gathered$position_length,
+     elsa_gathered$position_width,
      asp = 1)
 # ## identify() is amazing for figuring out which perch is which
 # ## Make sure the previous plot() is still active and is the most
 # ## recently-generated plot. Then use the following block to click inside that
 # ## plot on points you want identified. Then hit "Esc" and they will be labeled
-# identify(elsa_gathered$position_lengths,
-#          elsa_gathered$position_widths,
+# identify(elsa_gathered$position_length,
+#          elsa_gathered$position_width,
 #          labels = elsa_gathered$subject,
 #          plot = TRUE)
 
 ## Now plot the standardized data
-plot(elsa_standardized$position_lengths,
-     elsa_standardized$position_widths,
+plot(elsa_standardized$position_length,
+     elsa_standardized$position_width,
      asp = 1)
 # ## If you'd like to double-check, use identify() again to ensure the
 # ## mirror-image issue doesn't arise.
-# identify(elsa_standardized$position_lengths,
-#          elsa_standardized$position_widths,
+# identify(elsa_standardized$position_length,
+#          elsa_standardized$position_width,
 #          labels = elsa_standardized$subject,
 #          plot = TRUE)
 
@@ -242,18 +242,18 @@ jul_29_labeled <-
 
 # ## Plot with unique colors for combinations of rigid bodies and trajectories
 # ## We run out of colors, so they're recycled. Interpret carefully...
-plot(jul_29_labeled$position_lengths,
-     jul_29_labeled$position_widths,
+plot(jul_29_labeled$position_length,
+     jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$sub_traj))
 
 ## Or simply by rigid body ID
-plot(jul_29_labeled$position_lengths,
-     jul_29_labeled$position_widths,
+plot(jul_29_labeled$position_length,
+     jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$subject))
 
 ## Or simply by trajctory ID
-plot(jul_29_labeled$position_lengths,
-     jul_29_labeled$position_widths,
+plot(jul_29_labeled$position_length,
+     jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
 
@@ -469,9 +469,9 @@ read_flydra_data <-
           ## issues...
           time_sec = seq(from = 1, to = data_length, by = 1),
           subject = subject_name,
-          position_lengths = mat_read$kalman.x,
-          position_widths = mat_read$kalman.y,
-          position_heights = mat_read$kalman.z
+          position_length = mat_read$kalman.x,
+          position_width = mat_read$kalman.y,
+          position_height = mat_read$kalman.z
         )
 
     ## Add metadata as attributes()
@@ -498,7 +498,7 @@ test_mat <-
     "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat",
     subject_name = "steve")
 
-attributes(test_mat)
+#attributes(test_mat)
 attr(test_mat,"header")
 attr(test_mat,"pathviewR_steps")
 
@@ -519,22 +519,22 @@ test_selected <-
   select_x_percent(desired_percent = 50)
 
 ## Full (non-selected) data plot:
-rgl::plot3d(x = test_mat$position_lengths,
-            y = test_mat$position_widths,
-            z = test_mat$position_heights,
+rgl::plot3d(x = test_mat$position_length,
+            y = test_mat$position_width,
+            z = test_mat$position_height,
             aspect = 1)
 
 ## Post-select_x_percent()
-rgl::plot3d(x = test_selected$position_lengths,
-            y = test_selected$position_widths,
-            z = test_selected$position_heights,
+rgl::plot3d(x = test_selected$position_length,
+            y = test_selected$position_width,
+            z = test_selected$position_height,
             aspect = 1)
 ## Because length = 0 is at one perch (one extreme end of the tunnel),
 ## select_x_percent() clips the data incorrectly.
 
 ## SO, that means that the flydra data will need to be standardized
 ## such that (0, 0, 0) is the center of the data. This is probably easily done
-## for the _lengths and _widths axes, but _heights may take some thinking. I
+## for the _length and _width axes, but _height may take some thinking. I
 ## believe (/ am very much hoping!) that the perch heights were written down in
 ## Roz's notebook. We could then set the perch height to equal 0, thereby
 ## leaving us with positive values indicating position above the perch level and

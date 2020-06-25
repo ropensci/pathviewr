@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-25 MSA
+## Last updated: 2020-06-25 MSA & VBB
 
 ############################### relabel_viewr_axes #############################
 
@@ -201,19 +201,19 @@ gather_tunnel_data <- function(obj_name,
       obj_name[,grepl("position_length", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$position_lengths <- tmp_len$value
+    gathered_data$position_length <- tmp_len$value
     ## Widths
     tmp_wid <-
       obj_name[,grepl("position_width", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$position_widths <- tmp_wid$value
+    gathered_data$position_width <- tmp_wid$value
     ## Heights
     tmp_hei <-
       obj_name[,grepl("position_height", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$position_heights <- tmp_hei$value
+    gathered_data$position_height <- tmp_hei$value
 
   ## Gather rotations
     ## Lengths
@@ -221,19 +221,19 @@ gather_tunnel_data <- function(obj_name,
       obj_name[,grepl("rotation_length", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_lengths <- tmp_rotl$value
+    gathered_data$rotation_length <- tmp_rotl$value
     ## Widths
     tmp_rotw <-
       obj_name[,grepl("rotation_width", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_widths <- tmp_rotw$value
+    gathered_data$rotation_width <- tmp_rotw$value
     ## Heights
     tmp_roth <-
       obj_name[,grepl("rotation_height", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_heights <- tmp_roth$value
+    gathered_data$rotation_height <- tmp_roth$value
     ## W
     tmp_rotw <-
       obj_name[,grepl("rotation_real", colnames(obj_name),
@@ -314,21 +314,21 @@ trim_tunnel_outliers <- function(obj_name,
   ## noisiest
   filt_heights <-
     obj_name %>%
-    dplyr::filter(position_heights < heights_max) %>%
-    dplyr::filter(position_heights > heights_min)
+    dplyr::filter(position_height < heights_max) %>%
+    dplyr::filter(position_height > heights_min)
 
   ## Now filter by lengths
   filt_lengths <-
     filt_heights %>%
-    dplyr::filter(position_lengths < lengths_max) %>%
-    dplyr::filter(position_lengths > lengths_min)
+    dplyr::filter(position_length < lengths_max) %>%
+    dplyr::filter(position_length > lengths_min)
 
   ## Finally filter by widths; this may not change anything since outliers
   ## in this axis seem to be rare
   filt_widths <-
     filt_lengths %>%
-    dplyr::filter(position_widths < widths_max) %>%
-    dplyr::filter(position_widths > widths_min) %>%
+    dplyr::filter(position_width < widths_max) %>%
+    dplyr::filter(position_width > widths_min) %>%
     tibble::as_tibble()
 
   ## Add metadata as attributes()
@@ -463,16 +463,16 @@ rotate_tunnel <- function(obj_name,
 
   ## Now apply a translation to the original data set
   ## (Translation for height in next block of code)
-  obj_name$position_lengths <- obj_name$position_lengths - tunnel_centerpoint[1]
-  obj_name$position_widths <- obj_name$position_widths - tunnel_centerpoint[2]
+  obj_name$position_length <- obj_name$position_length - tunnel_centerpoint[1]
+  obj_name$position_width <- obj_name$position_width - tunnel_centerpoint[2]
 
   # Now apply a rotation to the translated data set
-  obj_new$position_lengths <- (obj_name$position_lengths*cos(-1*alpharad))-
-    (obj_name$position_widths)*sin(-1*alpharad)
-  obj_new$position_widths <- (obj_name$position_lengths*sin(-1*alpharad))+
-    (obj_name$position_widths)*cos(-1*alpharad)
+  obj_new$position_length <- (obj_name$position_length*cos(-1*alpharad))-
+    (obj_name$position_width)*sin(-1*alpharad)
+  obj_new$position_width <- (obj_name$position_length*sin(-1*alpharad))+
+    (obj_name$position_width)*cos(-1*alpharad)
   ## Height will simply be translated
-  obj_new$position_heights <- obj_name$position_heights - tunnel_centerpoint[3]
+  obj_new$position_height <- obj_name$position_height - tunnel_centerpoint[3]
   ## (all other variables should remain the same)
 
   ## Coerce to tibble
@@ -536,16 +536,16 @@ standardize_tunnel <- function(obj_name,
   ## Make a data.frame of landmark_one (i.e. perch #1)'s positions
   landmark1_med_pos <- obj_name %>%
     dplyr::filter(subject == landmark_one) %>%
-    dplyr::summarise(med_length = median(position_lengths),
-                     med_width = median(position_widths),
-                     med_height = median(position_heights)) %>%
+    dplyr::summarise(med_length = median(position_length),
+                     med_width = median(position_width),
+                     med_height = median(position_height)) %>%
     as.data.frame()
 
   landmark2_med_pos <- obj_name %>%
     dplyr::filter(subject == landmark_two) %>%
-    dplyr::summarise(med_length = median(position_lengths),
-                     med_width = median(position_widths),
-                     med_height = median(position_heights)) %>%
+    dplyr::summarise(med_length = median(position_length),
+                     med_width = median(position_width),
+                     med_height = median(position_height)) %>%
     as.data.frame()
 
   ## Now approximate the centerpoint of the tunnel
@@ -611,16 +611,16 @@ standardize_tunnel <- function(obj_name,
 
   ## Now apply a translation to the original data set
   ## (Translation for height in next block of code)
-  obj_name$position_lengths <- obj_name$position_lengths - tunnel_centerpoint[1]
-  obj_name$position_widths <- obj_name$position_widths - tunnel_centerpoint[2]
+  obj_name$position_length <- obj_name$position_length - tunnel_centerpoint[1]
+  obj_name$position_width <- obj_name$position_width - tunnel_centerpoint[2]
 
   # Now apply a rotation to the translated data set
-  obj_new$position_lengths <- (obj_name$position_lengths*cos(-1*alpharad))-
-    (obj_name$position_widths)*sin(-1*alpharad)
-  obj_new$position_widths <- (obj_name$position_lengths*sin(-1*alpharad))+
-    (obj_name$position_widths)*cos(-1*alpharad)
+  obj_new$position_length <- (obj_name$position_length*cos(-1*alpharad))-
+    (obj_name$position_width)*sin(-1*alpharad)
+  obj_new$position_width <- (obj_name$position_length*sin(-1*alpharad))+
+    (obj_name$position_width)*cos(-1*alpharad)
   ## Height will simply be translated
-  obj_new$position_heights <- obj_name$position_heights - tunnel_centerpoint[3]
+  obj_new$position_height <- obj_name$position_height - tunnel_centerpoint[3]
   ## (all other variables should remain the same)
 
   ## Coerce to tibble
@@ -667,7 +667,7 @@ select_x_percent <- function(obj_name,
   prop <- desired_percent/100
 
   ## Get tunnel length
-  tunnel_range <- range(obj_name$position_lengths)
+  tunnel_range <- range(obj_name$position_length)
   tunnel_length <- sum(abs(tunnel_range[1]), abs(tunnel_range[2]))
 
   ## Determine the range of lengths that will be needed
@@ -678,8 +678,8 @@ select_x_percent <- function(obj_name,
   ## Now filter by lengths
   obj_name <-
     obj_name %>%
-    dplyr::filter(position_lengths < lengths_needed) %>%
-    dplyr::filter(position_lengths > (-1 * lengths_needed))
+    dplyr::filter(position_length < lengths_needed) %>%
+    dplyr::filter(position_length > (-1 * lengths_needed))
 
   ## Coerce to tibble
   obj_name <- tibble::as_tibble(obj_name)
@@ -769,8 +769,8 @@ get_full_trajectories <- function(obj_name,
     obj_name %>%
     dplyr::group_by(traj_id) %>%
     dplyr::summarise(traj_length = n(),
-                     start_length = position_lengths[1],
-                     end_length = position_lengths[traj_length],
+                     start_length = position_length[1],
+                     end_length = position_length[traj_length],
                      length_diff = abs(end_length - start_length),
                      start_length_sign = sign(start_length),
                      end_length_sign = sign(end_length))
@@ -783,8 +783,8 @@ get_full_trajectories <- function(obj_name,
   ## If selected lengths have been stripped away, compute the maximum
   ## length again
   if (is.null(attr(obj_name, "selected_tunnel_length"))) {
-    max_length <- sum(abs(range(obj_name$position_lengths)[1]),
-                      abs(range(obj_name$position_lengths)[2]))
+    max_length <- sum(abs(range(obj_name$position_length)[1]),
+                      abs(range(obj_name$position_length)[2]))
   } else {
     # Otherwise, use the selected_tunnel_length
     max_length <- attr(obj_name,"selected_tunnel_length")
@@ -922,12 +922,12 @@ rmbird_byflightnum <- function(obj_name,
 plot_by_bird_manually <- function(obj_name){
 
   paths_obj_name <- ggplot(obj_name) +
-    geom_point(aes(position_lengths, position_widths, colour = treatment), alpha = .1, show.legend = FALSE) +
+    geom_point(aes(position_length, position_width, colour = treatment), alpha = .1, show.legend = FALSE) +
     theme(legend.position = "none") +
     theme_tufte()
 
   hist_obj_name <- ggplot(obj_name) +
-    geom_histogram(aes(position_widths, fill = treatment), alpha = .5, position = "identity", show.legend = FALSE) +
+    geom_histogram(aes(position_width, fill = treatment), alpha = .5, position = "identity", show.legend = FALSE) +
     coord_flip() +
     theme(legend.position = "none") +
     theme_tufte()
@@ -947,22 +947,22 @@ purrplot_by_bird <- function(obj_name,
                              treatment,
                              ...){
   #set axes limits based on data
-  height_limits <- c(max(abs(range(obj_name$position_heights)))*-1,
-                     max(abs(range(obj_name$position_heights))))
-  width_limits <- c(max(abs(range(obj_name$position_widths)))*-1,
-                    max(abs(range(obj_name$position_widths))))
+  height_limits <- c(max(abs(range(obj_name$position_height)))*-1,
+                     max(abs(range(obj_name$position_height))))
+  width_limits <- c(max(abs(range(obj_name$position_width)))*-1,
+                    max(abs(range(obj_name$position_width))))
 
   #for top view (change in lateral position)
   top_view <- obj_name %>%
     group_by(rigid_body) %>%
     nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_lengths, position_widths, colour = treatment)) +
+    mutate(paths = map(data, ~ggplot(., aes(position_length, position_width, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
                          ylim(width_limits) +
                          geom_hline(yintercept = 0, linetype = "dotted") +
                          coord_fixed(ratio = 1) +
                          theme_tufte()),
-           hist = map(data, ~ggplot(., aes(x = position_widths, fill = treatment)) +
+           hist = map(data, ~ggplot(., aes(x = position_width, fill = treatment)) +
                         geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
                         xlim(width_limits) +
                         geom_vline(xintercept = 0, linetype = "dotted") +
@@ -984,13 +984,13 @@ purrplot_by_bird <- function(obj_name,
   elev_view <- obj_name %>%
     group_by(rigid_body) %>%
     nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_lengths, position_heights, colour = treatment)) +
+    mutate(paths = map(data, ~ggplot(., aes(position_length, position_height, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
                          ylim(height_limits) +
                          geom_hline(yintercept = 0, linetype = "dotted") +
                          coord_fixed(ratio = 1) +
                          theme_tufte()),
-           hist = map(data, ~ggplot(., aes(position_heights, fill = treatment)) +
+           hist = map(data, ~ggplot(., aes(position_height, fill = treatment)) +
                         geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
                         xlim(height_limits) +
                         geom_vline(xintercept = 0, linetype = "dotted") +
@@ -1036,7 +1036,7 @@ select_x_percent_M <- function(obj_name,
   prop <- desired_percent/100
 
   ## Get tunnel length
-  tunnel_range <- range(obj_name$position_lengths)
+  tunnel_range <- range(obj_name$position_length)
   tunnel_length <- sum(abs(tunnel_range[1]), abs(tunnel_range[2]))
 
   ## Determine the range of lengths that will be needed
@@ -1048,8 +1048,8 @@ select_x_percent_M <- function(obj_name,
   ## Now filter by lengths
   obj_name <-
     obj_name %>%
-    dplyr::filter(position_lengths < midpoint + lengths_needed) %>%
-    dplyr::filter(position_lengths > (midpoint - lengths_needed)) %>%
+    dplyr::filter(position_length < midpoint + lengths_needed) %>%
+    dplyr::filter(position_length > (midpoint - lengths_needed)) %>%
     tibble::as_tibble()
 
   ## Leave a note about the proportion used
