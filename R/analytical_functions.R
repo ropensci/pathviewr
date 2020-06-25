@@ -1,21 +1,23 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-02 VBB
+## Last updated: 2020-06-25 MSA
 
 ################################ get_rb_velocity ###############################
 ## Get instantaneous velocity for rigid body objects
+## adjusted Vikram's to use width, height, and length instead of XYZ cause they always confuse me!
+## do we need to adjust to account for frame/time gaps?
 
-get_rb_velocity <- function(obj_name,
-                            time_col,
-                            x_col,
-                            y_col,
-                            z_col,
-                            ...) {
+get_rb_velocity_M <- function(obj_name,
+                              time_col,
+                              width_col,
+                              height_col,
+                              length_col,
+                              ...) {
   ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
-  }
+  #  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  #    stop("This doesn't seem to be a viewr object")
+  #  }
 
-  df <- as.data.frame(obj_name) # convert back to standard df?
+  df <- as.data.frame(obj_name)
 
   ## Create vector of time differences
   time_diffs <- diff(df[,time_col])
@@ -24,15 +26,15 @@ get_rb_velocity <- function(obj_name,
   ## First entry is set to zero because calculating velocity depends on previous
   ## step. We may opt change this to `NA` later on so that these can be filtered
   ## easily.
-  x_inst <- c(0, diff(df[,x_col]) / time_diffs)
-  y_inst <- c(0, diff(df[,y_col]) / time_diffs)
-  z_inst <- c(0, diff(df[,z_col]) / time_diffs)
+  width_inst <- c(0, diff(df[,width_col]) / time_diffs)
+  height_inst <- c(0, diff(df[,height_col]) / time_diffs)
+  length_inst <- c(0, diff(df[,length_col]) / time_diffs)
 
   ## Calculate object velocity
-  vel <- sqrt((x_inst ^ 2) + (y_inst ^ 2) + (z_inst ^ 2))
+  vel <- sqrt((width_inst ^ 2) + (height_inst ^ 2) + (length_inst ^ 2))
 
   ## Combine
-  res <- tibble::tibble(velocity = vel, x_inst, y_inst, z_inst)
+  res <- tibble::tibble(velocity = vel, width_inst, height_inst, length_inst)
 
   ## Output
   return(res)
