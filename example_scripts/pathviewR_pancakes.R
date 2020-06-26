@@ -251,7 +251,7 @@ plot(jul_29_labeled$position_length,
      jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$subject))
 
-## Or simply by trajctory ID
+## Or simply by trajectory ID
 plot(jul_29_labeled$position_length,
      jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
@@ -270,6 +270,46 @@ plot(jul_29_labeled$position_length,
 jul_29_full <-
   jul_29_labeled %>% get_full_trajectories(span = 0.95)
 attr(jul_29_full, "pathviewR_steps")
+
+
+####################### compute instantaneous velocities #######################
+## 2020-06-26: This revised function how has more flexiblity in what a user can
+## do and when the user can choose to implement it. I'll play around in this
+## section to see how it behaves and give some examples of how people may want
+## to use it
+
+## Appending velocity data as new columns on an exisiting viewr object
+## The argument `add_to_viewr` is TRUE by default and will add columns
+jul_29_full_with_velocity <-
+  jul_29_full %>% get_velocity()
+## But if you don't want a billion columns, go with a simple velocity output:
+jul_29_full_only_velocity <-
+  jul_29_full %>% get_velocity(add_to_viewr = FALSE)
+
+## When can this function be used? At basically any point, I think:
+jul_29_gathered_velocity <-
+  jul_29_gathered %>% get_velocity()
+jul_29_selected_velocity <-
+  jul_29_selected %>% get_velocity()
+jul_29_rotated_velocity <-
+  jul_29_rotated %>% get_velocity()
+
+## This flexiblity even allows for non-standard column naming, but the downside
+## is that it can lead to weird scenarios:
+jul_29_unsimple_velocity <- ## using jul_29_unsimple bc it hasn't been relabeled
+  jul_29_unsimple %>% get_velocity(time_col   = "time_sec",
+                                   length_col = "device08_002_position_x",
+                                   width_col  = "device08_002_position_y",
+                                   height_col = "device08_002_position_z",
+                                   add_to_viewr = TRUE)
+## Now if you look at jul_29_unsimple_velocity, velocities were indeed
+## calculated and appended, but we are limited to computing them for device08
+## only.
+
+## Also, error messages are designed to be as informative as possible, e.g.:
+jul_29_unsimple_velocity_fail <-
+  jul_29_unsimple %>% get_velocity()
+
 
 ######################### one function to rule them all ########################
 ## Let's see if we can make an all-in-one that behaves nicely when the user
