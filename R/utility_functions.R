@@ -6,9 +6,9 @@
 #' Relabel the dimensions as length, width, and height
 #'
 #' Axes are commonly labeled as "x", "y", and "z" in recording software yet
-#' you may desire to relabel these as "length", "width", and "height".
-#' \code{relabel_viewr_axes()} is a function that takes a \code{viewr} object
-#' and allows the user to rename the variables.
+#' \code{pathviewR} functions require these to be labeled as "length", "width",
+#' and "height". \code{relabel_viewr_axes()} is a function that takes a
+#' \code{viewr} object and allows the user to rename its variables.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr}
 #' @param tunnel_length The dimension that corresponds to tunnel length. Set to
@@ -88,8 +88,10 @@ relabel_viewr_axes <- function(obj_name,
   }
 
   namez <- names(obj_name)
-  ## sub() doesn't seem to be pipe-friendly, so we'll do it this way...
-  namez <- sub(real,"_real",namez) # THIS STEP MUST COME BEFORE WIDTH RENAMING!
+  # THE FOLLOWING STEP MUST COME BEFORE WIDTH RENAMING! This is because the
+  # 'real' dimension in quaternion notation is denoted "w", which conflicts
+  # with the "w" in width
+  namez <- sub(real,"_real",namez)
   namez <- sub(tunnel_width,"_width",namez)
   namez <- sub(tunnel_length,"_length",namez)
   namez <- sub(tunnel_height,"_height",namez)
@@ -124,10 +126,19 @@ relabel_viewr_axes <- function(obj_name,
 #' observed frame and time.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr} that has
-#' been passed through \code{relabel_viewr_axes()}
+#' ideally been passed through \code{relabel_viewr_axes()}. See Details for
+#' formatting requirements.
 #' @param NA_drop Should rows with NAs be dropped? Defaults to \code{TRUE}
 #' @param ... Additional arguments that can be passed to other \code{pathviewR}
 #' functions such as \code{relabel_viewr_axes()} or \code{read_motive_csv()}
+#'
+#' @details The tibble or data.frame that is fed in must have variables that
+#' have subject names and axis names separated by underscores. Axis names must
+#' be one of the following: \code{position_length}, \code{position_width}, or
+#' \code{position_height}. Each of these three dimensions must be present in the
+#' data. Collectively, this means that names like \code{bird01_position_length}
+#' or \code{larry_position_height} are acceptible, but \code{bird01_x} or
+#' \code{bird01_length} are not.
 #'
 #' @return A tibble in "tidy" format which is formatted to have every row
 #' correspond to the position (and potentially rotation) of a single subject
@@ -165,9 +176,33 @@ gather_tunnel_data <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  ## NOTE: I know that the following 3 blocks of code can be written more
+  ## efficiently, but I would rather split them up explicitly so that a user
+  ## knows exactly which type of column is missing, given the error message
+  ## that is returned.
+
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
   }
 
   ## Get number of unique subjects
@@ -177,10 +212,10 @@ gather_tunnel_data <- function(obj_name,
   }
 
   ## And the unique subjects' names
-  rbeez <- attributes(obj_name)$subject_names_simple
+  subbiez <- attributes(obj_name)$subject_names_simple
 
   ## Start setting up a gathered data.frame
-  ## Just frame, time, and Rigid Bodies for now
+  ## Just frame, time, and subject for now
   ## Other columns will be appended
   gathered_data <- data.frame(
     frame = c(rep(obj_name$"frame", bodiez)),
@@ -190,7 +225,7 @@ gather_tunnel_data <- function(obj_name,
   rb <- NULL
   for (i in 1:bodiez){
     rb <- c(rb,
-            rep(rbeez[i], dim(obj_name)[1])
+            rep(subbiez[i], dim(obj_name)[1])
             )
   }
   gathered_data$subject <- rb
@@ -283,9 +318,6 @@ gather_tunnel_data <- function(obj_name,
 ## I highly recommend plotting data beforehand and checking that estimates
 ## make sense!!!!!!
 
-## NOTE TBD: make an option in the function to let data pass if there are
-## no outliers
-
 trim_tunnel_outliers <- function(obj_name,
                                  lengths_min = 0,
                                  lengths_max = 3,
@@ -300,14 +332,35 @@ trim_tunnel_outliers <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
   }
 
-  ## Check that the data columns have been gathered
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("Please use gather_tunnel_data() to gather columns first")
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
   }
 
   ## Filter by heights first, since extremes in this axis tend to be the
@@ -385,10 +438,37 @@ rotate_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
   }
+
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
 
   ## Now compute the approximate midpoints of each perch
   ## Perch 1 first
@@ -491,7 +571,9 @@ rotate_tunnel <- function(obj_name,
 
   ## Leave a note that we rotated and translated the data set
   attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "tunnel_rotated")
+    c(attr(obj_name,"pathviewR_steps"), c("tunnel_rotated", # rotated
+                                          "tunnel_centered") # centered
+    )
 
   ## Export
   return(obj_new)
@@ -502,12 +584,7 @@ rotate_tunnel <- function(obj_name,
 ## Alternative to rotate_tunnel. Writing a version here where perches (or other
 ## landmarks) are coded as rigid bodies from the get-go.
 ##
-## 2020-06-21: re-writing this in light of all the updates to the preceding
-## steps (read -> relabel -> gather -> trim (trim is optional))
-##
-## We may also want to include this function in lieu of rotate_tunnel() when
-## all is said and done, since it is perhaps more likely that perches (or other
-## landmarks) will likely be labeled in other data sets
+## This may get consolidated with rotate_tunnel() at some point...
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -519,10 +596,37 @@ standardize_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
   }
+
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
 
   ## ADD CHECK THAT perch1position length < perch2 position_length; otherwise,
   ## the rotation will apply to a mirror-image of the tunnel
@@ -639,14 +743,16 @@ standardize_tunnel <- function(obj_name,
 
   ## Leave a note that we rotated and translated the data set
   attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "tunnel_rotated")
+    c(attr(obj_name,"pathviewR_steps"), c("tunnel_rotated", # rotated
+                                          "tunnel_centered") # centered
+    )
 
   ## Export
   return(obj_new)
 }
 
 
-############################### select_X_percent ###############################
+############################### select_x_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
 
 select_x_percent <- function(obj_name,
@@ -658,10 +764,12 @@ select_x_percent <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  # ## Check that its axes have been renamed
-  # if (!any(class(obj_name) == "tunnel_rotated")) {
-  #   stop("Please use rotate_tunnel() to align data prior to using this")
-  # }
+  ## Check that it's undergone one of our centering steps
+  if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
+    warning("This viewr object does not seem to have been passed through
+one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
+or center_tunnel(). Please proceed with extreme caution.")
+  }
 
   ## Convert percent to proportion
   prop <- desired_percent/100
@@ -818,74 +926,6 @@ get_full_trajectories <- function(obj_name,
   ## Export
   return(obj_defined)
 
-}
-
-
-############################### all_in_one_function ############################
-## Use all of the preceding functions to construct an all-in-one function for
-## ease of use. Unsure if this is the best way to go, but let's give it a try
-## anyway.
-
-## NOTE 2020-06-17 We will need to accomodate for future import functions such
-## as read_flydra_mat() (or whatever it will be named). Ideally this will be
-## autodetected based on file type and switched internally.
-
-import_and_clean_viewr <- function(file_name,
-                                  file_id = NA,
-                                  ...){
-
-  ## Import checks
-  if (missing(file_name))
-    stop("A file_name is required")
-  if (!file.exists(file_name))
-    stop(paste0("File ", file_name, " not found!"))
-
-  ## ADD CHECK HERE FOR FILETYPE (CSV OR MAT) AND THEN HANDLE ACCORDINGLY
-
-  ## Check that any arguments supplied are valid; return a warning if not
-  valid_args <- c(
-    ## read_motive_csv()
-    "file_name", "file_id",
-    ## relabel_viewr_axes()
-    "tunnel_length", "tunnel_width", "tunnel_height", "real",
-    ## trim_tunnel_outliers()
-    "lengths_min", "lengths_max",
-    "widths_min", "widths_max",
-    "heights_min", "heights_max",
-    ## rotate_tunnel()
-    "all_heights_min", "all_heights_max",
-      ## perch 1 = left (near length = 0); perch 2 = right
-    "perch1_len_min", "perch1_len_max",
-    "perch2_len_min", "perch2_len_max",
-    "perch1_wid_min", "perch1_wid_max",
-    "perch2_wid_min", "perch2_wid_max",
-    ## select_x_percent()
-    "desired_percent",
-    ## separate_trajectories()
-    "max_frame_gap",
-    ## get_full_trajectories()
-    "span"
-  )
-  arg_names <- names(list(...))
-  if (!all(arg_names %in% valid_args)) {
-    warning("One or more provided arguments does not match known arguments.
-            \nThese will not be used.")
-  }
-
-  ## Run it through the pipe
-  obj <-
-    file_name %>%
-    read_motive_csv(...) %>%
-    relabel_viewr_axes(...) %>%
-    gather_tunnel_data(...) %>%
-    trim_tunnel_outliers(...) %>%
-    rotate_tunnel(...) %>%
-    select_x_percent(...) %>%
-    separate_trajectories(...) %>%
-    get_full_trajectories(...)
-
-  ## Export
-  return(obj)
 }
 
 

@@ -8,7 +8,8 @@ gather_tunnel_data(obj_name, NA_drop = TRUE, ...)
 }
 \arguments{
 \item{obj_name}{A tibble or data.frame with attribute \code{viewr} that has
-been passed through \code{relabel_viewr_axes()}}
+ideally been passed through \code{relabel_viewr_axes()}. See Details for
+formatting requirements.}
 
 \item{NA_drop}{Should rows with NAs be dropped? Defaults to \code{TRUE}}
 
@@ -27,6 +28,15 @@ returned tibble.
 Reformat \code{viewr} data into a "tidy" format so that every row corresponds
 to the position (and potentially rotation) of a single subject during an
 observed frame and time.
+}
+\details{
+The tibble or data.frame that is fed in must have variables that
+have subject names and axis names separated by underscores. Axis names must
+be one of the following: \code{position_length}, \code{position_width}, or
+\code{position_height}. Each of these three dimensions must be present in the
+data. Collectively, this means that names like \code{bird01_position_length}
+or \code{larry_position_height} are acceptible, but \code{bird01_x} or
+\code{bird01_length} are not.
 }
 \examples{
 library(pathviewR)

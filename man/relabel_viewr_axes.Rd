@@ -39,9 +39,9 @@ A tibble or data.frame with variables that have been renamed.
 }
 \description{
 Axes are commonly labeled as "x", "y", and "z" in recording software yet
-you may desire to relabel these as "length", "width", and "height".
-\code{relabel_viewr_axes()} is a function that takes a \code{viewr} object
-and allows the user to rename the variables.
+\code{pathviewR} functions require these to be labeled as "length", "width",
+and "height". \code{relabel_viewr_axes()} is a function that takes a
+\code{viewr} object and allows the user to rename its variables.
 }
 \details{
 Each argument must have a leading underscore ("_") and each

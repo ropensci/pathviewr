@@ -465,9 +465,8 @@ read_flydra_data <-
           # using kalman frame instead of observed frame
           frame = mat_read$kalman.frame,
           ## I actally don't know the time intervals yet, so I am just putting
-          ## in a dummy sequence. Not sure if starting the array at 1 will cause
-          ## issues...
-          time_sec = seq(from = 1, to = data_length, by = 1),
+          ## in a dummy sequence.
+          time_sec = seq(from = 0, to = (data_length - 1), by = 1),
           subject = subject_name,
           position_length = mat_read$kalman.x,
           position_width = mat_read$kalman.y,
