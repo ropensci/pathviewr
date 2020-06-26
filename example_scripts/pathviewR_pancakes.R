@@ -339,6 +339,38 @@ jul_29_percent74_span95_explicit <-
 identical(jul_29_percent74_span95, jul_29_percent74_span95_explicit)
 ## noice noice noice!!!
 
+## 2020-06-25: post re-write of the function, the above testing in this
+## subsection still produces valid results. Yay! That said, I want to to test
+## other parts of this. So what follows will be attempts to break how the
+## all-in-one works to showcase its behavior. Suggestions very welcome!!
+
+## Let's try a B.S. option for the standardization_option argument
+jul_29_steve <-
+  jul_29_path %>% import_and_clean_viewr(standardization_option = "steve")
+## Fails! And it gives informative error messages!
+
+## Let's try skipping the separate_trajectories step:
+jul_29_skipseparate <-
+  jul_29_path %>% import_and_clean_viewr(separate_trajectories = FALSE)
+## Fails! And it gives an informative error message!
+
+## Skip trimming tunnel outliers
+jul_29_skiptrim <-
+  jul_29_path %>% import_and_clean_viewr(trim_tunnel_outliers = FALSE)
+## Seems to work!
+
+## Skip trimming and get_full_trajectories
+jul_29_skiptrim_and_full <-
+  jul_29_path %>% import_and_clean_viewr(trim_tunnel_outliers = FALSE,
+                                         get_full_trajectories = FALSE)
+## Skipping two steps seems to work! Note, these two were chosen because doing
+## so won't break anything.
+
+## Obviously, skipping certain steps will break the pipeline or otherwise cause
+## problems. But users should be tasked to think carefully about what they're
+## implementing.
+
+
 #################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this
 ## package.
