@@ -18,6 +18,7 @@ import_and_clean_viewr <- function(file_name,
                                    gather_tunnel_data = TRUE,
                                    trim_tunnel_outliers = TRUE,
                                    standardization_option = "rotate_tunnel",
+                                   get_velocity = TRUE,
                                    select_x_percent = TRUE,
                                    separate_trajectories = TRUE,
                                    get_full_trajectories = TRUE,
@@ -121,6 +122,14 @@ import_and_clean_viewr <- function(file_name,
   }
 
   if (standardization_option == "none"){
+    obj <- obj
+  }
+
+  if (get_velocity == TRUE) {
+    obj <-
+      obj %>%
+      get_velocity(...)
+  } else {
     obj <- obj
   }
 

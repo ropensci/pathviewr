@@ -1,4 +1,4 @@
-## Last updated: 2020-06-25 VBB
+## Last updated: 2020-06-26 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -295,7 +295,7 @@ jul_29_rotated_velocity <-
   jul_29_rotated %>% get_velocity()
 
 ## This flexiblity even allows for non-standard column naming, but the downside
-## is that it can lead to weird scenarios:
+## is that it can also lead to weird scenarios:
 jul_29_unsimple_velocity <- ## using jul_29_unsimple bc it hasn't been relabeled
   jul_29_unsimple %>% get_velocity(time_col   = "time_sec",
                                    length_col = "device08_002_position_x",
@@ -314,6 +314,7 @@ jul_29_unsimple_velocity_fail <-
 ######################### one function to rule them all ########################
 ## Let's see if we can make an all-in-one that behaves nicely when the user
 ## would like to specify non-default values to the arguments.
+## 2020-06-26: added velocity to the all-in-one, right before select_x_percent()
 
 jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
@@ -332,6 +333,7 @@ jul_29_all_defaults_explicit <-
   gather_tunnel_data() %>%
   trim_tunnel_outliers() %>%
   rotate_tunnel() %>%
+  get_velocity() %>%
   select_x_percent() %>%
   separate_trajectories() %>%
   get_full_trajectories()
@@ -352,6 +354,7 @@ jul_29_percent74_explicit <-
   gather_tunnel_data() %>%
   trim_tunnel_outliers() %>%
   rotate_tunnel() %>%
+  get_velocity() %>%
   select_x_percent(desired_percent = 74) %>%
   separate_trajectories() %>%
   get_full_trajectories()
@@ -371,6 +374,7 @@ jul_29_percent74_span95_explicit <-
   gather_tunnel_data() %>%
   trim_tunnel_outliers() %>%
   rotate_tunnel() %>%
+  get_velocity() %>%
   select_x_percent(desired_percent = 74) %>%
   separate_trajectories() %>%
   get_full_trajectories(span = 0.95)
@@ -409,6 +413,11 @@ jul_29_skiptrim_and_full <-
 ## Obviously, skipping certain steps will break the pipeline or otherwise cause
 ## problems. But users should be tasked to think carefully about what they're
 ## implementing.
+
+## Also, opting for `add_to_viewr = FALSE` in get_velocity() will break the
+## pipeline right before select_x_percent().
+jul_29_dontaddvelocity <-
+  jul_29_path %>% import_and_clean_viewr(add_to_viewr = FALSE)
 
 
 #################################### roz2016 ###################################
