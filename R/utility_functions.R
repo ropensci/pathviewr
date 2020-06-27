@@ -1,14 +1,14 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-18 VBB
+## Last updated: 2020-06-25 MSA & VBB
 
 ############################### relabel_viewr_axes #############################
 
 #' Relabel the dimensions as length, width, and height
 #'
 #' Axes are commonly labeled as "x", "y", and "z" in recording software yet
-#' you may desire to relabel these as "length", "width", and "height".
-#' \code{relabel_viewr_axes()} is a function that takes a \code{viewr} object
-#' and allows the user to rename the variables.
+#' \code{pathviewR} functions require these to be labeled as "length", "width",
+#' and "height". \code{relabel_viewr_axes()} is a function that takes a
+#' \code{viewr} object and allows the user to rename its variables.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr}
 #' @param tunnel_length The dimension that corresponds to tunnel length. Set to
@@ -88,8 +88,10 @@ relabel_viewr_axes <- function(obj_name,
   }
 
   namez <- names(obj_name)
-  ## sub() doesn't seem to be pipe-friendly, so we'll do it this way...
-  namez <- sub(real,"_real",namez) # THIS STEP MUST COME BEFORE WIDTH RENAMING!
+  # THE FOLLOWING STEP MUST COME BEFORE WIDTH RENAMING! This is because the
+  # 'real' dimension in quaternion notation is denoted "w", which conflicts
+  # with the "w" in width
+  namez <- sub(real,"_real",namez)
   namez <- sub(tunnel_width,"_width",namez)
   namez <- sub(tunnel_length,"_length",namez)
   namez <- sub(tunnel_height,"_height",namez)
@@ -124,10 +126,19 @@ relabel_viewr_axes <- function(obj_name,
 #' observed frame and time.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr} that has
-#' been passed through \code{relabel_viewr_axes()}
+#' ideally been passed through \code{relabel_viewr_axes()}. See Details for
+#' formatting requirements.
 #' @param NA_drop Should rows with NAs be dropped? Defaults to \code{TRUE}
 #' @param ... Additional arguments that can be passed to other \code{pathviewR}
 #' functions such as \code{relabel_viewr_axes()} or \code{read_motive_csv()}
+#'
+#' @details The tibble or data.frame that is fed in must have variables that
+#' have subject names and axis names separated by underscores. Axis names must
+#' be one of the following: \code{position_length}, \code{position_width}, or
+#' \code{position_height}. Each of these three dimensions must be present in the
+#' data. Collectively, this means that names like \code{bird01_position_length}
+#' or \code{larry_position_height} are acceptible, but \code{bird01_x} or
+#' \code{bird01_length} are not.
 #'
 #' @return A tibble in "tidy" format which is formatted to have every row
 #' correspond to the position (and potentially rotation) of a single subject
@@ -165,9 +176,33 @@ gather_tunnel_data <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  ## NOTE: I know that the following 3 blocks of code can be written more
+  ## efficiently, but I would rather split them up explicitly so that a user
+  ## knows exactly which type of column is missing, given the error message
+  ## that is returned.
+
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
   }
 
   ## Get number of unique subjects
@@ -177,10 +212,10 @@ gather_tunnel_data <- function(obj_name,
   }
 
   ## And the unique subjects' names
-  rbeez <- attributes(obj_name)$subject_names_simple
+  subbiez <- attributes(obj_name)$subject_names_simple
 
   ## Start setting up a gathered data.frame
-  ## Just frame, time, and Rigid Bodies for now
+  ## Just frame, time, and subject for now
   ## Other columns will be appended
   gathered_data <- data.frame(
     frame = c(rep(obj_name$"frame", bodiez)),
@@ -190,7 +225,7 @@ gather_tunnel_data <- function(obj_name,
   rb <- NULL
   for (i in 1:bodiez){
     rb <- c(rb,
-            rep(rbeez[i], dim(obj_name)[1])
+            rep(subbiez[i], dim(obj_name)[1])
             )
   }
   gathered_data$subject <- rb
@@ -201,19 +236,19 @@ gather_tunnel_data <- function(obj_name,
       obj_name[,grepl("position_length", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$position_lengths <- tmp_len$value
+    gathered_data$position_length <- tmp_len$value
     ## Widths
     tmp_wid <-
       obj_name[,grepl("position_width", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$position_widths <- tmp_wid$value
+    gathered_data$position_width <- tmp_wid$value
     ## Heights
     tmp_hei <-
       obj_name[,grepl("position_height", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$position_heights <- tmp_hei$value
+    gathered_data$position_height <- tmp_hei$value
 
   ## Gather rotations
     ## Lengths
@@ -221,19 +256,19 @@ gather_tunnel_data <- function(obj_name,
       obj_name[,grepl("rotation_length", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_lengths <- tmp_rotl$value
+    gathered_data$rotation_length <- tmp_rotl$value
     ## Widths
     tmp_rotw <-
       obj_name[,grepl("rotation_width", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_widths <- tmp_rotw$value
+    gathered_data$rotation_width <- tmp_rotw$value
     ## Heights
     tmp_roth <-
       obj_name[,grepl("rotation_height", colnames(obj_name),
                       ignore.case = FALSE)] %>%
       tidyr::gather()
-    gathered_data$rotation_heights <- tmp_roth$value
+    gathered_data$rotation_height <- tmp_roth$value
     ## W
     tmp_rotw <-
       obj_name[,grepl("rotation_real", colnames(obj_name),
@@ -283,9 +318,6 @@ gather_tunnel_data <- function(obj_name,
 ## I highly recommend plotting data beforehand and checking that estimates
 ## make sense!!!!!!
 
-## NOTE TBD: make an option in the function to let data pass if there are
-## no outliers
-
 trim_tunnel_outliers <- function(obj_name,
                                  lengths_min = 0,
                                  lengths_max = 3,
@@ -300,35 +332,56 @@ trim_tunnel_outliers <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "renamed_tunnel")) {
-    stop("Please rename axes via relabel_viewr_axes() prior to using this")
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
   }
 
-  ## Check that the data columns have been gathered
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("Please use gather_tunnel_data() to gather columns first")
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
   }
 
   ## Filter by heights first, since extremes in this axis tend to be the
   ## noisiest
   filt_heights <-
     obj_name %>%
-    dplyr::filter(position_heights < heights_max) %>%
-    dplyr::filter(position_heights > heights_min)
+    dplyr::filter(position_height < heights_max) %>%
+    dplyr::filter(position_height > heights_min)
 
   ## Now filter by lengths
   filt_lengths <-
     filt_heights %>%
-    dplyr::filter(position_lengths < lengths_max) %>%
-    dplyr::filter(position_lengths > lengths_min)
+    dplyr::filter(position_length < lengths_max) %>%
+    dplyr::filter(position_length > lengths_min)
 
   ## Finally filter by widths; this may not change anything since outliers
   ## in this axis seem to be rare
   filt_widths <-
     filt_lengths %>%
-    dplyr::filter(position_widths < widths_max) %>%
-    dplyr::filter(position_widths > widths_min) %>%
+    dplyr::filter(position_width < widths_max) %>%
+    dplyr::filter(position_width > widths_min) %>%
     tibble::as_tibble()
 
   ## Add metadata as attributes()
@@ -385,10 +438,37 @@ rotate_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "artifacts_removed")) {
-    stop("Please use trim_tunnel_outliers() prior to using this")
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
   }
+
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
 
   ## Now compute the approximate midpoints of each perch
   ## Perch 1 first
@@ -463,16 +543,16 @@ rotate_tunnel <- function(obj_name,
 
   ## Now apply a translation to the original data set
   ## (Translation for height in next block of code)
-  obj_name$position_lengths <- obj_name$position_lengths - tunnel_centerpoint[1]
-  obj_name$position_widths <- obj_name$position_widths - tunnel_centerpoint[2]
+  obj_name$position_length <- obj_name$position_length - tunnel_centerpoint[1]
+  obj_name$position_width <- obj_name$position_width - tunnel_centerpoint[2]
 
   # Now apply a rotation to the translated data set
-  obj_new$position_lengths <- (obj_name$position_lengths*cos(-1*alpharad))-
-    (obj_name$position_widths)*sin(-1*alpharad)
-  obj_new$position_widths <- (obj_name$position_lengths*sin(-1*alpharad))+
-    (obj_name$position_widths)*cos(-1*alpharad)
+  obj_new$position_length <- (obj_name$position_length*cos(-1*alpharad))-
+    (obj_name$position_width)*sin(-1*alpharad)
+  obj_new$position_width <- (obj_name$position_length*sin(-1*alpharad))+
+    (obj_name$position_width)*cos(-1*alpharad)
   ## Height will simply be translated
-  obj_new$position_heights <- obj_name$position_heights - tunnel_centerpoint[3]
+  obj_new$position_height <- obj_name$position_height - tunnel_centerpoint[3]
   ## (all other variables should remain the same)
 
   ## Coerce to tibble
@@ -486,12 +566,14 @@ rotate_tunnel <- function(obj_name,
   attr(obj_new,"tunnel_centerpoint_original") <- tunnel_centerpoint
   attr(obj_new,"rotation_degrees") <- tunnel_angle
   attr(obj_new,"rotation_radians") <- alpharad
-  attr(obj_new,"perch1_current_midpoint") <- perch1_trans_prime
-  attr(obj_new,"perch2_current_midpoint") <- perch2_trans_prime
+  attr(obj_new,"perch1_midpoint_current") <- perch1_trans_prime
+  attr(obj_new,"perch2_midpoint_current") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
   attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "tunnel_rotated")
+    c(attr(obj_name,"pathviewR_steps"), c("tunnel_rotated", # rotated
+                                          "tunnel_centered") # centered
+    )
 
   ## Export
   return(obj_new)
@@ -502,8 +584,7 @@ rotate_tunnel <- function(obj_name,
 ## Alternative to rotate_tunnel. Writing a version here where perches (or other
 ## landmarks) are coded as rigid bodies from the get-go.
 ##
-## I anticipate that the run order will actually now go:
-## read -> relabel -> standardize -> gather -> trim -> selectX -> etcetc
+## This may get consolidated with rotate_tunnel() at some point...
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -515,28 +596,69 @@ standardize_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
+  }
+
+  ## Check that "position_length" exists in at least one column
+  if (!any(grepl("position_length",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_length column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_width" exists in at least one column
+  if (!any(grepl("position_width",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_width column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+  ## Check that "position_height" exists in at least one column
+  if (!any(grepl("position_height",
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("position_height column(s) are missing.
+Please use relabel_viewr_axes() to rename variables as necessary.")
+  }
+
+
+  ## ADD CHECK THAT perch1position length < perch2 position_length; otherwise,
+  ## the rotation will apply to a mirror-image of the tunnel
+
+  ## Tunnels are standardized via information from perch positions. We think
+  ## that the most reasonable esimate for perches' positions are their median
+  ## values. So the next few blocks of code will determine the median positions
+  ## of each perch and then estimate the centerpoint of the tunnel to be between
+  ## the two perches (i.e. mean of each set of perch positions).
+
+  ## Make a data.frame of landmark_one (i.e. perch #1)'s positions
   landmark1_med_pos <- obj_name %>%
-    dplyr::filter(rigid_body == landmark_one) %>% # you mean dowel01?
-    dplyr::summarise(med_length = median(position_lengths),
-                     med_width = median(position_widths),
-                     med_height = median(position_heights)) %>%
-    as.data.frame() # make df of just median values of perches
+    dplyr::filter(subject == landmark_one) %>%
+    dplyr::summarise(med_length = median(position_length),
+                     med_width = median(position_width),
+                     med_height = median(position_height)) %>%
+    as.data.frame()
 
   landmark2_med_pos <- obj_name %>%
-    dplyr::filter(rigid_body == landmark_two) %>%
-    dplyr::summarise(med_length = median(position_lengths),
-                     med_width = median(position_widths),
-                     med_height = median(position_heights)) %>%
+    dplyr::filter(subject == landmark_two) %>%
+    dplyr::summarise(med_length = median(position_length),
+                     med_width = median(position_width),
+                     med_height = median(position_height)) %>%
     as.data.frame()
 
   ## Now approximate the centerpoint of the tunnel
   tunnel_centerpoint <-
     rbind(landmark1_med_pos, landmark2_med_pos) %>% colMeans()
-  # binding dfs by binding rows not columns (cbind)
 
   ## Define an arbitrary point that is in line with the tunnel center on the
   ## width and height axes but an arbitrary distance (say 1 m) away. This will
-  ## be necessary for the angular calculation.
+  ## later be necessary for the angular calculation.
   tunnel_arbitrary <- c(tunnel_centerpoint[1] - 1,
                         tunnel_centerpoint[2],
                         tunnel_centerpoint[3])
@@ -566,7 +688,9 @@ standardize_tunnel <- function(obj_name,
   perch2_midpoint_translated <- as.numeric(
     as.numeric(landmark2_med_pos) - tunnel_centerpoint)
   tunnel_centerpoint_translated <- tunnel_centerpoint - tunnel_centerpoint
+  ## tunnel_centerpoint_translated should be (0, 0, 0)
   tunnel_arbitrary_translated <- tunnel_arbitrary - tunnel_centerpoint
+  ## tunnel_abitrary_translated should be (-1, 0, 0)
 
   ## Compute the new locations of perch midpoint estimates
   perch1_trans_prime <- c((perch1_midpoint_translated[1]*cos(-1*alpharad))-
@@ -591,16 +715,16 @@ standardize_tunnel <- function(obj_name,
 
   ## Now apply a translation to the original data set
   ## (Translation for height in next block of code)
-  obj_name$position_lengths <- obj_name$position_lengths - tunnel_centerpoint[1]
-  obj_name$position_widths <- obj_name$position_widths - tunnel_centerpoint[2]
+  obj_name$position_length <- obj_name$position_length - tunnel_centerpoint[1]
+  obj_name$position_width <- obj_name$position_width - tunnel_centerpoint[2]
 
   # Now apply a rotation to the translated data set
-  obj_new$position_lengths <- (obj_name$position_lengths*cos(-1*alpharad))-
-    (obj_name$position_widths)*sin(-1*alpharad)
-  obj_new$position_widths <- (obj_name$position_lengths*sin(-1*alpharad))+
-    (obj_name$position_widths)*cos(-1*alpharad)
+  obj_new$position_length <- (obj_name$position_length*cos(-1*alpharad))-
+    (obj_name$position_width)*sin(-1*alpharad)
+  obj_new$position_width <- (obj_name$position_length*sin(-1*alpharad))+
+    (obj_name$position_width)*cos(-1*alpharad)
   ## Height will simply be translated
-  obj_new$position_heights <- obj_name$position_heights - tunnel_centerpoint[3]
+  obj_new$position_height <- obj_name$position_height - tunnel_centerpoint[3]
   ## (all other variables should remain the same)
 
   ## Coerce to tibble
@@ -609,24 +733,26 @@ standardize_tunnel <- function(obj_name,
   ## Add new info to attributes that lists the original (approximate) perch
   ## positions, tunnel center point, angle of rotation, and new (approxmate)
   ## perch positions after rotation
-  attr(obj_new,"perch1_midpoint_original") <- as.numeric(landmark1_med_pos)
-  attr(obj_new,"perch2_midpoint_original") <- as.numeric(landmark2_med_pos)
+  attr(obj_new,"landmark1_midpoint_original") <- as.numeric(landmark1_med_pos)
+  attr(obj_new,"landmark2_midpoint_original") <- as.numeric(landmark2_med_pos)
   attr(obj_new,"tunnel_centerpoint_original") <- tunnel_centerpoint
   attr(obj_new,"rotation_degrees") <- tunnel_angle
   attr(obj_new,"rotation_radians") <- alpharad
-  attr(obj_new,"perch1_current_midpoint") <- perch1_trans_prime
-  attr(obj_new,"perch2_current_midpoint") <- perch2_trans_prime
+  attr(obj_new,"landmark1_midpoint_current") <- perch1_trans_prime
+  attr(obj_new,"landmark2_midpoint_current") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
   attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "tunnel_rotated")
+    c(attr(obj_name,"pathviewR_steps"), c("tunnel_rotated", # rotated
+                                          "tunnel_centered") # centered
+    )
 
   ## Export
   return(obj_new)
 }
 
 
-############################### select_X_percent ###############################
+############################### select_x_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
 
 select_x_percent <- function(obj_name,
@@ -638,16 +764,18 @@ select_x_percent <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  # ## Check that its axes have been renamed
-  # if (!any(class(obj_name) == "tunnel_rotated")) {
-  #   stop("Please use rotate_tunnel() to align data prior to using this")
-  # }
+  ## Check that it's undergone one of our centering steps
+  if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
+    warning("This viewr object does not seem to have been passed through
+one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
+or center_tunnel(). Please proceed with extreme caution.")
+  }
 
   ## Convert percent to proportion
   prop <- desired_percent/100
 
   ## Get tunnel length
-  tunnel_range <- range(obj_name$position_lengths)
+  tunnel_range <- range(obj_name$position_length)
   tunnel_length <- sum(abs(tunnel_range[1]), abs(tunnel_range[2]))
 
   ## Determine the range of lengths that will be needed
@@ -658,8 +786,8 @@ select_x_percent <- function(obj_name,
   ## Now filter by lengths
   obj_name <-
     obj_name %>%
-    dplyr::filter(position_lengths < lengths_needed) %>%
-    dplyr::filter(position_lengths > (-1 * lengths_needed))
+    dplyr::filter(position_length < lengths_needed) %>%
+    dplyr::filter(position_length > (-1 * lengths_needed))
 
   ## Coerce to tibble
   obj_name <- tibble::as_tibble(obj_name)
@@ -749,8 +877,8 @@ get_full_trajectories <- function(obj_name,
     obj_name %>%
     dplyr::group_by(traj_id) %>%
     dplyr::summarise(traj_length = n(),
-                     start_length = position_lengths[1],
-                     end_length = position_lengths[traj_length],
+                     start_length = position_length[1],
+                     end_length = position_length[traj_length],
                      length_diff = abs(end_length - start_length),
                      start_length_sign = sign(start_length),
                      end_length_sign = sign(end_length))
@@ -763,8 +891,8 @@ get_full_trajectories <- function(obj_name,
   ## If selected lengths have been stripped away, compute the maximum
   ## length again
   if (is.null(attr(obj_name, "selected_tunnel_length"))) {
-    max_length <- sum(abs(range(obj_name$position_lengths)[1]),
-                      abs(range(obj_name$position_lengths)[2]))
+    max_length <- sum(abs(range(obj_name$position_length)[1]),
+                      abs(range(obj_name$position_length)[2]))
   } else {
     # Otherwise, use the selected_tunnel_length
     max_length <- attr(obj_name,"selected_tunnel_length")
@@ -801,74 +929,6 @@ get_full_trajectories <- function(obj_name,
 }
 
 
-############################### all_in_one_function ############################
-## Use all of the preceding functions to construct an all-in-one function for
-## ease of use. Unsure if this is the best way to go, but let's give it a try
-## anyway.
-
-## NOTE 2020-06-17 We will need to accomodate for future import functions such
-## as read_flydra_mat() (or whatever it will be named). Ideally this will be
-## autodetected based on file type and switched internally.
-
-import_and_clean_viewr <- function(file_name,
-                                  file_id = NA,
-                                  ...){
-
-  ## Import checks
-  if (missing(file_name))
-    stop("A file_name is required")
-  if (!file.exists(file_name))
-    stop(paste0("File ", file_name, " not found!"))
-
-  ## ADD CHECK HERE FOR FILETYPE (CSV OR MAT) AND THEN HANDLE ACCORDINGLY
-
-  ## Check that any arguments supplied are valid; return a warning if not
-  valid_args <- c(
-    ## read_motive_csv()
-    "file_name", "file_id",
-    ## relabel_viewr_axes()
-    "tunnel_length", "tunnel_width", "tunnel_height", "real",
-    ## trim_tunnel_outliers()
-    "lengths_min", "lengths_max",
-    "widths_min", "widths_max",
-    "heights_min", "heights_max",
-    ## rotate_tunnel()
-    "all_heights_min", "all_heights_max",
-      ## perch 1 = left (near length = 0); perch 2 = right
-    "perch1_len_min", "perch1_len_max",
-    "perch2_len_min", "perch2_len_max",
-    "perch1_wid_min", "perch1_wid_max",
-    "perch2_wid_min", "perch2_wid_max",
-    ## select_x_percent()
-    "desired_percent",
-    ## separate_trajectories()
-    "max_frame_gap",
-    ## get_full_trajectories()
-    "span"
-  )
-  arg_names <- names(list(...))
-  if (!all(arg_names %in% valid_args)) {
-    warning("One or more provided arguments does not match known arguments.
-            \nThese will not be used.")
-  }
-
-  ## Run it through the pipe
-  obj <-
-    file_name %>%
-    read_motive_csv(...) %>%
-    relabel_viewr_axes(...) %>%
-    gather_tunnel_data(...) %>%
-    trim_tunnel_outliers(...) %>%
-    rotate_tunnel(...) %>%
-    select_x_percent(...) %>%
-    separate_trajectories(...) %>%
-    get_full_trajectories(...)
-
-  ## Export
-  return(obj)
-}
-
-
 ############################### remove birds with too few flights ###############################
 rmbird_byflightnum <- function(obj_name,
                                flightnum = 5,
@@ -896,42 +956,18 @@ rmbird_byflightnum <- function(obj_name,
 }
 
 
-############################### scale traj avgs by individual ###############################
-## Goal here is to elminate individual bias for one side of tunnel vs. the other
-## Not sure yet if this should be done separately for each pair of treatments or for the bird as a whole across all treatments
-## if as a whole, would want to look for shifts in biases over time?
-avgnscale_bybird <- function(obj_name,
-                             ID){
-
-  CD_bird01_scale <- obj_name %>%
-    separate(rb_traj, c("bird", "traj")) %>%
-    filter(bird == ID)
-  CD_bird01_scale$traj_scale <- scale(CD_bird01_scale$traj_avg, center = T, scale = F)
-  CD_bird01_avgC <- CD_bird01_scale %>%
-    filter(treatment == "lat C") %>%
-    summarise(bird_avg = mean (traj_scale)) %>%
-    mutate(treatment = "lat C", bird = ID)
-  CD_bird01_avgD <- CD_bird01_scale %>%
-    filter(treatment == "lat D") %>%
-    summarise(bird_avg = mean (traj_scale)) %>%
-    mutate(treatment = "lat D", bird = ID)
-
-  rbind(CD_bird01_avgC,CD_bird01_avgD)
-}
-
-
 ############################### plot by bird ###############################
 ## Generate plots of each individual--hoping to loop to auto go through all birds in each treatment...
 
 plot_by_bird_manually <- function(obj_name){
 
   paths_obj_name <- ggplot(obj_name) +
-    geom_point(aes(position_lengths, position_widths, colour = treatment), alpha = .1, show.legend = FALSE) +
+    geom_point(aes(position_length, position_width, colour = treatment), alpha = .1, show.legend = FALSE) +
     theme(legend.position = "none") +
     theme_tufte()
 
   hist_obj_name <- ggplot(obj_name) +
-    geom_histogram(aes(position_widths, fill = treatment), alpha = .5, position = "identity", show.legend = FALSE) +
+    geom_histogram(aes(position_width, fill = treatment), alpha = .5, position = "identity", show.legend = FALSE) +
     coord_flip() +
     theme(legend.position = "none") +
     theme_tufte()
@@ -951,22 +987,22 @@ purrplot_by_bird <- function(obj_name,
                              treatment,
                              ...){
   #set axes limits based on data
-  height_limits <- c(max(abs(range(obj_name$position_heights)))*-1,
-                     max(abs(range(obj_name$position_heights))))
-  width_limits <- c(max(abs(range(obj_name$position_widths)))*-1,
-                    max(abs(range(obj_name$position_widths))))
+  height_limits <- c(max(abs(range(obj_name$position_height)))*-1,
+                     max(abs(range(obj_name$position_height))))
+  width_limits <- c(max(abs(range(obj_name$position_width)))*-1,
+                    max(abs(range(obj_name$position_width))))
 
   #for top view (change in lateral position)
   top_view <- obj_name %>%
     group_by(rigid_body) %>%
     nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_lengths, position_widths, colour = treatment)) +
+    mutate(paths = map(data, ~ggplot(., aes(position_length, position_width, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
                          ylim(width_limits) +
                          geom_hline(yintercept = 0, linetype = "dotted") +
                          coord_fixed(ratio = 1) +
                          theme_tufte()),
-           hist = map(data, ~ggplot(., aes(x = position_widths, fill = treatment)) +
+           hist = map(data, ~ggplot(., aes(x = position_width, fill = treatment)) +
                         geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
                         xlim(width_limits) +
                         geom_vline(xintercept = 0, linetype = "dotted") +
@@ -988,13 +1024,13 @@ purrplot_by_bird <- function(obj_name,
   elev_view <- obj_name %>%
     group_by(rigid_body) %>%
     nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_lengths, position_heights, colour = treatment)) +
+    mutate(paths = map(data, ~ggplot(., aes(position_length, position_height, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
                          ylim(height_limits) +
                          geom_hline(yintercept = 0, linetype = "dotted") +
                          coord_fixed(ratio = 1) +
                          theme_tufte()),
-           hist = map(data, ~ggplot(., aes(position_heights, fill = treatment)) +
+           hist = map(data, ~ggplot(., aes(position_height, fill = treatment)) +
                         geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
                         xlim(height_limits) +
                         geom_vline(xintercept = 0, linetype = "dotted") +
@@ -1040,7 +1076,7 @@ select_x_percent_M <- function(obj_name,
   prop <- desired_percent/100
 
   ## Get tunnel length
-  tunnel_range <- range(obj_name$position_lengths)
+  tunnel_range <- range(obj_name$position_length)
   tunnel_length <- sum(abs(tunnel_range[1]), abs(tunnel_range[2]))
 
   ## Determine the range of lengths that will be needed
@@ -1052,8 +1088,8 @@ select_x_percent_M <- function(obj_name,
   ## Now filter by lengths
   obj_name <-
     obj_name %>%
-    dplyr::filter(position_lengths < midpoint + lengths_needed) %>%
-    dplyr::filter(position_lengths > (midpoint - lengths_needed)) %>%
+    dplyr::filter(position_length < midpoint + lengths_needed) %>%
+    dplyr::filter(position_length > (midpoint - lengths_needed)) %>%
     tibble::as_tibble()
 
   ## Leave a note about the proportion used
@@ -1109,76 +1145,3 @@ determine_fg_M <- function(obj_name,
   return(list(mfg_tib, mfg_plot))
 
 }
-
-
-############################# get_full_trajectories_M ##########################
-## Specify a minimum span of the (selected) tunnel and then keep trajectories
-## that are wider than that span and go from one end to the other
-
-get_full_trajectories_M <- function(obj_name,
-                                    span = 0.8,
-                                    ...){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
-    stop("Please use separate_trajectories() prior to using this")
-  }
-
-  summary_obj <-
-    obj_name %>%
-    group_by(traj_id) %>%
-    summarise(traj_length = n(),
-              start_length = position_lengths[1],
-              end_length = position_lengths[traj_length],
-              length_diff = abs(end_length - start_length),
-              start_length_sign = sign(start_length),
-              end_length_sign = sign(end_length))
-
-  ## Define rightwards as starting at negative length values and going
-  ## towards positive
-  summary_obj$direction <-
-    ifelse(summary_obj$start_length < 0, "rightwards", "leftwards")
-
-  ## If selected lengths have been stripped away, compute the maximum
-  ## length again
-  if (is.null(attr(obj_name, "selected_tunnel_length"))) {
-    max_length <- sum(abs(range(obj_name$position_lengths)[1]),
-                      abs(range(obj_name$position_lengths)[2]))
-  } else {
-    # Otherwise, use the selected_tunnel_length
-    max_length <- attr(obj_name,"selected_tunnel_length")
-  }
-
-  ## Filter data by the ONE criteria
-  filt_summary <-
-    summary_obj %>%
-    group_by(traj_id) %>%
-    ## Each trajectory must span a minimum porportion of the selected tunnel
-    dplyr::filter(length_diff > (span * max_length))
-
-  obj_continuous <-
-    obj_name %>%
-    dplyr::filter(traj_id %in% filt_summary$traj_id)
-
-  ## Join the columns to add in direction
-  obj_defined <-
-    right_join(obj_continuous, filt_summary, by = "traj_id") %>%
-    tibble::as_tibble()
-
-  ## Leave a note about the span used
-  attr(obj_defined, "span") <- span
-
-  ## Leave a note that full trajectories were retained
-  attr(obj_defined,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "full_trajectories_M")
-
-  ## Export
-  return(obj_defined)
-
-}
-

@@ -1,21 +1,55 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-02 VBB
+## Last updated: 2020-06-26 VBB
 
-################################ get_rb_velocity ###############################
-## Get instantaneous velocity for rigid body objects
+################################## get_velocity ################################
+## Get instantaneous velocity for all subjects
+##
+## do we need to adjust to account for frame/time gaps?
 
-get_rb_velocity <- function(obj_name,
-                            time_col,
-                            x_col,
-                            y_col,
-                            z_col,
-                            ...) {
-  ## Check that it's a motiv object
-  if (!any(class(obj_name) == "motiv")) {
-    stop("Input data should be of class `motiv`")
+get_velocity <- function(obj_name,
+                         time_col = "time_sec",
+                         length_col = "position_length",
+                         width_col = "position_width",
+                         height_col = "position_height",
+                         add_to_viewr = TRUE,
+                         ...) {
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
   }
 
-  df <- as.data.frame(obj_name) # convert back to standard df?
+  ## Argument checks
+  if (!any(grepl(time_col,
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("time_col not found.
+Please check that you have entered the name of the time variable correctly.")
+  }
+
+  if (!any(grepl(length_col,
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("length_col not found.
+Please check that you have entered the name of the length variable correctly.")
+  }
+
+  if (!any(grepl(width_col,
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("width_col not found.
+Please check that you have entered the name of the width variable correctly.")
+  }
+
+  if (!any(grepl(height_col,
+                 colnames(obj_name),
+                 ignore.case = FALSE))) {
+    stop("height_col not found.
+Please check that you have entered the name of the height variable correctly.")
+  }
+
+  ## Convert to data.frame for easier column extraction
+  df <- as.data.frame(obj_name)
 
   ## Create vector of time differences
   time_diffs <- diff(df[,time_col])
@@ -24,18 +58,37 @@ get_rb_velocity <- function(obj_name,
   ## First entry is set to zero because calculating velocity depends on previous
   ## step. We may opt change this to `NA` later on so that these can be filtered
   ## easily.
-  x_inst <- c(0, diff(df[,x_col]) / time_diffs)
-  y_inst <- c(0, diff(df[,y_col]) / time_diffs)
-  z_inst <- c(0, diff(df[,z_col]) / time_diffs)
+  length_inst <- c(0, diff(df[,length_col]) / time_diffs)
+  width_inst  <- c(0, diff(df[,width_col])  / time_diffs)
+  height_inst <- c(0, diff(df[,height_col]) / time_diffs)
 
   ## Calculate object velocity
-  vel <- sqrt((x_inst ^ 2) + (y_inst ^ 2) + (z_inst ^ 2))
+  vel <- sqrt((length_inst ^ 2) + (width_inst ^ 2) + (height_inst ^ 2))
 
   ## Combine
-  res <- tibble::tibble(velocity = vel, x_inst, y_inst, z_inst)
+  res <- tibble::tibble(velocity = vel,
+                        length_inst_vel = length_inst,
+                        width_inst_vel = width_inst,
+                        height_inst_vel = height_inst
+                        )
+
+  ## If add_to_viewr is TRUE, add it as new columns to the input viewr object.
+  ## If add_to_viewr is FALSE, export the standalone (res) tibble
+  if (add_to_viewr == TRUE){
+    ## Add the new columns and generate a new viewr object
+    obj_new <- bind_cols(obj_name, res)
+
+    ## Leave a note that we computed velocity via get_velocity()
+    attr(obj_new,"pathviewR_steps") <-
+      c(attr(obj_name,"pathviewR_steps"), "velocity_computed")
+
+  } else { ## if FALSE
+    obj_new <- res
+  }
 
   ## Output
-  return(res)
+  return(obj_new)
+
 }
 
 
