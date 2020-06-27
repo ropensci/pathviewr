@@ -51,6 +51,10 @@ import_and_clean_viewr <- function(file_name,
     "perch2_len_min", "perch2_len_max",
     "perch1_wid_min", "perch1_wid_max",
     "perch2_wid_min", "perch2_wid_max",
+    ## get_velocity()
+    "time_col",
+    "length_col", "width_col", "height_col",
+    "add_to_viewr",
     ## select_x_percent()
     "desired_percent",
     ## separate_trajectories()
