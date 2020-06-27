@@ -28,6 +28,7 @@ package.check <- lapply(packages, # applies the function to a list and returns
                           }
                         }
 )
+## (EP) on my machine, R.matlab didn't auto-install/load like the others...
 
 
 ################################ script sourcing ###############################
@@ -39,13 +40,15 @@ package.check <- lapply(packages, # applies the function to a list and returns
 devtools::load_all()
 
 ## Now all of our functions are available to us. Pretty nifty
+## (EP) This means our functions are available in the background just like they
+## would be if we loaded any other package like dplyr right? can delete if true
 
 ################################# data import ##################################
 ## Using example file from Melissa
 jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
 ## New import function. Let VBB know if there are issues!!!
-jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
+jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE) #all good!
 
 ## Try without simplifying marker naming (should be no change for this file)
 jul_29_unsimple <- read_motive_csv(jul_29_path, simplify_marker_naming = FALSE)
