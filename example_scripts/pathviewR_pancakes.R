@@ -242,6 +242,15 @@ jul_29_selected <-
 ##
 ## EDIT 2020-06-17 $sub_traj now has concatenation of subject IDs and
 ## trajectory IDs (formerly $rb_traj)
+##
+## SEMANTIC SUGGESTION 2020-06-27 shouldn't max_frame_gap represent the largest
+## permissible frame gap that is still considered part of the same trajectory?
+## i.e. trajectories are separated if max_frame_gap = n + 1.
+## Eg. max_frame_gap = 0 would separate trajectories for any gaps in the data
+## Similarly, max_frame_gap = 9 should include gaps of 9, but gaps of 10 would
+## be separated into multiple trajectories.
+## Perhaps renaming the argument to separate_at = n or something similar would
+## make this more clear.
 
 ## Trajectories are defined when 5 frames in a row are missing
 jul_29_labeled <-
