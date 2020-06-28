@@ -176,9 +176,13 @@ calc_vis_angle_mod <- function(obj_name,
                                stim_param_pos,
                                stim_param_neg){
 
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
 
-  ## Part 1. Translate vertex_angle from degrees to radians for trig functions
-  vertex_angle <- (vertex_angle * pi) / 180
+  ## Translate vertex_angle from degrees to radians for trig functions
+  deg2rad(vertex_angle)
 
 
   ## Part 2. Introduce variables for height_2_vertex and height_2_screen
@@ -230,9 +234,9 @@ calc_vis_angle_mod <- function(obj_name,
            # radians
            vis_angle_neg_rad =  2*atan(stim_param_neg/(2*obj_name$min_dist_neg)),
            # radians
-           vis_angle_pos_deg =  vis_angle_pos_rad * (180 / pi),
+           vis_angle_pos_deg =  rad2deg(vis_angle_pos_rad),
            # convert to deg
-           vis_angle_neg_deg =  vis_angle_neg_rad * (180 / pi))
+           vis_angle_neg_deg =  rad2deg(vis_angle_neg_rad))
   # convert to deg
 
   return(obj_name)
@@ -251,9 +255,12 @@ calc_vis_angle_mod.1 <- function(obj_name,
                                  stim_param_pos,
                                  stim_param_neg){
 
-
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
   ## Part 1. Translate vertex_angle from degrees to radians for trig functions
-  vertex_angle <- (vertex_angle * pi) / 180
+  deg2rad(vertex_angle)
 
 
   ## Part 2. Introduce variables for height_2_vertex and height_2_screen
@@ -302,8 +309,8 @@ calc_vis_angle_mod.1 <- function(obj_name,
   vis_angle_neg_rad <- 2 * atan(stim_param_neg / (2 * min_dist_neg)) # radians
 
   obj_name <- obj_name %>%
-    mutate(vis_angle_pos_deg =  vis_angle_pos_rad * (180 / pi), # convert to deg
-           vis_angle_neg_deg =  vis_angle_neg_rad * (180 / pi)) # convert to deg
+    mutate(vis_angle_pos_deg =  rad2deg(vis_angle_pos_rad), # convert to deg
+           vis_angle_neg_deg =  rad2deg(vis_angle_neg_rad)) # convert to deg
 
   return(obj_name)
 }
