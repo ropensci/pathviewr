@@ -819,11 +819,6 @@ separate_trajectories <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  # ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_rotated")) {
-    stop("Please use rotate_tunnel() to align data prior to using this")
-  }
-
   obj_name$frame -> framez
   df <-
     framez %>%
