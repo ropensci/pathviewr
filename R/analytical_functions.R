@@ -86,6 +86,34 @@ Please check that you have entered the name of the height variable correctly.")
     obj_new <- res
   }
 
+  #let's add some threshold arguments to set biologically reasonable limits
+  #velocity_min
+  if (is.numeric(velocity_min)){
+    ## filter velocity
+    obj_new <- obj_new %>%
+      filter(velocity > velocity_min)
+
+    ## Leave a note set velocity_min via get_velocity()
+    #leave note even if not added to viewr object?
+    attr(obj_new,"velocity_min") <- velocity_min
+
+  } else { ## if FALSE
+    obj_new <- obj_new
+  }
+  #velocity_max
+  if (is.numeric(velocity_max)){
+    ## filter velocity
+    obj_new <- obj_new %>%
+      filter(velocity < velocity_max)
+
+    ## Leave a note set velocity_min via get_velocity()
+    #leave note even if not added to viewr object?
+    attr(obj_new,"velocity_max") <- velocity_max
+
+  } else { ## if FALSE
+    obj_new <- obj_new
+  }
+
   ## Output
   return(obj_new)
 
