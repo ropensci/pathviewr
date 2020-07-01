@@ -1,4 +1,4 @@
-## Last updated: 2020-06-26 VBB
+## Last updated: 2020-07-01 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -579,88 +579,20 @@ library(rhdf5)
 ## organized as a data.frame or tibble already, but what they will need explicit
 ## instruction on is what & how metadata should be included & formatted.
 
-## 2020-06-23
 ## Let's plot in 3D
+open3d()
 rgl::plot3d(x = ex1_h5_mat$kalman.x,
             y = ex1_h5_mat$kalman.y,
-            z = ex1_h5_mat$kalman.z,
-            aspect = 1)
+            z = ex1_h5_mat$kalman.z)
+aspect3d("iso")
 ## Perches seems to be on oppose ends of x-axis and z-axis seems to correspond
 ## to height (up vs. down).
 
-## Let's start making what will ultimately be the flydra import function. This
-## should be considered a work in progress until it is imported into the
-## data_import_functions.R script. Porting it over there will imply that it has
-## reached sufficient maturity.
-
-read_flydra_data <-
-  function(mat_file,
-           file_id = NA,
-           subject_name,
-           ...) {
-
-    ## Import checks
-    if (missing(mat_file))
-      stop("A mat_file is required")
-    if (!file.exists(mat_file))
-      stop(paste0("File ", mat_file, " not found!"))
-
-    ## For now, we will assume that only one subject (one individual
-    ## hummingbird) is present in the data. Since these subject names were not
-    ## stored in the flydra data or accompanying H5 files (as far as I can see)
-    ## this will need to be supplied by the user
-    if (missing(subject_name))
-      stop("A subject_name is required")
-
-    ## Match file_id to mat_file if no file_id is supplied
-      if (is.na(file_id)) file_id <-
-          basename(mat_file)
-
-    ## Get maketime of file (may not be accurate...use with caution!)
-      mtime <-
-        file.info(mat_file)$mtime
-
-    ## Read the MAT file via R.matlab::readMat()
-      mat_read <-
-        R.matlab::readMat(mat_file)
-
-    ## The data we'd like to tibble-ize is spread across various components
-    ## of the list. We need to put it together manually.
-
-    ## First get the dimensions of the data
-      data_length <- length(mat_read$kalman.y)
-
-    ## Now put the data together
-      data <-
-        tibble(
-          # using kalman frame instead of observed frame
-          frame = mat_read$kalman.frame,
-          ## I actally don't know the time intervals yet, so I am just putting
-          ## in a dummy sequence.
-          time_sec = seq(from = 0, to = (data_length - 1), by = 1),
-          subject = subject_name,
-          position_length = mat_read$kalman.x,
-          position_width = mat_read$kalman.y,
-          position_height = mat_read$kalman.z
-        )
-
-    ## Add metadata as attributes()
-    attr(data, "pathviewR_steps") <-
-      c("viewr", "renamed_tunnel", "gathered_tunnel")
-      ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
-      ## tibble is being created above and we are basically already in gathered
-      ##  format.
-    attr(data, "file_id") <- file_id
-    attr(data, "file_mtime") <- mtime
-      ## We will opt to store the original matlab file as an attribute since
-      ## it very likely contains things we may need later. Hard to say what
-      ## exactly right now; this is motivated by spidey-sense...
-    attr(data, "flydra_mat") <- mat_read
-    attr(data, "header") <- attr(mat_read, "header")
-
-    ## Export
-    return(data)
-  }
+## 2D plot -- using this to estimate perch height for now
+plot(x = ex1_h5_mat$kalman.x,
+     y = ex1_h5_mat$kalman.z,
+     asp = 1)
+abline(h = 1.44)
 
 ## Test pancake
 test_mat <-
@@ -689,16 +621,18 @@ test_selected <-
   select_x_percent(desired_percent = 50)
 
 ## Full (non-selected) data plot:
+open3d()
 rgl::plot3d(x = test_mat$position_length,
             y = test_mat$position_width,
-            z = test_mat$position_height,
-            aspect = 1)
+            z = test_mat$position_height)
+aspect3d("iso")
 
 ## Post-select_x_percent()
+open3d()
 rgl::plot3d(x = test_selected$position_length,
             y = test_selected$position_width,
-            z = test_selected$position_height,
-            aspect = 1)
+            z = test_selected$position_height)
+aspect3d("iso")
 ## Because length = 0 is at one perch (one extreme end of the tunnel),
 ## select_x_percent() clips the data incorrectly.
 
@@ -710,3 +644,4 @@ rgl::plot3d(x = test_selected$position_length,
 ## leaving us with positive values indicating position above the perch level and
 ## negative values indicating positions below perch level.
 
+## Time to start writing a center_tunnel_data() function

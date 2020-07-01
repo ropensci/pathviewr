@@ -310,6 +310,82 @@ problems.",
   }
 
 
+################################# read_flydra_data #############################
+## It is nearly there but I still need to figure out how time (or frame rate)
+## is encoded.
+
+
+read_flydra_data <-
+  function(mat_file,
+           file_id = NA,
+           subject_name,
+           ...) {
+
+    ## Import checks
+    if (missing(mat_file))
+      stop("A mat_file is required")
+    if (!file.exists(mat_file))
+      stop(paste0("File ", mat_file, " not found!"))
+
+    ## For now, we will assume that only one subject (one individual
+    ## hummingbird) is present in the data. Since these subject names were not
+    ## stored in the flydra data or accompanying H5 files (as far as I can see)
+    ## this will need to be supplied by the user
+    if (missing(subject_name))
+      stop("A subject_name is required")
+
+    ## Match file_id to mat_file if no file_id is supplied
+    if (is.na(file_id)) file_id <-
+        basename(mat_file)
+
+    ## Get maketime of file (may not be accurate...use with caution!)
+    mtime <-
+      file.info(mat_file)$mtime
+
+    ## Read the MAT file via R.matlab::readMat()
+    mat_read <-
+      R.matlab::readMat(mat_file)
+
+    ## The data we'd like to tibble-ize is spread across various components
+    ## of the list. We need to put it together manually.
+
+    ## First get the dimensions of the data
+    data_length <- length(mat_read$kalman.y)
+
+    ## Now put the data together
+    data <-
+      tibble(
+        # using kalman frame instead of observed frame
+        frame = mat_read$kalman.frame,
+        ## I actally don't know the time intervals yet, so I am just putting
+        ## in a dummy sequence.
+        time_sec = seq(from = 0, to = (data_length - 1), by = 1),
+        subject = subject_name,
+        position_length = mat_read$kalman.x,
+        position_width = mat_read$kalman.y,
+        position_height = mat_read$kalman.z
+      )
+
+    ## Add metadata as attributes()
+    attr(data, "pathviewR_steps") <-
+      c("viewr", "renamed_tunnel", "gathered_tunnel")
+    ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
+    ## tibble is being created above and we are basically already in gathered
+    ##  format.
+    attr(data, "file_id") <- file_id
+    attr(data, "file_mtime") <- mtime
+    ## We will opt to store the original matlab file as an attribute since
+    ## it very likely contains things we may need later. Hard to say what
+    ## exactly right now; this is motivated by spidey-sense...
+    ## It also doubles the object size -- not very ideal. Fix this soon!
+    attr(data, "flydra_mat") <- mat_read
+    attr(data, "header") <- attr(mat_read, "header")
+
+    ## Export
+    return(data)
+  }
+
+
 ################################# get_header_viewr #############################
 #' Extract header info from imported viewr object
 #'
