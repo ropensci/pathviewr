@@ -810,6 +810,12 @@ or center_tunnel(). Please proceed with extreme caution.")
 ## Specify a maximum frame gap and then use this to separate rows of data
 ## into separately labeled trajectories.
 
+## max_frame_gap lower than 1 will make every point into a separate trajectory.
+## Even negative values will do so. I'm inclined think this could be a useful
+## thing in certain contexts...
+
+## max_frame_gap = "autodetect" will
+
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
                                   ...){
@@ -819,19 +825,81 @@ separate_trajectories <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  obj_name$frame -> framez
-  df <-
-    framez %>%
-    tibble::tibble(dat = .) # automatically gives name "." for frames so rename
-    # this to dat
-  sploot <-
-    df %>%
-    dplyr::group_by(seq_id = cumsum(c(1, diff(dat)) > max_frame_gap))# group by
-  # seq_id which is the diff between successive frames is greater than gap
-  obj_name$traj_id <- sploot$seq_id # new column (traj_id) is this seq_id
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
+  }
 
-  ## Also combine the rigid body ID so that we're sure trajectories correspond
-  ## to unique rigid bodies
+
+  ## Extract the frames and subjects and group by subjects
+  grouped_frames <-
+    obj_name %>%
+    dplyr::select(frame, subject) %>%
+    dplyr::group_by(subject)
+
+  ## Split that tibble into a list of tibbles -- one per subject
+  splitz <-
+    dplyr::group_split(grouped_frames)
+
+  ## Now determine the maximum gap within each subject's set of frames
+  ## This has to be done on a per-subject basis because frame numbering
+  ## in obj_name$frame is recycled as new subjects are encountered (going
+  ## down the rows)
+  maxFGs_by_subject <- NULL
+  allFGs_by_subject <- NULL
+  for (i in 1:length(splitz)){
+    maxFGs_by_subject[i] <- max(diff(splitz[[i]]$frame))
+    allFGs_by_subject[[i]] <- diff(splitz[[i]]$frame)
+  }
+  ## Store the largest of these as the maximum frame gap across subjects
+  maxFG_across_subjects <- max(maxFGs_by_subject)
+
+  ## If max_frame_gap is a numeric
+    if (is.numeric(max_frame_gap)) {
+      ## Check that max_frame_gap does not exceed the
+      ## actual max across subjects
+      if (max_frame_gap > maxFG_across_subjects) {
+        warning("Largest frame gap detected exceeds max_frame_gap argument.
+Setting max_frame_gap to ", maxFG_across_subjects)
+        max_frame_gap <- maxFG_across_subjects
+      }
+    }
+
+  ## If max_frame_gap is set to "autodetect"
+  if (max_frame_gap == "autodetect"){
+    ## First collect all frame gaps in one tibble
+    all_frame_gaps <-
+      unlist(allFGs_by_subject) %>%
+      tibble::as_tibble_col(column_name = "frame_gap")
+    ## Remove values below 1 or NA values
+    cleaned_frame_gaps <-
+      all_frame_gaps %>%
+      dplyr::filter(frame_gap > 1) %>%
+      tidyr::drop_na()
+    ## Compute median -- this seems to be a reasonable estimator. We can
+    ## opt to swap this with something else tho!
+    max_frame_gap <- median(cleaned_frame_gaps$frame_gap)
+
+    ## As a note, hist(cleaned_frame_gaps$frame_gap) could help us assess
+    ## if we want to use something other than the median. And I like having
+    ## Melissa's plotting function as something the user could do too.
+    }
+
+  ## max_frame_gap has now been verified or estimated by this function.
+  ## The remaining part is common between the two options:
+  sploot <-
+    grouped_frames %>%
+    ## group by seq_id which is the diff between successive frames
+    ## is greater than max_frame_gap
+    dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap))
+
+  ## new column (traj_id) is this seq_id
+  obj_name$traj_id <- sploot$seq_id
+
+  ## Also combine the subject ID so that we're sure trajectories
+  ## correspond to unique subjects
   obj_name$sub_traj <- paste0(obj_name$subject,"_",obj_name$traj_id)
 
   ## Coerce to tibble
