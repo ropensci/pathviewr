@@ -233,8 +233,8 @@ jul_29_selected <-
 ##
 ## Trajectory IDs are stored in the "traj_id" column.
 ##
-## EDIT 2020-06-17 $sub_traj now has concatenation of subject IDs and
-## trajectory IDs (formerly $rb_traj)
+## EDIT 2020-07-01 we now have an "autodetect" capability in the max_frame_gap
+## argument. See lines further down in this section for worked examples.
 
 ## Trajectories are defined when 5 frames in a row are missing
 jul_29_labeled <-
@@ -256,6 +256,70 @@ plot(jul_29_labeled$position_length,
      jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
+
+## 2020-07-01 new behavior of max_frame_gap!
+## Entering a numeric still allows it to behave as it did before. This allows
+## users who have a good sense of what they think the frame gap should be to set
+## it with as little hassle as possible. E.g.
+jul_29_labeled_fg3 <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = 3)
+plot(jul_29_labeled_fg3$position_length,
+     jul_29_labeled_fg3$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_fg3$traj_id))
+
+## You can also use it without needing to run through select_x_percent first:
+jul_29_labeled_unselected <-
+  jul_29_rotated %>% separate_trajectories(max_frame_gap = 1)
+plot(jul_29_labeled_unselected$position_length,
+     jul_29_labeled_unselected$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_unselected$traj_id))
+## Note that it takes a bit longer if you're using a pre-select_x_percent object
+## since there are many more rows. But the plot checks out!
+
+## It also has safeguarding now to ensure that max_frame_gap does not exceed
+## the actual maximum gap between frames throughout the data:
+jul_29_labeled_overflow <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = 30000000000)
+## Obviously, a max_frame_gap of 33296 is not ideal, either. But this ensures
+## that the value will at least be one that is feasible, given the data. It
+## also amounts to setting all the data as belonging to one trajectory:
+plot(jul_29_labeled_overflow$position_length,
+     jul_29_labeled_overflow$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_overflow$traj_id))
+
+## A final neat trick among numeric entries for max_frame_gap is setting it to
+## any value lower than 1. I haven't played around with this thoroughly, but
+## max_frame_gap < 1 (includeing negative values) should make every frame a
+## separate trajectory.
+jul_29_labeled_negatory <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = -1)
+plot(jul_29_labeled_negatory$position_length,
+     jul_29_labeled_negatory$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_negatory$traj_id))
+## I consider this a "cheat code" for cases in which it may make sense to treat
+## each observation as a unique grouping factor. I don't exactly know why that
+## would be good, but my spidey sense tells me it may prove useful someday...
+
+## Here's an exciting part -- using max_frame_gap = "autodetect".
+## This inspects all frame gaps within the data set, filters out frame gaps
+## of size 1, and from the remaining gaps computes the median value. That value
+## is then used as max_frame_gap as what I am hoping may be a reasonable value.
+jul_29_labeled_autodetect <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect")
+plot(jul_29_labeled_autodetect$position_length,
+     jul_29_labeled_autodetect$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_autodetect$traj_id))
+
+## We'll probably want to make a check for situtations in which character
+## vectors are used which arent "autodetect". This is so we can guard against
+## stuff like:
+jul_29_labeled_steve <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = "steve")
+plot(jul_29_labeled_steve$position_length,
+     jul_29_labeled_steve$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_steve$traj_id))
+## Then again, all trajectory labels are set to 0. So perhaps this task
+## fails successfully!
 
 ########################### keep full trajectories #############################
 ## Once trajectories have been labeled, this next function will retain only the

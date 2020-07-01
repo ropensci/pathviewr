@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-25 MSA & VBB
+## Last updated: 2020-07-01 vbb
 
 ############################### relabel_viewr_axes #############################
 
@@ -861,7 +861,7 @@ into key-value pairs ")
       ## Check that max_frame_gap does not exceed the
       ## actual max across subjects
       if (max_frame_gap > maxFG_across_subjects) {
-        warning("Largest frame gap detected exceeds max_frame_gap argument.
+        message("Largest frame gap detected exceeds max_frame_gap argument.
 Setting max_frame_gap to ", maxFG_across_subjects)
         max_frame_gap <- maxFG_across_subjects
       }
@@ -881,6 +881,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
     ## Compute median -- this seems to be a reasonable estimator. We can
     ## opt to swap this with something else tho!
     max_frame_gap <- median(cleaned_frame_gaps$frame_gap)
+    message("autodetect is an experimental feature -- please report issues.
+Estimated best value for max_frame_gap: ", max_frame_gap)
 
     ## As a note, hist(cleaned_frame_gaps$frame_gap) could help us assess
     ## if we want to use something other than the median. And I like having
@@ -895,25 +897,30 @@ Setting max_frame_gap to ", maxFG_across_subjects)
     ## is greater than max_frame_gap
     dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap))
 
+  ## Duplicate obj_name to avoid overwriting important stuff
+  obj_new <- obj_name
+
   ## new column (traj_id) is this seq_id
-  obj_name$traj_id <- sploot$seq_id
+  obj_new$traj_id <- sploot$seq_id
 
   ## Also combine the subject ID so that we're sure trajectories
   ## correspond to unique subjects
-  obj_name$sub_traj <- paste0(obj_name$subject,"_",obj_name$traj_id)
+  obj_new$sub_traj <- paste0(obj_new$subject,"_",obj_new$traj_id)
 
   ## Coerce to tibble
-  obj_name <- tibble::as_tibble(obj_name)
+  obj_new <- tibble::as_tibble(obj_new)
+  ## Note to self -- if this ever erases attributes, they can be pasted back
+  ## in from the original obj_name
 
   ## Leave a note about the max frame gap used
-  attr(obj_name,"max_frame_gap") <- max_frame_gap
+  attr(obj_new,"max_frame_gap") <- max_frame_gap
 
   ## Leave a note that we rotated and translated the data set
-  attr(obj_name,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "trajectories_labeled")
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_new,"pathviewR_steps"), "trajectories_labeled")
 
   ## Export
-  return(obj_name)
+  return(obj_new)
 
 }
 
