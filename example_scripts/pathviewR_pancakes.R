@@ -112,6 +112,32 @@ elsa_renamed <- relabel_viewr_axes(elsa_dat) # use all defaults
 jul_29_gathered <- gather_tunnel_data(jul_29)
 elsa_gathered <- gather_tunnel_data(elsa_renamed)
 
+
+############################### rename subjects! ###############################
+## Simple utility function to rename subjects via pattern replacement. Uses
+## stringr::str_replace() under the hood, so please consult that function's Help
+## file for more details on what the "pattern" and "replacement" arguments can
+## entail (they have regex capability, but you can also keep it simple)
+
+## I'll opt to overwrite jul_29_gathered with cleaner subject names
+jul_29_subjectsrenamed <-
+  rename_viewr_characters(jul_29_gathered,
+                          target_column =  "subject", ## This is the default
+                          pattern = " 002", ## No default here; must be entered
+                          replacement = "") ## The default
+## Using replacement = "" amounts to removing the "pattern" characters from
+## the cells within the target_column. So the above removes " 002" from each
+## subject name (if it was there)
+
+## I called it rename_viewr_characters() instead of rename_viewer_subjects()
+## because this can acutally be applied to any column. This flexibility could
+## come in handy if the user wants to revise the naming system in the traj_id
+## column made by separate_trajectories() or if they want to revise names within
+## columns that are added on by something else (e.g. a "treatments" column)
+##
+## That all said, I'm not terribly fond of the name, so suggestions are welcome!
+
+
 ################################# trim outliers ################################
 ## Use trim_tunnel_outliers() to remove artifacts and other outlier data
 ## This function relies on the user supplying estimates of the min and max
@@ -208,7 +234,7 @@ plot(elsa_standardized$position_length,
 ## the center point is now set to (0, 0, 0), which is important for subsequent
 ## steps
 
-############################### select X percent ###############################
+############################### select x percent ###############################
 ## Select the middle X percent of the tunnel, according to the length
 ## dimension.
 ##

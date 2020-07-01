@@ -311,6 +311,44 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 }
 
 
+############################ rename_viewr_subjects #############################
+## Quick utility function to use str_replace with mutate(across()) to batch-
+## rename subjects via pattern detection.
+
+rename_viewr_characters <- function(obj_name,
+                                    target_column = "subject",
+                                    pattern,
+                                    replacement = ""){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
+  }
+
+  ## Check that target_column exists
+  if (!target_column %in% names(obj_name)) {
+    stop("target_column was not found")
+  }
+
+  obj_new <-
+    obj_name %>%
+    dplyr::mutate(
+      dplyr::across(target_column,
+                    stringr::str_replace,
+                    pattern,
+                    replacement)
+    )
+  return(obj_new)
+
+}
+
 ############################ trim_tunnel_outliers ##############################
 ## Trim out artifacts and other outliers from the extremes of the tunnel
 ## User provides estimates of min and max values of data and function then
