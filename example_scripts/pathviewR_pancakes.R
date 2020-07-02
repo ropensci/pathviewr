@@ -1,4 +1,4 @@
-## Last updated: 2020-06-26 VBB
+## Last updated: 2020-07-01 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -79,6 +79,7 @@ elsa_dat <-
     "./inst/extdata/feb-20_mixed-group_10-35_trunc.csv"
   )
 
+#### __simplify_marker_naming examples ####
 ## Via names() we can see what the `simplify_marker_naming` argument does
 names(jul_29)
 names(jul_29_unsimple) # should be identical to the above
@@ -118,6 +119,32 @@ elsa_renamed <- relabel_viewr_axes(elsa_dat) # use all defaults
 
 jul_29_gathered <- gather_tunnel_data(jul_29)
 elsa_gathered <- gather_tunnel_data(elsa_renamed)
+
+
+############################### rename subjects! ###############################
+## Simple utility function to rename subjects via pattern replacement. Uses
+## stringr::str_replace() under the hood, so please consult that function's Help
+## file for more details on what the "pattern" and "replacement" arguments can
+## entail (they have regex capability, but you can also keep it simple)
+
+## I'll opt to overwrite jul_29_gathered with cleaner subject names
+jul_29_subjectsrenamed <-
+  rename_viewr_characters(jul_29_gathered,
+                          target_column =  "subject", ## This is the default
+                          pattern = " 002", ## No default here; must be entered
+                          replacement = "") ## The default
+## Using replacement = "" amounts to removing the "pattern" characters from
+## the cells within the target_column. So the above removes " 002" from each
+## subject name (if it was there)
+
+## I called it rename_viewr_characters() instead of rename_viewer_subjects()
+## because this can acutally be applied to any column. This flexibility could
+## come in handy if the user wants to revise the naming system in the traj_id
+## column made by separate_trajectories() or if they want to revise names within
+## columns that are added on by something else (e.g. a "treatments" column)
+##
+## That all said, I'm not terribly fond of the name, so suggestions are welcome!
+
 
 ################################# trim outliers ################################
 ## Use trim_tunnel_outliers() to remove artifacts and other outlier data
@@ -215,7 +242,7 @@ plot(elsa_standardized$position_length,
 ## the center point is now set to (0, 0, 0), which is important for subsequent
 ## steps
 
-############################### select X percent ###############################
+############################### select x percent ###############################
 ## Select the middle X percent of the tunnel, according to the length
 ## dimension.
 ##
@@ -240,6 +267,7 @@ jul_29_selected <-
 ##
 ## Trajectory IDs are stored in the "traj_id" column.
 ##
+<<<<<<< HEAD
 ## EDIT 2020-06-17 $sub_traj now has concatenation of subject IDs and
 ## trajectory IDs (formerly $rb_traj)
 ##
@@ -251,6 +279,10 @@ jul_29_selected <-
 ## be separated into multiple trajectories.
 ## Perhaps renaming the argument to separate_at = n or something similar would
 ## make this more clear.
+=======
+## EDIT 2020-07-01 we now have an "autodetect" capability in the max_frame_gap
+## argument. See lines further down in this section for worked examples.
+>>>>>>> 4c7915171e2a14723112f8346c2e483db082c262
 
 ## Trajectories are defined when 5 frames in a row are missing
 jul_29_labeled <-
@@ -272,6 +304,70 @@ plot(jul_29_labeled$position_length,
      jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
+#### __new behavior of max_frame_gap ####
+## 2020-07-01 new behavior of max_frame_gap!
+## Entering a numeric still allows it to behave as it did before. This allows
+## users who have a good sense of what they think the frame gap should be to set
+## it with as little hassle as possible. E.g.
+jul_29_labeled_fg3 <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = 3)
+plot(jul_29_labeled_fg3$position_length,
+     jul_29_labeled_fg3$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_fg3$traj_id))
+
+## You can also use it without needing to run through select_x_percent first:
+jul_29_labeled_unselected <-
+  jul_29_rotated %>% separate_trajectories(max_frame_gap = 1)
+plot(jul_29_labeled_unselected$position_length,
+     jul_29_labeled_unselected$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_unselected$traj_id))
+## Note that it takes a bit longer if you're using a pre-select_x_percent object
+## since there are many more rows. But the plot checks out!
+
+## It also has safeguarding now to ensure that max_frame_gap does not exceed
+## the actual maximum gap between frames throughout the data:
+jul_29_labeled_overflow <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = 30000000000)
+## Obviously, a max_frame_gap of 33296 is not ideal, either. But this ensures
+## that the value will at least be one that is feasible, given the data. It
+## also amounts to setting all the data as belonging to one trajectory:
+plot(jul_29_labeled_overflow$position_length,
+     jul_29_labeled_overflow$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_overflow$traj_id))
+
+## A final neat trick among numeric entries for max_frame_gap is setting it to
+## any value lower than 1. I haven't played around with this thoroughly, but
+## max_frame_gap < 1 (includeing negative values) should make every frame a
+## separate trajectory.
+jul_29_labeled_negatory <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = -1)
+plot(jul_29_labeled_negatory$position_length,
+     jul_29_labeled_negatory$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_negatory$traj_id))
+## I consider this a "cheat code" for cases in which it may make sense to treat
+## each observation as a unique grouping factor. I don't exactly know why that
+## would be good, but my spidey sense tells me it may prove useful someday...
+
+## Here's an exciting part -- using max_frame_gap = "autodetect".
+## This inspects all frame gaps within the data set, filters out frame gaps
+## of size 1, and from the remaining gaps computes the median value. That value
+## is then used as max_frame_gap as what I am hoping may be a reasonable value.
+jul_29_labeled_autodetect <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect")
+plot(jul_29_labeled_autodetect$position_length,
+     jul_29_labeled_autodetect$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_autodetect$traj_id))
+
+## We'll probably want to make a check for situtations in which character
+## vectors are used which arent "autodetect". This is so we can guard against
+## stuff like:
+jul_29_labeled_steve <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = "steve")
+plot(jul_29_labeled_steve$position_length,
+     jul_29_labeled_steve$position_width,
+     asp = 1, col = as.factor(jul_29_labeled_steve$traj_id))
+## Then again, all trajectory labels are set to 0. So perhaps this task
+## fails successfully!
 
 ########################### keep full trajectories #############################
 ## Once trajectories have been labeled, this next function will retain only the
@@ -505,89 +601,22 @@ library(rhdf5)
 ## organized as a data.frame or tibble already, but what they will need explicit
 ## instruction on is what & how metadata should be included & formatted.
 
-## 2020-06-23
 ## Let's plot in 3D
+open3d()
 rgl::plot3d(x = ex1_h5_mat$kalman.x,
             y = ex1_h5_mat$kalman.y,
-            z = ex1_h5_mat$kalman.z,
-            aspect = 1)
+            z = ex1_h5_mat$kalman.z)
+aspect3d("iso")
 ## Perches seems to be on oppose ends of x-axis and z-axis seems to correspond
 ## to height (up vs. down).
 
-## Let's start making what will ultimately be the flydra import function. This
-## should be considered a work in progress until it is imported into the
-## data_import_functions.R script. Porting it over there will imply that it has
-## reached sufficient maturity.
+## 2D plot -- using this to estimate perch height for now
+plot(x = ex1_h5_mat$kalman.x,
+     y = ex1_h5_mat$kalman.z,
+     asp = 1)
+abline(h = 1.44)
 
-read_flydra_data <-
-  function(mat_file,
-           file_id = NA,
-           subject_name,
-           ...) {
-
-    ## Import checks
-    if (missing(mat_file))
-      stop("A mat_file is required")
-    if (!file.exists(mat_file))
-      stop(paste0("File ", mat_file, " not found!"))
-
-    ## For now, we will assume that only one subject (one individual
-    ## hummingbird) is present in the data. Since these subject names were not
-    ## stored in the flydra data or accompanying H5 files (as far as I can see)
-    ## this will need to be supplied by the user
-    if (missing(subject_name))
-      stop("A subject_name is required")
-
-    ## Match file_id to mat_file if no file_id is supplied
-      if (is.na(file_id)) file_id <-
-          basename(mat_file)
-
-    ## Get maketime of file (may not be accurate...use with caution!)
-      mtime <-
-        file.info(mat_file)$mtime
-
-    ## Read the MAT file via R.matlab::readMat()
-      mat_read <-
-        R.matlab::readMat(mat_file)
-
-    ## The data we'd like to tibble-ize is spread across various components
-    ## of the list. We need to put it together manually.
-
-    ## First get the dimensions of the data
-      data_length <- length(mat_read$kalman.y)
-
-    ## Now put the data together
-      data <-
-        tibble(
-          # using kalman frame instead of observed frame
-          frame = mat_read$kalman.frame,
-          ## I actally don't know the time intervals yet, so I am just putting
-          ## in a dummy sequence.
-          time_sec = seq(from = 0, to = (data_length - 1), by = 1),
-          subject = subject_name,
-          position_length = mat_read$kalman.x,
-          position_width = mat_read$kalman.y,
-          position_height = mat_read$kalman.z
-        )
-
-    ## Add metadata as attributes()
-    attr(data, "pathviewR_steps") <-
-      c("viewr", "renamed_tunnel", "gathered_tunnel")
-      ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
-      ## tibble is being created above and we are basically already in gathered
-      ##  format.
-    attr(data, "file_id") <- file_id
-    attr(data, "file_mtime") <- mtime
-      ## We will opt to store the original matlab file as an attribute since
-      ## it very likely contains things we may need later. Hard to say what
-      ## exactly right now; this is motivated by spidey-sense...
-    attr(data, "flydra_mat") <- mat_read
-    attr(data, "header") <- attr(mat_read, "header")
-
-    ## Export
-    return(data)
-  }
-
+#### __testing pathviewR flydra functions ####
 ## Test pancake
 test_mat <-
   read_flydra_data(
@@ -615,16 +644,18 @@ test_selected <-
   select_x_percent(desired_percent = 50)
 
 ## Full (non-selected) data plot:
+open3d()
 rgl::plot3d(x = test_mat$position_length,
             y = test_mat$position_width,
-            z = test_mat$position_height,
-            aspect = 1)
+            z = test_mat$position_height)
+aspect3d("iso")
 
 ## Post-select_x_percent()
+open3d()
 rgl::plot3d(x = test_selected$position_length,
             y = test_selected$position_width,
-            z = test_selected$position_height,
-            aspect = 1)
+            z = test_selected$position_height)
+aspect3d("iso")
 ## Because length = 0 is at one perch (one extreme end of the tunnel),
 ## select_x_percent() clips the data incorrectly.
 
@@ -636,3 +667,42 @@ rgl::plot3d(x = test_selected$position_length,
 ## leaving us with positive values indicating position above the perch level and
 ## negative values indicating positions below perch level.
 
+#### __new centering function ####
+## 2020-07-01 new centering function written; time to try it out
+test_centered <-
+  test_mat %>%
+  center_tunnel_data(length_zero = "middle")
+
+open3d()
+rgl::plot3d(x = test_centered$position_length,
+            y = test_centered$position_width,
+            z = test_centered$position_height)
+aspect3d("iso")
+## Hot damn! It worked!!
+
+## Let's see if we can plug into select_x_percent() now
+test_selected <-
+  test_centered %>%
+  select_x_percent(desired_percent = 50)
+## 3D plot
+open3d()
+rgl::plot3d(x = test_selected$position_length,
+            y = test_selected$position_width,
+            z = test_selected$position_height)
+aspect3d("iso")
+
+## Next steps
+test_full <-
+  test_selected %>%
+  separate_trajectories(max_frame_gap = 1) %>%
+  get_full_trajectories(span = 0.95)
+## 3D plot
+open3d()
+rgl::plot3d(x = test_full$position_length,
+            y = test_full$position_width,
+            z = test_full$position_height)
+aspect3d("iso")
+## 2D overhead
+plot(test_full$position_length,
+     test_full$position_width,
+     asp = 1, col = as.factor(test_full$traj_id))

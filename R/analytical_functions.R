@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-26 VBB
+## Last updated: 2020-06-30 MSA
 
 ################################## get_velocity ################################
 ## Get instantaneous velocity for all subjects
@@ -12,6 +12,8 @@ get_velocity <- function(obj_name,
                          width_col = "position_width",
                          height_col = "position_height",
                          add_to_viewr = TRUE,
+                         velocity_min = NA,
+                         velocity_max = NA,
                          ...) {
 
   ## Check that it's a viewr object
@@ -84,6 +86,44 @@ Please check that you have entered the name of the height variable correctly.")
 
   } else { ## if FALSE
     obj_new <- res
+  }
+
+  #let's add some threshold arguments to set biologically reasonable limits
+  #velocity_min
+  if (is.numeric(velocity_min)){
+    ## filter velocity
+    obj_new <- obj_new %>%
+      filter(velocity > velocity_min)
+
+    ## Leave a note set velocity_min via get_velocity()
+    #leave note even if not added to viewr object?
+    attr(obj_new,"velocity_min") <- velocity_min
+
+  } else { ## if FALSE
+    obj_new <- obj_new
+    #if is character instead of numeric:
+    if (is.character(velocity_min)) {
+      stop("velocity_min is character.
+    Please check that you have entered the velocity_min variable correctly.")
+    }
+  }
+  #velocity_max
+  if (is.numeric(velocity_max)){
+    ## filter velocity
+    obj_new <- obj_new %>%
+      filter(velocity < velocity_max)
+
+    ## Leave a note set velocity_min via get_velocity()
+    #leave note even if not added to viewr object?
+    attr(obj_new,"velocity_max") <- velocity_max
+
+  } else { ## if FALSE
+    obj_new <- obj_new
+    #if is character instead of numeric:
+    if (is.character(velocity_max)) {
+      stop("velocity_max is character.
+    Please check that you have entered the velocity_max variable correctly.")
+    }
   }
 
   ## Output

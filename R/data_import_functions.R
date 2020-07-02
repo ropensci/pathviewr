@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-17 VBB
+## Last updated: 2020-07-01 VBB
 
 
 ############################### read_motive_csv ################################
@@ -304,6 +304,104 @@ problems.",
     attr(data, "data_types_simple") <- base::unique(types)
     attr(data, "d1") <- data_names_part_one
     attr(data, "d2") <- data_names_part_two
+
+    ## Export
+    return(data)
+  }
+
+
+################################# read_flydra_data #############################
+## Time is now encoded as a function of frame_rate and the specific labeling
+## of frames within the imported flydra object
+
+read_flydra_data <-
+  function(mat_file,
+           file_id = NA,
+           subject_name,
+           frame_rate = 100, ## in Hz
+           ...) {
+
+    ## Import checks
+    if (missing(mat_file))
+      stop("A mat_file is required")
+    if (!file.exists(mat_file))
+      stop(paste0("File ", mat_file, " not found!"))
+
+    ## For now, we will assume that only one subject (one individual
+    ## hummingbird) is present in the data. Since these subject names were not
+    ## stored in the flydra data or accompanying H5 files (as far as I can see)
+    ## this will need to be supplied by the user
+    if (missing(subject_name))
+      stop("A subject_name is required")
+
+    ## Match file_id to mat_file if no file_id is supplied
+    if (is.na(file_id)) file_id <-
+        basename(mat_file)
+
+    ## Get maketime of file (may not be accurate...use with caution!)
+    mtime <-
+      file.info(mat_file)$mtime
+
+    ## Read the MAT file via R.matlab::readMat()
+    mat_read <-
+      R.matlab::readMat(mat_file)
+
+    ## The data we'd like to tibble-ize is spread across various components
+    ## of the list. We need to put it together manually.
+
+    ## First get the dimensions of the data
+    data_length <- length(mat_read$kalman.y)
+
+    ## Now extract all the frames
+    framez <- mat_read$kalman.frame
+    frame_tib <- tibble::tibble(frame = framez)
+    ## Because frames may have been dropped, we will first generate a
+    ## full sequence that begins and ends on the min and max frames.
+    ## Then we'll generate time stamps that correspond to those frames.
+    ## Finally, we'll drop time stamps for any frames that were dropped
+    ## in the exported matlab file.
+    frame_first <- min(framez)
+    frame_last <- max(framez)
+    frame_seq <- seq(from = frame_first, to = frame_last, by = 1)
+    time_interval <- 1/frame_rate
+    ## We'll set time to start at 0 and then increase by time_interval until
+    ## it hits the same vector length as length(frame_seq)
+    time_seq <- seq(from = 0, by = time_interval,
+                    length.out = length(frame_seq))
+    ## Now combine
+    frame_time_seqs <- tibble::tibble(frame = frame_seq,
+                                      time  = time_seq)
+    ## Need to join it back to frame_tib in case frame ordering shifts
+    ## or is duplicated within the data
+    joined_frame_time_seq <- dplyr::left_join(frame_tib, frame_time_seqs,
+                                              by = "frame")
+
+    ## Now put the data together
+    data <-
+      tibble::tibble(
+        ## Using kalman frame instead of observed frame
+        frame = frame_tib$frame,
+        time_sec = joined_frame_time_seq$time,
+        subject = subject_name,
+        position_length = mat_read$kalman.x,
+        position_width = mat_read$kalman.y,
+        position_height = mat_read$kalman.z
+      )
+
+    ## Add metadata as attributes()
+    attr(data, "pathviewR_steps") <-
+      c("viewr", "renamed_tunnel", "gathered_tunnel")
+    ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
+    ## tibble is being created above and we are basically already in gathered
+    ## format.
+    attr(data, "file_id") <- file_id
+    attr(data, "file_mtime") <- mtime
+    ## We will opt to store the original matlab file as an attribute since
+    ## it very likely contains things we may need later. Hard to say what
+    ## exactly right now; this is motivated by spidey-sense...
+    ## It also doubles the object size -- not very ideal. Fix this soon!
+    attr(data, "flydra_mat") <- mat_read
+    attr(data, "header") <- attr(mat_read, "header")
 
     ## Export
     return(data)
