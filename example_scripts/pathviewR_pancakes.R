@@ -1,4 +1,4 @@
-## Last updated: 2020-07-01 VBB
+## Last updated: 2020-07-02 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -517,6 +517,19 @@ jul_29_skiptrim_and_full <-
 jul_29_dontaddvelocity <-
   jul_29_path %>% import_and_clean_viewr(add_to_viewr = FALSE)
 
+## Trying to resolve what Melissa mentioned in:
+## https://github.com/vbaliga/pathviewR/issues/14
+jul_29_alltest1 <-
+  jul_29_path %>%
+  import_and_clean_viewr(separate_trajectories = FALSE,
+                         get_full_trajectories = FALSE,
+                         max_frame_gap = 3,
+                         span = 0.95,
+                         steve = "boop")
+## The function now stops and reports an explicit error message about:
+## 1) any unrecognized arguments (here: steve); these are simply ignored
+## 2) any unused arguments. The function stops and produces (what I hope is)
+## an informative error
 
 #################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this

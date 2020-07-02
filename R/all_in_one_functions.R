@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-02 MSA
+## Last updated: 2020-07-02 MSA & VBB
 
 ############################### all_in_one_function ############################
 ## Use all of the preceding functions to construct an all-in-one function for
@@ -36,41 +36,49 @@ import_and_clean_viewr <- function(file_name,
   ## ADD CHECK HERE FOR FILETYPE (CSV OR MAT) AND THEN HANDLE ACCORDINGLY
 
   ## Check that any arguments supplied are valid; return a warning if not
-  valid_args <- c(
     ## read_motive_csv()
-    "file_name", "file_id",
+    read_args <- c("file_name", "file_id")
     ## relabel_viewr_axes()
-    "tunnel_length", "tunnel_width", "tunnel_height", "real",
+    relabel_args <- c("tunnel_length", "tunnel_width", "tunnel_height", "real")
+    ## gather_tunnel_data
+    gather_args <- c("NA_drop")
     ## trim_tunnel_outliers()
-    "lengths_min", "lengths_max",
-    "widths_min", "widths_max",
-    "heights_min", "heights_max",
+    trim_args <- c("lengths_min", "lengths_max",
+                   "widths_min", "widths_max",
+                   "heights_min", "heights_max")
     ## rotate_tunnel()
-    "all_heights_min", "all_heights_max",
+    rotate_args <- c("all_heights_min", "all_heights_max")
     ## standardize_tunnel()
-    "landmark_one", "landmark_two",
+    standardize_args <- c("landmark_one", "landmark_two",
     ## perch 1 = left (near length = 0); perch 2 = right
-    "perch1_len_min", "perch1_len_max",
-    "perch2_len_min", "perch2_len_max",
-    "perch1_wid_min", "perch1_wid_max",
-    "perch2_wid_min", "perch2_wid_max",
+                          "perch1_len_min", "perch1_len_max",
+                          "perch2_len_min", "perch2_len_max",
+                          "perch1_wid_min", "perch1_wid_max",
+                          "perch2_wid_min", "perch2_wid_max")
     ## get_velocity()
-    "time_col",
-    "length_col", "width_col", "height_col",
-    "add_to_viewr",
-    "velocity_min", "velocity_max",
+    velocity_args <- c("time_col",
+                       "length_col", "width_col", "height_col",
+                       "add_to_viewr",
+                       "velocity_min", "velocity_max")
     ## select_x_percent()
-    "desired_percent",
+    select_args <- c("desired_percent")
     ## separate_trajectories()
-    "max_frame_gap",
+    separate_args <- c("max_frame_gap")
     ## get_full_trajectories()
-    "span"
-  )
+    get_full_traj_args <- c("span")
+
+  valid_args <- c(read_args, relabel_args, trim_args,
+                  rotate_args, standardize_args,
+                  velocity_args,
+                  select_args, separate_args, get_full_traj_args
+                  )
+
   arg_names <- names(list(...))
-  if (!all(arg_names %in% valid_args)) {
-    warning("One or more provided arguments does not match known arguments.
-            \nThese will not be used.")
-  }
+  ## Check for any unrecognized arguments and message() about them
+  unrecog_params <- setdiff(arg_names,valid_args)
+  if(length(unrecog_params))
+    message('Unrecognized arguments: ',paste(unrecog_params,collapse = ', '),
+            "\nAny arguments that are unrecognized will not be used.")
 
   ## Check standardization choice
   valid_stands <- c("rotate_tunnel",
@@ -78,7 +86,7 @@ import_and_clean_viewr <- function(file_name,
                     "center_tunnel_data",
                     "none")
   if (!all(standardization_option %in% valid_stands)) {
-    warning("standardization_option must be one of the following:
+    stop("standardization_option must be one of the following:
 \"rotate_tunnel\", \"standardize_tunnel\", \"center_tunnel_data\", or \"none\"")
   }
 
@@ -92,6 +100,13 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       relabel_viewr_axes(...)
   } else {
+    if (any(arg_names %in% relabel_args)){
+      stop(
+"At least one argument for relabel_viewr_axes() was supplied,
+but relabel_viewr_axes was set to FALSE.
+Please resolve by either setting relabel_viewr_axes to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
 
@@ -100,6 +115,13 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       gather_tunnel_data(...)
   } else {
+    if (any(arg_names %in% gather_args)){
+      stop(
+"At least one argument for gather_tunnel_data() was supplied,
+but gather_tunnel_data was set to FALSE.
+Please resolve by either setting gather_tunnel_data to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
 
@@ -108,6 +130,13 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       trim_tunnel_outliers(...)
   } else {
+    if (any(arg_names %in% trim_args)){
+      stop(
+"At least one argument for trim_tunnel_outliers() was supplied,
+but trim_tunnel_outliers was set to FALSE.
+Please resolve by either setting trim_tunnel_outliers to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
 
@@ -138,6 +167,13 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       get_velocity(...)
   } else {
+    if (any(arg_names %in% velocity_args)){
+      stop(
+"At least one argument for get_velocity() was supplied,
+but get_velocity was set to FALSE.
+Please resolve by either setting get_velocity to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
 
@@ -146,6 +182,13 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       select_x_percent(...)
   } else {
+    if (any(arg_names %in% select_args)){
+      stop(
+"At least one argument for select_x_percent() was supplied,
+but select_x_percent was set to FALSE.
+Please resolve by either setting select_x_percent to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
 
@@ -154,6 +197,13 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       separate_trajectories(...)
   } else {
+    if (any(arg_names %in% separate_args)){
+      stop(
+"At least one argument for separate_trajectories() was supplied,
+but separate_trajectories was set to FALSE.
+Please resolve by either setting separate_trajectories to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
 
@@ -162,9 +212,26 @@ import_and_clean_viewr <- function(file_name,
       obj %>%
       get_full_trajectories(...)
   } else {
+    if (any(arg_names %in% get_full_traj_args)){
+      stop(
+"At least one argument for get_full_trajectories() was supplied,
+but get_full_trajectories was set to FALSE.
+Please resolve by either setting get_full_trajectories to TRUE
+or by removing the extraneous argument(s)")
+    }
     obj <- obj
   }
+
+  ## Check for any unused arguments and message() about them
+  params <- list(...)
+  optionalParamNames <- valid_args
+  unusedParams <- setdiff(names(params),optionalParamNames)
+  if(length(unusedParams))
+    message('Unused parameters: ',paste(unusedParams,collapse = ', '))
 
   ## Export
   return(obj)
 }
+
+
+
