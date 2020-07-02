@@ -50,12 +50,8 @@ jul_29_path <-
   './inst/extdata/july-29_group-I_16-20.csv'
 
 ## New import function. Let VBB know if there are issues!!!
-<<<<<<< HEAD
-jul_29 <- read_motive_csv(jul_29_path, simplify_marker_naming = TRUE) #all good!
-=======
 jul_29 <-
   read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
->>>>>>> 93805a72176b64125bfb0aa15bb8ffb76ac70cfb
 
 ## Try without simplifying marker naming (should be no change for this file)
 jul_29_unsimple <-
@@ -267,22 +263,12 @@ jul_29_selected <-
 ##
 ## Trajectory IDs are stored in the "traj_id" column.
 ##
-<<<<<<< HEAD
+
 ## EDIT 2020-06-17 $sub_traj now has concatenation of subject IDs and
 ## trajectory IDs (formerly $rb_traj)
-##
-## SEMANTIC SUGGESTION 2020-06-27 shouldn't max_frame_gap represent the largest
-## permissible frame gap that is still considered part of the same trajectory?
-## i.e. trajectories are separated if max_frame_gap = n + 1.
-## Eg. max_frame_gap = 0 would separate trajectories for any gaps in the data
-## Similarly, max_frame_gap = 9 should include gaps of 9, but gaps of 10 would
-## be separated into multiple trajectories.
-## Perhaps renaming the argument to separate_at = n or something similar would
-## make this more clear.
-=======
+
 ## EDIT 2020-07-01 we now have an "autodetect" capability in the max_frame_gap
 ## argument. See lines further down in this section for worked examples.
->>>>>>> 4c7915171e2a14723112f8346c2e483db082c262
 
 ## Trajectories are defined when 5 frames in a row are missing
 jul_29_labeled <-
