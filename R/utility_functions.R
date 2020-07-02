@@ -1139,6 +1139,10 @@ get_full_trajectories <- function(obj_name,
   attr(obj_defined,"pathviewR_steps") <-
     c(attr(obj_name,"pathviewR_steps"), "full_trajectories")
 
+  ## Leave a note about trajectories removed
+  attr(obj_defined, "trajectories_removed") <-
+    length(summary_obj$traj_id) - length(filt_summary$traj_id)
+
   ## Export
   return(obj_defined)
 
