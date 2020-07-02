@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-17 VBB
+## Last updated: 2020-07-01 VBB
 
 
 ############################### read_motive_csv ################################

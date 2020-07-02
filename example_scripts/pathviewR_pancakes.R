@@ -644,4 +644,4 @@ aspect3d("iso")
 ## leaving us with positive values indicating position above the perch level and
 ## negative values indicating positions below perch level.
 
-## Time to start writing a center_tunnel_data() function
+## 2020-07-01 new centering function written; time to try it out

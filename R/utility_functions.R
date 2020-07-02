@@ -789,6 +789,114 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   return(obj_new)
 }
 
+############################# center_tunnel_data ###############################
+## "Center" the tunnel data, i.e. translation but no rotation
+## This is primarily designed for use with flydra data
+## Three choices of how centering is handled:
+## "original" keeps axis as is -- this is how width and height should be handled
+## for flydra data
+## "middle" is the middle of the range of data: (min + max) / 2
+## "median" is the median value of data on that axis. Probably not recommended
+
+center_tunnel_data <- function(obj_name,
+                               length_col = "position_length",
+                               width_col = "position_width",
+                               height_col = "position_height",
+                               length_zero = c("original", "middle", "median"),
+                               width_zero = c("original", "middle", "median"),
+                               height_zero = c("original", "middle", "median"),
+                               ...) {
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that gather_tunnel_data() has been run on the object
+  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+    stop("You must gather your party before venturing forth.
+Please use gather_tunnel_data() on this object to gather data columns
+into key-value pairs ")
+  }
+
+  ## Check that each column exists
+  if (!length_col %in% names(obj_name)) {
+    stop("length_col was not found")
+  }
+  if (!width_col %in% names(obj_name)) {
+    stop("width_col was not found")
+  }
+  if (!height_col %in% names(obj_name)) {
+    stop("height_col was not found")
+  }
+
+  ## NEED TO ADD: Check for NAs within the data columns:
+  # if (SOMETHING) == TRUE){
+  #   stop("NA values found within data, please clean")
+  # }
+
+  length_zero <- match.arg(length_zero)
+  width_zero  <- match.arg(width_zero)
+  height_zero <- match.arg(height_zero)
+
+  ## Summarize each dimension
+  length_min <- min(obj_name$position_length)
+  length_max <- max(obj_name$position_length)
+  length_middle <- (length_max + length_min)/2
+  length_median <- median(obj_name$position_length)
+  width_min <- min(obj_name$position_width)
+  width_max <- max(obj_name$position_width)
+  width_middle <- (width_max + width_min)/2
+  width_median <- median(obj_name$position_width)
+  height_min <- min(obj_name$position_height)
+  height_max <- max(obj_name$position_height)
+  height_middle <- (height_max + height_min)/2
+  height_median <- median(obj_name$position_height)
+
+  ## Create new object to overwrite
+  obj_new <- obj_name
+
+  ## Handle lengths first
+  if (length_zero == "original"){
+    obj_new$position_length <- obj_name$position_length
+  }
+  if (length_zero == "middle"){
+    obj_new$position_length <- obj_name$position_length - length_middle
+  }
+  if (length_zero == "median"){
+    obj_new$position_length <- obj_name$position_length - length_median
+  }
+  ## Handle widths second
+  if (width_zero == "original"){
+    obj_new$position_width <- obj_name$position_width
+  }
+  if (width_zero == "middle"){
+    obj_new$position_width <- obj_name$position_width - width_middle
+  }
+  if (width_zero == "median"){
+    obj_new$position_width <- obj_name$position_width - width_median
+  }
+  ## Handle heights third
+  if (height_zero == "original"){
+    obj_new$position_height <- obj_name$position_height
+  }
+  if (height_zero == "middle"){
+    obj_new$position_height <- obj_name$position_height - height_middle
+  }
+  if (height_zero == "median"){
+    obj_new$position_height <- obj_name$position_height - height_median
+  }
+
+  ## TO ADD: Note what the original center was in the attributes
+
+  ## Leave a note that we translated the data set
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "tunnel_centered") # centered
+
+## Export
+return(obj_new)
+
+}
 
 ############################### select_x_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
