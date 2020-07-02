@@ -531,6 +531,11 @@ jul_29_alltest1 <-
 ## 2) any unused arguments. The function stops and produces (what I hope is)
 ## an informative error
 
+## Unnamed AND unrecognized arguments are silently ignored, though:
+jul_29_alltest2 <-
+  jul_29_path %>%
+  import_and_clean_viewr("boop")
+
 #################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this
 ## package.
