@@ -160,10 +160,10 @@ deg2rad <- function(deg) {
 }
 
 
-#################        calc_vis_angle_mod       ###################
+#################        calc_vis_angle       ###################
 
 #' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
-#' \code{calc_vis_angle_mod()} calculates the visual angles created by lateral
+#' \code{calc_vis_angle()} calculates the visual angles created by lateral
 #' visual stimuli.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr}
@@ -173,19 +173,19 @@ deg2rad <- function(deg) {
 #' @param gnd_plane The vertical distance (in meters) between the bottom of the
 #' "V" and the horizontal plane through the origin (0,0,0).
 #' @param stim_param_pos The length (in meters) of the visual stimulus presented
-#' on the positive side of the tunnel (i.e. \code{Position_widths >= 0}). For
+#' on the positive side of the tunnel (i.e. \code{position_width >= 0}). For
 #' example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}
 #' @param stim_param_neg The same convention as \code{stim_param_pos} but for
 #' stimuli presented on the negative side of the tunnel
-#' (i.e. \code{Position_widths < 0}).
+#' (i.e. \code{position_width < 0}).
 #'
-#' @details \code{cal_vis_angle_mod} assumes fixed gaze at the point on the
+#' @details \code{cal_vis_angle} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and
 #' thereby maximizes visual angles. Currently, visual angles are overestimated
-#' when \code{Position_widths} lies outside the boundaries starting at the
+#' when \code{position_width} lies outside the boundaries starting at the
 #' bottom of the "V" and extend at right angles from the planes created by
-#' either sideof the tunnel. As \code{vertex_angle} increases from 45 t0 90,
-#' this boundary where calc_vis_angle_mod is accurate becomes more restrictive.
+#' either side of the tunnel. As \code{vertex_angle} increases from 45 to 90,
+#' this boundary where calc_vis_angle is accurate becomes more restrictive.
 #'
 #' @return A tibble or data.frame with added variables for
 #' \code{vis_angle_pos_deg} and \code{vis_angle_neg_deg} reported in degrees.
@@ -200,21 +200,16 @@ deg2rad <- function(deg) {
 
 
 ## Assuming gaze is fixed at the point on each screen such that the axis of gaze
-## is orthogonal to the plane of each screen. This function minimizes the distance
-## to the screen closer to the bird and therefore maximizes the visual angle
-## calculated for the closer screen.
-## However, this does not hold true for the opposite screen in the following
-## condition. If the vertex angle of the tunnel is > 45˚ and the bird's position
-## extends beyond the boundary created by a 45˚ vertex angle (the bird is quite
-## close to one screen), then the closest point to the opposite screen is the
-## vertex itself. Given that the birds tend to fly fairly close to the center of
-## the tunnel, this may not be encountered very often.
+## is orthogonal to the plane of each screen. This function minimizes the
+## distance to the screen closer to the bird and therefore maximizes the visual
+## angle calculated for the closer screen.
 
-calc_vis_angle_mod <- function(obj_name,
+calc_vis_angle <- function(obj_name,
                                vertex_angle = 45,
                                gnd_plane,
                                stim_param_pos,
-                               stim_param_neg){
+                               stim_param_neg,
+                               simplify_output = FALSE){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -224,37 +219,33 @@ calc_vis_angle_mod <- function(obj_name,
   ## Translate vertex_angle from degrees to radians for trig functions
   deg2rad(vertex_angle)
 
+  ## duplicate object for simplify = TRUE
+  obj_simplify <- obj_name
 
-  ## Part 2. Introduce variables for height_2_vertex and height_2_screen
+  ## Introduce variables for height_2_vertex and height_2_screen
   obj_name <- obj_name %>%
-    mutate(height_2_vertex = gnd_plane + Position_heights,
+    mutate(height_2_vertex = gnd_plane + position_height,
            height_2_screen = height_2_vertex -
-             (abs(Position_widths) / tan(vertex_angle)))
+             (abs(position_width) / tan(vertex_angle)))
 
 
-  ## Part 3. Introduce variables for width_2_screen on positive and negative sides
-  ## of the tunnel using ifelse() which combines a conditional and a for loop.
+  ## Introduce variables for width_2_screen on positive and negative sides
+  ## of the tunnel using ifelse()
   ## width_2_screen refers to the horizontal distance between the bird and
   ## either screen.
   obj_name$width_2_screen_pos <-
-    ifelse(obj_name$Position_widths >= 0,
-           # if bird is in positive side of tunnel
-           obj_name$height_2_screen * tan(vertex_angle),
-           # TRUE = width_2_screen_pos
+    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
+           obj_name$height_2_screen * tan(vertex_angle), # TRUE
            (obj_name$height_2_screen * tan(vertex_angle)) +
-             (2 * abs(obj_name$Position_widths)))
-  # FALSE = width_2_screen_pos + 2 * abs(Position_widths)
+             (2 * abs(obj_name$position_width))) # FALSE
 
   obj_name$width_2_screen_neg <-
-    ifelse(obj_name$Position_widths < 0,
-           # if bird is in negative side of tunnel
-           obj_name$height_2_screen * tan(vertex_angle),
-           # TRUE = width_2_screen_neg
+    ifelse(obj_name$position_width < 0,# if in negative side of tunnel
+           obj_name$height_2_screen * tan(vertex_angle), # TRUE
            (obj_name$height_2_screen * tan(vertex_angle)) +
-             (2 * abs(obj_name$Position_widths)))
-  # FALSE = width_2_screen_neg + 2 * abs(Position_widths)
+             (2 * abs(obj_name$position_width))) # FALSE
 
-  ## Part 4. Introduce variable min_dist on positive and negative sides of the
+  ## Introduce variable min_dist on positive and negative sides of the
   ## tunnel. min_dist refers to the minimum distance between the bird and either
   ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45˚ down
   ## from horizontal)
@@ -267,7 +258,7 @@ calc_vis_angle_mod <- function(obj_name,
   # min_dist to negative screen
 
 
-  ## Part 5. Calculate visual angles (radians and degrees) using distance to
+  ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
   obj_name <- obj_name %>%
     mutate(vis_angle_pos_rad =  2*atan(stim_param_pos/(2*obj_name$min_dist_pos)),
@@ -277,83 +268,19 @@ calc_vis_angle_mod <- function(obj_name,
            vis_angle_pos_deg =  rad2deg(vis_angle_pos_rad),
            # convert to deg
            vis_angle_neg_deg =  rad2deg(vis_angle_neg_rad))
-  # convert to deg
+           # convert to deg
 
-  return(obj_name)
+  obj_simplify <- obj_simplify %>%
+    mutate(vis_angle_pos_deg =  rad2deg(obj_name$vis_angle_pos_rad),
+           vis_angle_neg_deg =  rad2deg(obj_name$vis_angle_neg_rad))
+
+  if(simplify_output == TRUE){
+    return(obj_simplify)
+  } else {
+    return(obj_name)
+    }
 }
 
-
-
-
-#################        calc_vis_angle_mod.1       ###################
-
-## Same as above but without adding all internal variables to the dataframe
-
-calc_vis_angle_mod.1 <- function(obj_name,
-                                 vertex_angle = 45,
-                                 gnd_plane,
-                                 stim_param_pos,
-                                 stim_param_neg){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-  ## Part 1. Translate vertex_angle from degrees to radians for trig functions
-  deg2rad(vertex_angle)
-
-
-  ## Part 2. Introduce variables for height_2_vertex and height_2_screen
-  height_2_vertex <- gnd_plane + obj_name$Position_heights
-  height_2_screen <- height_2_vertex -
-    (abs(obj_name$Position_widths) / tan(vertex_angle))
-
-
-  ## Part 3. Introduce variables for width_2_screen on positive and negative sides
-  ## of the tunnel using ifelse() which combines a conditional and a for loop.
-  ## width_2_screen refers to the horizontal distance between the bird and
-  ## either screen.
-  width_2_screen_pos <-
-    ifelse(obj_name$Position_widths >= 0,
-           # if bird is in positive side of tunnel
-           height_2_screen * tan(vertex_angle),
-           # TRUE = width_2_screen_pos
-           height_2_screen * tan(vertex_angle) +
-             (2 * abs(obj_name$Position_widths)))
-  # FALSE = width_2_screen_pos + 2 * abs(Position_widths)
-
-  width_2_screen_neg <-
-    ifelse(obj_name$Position_widths < 0,
-           # if bird is in negative side of tunnel
-           height_2_screen * tan(vertex_angle),
-           # TRUE = width_2_screen_neg
-           height_2_screen * tan(vertex_angle) +
-             (2 * abs(obj_name$Position_widths)))
-  # FALSE = width_2_screen_neg + 2 * abs(Position_widths)
-
-
-  ## Part 4. Introduce variable min_dist on positive and negative sides of the
-  ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45˚ down
-  ## from horizontal)
-  min_dist_pos <- width_2_screen_pos * sin((pi/2) - vertex_angle)
-  # min_dist to positive screen
-
-  min_dist_neg <- width_2_screen_neg * sin((pi/2) - vertex_angle)
-  # min_dist to negative screen
-
-
-  ## Part 5. Calculate visual angles (radians and degrees) using distance to
-  ## positive and negative screens. Add the degrees variables into the dataframe.
-  vis_angle_pos_rad <- 2 * atan(stim_param_pos / (2 * min_dist_pos)) # radians
-  vis_angle_neg_rad <- 2 * atan(stim_param_neg / (2 * min_dist_neg)) # radians
-
-  obj_name <- obj_name %>%
-    mutate(vis_angle_pos_deg =  rad2deg(vis_angle_pos_rad), # convert to deg
-           vis_angle_neg_deg =  rad2deg(vis_angle_neg_rad)) # convert to deg
-
-  return(obj_name)
-}
 
 
 ## Remaining three functions originally written by Christina Harvey
