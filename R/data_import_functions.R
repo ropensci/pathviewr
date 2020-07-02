@@ -311,14 +311,14 @@ problems.",
 
 
 ################################# read_flydra_data #############################
-## It is nearly there but I still need to figure out how time (or frame rate)
-## is encoded.
-
+## Time is now encoded as a function of frame_rate and the specific labeling
+## of frames within the imported flydra object
 
 read_flydra_data <-
   function(mat_file,
            file_id = NA,
            subject_name,
+           frame_rate = 100, ## in Hz
            ...) {
 
     ## Import checks
@@ -352,14 +352,36 @@ read_flydra_data <-
     ## First get the dimensions of the data
     data_length <- length(mat_read$kalman.y)
 
+    ## Now extract all the frames
+    framez <- mat_read$kalman.frame
+    frame_tib <- tibble::tibble(frame = framez)
+    ## Because frames may have been dropped, we will first generate a
+    ## full sequence that begins and ends on the min and max frames.
+    ## Then we'll generate time stamps that correspond to those frames.
+    ## Finally, we'll drop time stamps for any frames that were dropped
+    ## in the exported matlab file.
+    frame_first <- min(framez)
+    frame_last <- max(framez)
+    frame_seq <- seq(from = frame_first, to = frame_last, by = 1)
+    time_interval <- 1/frame_rate
+    ## We'll set time to start at 0 and then increase by time_interval until
+    ## it hits the same vector length as length(frame_seq)
+    time_seq <- seq(from = 0, by = time_interval,
+                    length.out = length(frame_seq))
+    ## Now combine
+    frame_time_seqs <- tibble::tibble(frame = frame_seq,
+                                      time  = time_seq)
+    ## Need to join it back to frame_tib in case frame ordering shifts
+    ## or is duplicated within the data
+    joined_frame_time_seq <- dplyr::left_join(frame_tib, frame_time_seqs,
+                                              by = "frame")
+
     ## Now put the data together
     data <-
-      tibble(
-        # using kalman frame instead of observed frame
-        frame = mat_read$kalman.frame,
-        ## I actally don't know the time intervals yet, so I am just putting
-        ## in a dummy sequence.
-        time_sec = seq(from = 0, to = (data_length - 1), by = 1),
+      tibble::tibble(
+        ## Using kalman frame instead of observed frame
+        frame = frame_tib$frame,
+        time_sec = joined_frame_time_seq$time,
         subject = subject_name,
         position_length = mat_read$kalman.x,
         position_width = mat_read$kalman.y,
@@ -371,7 +393,7 @@ read_flydra_data <-
       c("viewr", "renamed_tunnel", "gathered_tunnel")
     ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
     ## tibble is being created above and we are basically already in gathered
-    ##  format.
+    ## format.
     attr(data, "file_id") <- file_id
     attr(data, "file_mtime") <- mtime
     ## We will opt to store the original matlab file as an attribute since
