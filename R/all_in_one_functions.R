@@ -1,3 +1,6 @@
+## Part of the pathviewR package
+## Last updated: 2020-07-02 MSA
+
 ############################### all_in_one_function ############################
 ## Use all of the preceding functions to construct an all-in-one function for
 ## ease of use.
@@ -55,6 +58,7 @@ import_and_clean_viewr <- function(file_name,
     "time_col",
     "length_col", "width_col", "height_col",
     "add_to_viewr",
+    "velocity_min", "velocity_max",
     ## select_x_percent()
     "desired_percent",
     ## separate_trajectories()
