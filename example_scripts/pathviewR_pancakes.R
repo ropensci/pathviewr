@@ -72,6 +72,7 @@ elsa_dat <-
     "./inst/extdata/feb-20_mixed-group_10-35_trunc.csv"
   )
 
+#### __simplify_marker_naming examples ####
 ## Via names() we can see what the `simplify_marker_naming` argument does
 names(jul_29)
 names(jul_29_unsimple) # should be identical to the above
@@ -282,7 +283,7 @@ plot(jul_29_labeled$position_length,
      jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
-
+#### __new behavior of max_frame_gap ####
 ## 2020-07-01 new behavior of max_frame_gap!
 ## Entering a numeric still allows it to behave as it did before. This allows
 ## users who have a good sense of what they think the frame gap should be to set
@@ -594,6 +595,7 @@ plot(x = ex1_h5_mat$kalman.x,
      asp = 1)
 abline(h = 1.44)
 
+#### __testing pathviewR flydra functions ####
 ## Test pancake
 test_mat <-
   read_flydra_data(
@@ -644,4 +646,42 @@ aspect3d("iso")
 ## leaving us with positive values indicating position above the perch level and
 ## negative values indicating positions below perch level.
 
+#### __new centering function ####
 ## 2020-07-01 new centering function written; time to try it out
+test_centered <-
+  test_mat %>%
+  center_tunnel_data(length_zero = "middle")
+
+open3d()
+rgl::plot3d(x = test_centered$position_length,
+            y = test_centered$position_width,
+            z = test_centered$position_height)
+aspect3d("iso")
+## Hot damn! It worked!!
+
+## Let's see if we can plug into select_x_percent() now
+test_selected <-
+  test_centered %>%
+  select_x_percent(desired_percent = 50)
+## 3D plot
+open3d()
+rgl::plot3d(x = test_selected$position_length,
+            y = test_selected$position_width,
+            z = test_selected$position_height)
+aspect3d("iso")
+
+## Next steps
+test_full <-
+  test_selected %>%
+  separate_trajectories(max_frame_gap = 1) %>%
+  get_full_trajectories(span = 0.95)
+## 3D plot
+open3d()
+rgl::plot3d(x = test_full$position_length,
+            y = test_full$position_width,
+            z = test_full$position_height)
+aspect3d("iso")
+## 2D overhead
+plot(test_full$position_length,
+     test_full$position_width,
+     asp = 1, col = as.factor(test_full$traj_id))
