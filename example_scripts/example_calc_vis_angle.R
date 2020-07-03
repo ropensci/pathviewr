@@ -67,7 +67,7 @@ jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
 
 jul_29_all_defaults <-
-  jul_29_path %>% import_and_clean_motiv()
+  jul_29_path %>% import_and_clean_viewr()
 
 
 ## or we could use the utility functions in sequence
@@ -77,7 +77,7 @@ jul_29_all_defaults <-
 ## in one function output
 
           #####   Data import   #####
-jul_29 <- read_motiv_csv('./inst//extdata/july-29_group-I_16-20.csv')
+jul_29 <- read_motive_csv('./inst//extdata/july-29_group-I_16-20.csv')
 
           #####   Rename axes   #####
 jul_29 <- relabel_viewr_axes(jul_29,
