@@ -281,6 +281,65 @@ calc_vis_angle <- function(obj_name,
     }
 }
 
+############################## get_dist_point_line_2d ##########################
+## Compute the distance between a point and a line in a 2D space (i.e. on an
+## XY plane)
+
+get_dist_point_line_2d <- function(point = c(0, 0),
+                                   line_coord1 = c(0, 0),
+                                   line_coord2 = c(0, 0)) {
+
+  ## Check that the arguments are numeric
+  ## THIS WILL NEED TO BE REFINED LATER TO CHECK THAT EACH INPUT
+  ## HAS LENGTH TWO (X-COORDINATE AND Y-COORDINATE)
+  if (!any(class(point) == "numeric")) {
+    stop("point argument must be a numeric")
+  }
+  if (!any(class(line_coord1) == "numeric")) {
+    stop("line_coord1 must be numeric")
+  }
+  if (!any(class(line_coord2) == "numeric")) {
+    stop("line_coord2 must be a numeric")
+  }
+
+  v1 <- line_coord1 - line_coord2
+  v2 <- point - line_coord1
+  m <- cbind(v1, v2)
+  dist <- abs(det(m)) / sqrt(sum(v1 * v1))
+  return(dist)
+
+}
+
+
+################################ get_3dcross_prod ##############################
+## Compute the cross product of 3D vectors
+## Will fill in details later
+
+get_3dcross_prod <- function(v1,v2){
+  v3 <- vector()
+  v3[1] <- v1[2]*v2[3]-v1[3]*v2[2]
+  v3[2] <- v1[3]*v2[1]-v1[1]*v2[3]
+  v3[3] <- v1[1]*v2[2]-v1[2]*v2[1]
+  return(v3)
+}
+
+############################## get_dist_point_line_3d ##########################
+## Compute the distance between a point and a line in 3D space
+## Will fill in details later
+
+get_dist_point_line_2d <- function(point = c(0, 0, 0),
+                                   line_coord1 = c(0, 0, 0),
+                                   line_coord2 = c(0, 0, 0)) {
+  v1 <- line_coord1 - line_coord2
+  v2 <- point - line_coord1
+  v3 <- cross3d_prod(v1, v2)
+  area <- sqrt(sum(v3 * v3)) / 2
+  dist <- 2 * area / sqrt(sum(v1 * v1))
+  return(dist)
+}
+
+
+
 
 
 ## Remaining three functions originally written by Christina Harvey
