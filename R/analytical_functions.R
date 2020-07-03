@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-06-30 MSA
+## Last updated: 2020-07-02 VBB
 
 ################################## get_velocity ################################
 ## Get instantaneous velocity for all subjects
@@ -315,11 +315,12 @@ get_dist_point_line_2d <- function(point = c(0, 0),
 ## Compute the cross product of 3D vectors
 ## Will fill in details later
 
-get_3dcross_prod <- function(v1,v2){
+get_3dcross_prod <- function(v1 = c(0, 0, 0),
+                             v2 = c(0, 0, 0)){
   v3 <- vector()
-  v3[1] <- v1[2]*v2[3]-v1[3]*v2[2]
-  v3[2] <- v1[3]*v2[1]-v1[1]*v2[3]
-  v3[3] <- v1[1]*v2[2]-v1[2]*v2[1]
+  v3[1] <- v1[2] * v2[3] - v1[3] * v2[2]
+  v3[2] <- v1[3] * v2[1] - v1[1] * v2[3]
+  v3[3] <- v1[1] * v2[2] - v1[2] * v2[1]
   return(v3)
 }
 
@@ -332,7 +333,7 @@ get_dist_point_line_2d <- function(point = c(0, 0, 0),
                                    line_coord2 = c(0, 0, 0)) {
   v1 <- line_coord1 - line_coord2
   v2 <- point - line_coord1
-  v3 <- cross3d_prod(v1, v2)
+  v3 <- get_3dcross_prod(v1, v2)
   area <- sqrt(sum(v3 * v3)) / 2
   dist <- 2 * area / sqrt(sum(v1 * v1))
   return(dist)
