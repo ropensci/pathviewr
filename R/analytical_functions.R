@@ -250,10 +250,10 @@ deg2rad <- function(deg) {
 ## angle calculated for the closer screen.
 
 calc_vis_angle <- function(obj_name,
-                               vertex_angle = 45,
                                gnd_plane,
                                stim_param_pos,
                                stim_param_neg,
+                               vertex_angle = 45,
                                simplify_output = FALSE){
 
   ## Check that it's a viewr object
