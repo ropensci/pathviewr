@@ -40,10 +40,6 @@ package.check <- lapply(packages, # applies the function to a list and returns
 
 devtools::load_all()
 
-## Now all of our functions are available to us. Pretty nifty
-## (EP) This means our functions are available in the background just like they
-## would be if we loaded any other package like dplyr right? can delete if true
-
 ################################# data import ##################################
 ## Using example file from Melissa
 jul_29_path <-
@@ -260,15 +256,6 @@ jul_29_selected <-
 ## Setting max_frame_gap = 1 means that a new trajectory is defined once one
 ## missing frame appears. max_frame_gap = 9 would define a new trajectory if
 ## a gap of 9 frames appears.
-##
-## Trajectory IDs are stored in the "traj_id" column.
-##
-
-## EDIT 2020-06-17 $sub_traj now has concatenation of subject IDs and
-## trajectory IDs (formerly $rb_traj)
-
-## EDIT 2020-07-01 we now have an "autodetect" capability in the max_frame_gap
-## argument. See lines further down in this section for worked examples.
 
 ## Trajectories are defined when 5 frames in a row are missing
 jul_29_labeled <-
@@ -290,8 +277,7 @@ plot(jul_29_labeled$position_length,
      jul_29_labeled$position_width,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
-#### __new behavior of max_frame_gap ####
-## 2020-07-01 new behavior of max_frame_gap!
+#### __behavior of max_frame_gap ####
 ## Entering a numeric still allows it to behave as it did before. This allows
 ## users who have a good sense of what they think the frame gap should be to set
 ## it with as little hassle as possible. E.g.
@@ -343,6 +329,12 @@ jul_29_labeled_autodetect <-
 plot(jul_29_labeled_autodetect$position_length,
      jul_29_labeled_autodetect$position_width,
      asp = 1, col = as.factor(jul_29_labeled_autodetect$traj_id))
+
+## Complementary visualization function, adapted from Melissa's determine_fg_M()
+visualize_frame_gap_choice(jul_29_selected, loops = 25)
+## Note that you'll get a different answer if a different loop length is used:
+visualize_frame_gap_choice(jul_29_selected, loops = 20)
+visualize_frame_gap_choice(jul_29_selected, loops = 50)
 
 ## We'll probably want to make a check for situtations in which character
 ## vectors are used which arent "autodetect". This is so we can guard against

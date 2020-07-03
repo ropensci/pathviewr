@@ -952,6 +952,55 @@ or center_tunnel(). Please proceed with extreme caution.")
 }
 
 
+########################## quick_separate_trajectories #########################
+## Quick version of separate_trajectories; meant to be used internally within
+## separate_trajectories itself as we are running through frame gap options
+
+quick_separate_trajectories <- function(obj_name,
+                                        max_frame_gap = 1,
+                                        ...){
+  # grouped_frames <-
+  #   obj_name %>%
+  #   dplyr::select(frame, subject) %>%
+  #   dplyr::group_by(subject)
+  #
+  # ## Split that tibble into a list of tibbles -- one per subject
+  # splitz <-
+  #   dplyr::group_split(grouped_frames)
+
+  sploot <-
+    obj_name %>%
+    dplyr::select(frame, subject) %>%
+    dplyr::group_by(subject) %>%
+    ## group by seq_id which is the diff between successive frames
+    ## is greater than max_frame_gap
+    dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap))
+
+  ## Duplicate obj_name to avoid overwriting important stuff
+  obj_new <- obj_name
+
+  ## new column (traj_id) is this seq_id
+  obj_new$traj_id <- sploot$seq_id
+
+  ## Also combine the subject ID so that we're sure trajectories
+  ## correspond to unique subjects
+  obj_new$sub_traj <- paste0(obj_new$subject,"_",obj_new$traj_id)
+
+  ## Coerce to tibble
+  obj_new <- tibble::as_tibble(obj_new)
+
+  ## Leave a note about the max frame gap used
+  attr(obj_new,"max_frame_gap") <- max_frame_gap
+
+  ## Leave a note that we rotated and translated the data set
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_new,"pathviewR_steps"), "trajectories_labeled")
+
+  ## Export
+  return(obj_new)
+}
+
+
 ############################# separate_trajectories ############################
 ## Specify a maximum frame gap and then use this to separate rows of data
 ## into separately labeled trajectories.
@@ -960,7 +1009,7 @@ or center_tunnel(). Please proceed with extreme caution.")
 ## Even negative values will do so. I'm inclined think this could be a useful
 ## thing in certain contexts...
 
-## max_frame_gap = "autodetect" will
+## max_frame_gap = "autodetect" will try to guesstimate the best value
 
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
@@ -977,7 +1026,6 @@ separate_trajectories <- function(obj_name,
 Please use gather_tunnel_data() on this object to gather data columns
 into key-value pairs ")
   }
-
 
   ## Extract the frames and subjects and group by subjects
   grouped_frames <-
@@ -1024,21 +1072,69 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       all_frame_gaps %>%
       dplyr::filter(frame_gap > 1) %>%
       tidyr::drop_na()
-    ## Compute median -- this seems to be a reasonable estimator. We can
-    ## opt to swap this with something else tho!
-    max_frame_gap <- median(cleaned_frame_gaps$frame_gap)
+
+    ## Figure out highest number of frame gaps to try
+    ## I am electing to set this to equal 1/4th the magnitude of the frame rate
+    frame_rate <-
+      get_header_viewr(obj_name)$value[5] %>% ## 5th line of header
+      as.numeric()
+    floor(frame_rate/4) -> loops
+
+    ## Make a bunch of empty vectors to dump info
+    mfg <- vector("list", loops)
+    cts <- vector("list", loops)
+    trajectory_count <- vector(mode = "double", loops)
+    frame_gap_allowed <- vector(mode = "double", loops)
+
+    ## Loop through max frame gap values
+    i <- 1
+    while (i < loops + 1) {
+      mfg[[i]] = quick_separate_trajectories(obj_name,
+                                             max_frame_gap = i)
+      cts[[i]] = count(mfg[[i]], traj_id)
+      trajectory_count[i] = nrow(cts[[i]])
+      frame_gap_allowed[i] = i
+      i = i +1
+    }
+
+    ## Collect the info on max frame gaps allowed vs. trajectory counts
+    mfg_tib <- tibble::tibble(frame_gap_allowed,
+                              trajectory_count)
+    # plot(mfg_tib) ## can be handy to look at this
+
+    ## Get set up for point-line distance computations
+    ## For all points, x = frame gap value, y = traj count
+    len <- nrow(mfg_tib)
+    first_point  <- c(frame_gap_allowed[1],   trajectory_count[1])
+    end_point    <- c(frame_gap_allowed[len], trajectory_count[len])
+
+    ## Compute the distance between each {frame_gap_allowed, trajectory_count}
+    ## and the line defined by the extreme endpoints.
+    ## The "elbow" in the plot will be at the frame gap that maximizes this
+    ## distance
+    mfg_dists <- NULL
+    for (j in 1:len) {
+      mfg_dists[j] <- get_dist_point_line_2d(point = c(frame_gap_allowed[j],
+                                                       trajectory_count[j]),
+                                             line_coord1 = first_point,
+                                             line_coord2 = end_point)
+    }
+
+    ## Set max_frame_gap to the maximum of these distances
+    max_frame_gap <- which.max(mfg_dists)
+    # plot(mfg_tib); abline(v = max_frame_gap) ## if you want to visualize
+
+    #max_frame_gap <- median(cleaned_frame_gaps$frame_gap) ## backup
     message("autodetect is an experimental feature -- please report issues.
 Estimated best value for max_frame_gap: ", max_frame_gap)
-
-    ## As a note, hist(cleaned_frame_gaps$frame_gap) could help us assess
-    ## if we want to use something other than the median. And I like having
-    ## Melissa's plotting function as something the user could do too.
     }
 
   ## max_frame_gap has now been verified or estimated by this function.
   ## The remaining part is common between the two options:
   sploot <-
-    grouped_frames %>%
+    obj_name %>%
+    dplyr::select(frame, subject) %>%
+    dplyr::group_by(subject) %>%
     ## group by seq_id which is the diff between successive frames
     ## is greater than max_frame_gap
     dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap))
@@ -1326,14 +1422,14 @@ select_x_percent_M <- function(obj_name,
 }
 
 
-############################# determine_frame_gap ############################
-## run separate_trajectories with many different frame gaps to help determine what value to use
-## spits out table and plot to guide decision--maybe could be incorporated into separate_trajectories
-## in future to guess at a default value
+########################### visualize_frame_gap_choice #########################
+## run separate_trajectories with many different frame gaps to help determine
+## what value to use
+## spits out table and plot to guide decision
 
-determine_fg_M <- function(obj_name,
-                           loops = 20,
-                           ...){
+visualize_frame_gap_choice <- function(obj_name,
+                                       loops = 20,
+                                       ...){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -1341,27 +1437,50 @@ determine_fg_M <- function(obj_name,
   }
 
   # make a bunch of empty vectors to dump info
-  mfg <- vector("list",loops)
-  cts <- vector("list",loops)
-  nrows <- vector(mode = "double",loops)
-  mfg_id <- vector(mode = "double", loops)
+  mfg <- vector("list", loops)
+  cts <- vector("list", loops)
+  trajectory_count <- vector(mode = "double", loops)
+  frame_gap_allowed <- vector(mode = "double", loops)
 
   # loop through user defined number of max frame gap values
   i <- 1
   while (i < loops + 1) {
-    mfg[[i]] = separate_trajectories(obj_name, max_frame_gap = i)
+    mfg[[i]] = quick_separate_trajectories(obj_name, max_frame_gap = i)
     cts[[i]] = count(mfg[[i]], traj_id)
-    nrows[i] = nrow(cts[[i]])
-    mfg_id[i] = i
+    trajectory_count[i] = nrow(cts[[i]])
+    frame_gap_allowed[i] = i
     i = i +1
   }
 
   #generate user friendly table and plot
-  mfg_tib <- tibble::tibble(nrows,mfg_id,file_id = "obj_name")
-  mfg_plot <- plot(mfg_tib$mfg_id, mfg_tib$nrows)
+  mfg_tib <- tibble::tibble(trajectory_count,
+                            frame_gap_allowed,
+                            file_id = "obj_name")
 
-  #ideally would then auto-select frame gap based on analysis of curve/plateau?
-  #or maybe this should always be looked at by user and then each decision added to lookup table as well?
+  ## Get set up for point-line distance computations
+  ## For all points, x = frame gap value, y = traj count
+  len <- nrow(mfg_tib)
+  first_point  <- c(frame_gap_allowed[1],   trajectory_count[1])
+  end_point    <- c(frame_gap_allowed[len], trajectory_count[len])
+
+  ## Compute the distance between each {frame_gap_allowed, trajectory_count}
+  ## and the line defined by the extreme endpoints.
+  ## The "elbow" in the plot will be at the frame gap that maximizes this
+  ## distance
+  mfg_dists <- NULL
+  for (j in 1:len) {
+    mfg_dists[j] <- get_dist_point_line_2d(point = c(frame_gap_allowed[j],
+                                                     trajectory_count[j]),
+                                           line_coord1 = first_point,
+                                           line_coord2 = end_point)
+  }
+
+  ## Set max_frame_gap to the maximum of these distances
+  max_fg <- which.max(mfg_dists)
+
+  mfg_plot <- plot(mfg_tib$frame_gap_allowed,
+                   mfg_tib$trajectory_count); abline(v = max_fg)
+
   return(list(mfg_tib, mfg_plot))
 
 }
