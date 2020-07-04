@@ -294,13 +294,16 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   gathered_data <- tibble::as_tibble(gathered_data)
 
   ## Add metadata as attributes()
-  attr(obj_name,"file_id") ->      attr(gathered_data,"file_id")
-  attr(obj_name,"file_mtime") ->   attr(gathered_data,"file_mtime")
-  attr(obj_name,"header") ->       attr(gathered_data,"header")
-  attr(obj_name,"rigid_bodies") -> attr(gathered_data,"rigid_bodies")
-  attr(obj_name,"data_names") ->   attr(gathered_data,"data_names")
-  attr(obj_name,"d1") ->           attr(gathered_data,"d1")
-  attr(obj_name,"d2") ->           attr(gathered_data,"d2")
+  attributes_list <-
+    c("file_id", "file_mtime", "header",
+      "Motive_IDs", "subject_names_full", "subject_names_simple",
+      "data_names", "data_types_full", "data_types_simple" ,
+      "d1", "d2")
+
+  for (i in 1:length(attributes_list)){
+    attr(gathered_data, attributes_list[i]) <-
+      attr(obj_name, attributes_list[i])
+  }
 
   ## Leave a note that we reshaped the data
   attr(gathered_data,"pathviewR_steps") <-
@@ -345,6 +348,22 @@ into key-value pairs ")
                     pattern,
                     replacement)
     )
+
+  if (target_column == "subject"){
+    snf <- attr(obj_name, "subject_names_full")
+    sns <- attr(obj_name, "subject_names_simple")
+
+    snf_renamed <- stringr::str_replace(snf, pattern, replacement)
+    sns_renamed <- stringr::str_replace(sns, pattern, replacement)
+
+    attr(obj_new, "subject_names_full") <- snf_renamed
+    attr(obj_new, "subject_names_simple") <- sns_renamed
+  }
+
+  ## Leave a note that we renamed something
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "renamed_characters")
+
   return(obj_new)
 
 }
@@ -1027,6 +1046,9 @@ Please use gather_tunnel_data() on this object to gather data columns
 into key-value pairs ")
   }
 
+  ## Get subject names
+  attr(obj_name)
+
   ## Extract the frames and subjects and group by subjects
   grouped_frames <-
     obj_name %>%
@@ -1036,6 +1058,13 @@ into key-value pairs ")
   ## Split that tibble into a list of tibbles -- one per subject
   splitz <-
     dplyr::group_split(grouped_frames)
+
+  ## Also generate separate subject-specific tibbles of all data
+  subject_tibbles <-
+    obj_name %>%
+    dplyr::group_by(subject) %>%
+    dplyr::group_split()
+  names(subject_tibbles) <-
 
   ## Now determine the maximum gap within each subject's set of frames
   ## This has to be done on a per-subject basis because frame numbering
