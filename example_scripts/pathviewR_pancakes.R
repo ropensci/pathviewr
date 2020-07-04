@@ -167,7 +167,7 @@ jul_29_subjectsrenamed <-
 ## Now use trim_tunnel_outliers() to trim out artifacts
 ## Defaults were defined by what worked for July 29th
 
-jul_29_trimmed <- trim_tunnel_outliers(jul_29_gathered)
+jul_29_trimmed <- trim_tunnel_outliers(jul_29_subjectsrenamed)
 
 # ## We can check that it worked by plotting length vs. height...etc again
 # plot(jul_29_trimmed$position_length,
@@ -320,16 +320,23 @@ plot(jul_29_labeled_negatory$position_length,
 ## each observation as a unique grouping factor. I don't exactly know why that
 ## would be good, but my spidey sense tells me it may prove useful someday...
 
-## Here's an exciting part -- using max_frame_gap = "autodetect".
-## This inspects all frame gaps within the data set, filters out frame gaps
-## of size 1, and from the remaining gaps computes the median value. That value
-## is then used as max_frame_gap as what I am hoping may be a reasonable value.
+## "autodetect" has been updated! It now:
+## Splits the data by subject and computes a max_frame_gap for each subject
 jul_29_labeled_autodetect <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect")
 plot(jul_29_labeled_autodetect$position_length,
      jul_29_labeled_autodetect$position_width,
      asp = 1, col = as.factor(jul_29_labeled_autodetect$traj_id))
+## Use frame_gap_messaging = TRUE to get reports of selecte frame gaps
+jul_29_labeled_autodetect <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect",
+                                            frame_gap_messaging = TRUE)
+## Use frame_gap_plotting = TRUE to get elbow plots! One per subject
+jul_29_labeled_autodetect <-
+  jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect",
+                                            frame_gap_plotting = TRUE)
 
+## THE visualize_frame_gap_choice() MAY NOT BE NECESSARY ANYMORE!
 ## Complementary visualization function, adapted from Melissa's determine_fg_M()
 visualize_frame_gap_choice(jul_29_selected, loops = 25)
 ## Note that you'll get a different answer if a different loop length is used:
