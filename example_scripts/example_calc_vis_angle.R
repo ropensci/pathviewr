@@ -1,28 +1,29 @@
-## Last updated 2020/05/28 by ERP
+## Last updated 2020/0738 by ERP
 
 #####     Worked example for using calc_vis_angle functions      #####
 
 
-## The calc_vis_angle functions reference the Position_widths and Position_heights
+## The calc_vis_angle functions reference the position_width and position_height
 ## variables of raw motive data files and require the following arguments:
 
 ##  Ground plane (gnd_plane) - at baseline, this indicates the vertical distance
 ##    between the bottom of the "V" and the height of the grounding tool.
-##    Following raw data processing using the utility functions, it must indicate
-##    the vertical distance between the bottom of the "V" and the height of the
-##    perches. An incorrect gnd_plane for a given tunnel set up may calculate
-##    negative visual angles (as if the bird is flying outside the tunnel).
-##    gnd_plane should be reported in the same units as Position_widths and
-##    Position_heights (meters I believe).
+##    Following raw data processing using the utility functions, it must
+##    indicate the vertical distance between the bottom of the "V" and the
+##    height of the perches. An incorrect gnd_plane for a given tunnel set up
+##    may calculate negative visual angles (as if the bird is flying outside the
+##    tunnel). gnd_plane should be reported in the same units as position_width
+##    and position_height (typically in meters).
+##
+##  Stimulus parameter (stim_param_pos AND stim_param_neg) - this reflects the
+##    size of the visual stimulus displayed on either side of the tunnel.
+##    E.g. positive screens displays 10cm wide bars: stim_param_pos = 0.1.
+##
 ##  Vertex angle (vertex_angle) - this is included in the calc_vis_angle_mod
 ##    functions and it represents the acute angle each screen creates with a
 ##    vertical axis. It is also equal to the angle of the "V" divided by 2.
-##    It's reported in degrees (because who measures things in radians anyway)
-##    and is converted to radians within the functions so that it works with the
-##    trig functions.
-##  Stimulus parameter (stim_param) - this reflects the size of the visual
-##    stimulus being displayed on either side of the tunnel. For example, if the
-##    screens display 10cm wide vertical or horizontal bars, stim_param = 0.1.
+##    It's reported in degrees and is converted to radians so that it works with
+##    the trig functions.
 
 ###   NOTE: Perhaps these arguments can eventually be supplied or referenced
 ###   from within each file's metadata.
@@ -81,9 +82,10 @@ jul_29 <- read_motive_csv('./inst//extdata/july-29_group-I_16-20.csv')
 
           #####   Rename axes   #####
 jul_29 <- relabel_viewr_axes(jul_29,
-                             tunnel_length = "_Z",
-                             tunnel_width = "_X",
-                             tunnel_height = "_Y")
+                             tunnel_length = "_z",
+                             tunnel_width = "_x",
+                             tunnel_height = "_y",
+                             real = "_w")
 
 
           #####    Gather data   #####
@@ -109,7 +111,7 @@ jul_29_full <-
   jul_29_labeled %>% get_full_trajectories()
 
 identical(jul_29_all_defaults, jul_29_full)
-## beautiful
+## curently false as import_and_clean_viewr includes velocity calculations
 
 
 
