@@ -8,19 +8,15 @@ visual stimuli.}
 \usage{
 calc_vis_angle(
   obj_name,
-  vertex_angle = 45,
   gnd_plane,
   stim_param_pos,
   stim_param_neg,
+  vertex_angle = 45,
   simplify_output = FALSE
 )
 }
 \arguments{
 \item{obj_name}{A tibble or data.frame with attribute \code{viewr}}
-
-\item{vertex_angle}{The angle (in degrees) subtended by a vertical axis and
-the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
-\code{vertex_angle)} defaults to 45.}
 
 \item{gnd_plane}{The vertical distance (in meters) between the bottom of the
 "V" and the horizontal plane through the origin (0,0,0).}
@@ -32,6 +28,10 @@ example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}}
 \item{stim_param_neg}{The same convention as \code{stim_param_pos} but for
 stimuli presented on the negative side of the tunnel
 (i.e. \code{position_width < 0}).}
+
+\item{vertex_angle}{The angle (in degrees) subtended by a vertical axis and
+the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
+\code{vertex_angle)} defaults to 45.}
 }
 \value{
 A tibble or data.frame with added variables for
