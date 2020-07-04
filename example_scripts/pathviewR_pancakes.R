@@ -278,14 +278,8 @@ plot(jul_29_labeled$position_length,
      asp = 1, col = as.factor(jul_29_labeled$traj_id))
 
 #### __behavior of max_frame_gap ####
-## Entering a numeric still allows it to behave as it did before. This allows
-## users who have a good sense of what they think the frame gap should be to set
-## it with as little hassle as possible. E.g.
-jul_29_labeled_fg3 <-
-  jul_29_selected %>% separate_trajectories(max_frame_gap = 3)
-plot(jul_29_labeled_fg3$position_length,
-     jul_29_labeled_fg3$position_width,
-     asp = 1, col = as.factor(jul_29_labeled_fg3$traj_id))
+## Entering a numeric still allows it to behave as it did before (above example
+## shows this already)
 
 ## You can also use it without needing to run through select_x_percent first:
 jul_29_labeled_unselected <-
@@ -327,6 +321,8 @@ jul_29_labeled_autodetect <-
 plot(jul_29_labeled_autodetect$position_length,
      jul_29_labeled_autodetect$position_width,
      asp = 1, col = as.factor(jul_29_labeled_autodetect$traj_id))
+## Frame gap values are reported in attributes:
+  attr(jul_29_labeled_autodetect, "max_frame_gap")
 ## Use frame_gap_messaging = TRUE to get reports of selecte frame gaps
 jul_29_labeled_autodetect <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect",
