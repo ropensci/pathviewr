@@ -1318,7 +1318,7 @@ get_full_trajectories <- function(obj_name,
 
   summary_obj <-
     obj_name %>%
-    dplyr::group_by(traj_id) %>%
+    dplyr::group_by(sub_traj) %>%
     dplyr::summarise(traj_length = n(),
                      start_length = position_length[1],
                      end_length = position_length[traj_length],
@@ -1344,7 +1344,7 @@ get_full_trajectories <- function(obj_name,
   ## Filter data by the two criteria
   filt_summary <-
     summary_obj %>%
-    dplyr::group_by(traj_id) %>%
+    dplyr::group_by(sub_traj) %>%
     ## Each trajectory must span a minimum porportion of the selected tunnel
     dplyr::filter(length_diff > (span * max_length)) %>%
     ## And the signs (+ or -) at the ends of the trajectories must be opposites
@@ -1352,11 +1352,11 @@ get_full_trajectories <- function(obj_name,
 
   obj_continuous <-
     obj_name %>%
-    dplyr::filter(traj_id %in% filt_summary$traj_id)
+    dplyr::filter(sub_traj %in% filt_summary$sub_traj)
 
   ## Join the columns to add in direction
   obj_defined <-
-    dplyr::right_join(obj_continuous, filt_summary, by = "traj_id") %>%
+    dplyr::right_join(obj_continuous, filt_summary, by = "sub_traj") %>%
     tibble::as_tibble()
 
   ## Leave a note about the span used
@@ -1368,7 +1368,7 @@ get_full_trajectories <- function(obj_name,
 
   ## Leave a note about trajectories removed
   attr(obj_defined, "trajectories_removed") <-
-    length(summary_obj$traj_id) - length(filt_summary$traj_id)
+    length(summary_obj$sub_traj) - length(filt_summary$sub_traj)
 
   ## Export
   return(obj_defined)
