@@ -1086,7 +1086,7 @@ into key-value pairs ")
   }
 
   ## Get subject names
-  subject_names_simple <- attr(obj_name, "subject_names_simple")
+  subject_names_simple <- unique(obj_name$subject)
 
   ## Extract the frames and subjects and group by subjects
   grouped_frames <-
