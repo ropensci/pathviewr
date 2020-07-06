@@ -303,7 +303,7 @@ plot(jul_29_labeled_overflow$position_length,
 
 ## A final neat trick among numeric entries for max_frame_gap is setting it to
 ## any value lower than 1. I haven't played around with this thoroughly, but
-## max_frame_gap < 1 (includeing negative values) should make every frame a
+## max_frame_gap < 1 (including negative values) should make every frame a
 ## separate trajectory.
 jul_29_labeled_negatory <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = -1)
@@ -666,11 +666,12 @@ aspect3d("iso")
 ## leaving us with positive values indicating position above the perch level and
 ## negative values indicating positions below perch level.
 
-#### __new centering function ####
-## 2020-07-01 new centering function written; time to try it out
+#### __centering function ####
 test_centered <-
   test_mat %>%
-  center_tunnel_data(length_zero = "middle")
+  redefine_tunnel_center(length_method = "middle",
+                         height_method = "user-defined",
+                         height_zero = 1.44)
 
 open3d()
 rgl::plot3d(x = test_centered$position_length,

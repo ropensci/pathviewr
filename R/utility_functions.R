@@ -808,23 +808,28 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   return(obj_new)
 }
 
-############################# center_tunnel_data ###############################
+############################# redefine_tunnel_center ###########################
 ## "Center" the tunnel data, i.e. translation but no rotation
 ## This is primarily designed for use with flydra data
-## Three choices of how centering is handled:
-## "original" keeps axis as is -- this is how width and height should be handled
-## for flydra data
+## Four choices of how centering is handled:
+## "original" keeps axis as is -- this is how width and (possibly) height should
+## be handled for flydra data
 ## "middle" is the middle of the range of data: (min + max) / 2
 ## "median" is the median value of data on that axis. Probably not recommended
+## "user-defined" lets the user customize where the (0, 0, 0) point in the
+## tunnel will end up. Each *_zero argument is subtracted from its corresponding
+## axis' data.
 
-center_tunnel_data <- function(obj_name,
-                               length_col = "position_length",
-                               width_col = "position_width",
-                               height_col = "position_height",
-                               length_zero = c("original", "middle", "median"),
-                               width_zero = c("original", "middle", "median"),
-                               height_zero = c("original", "middle", "median"),
-                               ...) {
+redefine_tunnel_center <-
+  function(obj_name,
+           axes = c("position_length", "position_width", "position_height"),
+           length_method = c("original", "middle", "median", "user-defined"),
+           width_method  = c("original", "middle", "median", "user-defined"),
+           height_method = c("original", "middle", "median", "user-defined"),
+           length_zero = NA,
+           width_zero = NA,
+           height_zero = NA,
+           ...) {
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -839,14 +844,17 @@ into key-value pairs ")
   }
 
   ## Check that each column exists
-  if (!length_col %in% names(obj_name)) {
-    stop("length_col was not found")
+  if (!"position_length" %in% names(obj_name)) {
+    stop("Length column not found.
+This column must be named 'position_length'.")
   }
-  if (!width_col %in% names(obj_name)) {
-    stop("width_col was not found")
+  if (!"position_width" %in% names(obj_name)) {
+    stop("Width column not found
+This column must be named 'position_width'.")
   }
-  if (!height_col %in% names(obj_name)) {
-    stop("height_col was not found")
+  if (!"position_height" %in% names(obj_name)) {
+    stop("Height column not found
+This column must be named 'position_height'.")
   }
 
   ## NEED TO ADD: Check for NAs within the data columns:
@@ -854,9 +862,9 @@ into key-value pairs ")
   #   stop("NA values found within data, please clean")
   # }
 
-  length_zero <- match.arg(length_zero)
-  width_zero  <- match.arg(width_zero)
-  height_zero <- match.arg(height_zero)
+  length_method <- match.arg(length_method)
+  width_method  <- match.arg(width_method)
+  height_method <- match.arg(height_method)
 
   ## Summarize each dimension
   length_min <- min(obj_name$position_length)
@@ -876,34 +884,63 @@ into key-value pairs ")
   obj_new <- obj_name
 
   ## Handle lengths first
-  if (length_zero == "original"){
+  if (length_method == "original"){
     obj_new$position_length <- obj_name$position_length
   }
-  if (length_zero == "middle"){
+  if (length_method == "middle"){
     obj_new$position_length <- obj_name$position_length - length_middle
   }
-  if (length_zero == "median"){
+  if (length_method == "median"){
     obj_new$position_length <- obj_name$position_length - length_median
   }
+  if (length_method == "user-defined"){
+    if (is.character(length_zero) == TRUE){
+      stop("length_zero must be a numeric vector of length 1")
+    }
+    if (is.na(length_zero) == TRUE){
+      stop("You must supply a length_zero argument.")
+    }
+    obj_new$position_length <- obj_name$position_length - length_zero
+  }
+
   ## Handle widths second
-  if (width_zero == "original"){
+  if (width_method == "original"){
     obj_new$position_width <- obj_name$position_width
   }
-  if (width_zero == "middle"){
+  if (width_method == "middle"){
     obj_new$position_width <- obj_name$position_width - width_middle
   }
-  if (width_zero == "median"){
+  if (width_method == "median"){
     obj_new$position_width <- obj_name$position_width - width_median
   }
+  if (width_method == "user-defined"){
+    if (is.character(width_zero) == TRUE){
+      stop("width_zero must be a numeric vector of length 1")
+    }
+    if (is.na(width_zero) == TRUE){
+      stop("You must supply a width_zero argument.")
+    }
+    obj_new$position_width <- obj_name$position_width - width_zero
+  }
+
   ## Handle heights third
-  if (height_zero == "original"){
+  if (height_method == "original"){
     obj_new$position_height <- obj_name$position_height
   }
-  if (height_zero == "middle"){
+  if (height_method == "middle"){
     obj_new$position_height <- obj_name$position_height - height_middle
   }
-  if (height_zero == "median"){
+  if (height_method == "median"){
     obj_new$position_height <- obj_name$position_height - height_median
+  }
+  if (height_method == "user-defined"){
+    if (is.character(height_zero) == TRUE){
+      stop("height_zero must be a numeric vector of length 1")
+    }
+    if (is.na(height_zero) == TRUE){
+      stop("You must supply a height_zero argument.")
+    }
+    obj_new$position_height <- obj_name$position_height - height_zero
   }
 
   ## TO ADD: Note what the original center was in the attributes
