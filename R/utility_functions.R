@@ -1066,9 +1066,12 @@ quick_separate_trajectories <- function(obj_name,
 ## thing in certain contexts...
 
 ## max_frame_gap = "autodetect" will try to guesstimate the best value
+## frame_rate_proportion multiplies the value inserted (default = 0.1) and the
+## frame rate to get an upper bound for what the maximum frame gap could be.
 
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
+                                  frame_rate_proportion = 0.10,
                                   frame_gap_messaging = FALSE,
                                   frame_gap_plotting = FALSE,
                                   ...){
@@ -1174,9 +1177,14 @@ Setting max_frame_gap to ", maxFG_across_subjects)
     message("autodetect is an experimental feature -- please report issues.")
 
     ## Figure out highest number of frame gaps to try
-    ## I am electing to set this to equal 1/4th the magnitude of the frame rate
-    ## Can be refined later!
-    floor(frame_rate/4) -> max_frame_gap_allowed
+    if (!is.numeric(frame_rate_proportion)){
+      stop("frame_rate_proportion must be numeric and between 0 and 1")
+    }
+    if (frame_rate_proportion > 1 || frame_rate_proportion < 0) {
+      stop(
+        "frame_rate_proportion must be expressed as a decimal between 0 and 1")
+    }
+    floor(frame_rate_proportion * frame_rate) -> max_frame_gap_allowed
 
     sploot <- list()
     ## For each subject's tibble, run through the process of finding the elbow
