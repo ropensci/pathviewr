@@ -1210,26 +1210,10 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       mfg_tib <- tibble::tibble(frame_gap_allowed,
                                 trajectory_count)
 
-      ## Get set up for point-line distance computations
-      ## For all points, x = frame gap value, y = traj count
-      len <- nrow(mfg_tib)
-      first_point  <- c(frame_gap_allowed[1],   trajectory_count[1])
-      end_point    <- c(frame_gap_allowed[len], trajectory_count[len])
-
-      ## Compute the distance between each {frame_gap_allowed, trajectory_count}
-      ## and the line defined by the extreme endpoints.
-      ## The "elbow" in the plot will be at the frame gap that maximizes this
-      ## distance
-      mfg_dists <- NULL
-      for (k in 1:len) {
-        mfg_dists[k] <- get_dist_point_line_2d(point = c(frame_gap_allowed[k],
-                                                         trajectory_count[k]),
-                                               line_coord1 = first_point,
-                                               line_coord2 = end_point)
-      }
-
-      ## Set max_frame_gap to the maximum of these distances
-      max_frame_gap[[i]] <- which.max(mfg_dists)
+      ## Find the curve elbow point via `find_curve_elbow()`
+      max_frame_gap[[i]] <- find_curve_elbow(mfg_tib,
+                                             export_type = "row_num",
+                                             plot_curve = FALSE)
 
       if(frame_gap_messaging == TRUE){
         message("For subject: ", subject_names_simple[i],
@@ -1570,31 +1554,18 @@ visualize_frame_gap_choice <- function(obj_name,
     i = i +1
   }
 
-  #generate user friendly table and plot
-  mfg_tib <- tibble::tibble(trajectory_count,
-                            frame_gap_allowed,
-                            file_id = "obj_name")
+  ## Collect the info on max frame gaps allowed vs. trajectory counts
+  mfg_tib <- tibble::tibble(frame_gap_allowed,
+                            trajectory_count)
 
-  ## Get set up for point-line distance computations
-  ## For all points, x = frame gap value, y = traj count
-  len <- nrow(mfg_tib)
-  first_point  <- c(frame_gap_allowed[1],   trajectory_count[1])
-  end_point    <- c(frame_gap_allowed[len], trajectory_count[len])
+  ## Find the curve elbow point via `find_curve_elbow()`
+  max_fg <- find_curve_elbow(mfg_tib,
+                             export_type = "row_num",
+                             plot_curve = FALSE)
 
-  ## Compute the distance between each {frame_gap_allowed, trajectory_count}
-  ## and the line defined by the extreme endpoints.
-  ## The "elbow" in the plot will be at the frame gap that maximizes this
-  ## distance
-  mfg_dists <- NULL
-  for (j in 1:len) {
-    mfg_dists[j] <- get_dist_point_line_2d(point = c(frame_gap_allowed[j],
-                                                     trajectory_count[j]),
-                                           line_coord1 = first_point,
-                                           line_coord2 = end_point)
-  }
-
-  ## Set max_frame_gap to the maximum of these distances
-  max_fg <- which.max(mfg_dists)
+  ## Paste filename into export tibble
+  obj_name_arg <- deparse(substitute(obj_name))
+  mfg_tib$file_id <- as.character(obj_name_arg)
 
   mfg_plot <- plot(mfg_tib$frame_gap_allowed,
                    mfg_tib$trajectory_count); abline(v = max_fg)
