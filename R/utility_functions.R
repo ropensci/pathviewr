@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-01 vbb
+## Last updated: 2020-07-07 vbb
 
 ############################### relabel_viewr_axes #############################
 
@@ -1283,27 +1283,6 @@ Setting max_frame_gap to ", maxFG_across_subjects)
   }
 
   }
-#   ## Collect all frame gaps in one tibble
-#   all_frame_gaps <-
-#     unlist(allFGs_by_subject) %>%
-#     tibble::as_tibble_col(column_name = "frame_gap")
-#   ## Remove values below 1 or NA values
-#   cleaned_frame_gaps <-
-#     all_frame_gaps %>%
-#     dplyr::filter(frame_gap > 1) %>%
-#     tidyr::drop_na()
-#
-#   restricted_frame_gaps <-
-#     cleaned_frame_gaps %>%
-#     dplyr::filter(frame_gap < frame_rate)
-#   # hist(restricted_frame_gaps$frame_gap) ## handy
-#
-#
-#
-#   #max_frame_gap <- median(cleaned_frame_gaps$frame_gap) ## backup
-#   message("autodetect is an experimental feature -- please report issues.
-# Estimated best value for max_frame_gap: ", max_frame_gap)
-
 
 
 ############################# get_full_trajectories ############################

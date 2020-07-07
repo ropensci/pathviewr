@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-02 VBB
+## Last updated: 2020-07-07 VBB
 
 ################################## get_velocity ################################
 ## Get instantaneous velocity for all subjects
@@ -78,7 +78,7 @@ Please check that you have entered the name of the height variable correctly.")
   ## If add_to_viewr is FALSE, export the standalone (res) tibble
   if (add_to_viewr == TRUE){
     ## Add the new columns and generate a new viewr object
-    obj_new <- bind_cols(obj_name, res)
+    obj_new <- dplyr::bind_cols(obj_name, res)
 
     ## Leave a note that we computed velocity via get_velocity()
     attr(obj_new,"pathviewR_steps") <-
@@ -93,7 +93,7 @@ Please check that you have entered the name of the height variable correctly.")
   if (is.numeric(velocity_min)){
     ## filter velocity
     obj_new <- obj_new %>%
-      filter(velocity > velocity_min)
+      dplyr::filter(velocity > velocity_min)
 
     ## Leave a note set velocity_min via get_velocity()
     #leave note even if not added to viewr object?
@@ -111,7 +111,7 @@ Please check that you have entered the name of the height variable correctly.")
   if (is.numeric(velocity_max)){
     ## filter velocity
     obj_new <- obj_new %>%
-      filter(velocity < velocity_max)
+      dplyr::filter(velocity < velocity_max)
 
     ## Leave a note set velocity_min via get_velocity()
     #leave note even if not added to viewr object?
