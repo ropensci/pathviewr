@@ -50,11 +50,15 @@ import_and_clean_viewr <- function(file_name,
     rotate_args <- c("all_heights_min", "all_heights_max")
     ## standardize_tunnel()
     standardize_args <- c("landmark_one", "landmark_two",
-    ## perch 1 = left (near length = 0); perch 2 = right
+        ## perch 1 = left (near length = 0); perch 2 = right
                           "perch1_len_min", "perch1_len_max",
                           "perch2_len_min", "perch2_len_max",
                           "perch1_wid_min", "perch1_wid_max",
                           "perch2_wid_min", "perch2_wid_max")
+    ## redefine_tunnel_center()
+    center_args <- c("axes",
+                     "length_method", "width_method", "height_method",
+                     "length_zero", "width_zero", "height_zero")
     ## get_velocity()
     velocity_args <- c("time_col",
                        "length_col", "width_col", "height_col",
@@ -63,7 +67,8 @@ import_and_clean_viewr <- function(file_name,
     ## select_x_percent()
     select_args <- c("desired_percent")
     ## separate_trajectories()
-    separate_args <- c("max_frame_gap")
+    separate_args <- c("max_frame_gap", "frame_rate_proportion",
+                       "frame_gap_messaging", "frame_gap_plotting")
     ## get_full_trajectories()
     get_full_traj_args <- c("span")
 
@@ -152,10 +157,10 @@ or by removing the extraneous argument(s)")
       standardize_tunnel(...)
   }
 
-  if (standardization_option == "center_tunnel_data"){
+  if (standardization_option == "redefine_tunnel_center"){
     obj <-
       obj %>%
-      rotate_tunnel(...) ## REPLACE WHEN CENTER_TUNNEL_DATA IS READY!
+      redefine_tunnel_center(...)
   }
 
   if (standardization_option == "none"){
