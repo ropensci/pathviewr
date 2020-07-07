@@ -204,6 +204,76 @@ deg2rad <- function(deg) {
 
 }
 
+################################# find_curve_elbow #############################
+## For bivariate data that show monotonic decreases (e.g. plots of trajectory
+## count vs. frame gap allowed, or scree plots from PCAs), this function will
+## find the "elbow" point. This is done by drawing an (imaginary) line between
+## the first observation and the final observation. Then, the distance between
+## that line and each observation is calculated. The "elbow" of the curve is
+## the observation that maximizes this distance.
+
+
+find_curve_elbow <- function(data_frame,
+                             export_type = "row_num",
+                             plot_curve = FALSE) {
+
+  ## Check that there are exactly two columns provided
+  if (!dim(data_frame)[2] == 2) {
+    stop("The input data has more than two columns.
+Please ensure there are only two columns, ordered x-axis first, y-axis second")
+  }
+
+  ## ADD A NUMERIC CHECK HERE EVENTUALLY
+
+  ## Convert to matrix for speedier handling
+  data_matrix <- as.matrix(data_frame)
+  first_col   <- data_matrix[,1]
+  second_col  <- data_matrix[,2]
+
+  ## Get set up for point-line distance computations
+  len <- nrow(data_matrix)
+  first_point <- c(first_col[1],   second_col[1])
+  end_point   <- c(first_col[len], second_col[len])
+
+  ## Compute the distance between each {x, y} and the line defined by the
+  ## extreme endpoints.
+  ## The "elbow" in the plot will be at the frame gap that maximizes this
+  ## distance
+  mfg_dists <- NULL
+  for (k in 1:len) {
+    mfg_dists[k] <- get_dist_point_line_2d(point = c(first_col[k],
+                                                     second_col[k]),
+                                           line_coord1 = first_point,
+                                           line_coord2 = end_point)
+  }
+
+  ## Set elbow to the maximum of these distances
+  elbow <- which.max(mfg_dists)
+
+  if(plot_curve == TRUE){
+    plot(data_matrix); abline(v = elbow)
+  }
+
+  ## Export
+  if (export_type == "row_num"){
+    return(elbow)
+  } else {
+    return(data_matrix[elbow,])
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 #################        calc_vis_angle       ###################
 
