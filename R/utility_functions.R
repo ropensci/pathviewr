@@ -1350,6 +1350,8 @@ get_full_trajectories <- function(obj_name,
 ############################### remove birds with too few flights ###############################
 rmbird_byflightnum <- function(obj_name,
                                flightnum = 5,
+                               vistim1,
+                               vistim2,
                                ...){
   #get list of birds that complete x num flights in BOTH treatments
   rm_bytreat <-
@@ -1363,10 +1365,11 @@ rmbird_byflightnum <- function(obj_name,
     separate(block, c("bird", "treatment")) %>%
     spread(treatment, n)
 
-  #not fully functional cause can't figure out how to make the column a changeable argument
+  vars <- c(vistim1, vistim2)
+
   rm_bytreat <-
     rm_bytreat %>%
-    filter(up >= flightnum & down >= flightnum) %>%
+    filter(.data[[vars[[1]]]] >= flightnum & .data[[vars[[2]]]] >= flightnum) %>%
     select(bird)
 
   obj_name <- inner_join(obj_name, rm_bytreat)
@@ -1412,7 +1415,7 @@ purrplot_by_bird <- function(obj_name,
 
   #for top view (change in lateral position)
   top_view <- obj_name %>%
-    group_by(rigid_body) %>%
+    group_by(subject) %>%
     nest() %>%
     mutate(paths = map(data, ~ggplot(., aes(position_length, position_width, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
@@ -1426,11 +1429,11 @@ purrplot_by_bird <- function(obj_name,
                         geom_vline(xintercept = 0, linetype = "dotted") +
                         coord_flip() +
                         theme_tufte()),
-           filename = paste0(rigid_body,"_top",".png"))
+           filename = paste0(subject,"_top",".png"))
 
   #all of them together:
   top_all_plots <- top_view %>%
-    select(rigid_body, paths, hist) %>%
+    select(subject, paths, hist) %>%
     gather("plot_type", "allplots", 2:3)
 
   birdseye_view <- plot_grid(plotlist = top_all_plots[[3]])
@@ -1440,7 +1443,7 @@ purrplot_by_bird <- function(obj_name,
 
   #for elev view (change in height):
   elev_view <- obj_name %>%
-    group_by(rigid_body) %>%
+    group_by(subject) %>%
     nest() %>%
     mutate(paths = map(data, ~ggplot(., aes(position_length, position_height, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
@@ -1454,11 +1457,11 @@ purrplot_by_bird <- function(obj_name,
                         geom_vline(xintercept = 0, linetype = "dotted") +
                         coord_flip() +
                         theme_tufte()),
-           filename = paste0(rigid_body,"_elev",".png"))
+           filename = paste0(subject,"_elev",".png"))
 
   #all of them together:
   elev_all_plots <- elev_view %>%
-    select(rigid_body, paths, hist) %>%
+    select(subject, paths, hist) %>%
     gather("plot_type", "allplots", 2:3)
 
   side_view <- plot_grid(plotlist = elev_all_plots[[3]])
@@ -1471,7 +1474,6 @@ purrplot_by_bird <- function(obj_name,
 #AB_top %>%
 #  select(filename, paths) %>%
 #  pwalk(ggsave, path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-
 
 ############################### select_X_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
