@@ -328,12 +328,12 @@ rename_viewr_characters <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that target_column exists
   if (!target_column %in% names(obj_name)) {
@@ -389,12 +389,12 @@ trim_tunnel_outliers <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that "position_length" exists in at least one column
   if (!any(grepl("position_length",
@@ -495,12 +495,12 @@ rotate_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that "position_length" exists in at least one column
   if (!any(grepl("position_length",
@@ -653,12 +653,12 @@ standardize_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that "position_length" exists in at least one column
   if (!any(grepl("position_length",
@@ -836,12 +836,12 @@ redefine_tunnel_center <-
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that each column exists
   if (!"position_length" %in% names(obj_name)) {
@@ -966,12 +966,12 @@ select_x_percent <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that it's undergone one of our centering steps
-  if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
-    warning("This viewr object does not seem to have been passed through
-one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
-or center_tunnel(). Please proceed with extreme caution.")
-  }
+#   ## Check that it's undergone one of our centering steps
+#   if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
+#     warning("This viewr object does not seem to have been passed through
+# one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
+# or center_tunnel(). Please proceed with extreme caution.")
+#   }
 
   ## Convert percent to proportion
   prop <- desired_percent/100
@@ -1081,12 +1081,12 @@ separate_trajectories <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Get subject names
   subject_names_simple <- unique(obj_name$subject)
@@ -1282,10 +1282,10 @@ get_full_trajectories <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
-    stop("Please use separate_trajectories() prior to using this")
-  }
+  # ## Check that its axes have been renamed
+  # if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
+  #   stop("Please use separate_trajectories() prior to using this")
+  # }
 
   summary_obj <-
     obj_name %>%
