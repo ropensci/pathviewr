@@ -73,7 +73,7 @@ import_and_clean_viewr <- function(file_name,
     get_full_traj_args <- c("span")
 
   valid_args <- c(read_args, relabel_args, trim_args,
-                  rotate_args, standardize_args,
+                  rotate_args, standardize_args, center_args,
                   velocity_args,
                   select_args, separate_args, get_full_traj_args
                   )
