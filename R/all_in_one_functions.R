@@ -1,10 +1,27 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-11 VBB
+## Last updated: 2020-07-12 VBB
 
 
 ################################# clean_viewr ##################################
 ## run through the pipeline for a single viewr object that has already been
 ## imported
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' For an imported viewr object, run through the cleaning pipeline as desired
+#'
+#' @param obj_name The viewr object to be processed
+#' @param relabel_viewr_axes default TRUE,
+#' @param gather_tunnel_data default TRUE,
+#' @param trim_tunnel_outliers default TRUE,
+#' @param standardization_option default "rotate_tunnel",
+#' @param get_velocity default TRUE,
+#' @param select_x_percent default TRUE,
+#' @param separate_trajectories default TRUE,
+#' @param get_full_trajectories default TRUE,
+#' @param ... Additional arugments passed to any of the corresponding functions
+#'
+#' @return
+#' @export
 
 clean_viewr <- function(obj_name,
                         relabel_viewr_axes = TRUE,
@@ -222,6 +239,24 @@ or by removing the extraneous argument(s)")
 ############################ import_and_clean_viewr ############################
 ## Use all of the preceding functions to construct an all-in-one function for
 ## ease of use.
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Import a file and run through as many cleaning steps as desired.
+#'
+#' @param file_name Target file
+#' @param file_id Optional
+#' @param relabel_viewr_axes default TRUE,
+#' @param gather_tunnel_data default TRUE,
+#' @param trim_tunnel_outliers default TRUE,
+#' @param standardization_option default TRUE,
+#' @param get_velocity default TRUE,
+#' @param select_x_percent default TRUE,
+#' @param separate_trajectories default TRUE,
+#' @param get_full_trajectories default TRUE,
+#' @param ... Additional arguments passed to the corresponding functions.
+#'
+#' @return
+#' @export
 
 import_and_clean_viewr <- function(file_name,
                                    file_id = NA,

@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-07 vbb
+## Last updated: 2020-07-12 VBB
 
 ############################### relabel_viewr_axes #############################
 
@@ -318,6 +318,18 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## Quick utility function to use str_replace with mutate(across()) to batch-
 ## rename subjects via pattern detection.
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Quick utility function to use str_replace with mutate(across()) to batch-
+#' rename subjects via pattern detection.
+#'
+#' @param obj_name The target viewr object
+#' @param target_column The target column; defaults to "subject"
+#' @param pattern The (regex) pattern to be replaced
+#' @param replacement The replacement text. Must be a character
+#'
+#' @return
+#' @export
+
 rename_viewr_characters <- function(obj_name,
                                     target_column = "subject",
                                     pattern,
@@ -374,6 +386,21 @@ rename_viewr_characters <- function(obj_name,
 ## trims out anything beyond these estimates.
 ## I highly recommend plotting data beforehand and checking that estimates
 ## make sense!!!!!!
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Trim out artifacts and other outliers from the extremes of the tunnel
+#'
+#' @param obj_name The target viewr object
+#' @param lengths_min Minimum length
+#' @param lengths_max Maximum length
+#' @param widths_min Minimum width
+#' @param widths_max Maximum width
+#' @param heights_min Minimum height
+#' @param heights_max Maximum height
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
 
 trim_tunnel_outliers <- function(obj_name,
                                  lengths_min = 0,
@@ -461,7 +488,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 
 ################################ rotate_tunnel #################################
 ## Function to rotate a tunnel so that perches are approximately aligned
-## Rotation is applied to length and width data; height is untouched
+## Rotation is applied to length and width data
 ## The user first estimates the locations of the perches by specifying
 ## bounds for where each perch is located.
 ## The function then computes the center of each bounding box and estimates
@@ -471,10 +498,28 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## The angle between perch1_center, tunnel_center_point, and arbitrary point
 ## along the length axis (tunnel_center_point - 1 on length) is estimated.
 ## That angle is then used to rotate the data, again only in the length and
-## width dimensions.
-## 2020-02-20 Height is now standardized by (approximate) perch height; values
-## greater than 0 are above the perch and values less than 0 are below the
-## perch level.
+## width dimensions. Height is standardized by (approximate) perch height;
+## values greater than 0 are above the perch and values less than 0 are below
+## the perch level.
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Rotate a tunnel so that perches are approximately aligned
+#'
+#' @param obj_name The target viewr object
+#' @param all_heights_min Minimum perch height
+#' @param all_heights_max Maximum perch height
+#' @param perch1_len_min Minimum length value of perch 1
+#' @param perch1_len_max Maximum length value of perch 1
+#' @param perch2_len_min Minimum length value of perch 2
+#' @param perch2_len_max Maximum length value of perch 2
+#' @param perch1_wid_min Minimum width value of perch 1
+#' @param perch1_wid_max Maximum width value of perch 1
+#' @param perch2_wid_min Minimum width value of perch 2
+#' @param perch2_wid_max Maximum witdh value of perch 2
+#' @param ... Additional arguments that may be passed
+#'
+#' @return
+#' @export
 
 rotate_tunnel <- function(obj_name,
                           all_heights_min = 0.11,
@@ -641,7 +686,17 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## Alternative to rotate_tunnel. Writing a version here where perches (or other
 ## landmarks) are coded as rigid bodies from the get-go.
 ##
-## This may get consolidated with rotate_tunnel() at some point...
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Rotate and center a tunnel based on specified landmarks.
+#'
+#' @param obj_name The target viewr object
+#' @param landmark_one Subject name of the first landmark
+#' @param landmark_two Subject name of the second landmark
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -820,6 +875,22 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## tunnel will end up. Each *_zero argument is subtracted from its corresponding
 ## axis' data.
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' "Center" the tunnel data, i.e. translation but no rotation
+#'
+#' @param obj_name The target viewr object
+#' @param axes Names of axes to be centered
+#' @param length_method Method for length
+#' @param width_method Method for width
+#' @param height_method Method for height
+#' @param length_zero User-defined value
+#' @param width_zero User-defined value
+#' @param height_zero User-defined value
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
+
 redefine_tunnel_center <-
   function(obj_name,
            axes = c("position_length", "position_width", "position_height"),
@@ -957,6 +1028,16 @@ return(obj_new)
 ############################### select_x_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Select data in the middle X percent of the length of the tunnel
+#'
+#' @param obj_name Target viewr object
+#' @param desired_percent Measured from the center outwards
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
+
 select_x_percent <- function(obj_name,
                              desired_percent = 33,
                              ...){
@@ -1012,17 +1093,19 @@ select_x_percent <- function(obj_name,
 ## Quick version of separate_trajectories; meant to be used internally within
 ## separate_trajectories itself as we are running through frame gap options
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Quick version of separate_trajectories
+#'
+#' @param obj_name Target viwer object
+#' @param max_frame_gap Must be numeric
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
+
 quick_separate_trajectories <- function(obj_name,
                                         max_frame_gap = 1,
                                         ...){
-  # grouped_frames <-
-  #   obj_name %>%
-  #   dplyr::select(frame, subject) %>%
-  #   dplyr::group_by(subject)
-  #
-  # ## Split that tibble into a list of tibbles -- one per subject
-  # splitz <-
-  #   dplyr::group_split(grouped_frames)
 
   sploot <-
     obj_name %>%
@@ -1068,6 +1151,20 @@ quick_separate_trajectories <- function(obj_name,
 ## max_frame_gap = "autodetect" will try to guesstimate the best value
 ## frame_rate_proportion multiplies the value inserted (default = 0.1) and the
 ## frame rate to get an upper bound for what the maximum frame gap could be.
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Separate rows of data into separately labeled trajectories.
+#'
+#' @param obj_name Target object
+#' @param max_frame_gap If known, a numeric value to use
+#' @param frame_rate_proportion If autodetect, proportion of frame rate as
+#' reference
+#' @param frame_gap_messaging Should frame gaps be reported in the console?
+#' @param frame_gap_plotting Should frame gap diagnostic plots be shown?
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
 
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
@@ -1272,6 +1369,17 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 ############################# get_full_trajectories ############################
 ## Specify a minimum span of the (selected) tunnel and then keep trajectories
 ## that are wider than that span and go from one end to the other
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Specify a minimum span of the (selected) tunnel and then keep trajectories
+#' that are wider than that span and go from one end to the other
+#'
+#' @param obj_name Target viewr object
+#' @param span Span to use; must range from 0 to 1
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
 
 get_full_trajectories <- function(obj_name,
                                   span = 0.8,
@@ -1530,6 +1638,17 @@ select_x_percent_M <- function(obj_name,
 ## run separate_trajectories with many different frame gaps to help determine
 ## what value to use
 ## spits out table and plot to guide decision
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Run separate_trajectories() with many different frame gaps to help determine
+#' what value to use
+#'
+#' @param obj_name Input viewr object
+#' @param loops How many total frame gap entries to consider
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
 
 visualize_frame_gap_choice <- function(obj_name,
                                        loops = 20,

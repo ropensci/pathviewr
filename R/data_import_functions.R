@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-01 VBB
+## Last updated: 2020-07-12 VBB
 
 
 ############################### read_motive_csv ################################
@@ -313,6 +313,19 @@ problems.",
 ################################# read_flydra_data #############################
 ## Time is now encoded as a function of frame_rate and the specific labeling
 ## of frames within the imported flydra object
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Import data from a MAT file exported from Flydra software
+#'
+#' @param mat_file The MAT file from Flydra
+#' @param file_id (Optional) identifier for this file. If not supplied, this
+#' defaults to \code{basename(file_name)}.
+#' @param subject_name Name that will be assigned to the subject
+#' @param frame_rate The capture frame rate of the session
+#' @param ... Additional arguments
+#'
+#' @return
+#' @export
 
 read_flydra_data <-
   function(mat_file,

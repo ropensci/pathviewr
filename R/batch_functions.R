@@ -1,10 +1,27 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-11 VBB
+## Last updated: 2020-07-12 VBB
 
 
 ################################# import_batch #################################
 ## Strictly importing, no further cleaning
 ##
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Batch import of files for either Motive or Flydra (but not a mix of both)
+#'
+#' @param file_path_list A list of file paths
+#' @param import_method Either "flydra" or "motive"
+#' @param file_id Optional
+#' @param subject_name For Flydra, the assigned subject name
+#' @param frame_rate For Flydra, the assigned frame rate
+#' @param simplify_marker_naming default TRUE; for Motive, whether marker naming
+#' should be simplified
+#' @param import_messaging default FALSE; should this function report each time
+#' a file has been imported?
+#' @param ... Additional arguments (may remove this if needed)
+#'
+#' @return
+#' @export
 
 import_batch <- function(file_path_list,
                          import_method = c("flydra", "motive"),
@@ -54,6 +71,17 @@ import_batch <- function(file_path_list,
 ## for a list of viewr files, run through the pipeline (from relabel axes
 ## up through get full trajectories, as desired) via clean_viewr()
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' For a list of viewr files, run through the pipeline (from relabel axes
+#' up through get full trajectories, as desired) via clean_viewr()
+#'
+#' @param obj_list A list of viewr files (i.e. a list of tibbles)
+#' @param ... Arguments to be passed in that specify how this function should
+#' clean files.
+#'
+#' @return
+#' @export
+
 clean_viewr_batch <- function(obj_list,
                               ...) {
 
@@ -71,6 +99,22 @@ clean_viewr_batch <- function(obj_list,
 ############################ import_and_clean_batch ############################
 ## Like clean viewr batch, but with import as the first step too
 ##
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Like clean viewr batch, but with import as the first step too
+#'
+#' @param file_path_list A list of file paths
+#' @param import_method Either "flydra" or "motive"
+#' @param file_id Optional
+#' @param subject_name For Flydra, the subject name applied to all files
+#' @param frame_rate For Flydra, the frame rate applied to all files
+#' simplified?
+#' @param import_messaging Should this function report each time a file has been
+#' processed?
+#' @param ... Additional arguments to specify how data should be cleaned.
+#'
+#' @return
+#' @export
 
 import_and_clean_batch <- function(file_path_list,
                                    import_method = c("flydra", "motive"),
@@ -123,10 +167,18 @@ import_and_clean_batch <- function(file_path_list,
 ## combine multiple viewr objects into a single viwer object
 ##
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Combine multiple viewr objects into a single viwer object
+#'
+#' @param obj_list A list of viewr objects
+#'
+#' @return
+#' @export
+
 bind_viewr_objects <- function(obj_list) {
 
   if (!"list" %in% class(obj_list)){
-    stop("obj_list must be a list of file locations")
+    stop("obj_list must be a list of viewr objects")
   }
 
   ## THIS FUNCTION LIKELY NEEDS TO BE EDITED TO ACCOMODATE ATTRIBUTES FROM
