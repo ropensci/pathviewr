@@ -1,4 +1,5 @@
-
+## Part of the pathviewR package
+## Last updated: 2020-07-11 VBB
 
 
 ################################# import_batch #################################
@@ -14,9 +15,9 @@ import_batch <- function(file_path_list,
                          import_messaging = FALSE,
                          ...){
 
-  if ("list" %in% class(file_path_list)){
-    stop("file_path_list must be a list of file locations")
-  }
+  # if ("list" %in% class(file_path_list)){
+  #   stop("file_path_list must be a list of file locations")
+  # }
 
   imp_meth <- match.arg(import_method)
 

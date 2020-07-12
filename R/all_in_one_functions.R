@@ -219,9 +219,6 @@ or by removing the extraneous argument(s)")
 }
 
 
-
-
-
 ############################ import_and_clean_viewr ############################
 ## Use all of the preceding functions to construct an all-in-one function for
 ## ease of use.
