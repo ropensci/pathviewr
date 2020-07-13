@@ -38,3 +38,16 @@ processed?}
 \description{
 Like clean viewr batch, but with import as the first step too
 }
+\seealso{
+Other data import functions: 
+\code{\link{import_batch}()},
+\code{\link{read_flydra_data}()},
+\code{\link{read_motive_csv}()}
+
+Other batch functions: 
+\code{\link{bind_viewr_objects}()},
+\code{\link{clean_viewr_batch}()},
+\code{\link{import_batch}()}
+}
+\concept{batch functions}
+\concept{data import functions}

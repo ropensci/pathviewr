@@ -50,3 +50,23 @@ rotate_tunnel(
 \description{
 Rotate a tunnel so that perches are approximately aligned
 }
+\seealso{
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{trim_tunnel_outliers}()},
+\code{\link{visualize_frame_gap_choice}()}
+
+Other tunnel standardization functions: 
+\code{\link{redefine_tunnel_center}()},
+\code{\link{standardize_tunnel}()}
+}
+\concept{data cleaning functions}
+\concept{tunnel standardization functions}

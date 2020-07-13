@@ -38,3 +38,18 @@ trim_tunnel_outliers(
 \description{
 Trim out artifacts and other outliers from the extremes of the tunnel
 }
+\seealso{
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{visualize_frame_gap_choice}()}
+}
+\concept{data cleaning functions}

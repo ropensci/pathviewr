@@ -20,3 +20,10 @@ clean files.}
 For a list of viewr files, run through the pipeline (from relabel axes
 up through get full trajectories, as desired) via clean_viewr()
 }
+\seealso{
+Other batch functions: 
+\code{\link{bind_viewr_objects}()},
+\code{\link{import_and_clean_batch}()},
+\code{\link{import_batch}()}
+}
+\concept{batch functions}

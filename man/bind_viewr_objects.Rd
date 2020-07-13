@@ -15,3 +15,10 @@ bind_viewr_objects(obj_list)
 \description{
 Combine multiple viewr objects into a single viwer object
 }
+\seealso{
+Other batch functions: 
+\code{\link{clean_viewr_batch}()},
+\code{\link{import_and_clean_batch}()},
+\code{\link{import_batch}()}
+}
+\concept{batch functions}

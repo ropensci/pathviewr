@@ -1,6 +1,54 @@
 ## Part of the pathviewR package
 ## Last updated: 2020-07-12 VBB
 
+
+################################# get_header_viewr #############################
+#' Extract header info from imported viewr object
+#'
+#' A function to quickly return the information stored in the header of the
+#' original data file imported via \code{pathviewR}'s \code{read_} functions.
+#'
+#' @param obj_name A tibble imported via \code{pathviewR}'s \code{read_}
+#' functions with value \code{viewr} appearing in the attribute
+#' \code{pathviewR_steps}
+#' @param ... Additional arguments that may be passed to other \code{pathviewR}
+#' functions
+#'
+#' @return The value of the \code{header} attribute, or NULL if no exact match
+#' is found and no or more than one partial match is found.
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family metadata handling functions
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the july 29 example data included in the package
+#' jul_29 <-
+#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Now display the Header information
+#' get_header_viewr(jul_29)
+#'
+#' @seealso
+#' \code{\link{read_motive_csv}} to import data exported from Motive, in CSV
+#' format
+
+get_header_viewr <- function(obj_name,
+                             ...) {
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Get the header
+  return(attr(obj_name,"header"))
+}
+
+
 ############################### relabel_viewr_axes #############################
 
 #' Relabel the dimensions as length, width, and height
@@ -33,7 +81,7 @@
 #'
 #' @author Vikram B. Baliga
 #'
-#' @family utility functions
+#' @family data cleaning functions
 #'
 #' @examples
 #'
@@ -148,6 +196,8 @@ relabel_viewr_axes <- function(obj_name,
 #' returned tibble.
 #'
 #' @export
+#'
+#' @family data cleaning functions
 #'
 #' @examples
 #' library(pathviewR)
@@ -314,7 +364,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 }
 
 
-############################ rename_viewr_subjects #############################
+########################### rename_viewr_characters ############################
 ## Quick utility function to use str_replace with mutate(across()) to batch-
 ## rename subjects via pattern detection.
 
@@ -328,6 +378,9 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param replacement The replacement text. Must be a character
 #'
 #' @return
+#'
+#' @family data cleaning functions
+#'
 #' @export
 
 rename_viewr_characters <- function(obj_name,
@@ -400,6 +453,7 @@ rename_viewr_characters <- function(obj_name,
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
 #' @export
 
 trim_tunnel_outliers <- function(obj_name,
@@ -519,6 +573,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param ... Additional arguments that may be passed
 #'
 #' @return
+#' @family data cleaning functions
+#' @family tunnel standardization functions
 #' @export
 
 rotate_tunnel <- function(obj_name,
@@ -696,6 +752,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
+#' @family tunnel standardization functions
 #' @export
 
 standardize_tunnel <- function(obj_name,
@@ -889,6 +947,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
+#' @family tunnel standardization functions
 #' @export
 
 redefine_tunnel_center <-
@@ -1036,6 +1096,7 @@ return(obj_new)
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
 #' @export
 
 select_x_percent <- function(obj_name,
@@ -1101,6 +1162,8 @@ select_x_percent <- function(obj_name,
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
 #' @export
 
 quick_separate_trajectories <- function(obj_name,
@@ -1164,6 +1227,8 @@ quick_separate_trajectories <- function(obj_name,
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
 #' @export
 
 separate_trajectories <- function(obj_name,
@@ -1379,6 +1444,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
 #' @export
 
 get_full_trajectories <- function(obj_name,
@@ -1648,6 +1715,8 @@ select_x_percent_M <- function(obj_name,
 #' @param ... Additional arguments
 #'
 #' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
 #' @export
 
 visualize_frame_gap_choice <- function(obj_name,

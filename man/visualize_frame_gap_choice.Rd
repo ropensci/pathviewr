@@ -21,3 +21,24 @@ visualize_frame_gap_choice(obj_name, loops = 20, ...)
 Run separate_trajectories() with many different frame gaps to help determine
 what value to use
 }
+\seealso{
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{trim_tunnel_outliers}()}
+
+Other functions that define or clean trajectories: 
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{separate_trajectories}()}
+}
+\concept{data cleaning functions}
+\concept{functions that define or clean trajectories}

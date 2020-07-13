@@ -325,6 +325,9 @@ problems.",
 #' @param ... Additional arguments
 #'
 #' @return
+#'
+#' @family data import functions
+#'
 #' @export
 
 read_flydra_data <-
@@ -419,51 +422,4 @@ read_flydra_data <-
     ## Export
     return(data)
   }
-
-
-################################# get_header_viewr #############################
-#' Extract header info from imported viewr object
-#'
-#' A function to quickly return the information stored in the header of the
-#' original data file imported via \code{pathviewR}'s \code{read_} functions.
-#'
-#' @param obj_name A tibble imported via \code{pathviewR}'s \code{read_}
-#' functions with value \code{viewr} appearing in the attribute
-#' \code{pathviewR_steps}
-#' @param ... Additional arguments that may be passed to other \code{pathviewR}
-#' functions
-#'
-#' @return The value of the \code{header} attribute, or NULL if no exact match
-#' is found and no or more than one partial match is found.
-#' @export
-#'
-#' @author Vikram B. Baliga
-#'
-#' @family data import functions
-#'
-#' @examples
-#' library(pathviewR)
-#'
-#' ## Import the july 29 example data included in the package
-#' jul_29 <-
-#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
-#'                              package = 'pathviewR'))
-#'
-#' ## Now display the Header information
-#' get_header_viewr(jul_29)
-#'
-#' @seealso
-#' \code{\link{read_motive_csv}} to import data exported from Motive, in CSV
-#' format
-
-get_header_viewr <- function(obj_name,
-                             ...) {
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Get the header
-  return(attr(obj_name,"header"))
-}
 

@@ -21,6 +21,8 @@
 #' @param ... Additional arguments (may remove this if needed)
 #'
 #' @return
+#' @family data import functions
+#' @family batch functions
 #' @export
 
 import_batch <- function(file_path_list,
@@ -80,6 +82,7 @@ import_batch <- function(file_path_list,
 #' clean files.
 #'
 #' @return
+#' @family batch functions
 #' @export
 
 clean_viewr_batch <- function(obj_list,
@@ -114,6 +117,8 @@ clean_viewr_batch <- function(obj_list,
 #' @param ... Additional arguments to specify how data should be cleaned.
 #'
 #' @return
+#' @family data import functions
+#' @family batch functions
 #' @export
 
 import_and_clean_batch <- function(file_path_list,
@@ -173,6 +178,7 @@ import_and_clean_batch <- function(file_path_list,
 #' @param obj_list A list of viewr objects
 #'
 #' @return
+#' @family batch functions
 #' @export
 
 bind_viewr_objects <- function(obj_list) {

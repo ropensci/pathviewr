@@ -24,3 +24,10 @@ defaults to \code{basename(file_name)}.}
 \description{
 Import data from a MAT file exported from Flydra software
 }
+\seealso{
+Other data import functions: 
+\code{\link{import_and_clean_batch}()},
+\code{\link{import_batch}()},
+\code{\link{read_motive_csv}()}
+}
+\concept{data import functions}

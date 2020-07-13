@@ -40,3 +40,16 @@ a file has been imported?}
 \description{
 Batch import of files for either Motive or Flydra (but not a mix of both)
 }
+\seealso{
+Other data import functions: 
+\code{\link{import_and_clean_batch}()},
+\code{\link{read_flydra_data}()},
+\code{\link{read_motive_csv}()}
+
+Other batch functions: 
+\code{\link{bind_viewr_objects}()},
+\code{\link{clean_viewr_batch}()},
+\code{\link{import_and_clean_batch}()}
+}
+\concept{batch functions}
+\concept{data import functions}

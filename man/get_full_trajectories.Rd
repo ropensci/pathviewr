@@ -21,3 +21,24 @@ get_full_trajectories(obj_name, span = 0.8, ...)
 Specify a minimum span of the (selected) tunnel and then keep trajectories
 that are wider than that span and go from one end to the other
 }
+\seealso{
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{trim_tunnel_outliers}()},
+\code{\link{visualize_frame_gap_choice}()}
+
+Other functions that define or clean trajectories: 
+\code{\link{quick_separate_trajectories}()},
+\code{\link{separate_trajectories}()},
+\code{\link{visualize_frame_gap_choice}()}
+}
+\concept{data cleaning functions}
+\concept{functions that define or clean trajectories}
