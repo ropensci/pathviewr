@@ -45,6 +45,7 @@
 #' @author Vikram B. Baliga
 #'
 #' @family data import functions
+#' @seealso \code{\link{read_flydra_data}} for importing Flydra data
 #'
 #' @examples
 #' library(pathviewR)
@@ -72,9 +73,6 @@
 #' ## Of course, all attributes can be viewed as a (long) list via:
 #' attributes(jul_29)
 #'
-#' @seealso
-#' \code{\link{get_header_viewr}} to quickly see header info from the CSV;
-#' \code{\link{relabel_viewr_axes}} to rename coordinate axes
 
 read_motive_csv <-
   function(file_name,
@@ -327,6 +325,7 @@ problems.",
 #' @return
 #'
 #' @family data import functions
+#' @seealso \code{\link{read_motive_csv}} for importing Motive data
 #'
 #' @export
 

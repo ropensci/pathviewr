@@ -32,10 +32,7 @@
 #'
 #' ## Now display the Header information
 #' get_header_viewr(jul_29)
-#'
-#' @seealso
-#' \code{\link{read_motive_csv}} to import data exported from Motive, in CSV
-#' format
+
 
 get_header_viewr <- function(obj_name,
                              ...) {
@@ -80,6 +77,7 @@ get_header_viewr <- function(obj_name,
 #' @return A tibble or data.frame with variables that have been renamed.
 #'
 #' @author Vikram B. Baliga
+#' @export
 #'
 #' @family data cleaning functions
 #'
@@ -106,11 +104,6 @@ get_header_viewr <- function(obj_name,
 #'
 #' ## See the result
 #' names(jul_29_relabeled)
-#'
-#' @seealso
-#' \code{\link{read_motive_csv}}
-#'
-#' @export
 
 
 relabel_viewr_axes <- function(obj_name,
@@ -1157,7 +1150,7 @@ select_x_percent <- function(obj_name,
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Quick version of separate_trajectories
 #'
-#' @param obj_name Target viwer object
+#' @param obj_name Target viewr object
 #' @param max_frame_gap Must be numeric
 #' @param ... Additional arguments
 #'

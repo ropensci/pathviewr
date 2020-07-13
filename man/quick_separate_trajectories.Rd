@@ -7,7 +7,7 @@
 quick_separate_trajectories(obj_name, max_frame_gap = 1, ...)
 }
 \arguments{
-\item{obj_name}{Target viwer object}
+\item{obj_name}{Target viewr object}
 
 \item{max_frame_gap}{Must be numeric}
 

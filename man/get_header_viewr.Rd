@@ -32,11 +32,6 @@ jul_29 <-
 
 ## Now display the Header information
 get_header_viewr(jul_29)
-
-}
-\seealso{
-\code{\link{read_motive_csv}} to import data exported from Motive, in CSV
-format
 }
 \author{
 Vikram B. Baliga

@@ -78,8 +78,7 @@ attributes(jul_29)
 
 }
 \seealso{
-\code{\link{get_header_viewr}} to quickly see header info from the CSV;
-\code{\link{relabel_viewr_axes}} to rename coordinate axes
+\code{\link{read_flydra_data}} for importing Flydra data
 
 Other data import functions: 
 \code{\link{import_and_clean_batch}()},

@@ -71,11 +71,8 @@ jul_29_relabeled <-
 
 ## See the result
 names(jul_29_relabeled)
-
 }
 \seealso{
-\code{\link{read_motive_csv}}
-
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},
 \code{\link{get_full_trajectories}()},
