@@ -393,11 +393,11 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 ## angle calculated for the closer screen.
 
 calc_vis_angle <- function(obj_name,
-                               gnd_plane,
-                               stim_param_pos,
-                               stim_param_neg,
-                               vertex_angle = 45,
-                               simplify_output = FALSE){
+                           gnd_plane,
+                           stim_param_pos,
+                           stim_param_neg,
+                           vertex_angle = 45,
+                           simplify_output = FALSE){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -418,7 +418,7 @@ calc_vis_angle <- function(obj_name,
 
 
   ## Introduce variables for width_2_screen on positive and negative sides
-  ## of the tunnel using ifelse()
+  ## of the tunnel.
   ## width_2_screen refers to the horizontal distance between the bird and
   ## either screen.
   obj_name$width_2_screen_pos <-
@@ -428,15 +428,14 @@ calc_vis_angle <- function(obj_name,
              (2 * abs(obj_name$position_width))) # FALSE
 
   obj_name$width_2_screen_neg <-
-    ifelse(obj_name$position_width < 0,# if in negative side of tunnel
+    ifelse(obj_name$position_width < 0, # if in negative side of tunnel
            obj_name$height_2_screen * tan(vertex_angle), # TRUE
            (obj_name$height_2_screen * tan(vertex_angle)) +
              (2 * abs(obj_name$position_width))) # FALSE
 
   ## Introduce variable min_dist on positive and negative sides of the
   ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45˚ down
-  ## from horizontal)
+  ## screen (axis of gaze is orthogonal to plane of each screen)
   obj_name$min_dist_pos <-
     obj_name$width_2_screen_pos * sin((pi/2) - vertex_angle)
   # min_dist to positive screen
