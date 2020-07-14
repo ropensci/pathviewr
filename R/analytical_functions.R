@@ -411,10 +411,10 @@ calc_vis_angle <- function(obj_name,
   obj_simplify <- obj_name
 
   ## Introduce variables for height_2_vertex and height_2_screen
-  obj_name <- obj_name %>%
-    mutate(height_2_vertex = gnd_plane + position_height,
-           height_2_screen = height_2_vertex -
-             (abs(position_width) / tan(vertex_angle)))
+
+  obj_name$height_2_vertex <- gnd_plane + obj_name$position_height
+  obj_name$height_2_screen <- obj_name$height_2_vertex -
+    (abs(obj_name$position_width) / tan(vertex_angle))
 
 
   ## Introduce variables for width_2_screen on positive and negative sides
@@ -448,27 +448,25 @@ calc_vis_angle <- function(obj_name,
 
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
-  obj_name <- obj_name %>%
-    mutate(vis_angle_pos_rad =  2*atan(stim_param_pos/(2*obj_name$min_dist_pos)),
-           # radians
-           vis_angle_neg_rad =  2*atan(stim_param_neg/(2*obj_name$min_dist_neg)),
-           # radians
-           vis_angle_pos_deg =  rad2deg(vis_angle_pos_rad),
-           # convert to deg
-           vis_angle_neg_deg =  rad2deg(vis_angle_neg_rad))
-           # convert to deg
 
-  obj_simplify <- obj_simplify %>%
-    mutate(vis_angle_pos_deg =  rad2deg(obj_name$vis_angle_pos_rad),
-           vis_angle_neg_deg =  rad2deg(obj_name$vis_angle_neg_rad))
+  obj_name$vis_angle_pos_rad <- 2*atan(stim_param_pos/(2*obj_name$min_dist_pos))
+    # radians
+  obj_name$vis_angle_neg_rad <- 2*atan(stim_param_neg/(2*obj_name$min_dist_neg))
+    # radians
+  obj_name$vis_angle_pos_deg <- rad2deg(obj_name$vis_angle_pos_rad) # degrees
+  obj_name$vis_angle_neg_deg <- rad2deg(obj_name$vis_angle_neg_rad) # degrees
 
+  ## create simple data frame by adding only visual angles in degrees
+  obj_simplify$vis_angle_pos_deg <- rad2deg(obj_name$vis_angle_pos_rad)
+  obj_simplify$vis_angle_neg_deg <- rad2deg(obj_name$vis_angle_neg_rad)
+
+  ## return simple or complete data table based on simplify argument
   if(simplify_output == TRUE){
     return(obj_simplify)
   } else {
     return(obj_name)
     }
 }
-
 
 
 
