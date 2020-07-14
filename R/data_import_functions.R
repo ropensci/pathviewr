@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-01 VBB
+## Last updated: 2020-07-12 VBB
 
 
 ############################### read_motive_csv ################################
@@ -45,6 +45,7 @@
 #' @author Vikram B. Baliga
 #'
 #' @family data import functions
+#' @seealso \code{\link{read_flydra_data}} for importing Flydra data
 #'
 #' @examples
 #' library(pathviewR)
@@ -72,9 +73,6 @@
 #' ## Of course, all attributes can be viewed as a (long) list via:
 #' attributes(jul_29)
 #'
-#' @seealso
-#' \code{\link{get_header_viewr}} to quickly see header info from the CSV;
-#' \code{\link{relabel_viewr_axes}} to rename coordinate axes
 
 read_motive_csv <-
   function(file_name,
@@ -314,6 +312,23 @@ problems.",
 ## Time is now encoded as a function of frame_rate and the specific labeling
 ## of frames within the imported flydra object
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Import data from a MAT file exported from Flydra software
+#'
+#' @param mat_file The MAT file from Flydra
+#' @param file_id (Optional) identifier for this file. If not supplied, this
+#' defaults to \code{basename(file_name)}.
+#' @param subject_name Name that will be assigned to the subject
+#' @param frame_rate The capture frame rate of the session
+#' @param ... Additional arguments
+#'
+#' @return
+#'
+#' @family data import functions
+#' @seealso \code{\link{read_motive_csv}} for importing Motive data
+#'
+#' @export
+
 read_flydra_data <-
   function(mat_file,
            file_id = NA,
@@ -406,51 +421,4 @@ read_flydra_data <-
     ## Export
     return(data)
   }
-
-
-################################# get_header_viewr #############################
-#' Extract header info from imported viewr object
-#'
-#' A function to quickly return the information stored in the header of the
-#' original data file imported via \code{pathviewR}'s \code{read_} functions.
-#'
-#' @param obj_name A tibble imported via \code{pathviewR}'s \code{read_}
-#' functions with value \code{viewr} appearing in the attribute
-#' \code{pathviewR_steps}
-#' @param ... Additional arguments that may be passed to other \code{pathviewR}
-#' functions
-#'
-#' @return The value of the \code{header} attribute, or NULL if no exact match
-#' is found and no or more than one partial match is found.
-#' @export
-#'
-#' @author Vikram B. Baliga
-#'
-#' @family data import functions
-#'
-#' @examples
-#' library(pathviewR)
-#'
-#' ## Import the july 29 example data included in the package
-#' jul_29 <-
-#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
-#'                              package = 'pathviewR'))
-#'
-#' ## Now display the Header information
-#' get_header_viewr(jul_29)
-#'
-#' @seealso
-#' \code{\link{read_motive_csv}} to import data exported from Motive, in CSV
-#' format
-
-get_header_viewr <- function(obj_name,
-                             ...) {
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Get the header
-  return(attr(obj_name,"header"))
-}
 

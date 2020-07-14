@@ -1,10 +1,30 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-02 VBB
+## Last updated: 2020-07-12 VBB
 
 ################################## get_velocity ################################
 ## Get instantaneous velocity for all subjects
 ##
 ## do we need to adjust to account for frame/time gaps?
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Get instantaneous velocity for subjects
+#'
+#' @param obj_name Input viewr object
+#' @param time_col Name of the column containing time
+#' @param length_col Name of the column containing length dimension
+#' @param width_col Name of the column containing width dimension
+#' @param height_col Name of the column containing height dimension
+#' @param add_to_viewr Default TRUE; should velocity data be added as new
+#'   columns or should this function create a new simpler object?
+#' @param velocity_min Should data below a certain velocity be filtered out? If
+#'   so, enter a numeric. If not, keep NA.
+#' @param velocity_max Should data above a certain velocity be filtered out? If
+#'   so, enter a numeric. If not, keep NA.
+#' @param ... Additional arguments.
+#'
+#' @return
+#' @family mathematical functions
+#' @export
 
 get_velocity <- function(obj_name,
                          time_col = "time_sec",
@@ -78,7 +98,7 @@ Please check that you have entered the name of the height variable correctly.")
   ## If add_to_viewr is FALSE, export the standalone (res) tibble
   if (add_to_viewr == TRUE){
     ## Add the new columns and generate a new viewr object
-    obj_new <- bind_cols(obj_name, res)
+    obj_new <- dplyr::bind_cols(obj_name, res)
 
     ## Leave a note that we computed velocity via get_velocity()
     attr(obj_new,"pathviewR_steps") <-
@@ -93,7 +113,7 @@ Please check that you have entered the name of the height variable correctly.")
   if (is.numeric(velocity_min)){
     ## filter velocity
     obj_new <- obj_new %>%
-      filter(velocity > velocity_min)
+      dplyr::filter(velocity > velocity_min)
 
     ## Leave a note set velocity_min via get_velocity()
     #leave note even if not added to viewr object?
@@ -111,7 +131,7 @@ Please check that you have entered the name of the height variable correctly.")
   if (is.numeric(velocity_max)){
     ## filter velocity
     obj_new <- obj_new %>%
-      filter(velocity < velocity_max)
+      dplyr::filter(velocity < velocity_max)
 
     ## Leave a note set velocity_min via get_velocity()
     #leave note even if not added to viewr object?
@@ -137,6 +157,18 @@ Please check that you have entered the name of the height variable correctly.")
 ##
 ## NOTE: CANNOT SET DEFAULTS TO c(0, 0) AS IT MESSES UP THE FUNCTION INTERNALLY
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Compute the distance between a point and a line in a 2D space (i.e. on an
+#' XY plane)
+#'
+#' @param point 2D coordinates of the point as c(x,y)
+#' @param line_coord1 2D coordinates of one point on the line as c(x,y)
+#' @param line_coord2 2D coordinates of a second point on the line as c(x,y)
+#'
+#' @return
+#' @family mathematical functions
+#' @export
+
 get_dist_point_line_2d <- function(point,
                                    line_coord1,
                                    line_coord2) {
@@ -150,7 +182,16 @@ get_dist_point_line_2d <- function(point,
 
 ################################ get_3dcross_prod ##############################
 ## Compute the cross product of 3D vectors
-## Will fill in details later
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Compute the cross product of two 3D vectors
+#'
+#' @param v1 First vector, as c(x,y,z)
+#' @param v2 Second vector, as c(x,y,z)
+#'
+#' @return
+#' @family mathematical functions
+#' @export
 
 get_3dcross_prod <- function(v1,
                              v2){
@@ -163,7 +204,17 @@ get_3dcross_prod <- function(v1,
 
 ############################## get_dist_point_line_3d ##########################
 ## Compute the distance between a point and a line in 3D space
-## Will fill in details later
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Compute the distance between a point and a line in 3D space
+#'
+#' @param point 3D coordinates of the point as c(x, y, z)
+#' @param line_coord1 3D coordinates of one point on the line as c(x, y, z)
+#' @param line_coord2 3D coordinates of a second point on the line as c(x, y, z)
+#'
+#' @return
+#' @family mathematical functions
+#' @export
 
 get_dist_point_line_3d <- function(point,
                                    line_coord1,
@@ -179,6 +230,16 @@ get_dist_point_line_3d <- function(point,
 
 #################################### rad2deg ###################################
 ## convert radians to degrees
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Convert radians to degrees
+#'
+#' @param rad Radians (numeric)
+#'
+#' @return
+#' @family mathematical functions
+#' @export
+
 rad2deg <- function(rad) {
 
   ## Check that it's a numeric
@@ -193,6 +254,16 @@ rad2deg <- function(rad) {
 
 #################################### deg2rad ###################################
 ## convert degrees to radians
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Convert degrees to radians
+#'
+#' @param deg Degrees (numeric)
+#'
+#' @return
+#' @family mathematical functions
+#' @export
+
 deg2rad <- function(deg) {
 
   ## Check that it's a numeric
@@ -201,6 +272,78 @@ deg2rad <- function(deg) {
   }
 
   return((deg * pi) / (180))
+
+}
+
+################################# find_curve_elbow #############################
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Find the "elbow" of a curve.
+#'
+#' For bivariate data that show monotonic decreases (e.g. plots of trajectory
+#' count vs. frame gap allowed, or scree plots from PCAs), this function will
+#' find the "elbow" point. This is done by drawing an (imaginary) line between
+#' the first observation and the final observation. Then, the distance between
+#' that line and each observation is calculated. The "elbow" of the curve is the
+#' observation that maximizes this distance.
+#'
+#' @param data_frame A two-column data frame (numeric entries only)
+#' @param export_type If "row_num" (the default), the row number of the elbow
+#'   point is returned. If anything else, the entire row of the original data
+#'   frame is returned.
+#' @param plot_curve Default FALSE; should the curve be plotted?
+#'
+#' @return
+#' @family mathematical functions
+#' @export
+
+find_curve_elbow <- function(data_frame,
+                             export_type = "row_num",
+                             plot_curve = FALSE) {
+
+  ## Check that there are exactly two columns provided
+  if (!dim(data_frame)[2] == 2) {
+    stop("The input data has more than two columns.
+Please ensure there are only two columns, ordered x-axis first, y-axis second")
+  }
+
+  ## ADD A NUMERIC CHECK HERE EVENTUALLY
+
+  ## Convert to matrix for speedier handling
+  data_matrix <- as.matrix(data_frame)
+  first_col   <- data_matrix[,1]
+  second_col  <- data_matrix[,2]
+
+  ## Get set up for point-line distance computations
+  len <- nrow(data_matrix)
+  first_point <- c(first_col[1],   second_col[1])
+  end_point   <- c(first_col[len], second_col[len])
+
+  ## Compute the distance between each {x, y} and the line defined by the
+  ## extreme endpoints.
+  ## The "elbow" in the plot will be at the frame gap that maximizes this
+  ## distance
+  mfg_dists <- NULL
+  for (k in 1:len) {
+    mfg_dists[k] <- get_dist_point_line_2d(point = c(first_col[k],
+                                                     second_col[k]),
+                                           line_coord1 = first_point,
+                                           line_coord2 = end_point)
+  }
+
+  ## Set elbow to the maximum of these distances
+  elbow <- which.max(mfg_dists)
+
+  if(plot_curve == TRUE){
+    plot(data_matrix); abline(v = elbow)
+  }
+
+  ## Export
+  if (export_type == "row_num"){
+    return(elbow)
+  } else {
+    return(data_matrix[elbow,])
+  }
 
 }
 
@@ -237,7 +380,7 @@ deg2rad <- function(deg) {
 #'
 #' @author Eric R. Press
 #'
-#' @family analytical functions
+#' @family optic flow functions
 #'
 #' @examples
 #'

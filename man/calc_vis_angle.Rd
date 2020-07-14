@@ -57,4 +57,4 @@ this boundary where calc_vis_angle is accurate becomes more restrictive.
 \author{
 Eric R. Press
 }
-\concept{analytical functions}
+\concept{optic flow functions}

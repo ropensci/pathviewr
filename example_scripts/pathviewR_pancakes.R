@@ -1,4 +1,4 @@
-## Last updated: 2020-07-02 VBB
+## Last updated: 2020-07-11 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -601,7 +601,6 @@ library(rhdf5)
 ## instruction on is what & how metadata should be included & formatted.
 
 ## Let's plot in 3D
-open3d()
 rgl::plot3d(x = ex1_h5_mat$kalman.x,
             y = ex1_h5_mat$kalman.y,
             z = ex1_h5_mat$kalman.z)
@@ -643,14 +642,12 @@ test_selected <-
   select_x_percent(desired_percent = 50)
 
 ## Full (non-selected) data plot:
-open3d()
 rgl::plot3d(x = test_mat$position_length,
             y = test_mat$position_width,
             z = test_mat$position_height)
 aspect3d("iso")
 
 ## Post-select_x_percent()
-open3d()
 rgl::plot3d(x = test_selected$position_length,
             y = test_selected$position_width,
             z = test_selected$position_height)
@@ -673,7 +670,7 @@ test_centered <-
                          height_method = "user-defined",
                          height_zero = 1.44)
 
-open3d()
+#open3d() ## if needed
 rgl::plot3d(x = test_centered$position_length,
             y = test_centered$position_width,
             z = test_centered$position_height)
@@ -685,7 +682,6 @@ test_selected <-
   test_centered %>%
   select_x_percent(desired_percent = 50)
 ## 3D plot
-open3d()
 rgl::plot3d(x = test_selected$position_length,
             y = test_selected$position_width,
             z = test_selected$position_height)
@@ -697,7 +693,6 @@ test_full <-
   separate_trajectories(max_frame_gap = 1) %>%
   get_full_trajectories(span = 0.95)
 ## 3D plot
-open3d()
 rgl::plot3d(x = test_full$position_length,
             y = test_full$position_width,
             z = test_full$position_height)

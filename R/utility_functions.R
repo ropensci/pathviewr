@@ -1,5 +1,50 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-01 vbb
+## Last updated: 2020-07-12 VBB
+
+
+################################# get_header_viewr #############################
+#' Extract header info from imported viewr object
+#'
+#' A function to quickly return the information stored in the header of the
+#' original data file imported via \code{pathviewR}'s \code{read_} functions.
+#'
+#' @param obj_name A tibble imported via \code{pathviewR}'s \code{read_}
+#' functions with value \code{viewr} appearing in the attribute
+#' \code{pathviewR_steps}
+#' @param ... Additional arguments that may be passed to other \code{pathviewR}
+#' functions
+#'
+#' @return The value of the \code{header} attribute, or NULL if no exact match
+#' is found and no or more than one partial match is found.
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family metadata handling functions
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the july 29 example data included in the package
+#' jul_29 <-
+#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Now display the Header information
+#' get_header_viewr(jul_29)
+
+
+get_header_viewr <- function(obj_name,
+                             ...) {
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Get the header
+  return(attr(obj_name,"header"))
+}
+
 
 ############################### relabel_viewr_axes #############################
 
@@ -32,8 +77,9 @@
 #' @return A tibble or data.frame with variables that have been renamed.
 #'
 #' @author Vikram B. Baliga
+#' @export
 #'
-#' @family utility functions
+#' @family data cleaning functions
 #'
 #' @examples
 #'
@@ -58,11 +104,6 @@
 #'
 #' ## See the result
 #' names(jul_29_relabeled)
-#'
-#' @seealso
-#' \code{\link{read_motive_csv}}
-#'
-#' @export
 
 
 relabel_viewr_axes <- function(obj_name,
@@ -148,6 +189,8 @@ relabel_viewr_axes <- function(obj_name,
 #' returned tibble.
 #'
 #' @export
+#'
+#' @family data cleaning functions
 #'
 #' @examples
 #' library(pathviewR)
@@ -314,9 +357,24 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 }
 
 
-############################ rename_viewr_subjects #############################
+########################### rename_viewr_characters ############################
 ## Quick utility function to use str_replace with mutate(across()) to batch-
 ## rename subjects via pattern detection.
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Quick utility function to use str_replace with mutate(across()) to batch-
+#' rename subjects via pattern detection.
+#'
+#' @param obj_name The target viewr object
+#' @param target_column The target column; defaults to "subject"
+#' @param pattern The (regex) pattern to be replaced
+#' @param replacement The replacement text. Must be a character
+#'
+#' @return
+#'
+#' @family data cleaning functions
+#'
+#' @export
 
 rename_viewr_characters <- function(obj_name,
                                     target_column = "subject",
@@ -328,12 +386,12 @@ rename_viewr_characters <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that target_column exists
   if (!target_column %in% names(obj_name)) {
@@ -375,6 +433,22 @@ into key-value pairs ")
 ## I highly recommend plotting data beforehand and checking that estimates
 ## make sense!!!!!!
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Trim out artifacts and other outliers from the extremes of the tunnel
+#'
+#' @param obj_name The target viewr object
+#' @param lengths_min Minimum length
+#' @param lengths_max Maximum length
+#' @param widths_min Minimum width
+#' @param widths_max Maximum width
+#' @param heights_min Minimum height
+#' @param heights_max Maximum height
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @export
+
 trim_tunnel_outliers <- function(obj_name,
                                  lengths_min = 0,
                                  lengths_max = 3,
@@ -389,12 +463,12 @@ trim_tunnel_outliers <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that "position_length" exists in at least one column
   if (!any(grepl("position_length",
@@ -461,7 +535,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 
 ################################ rotate_tunnel #################################
 ## Function to rotate a tunnel so that perches are approximately aligned
-## Rotation is applied to length and width data; height is untouched
+## Rotation is applied to length and width data
 ## The user first estimates the locations of the perches by specifying
 ## bounds for where each perch is located.
 ## The function then computes the center of each bounding box and estimates
@@ -471,10 +545,30 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## The angle between perch1_center, tunnel_center_point, and arbitrary point
 ## along the length axis (tunnel_center_point - 1 on length) is estimated.
 ## That angle is then used to rotate the data, again only in the length and
-## width dimensions.
-## 2020-02-20 Height is now standardized by (approximate) perch height; values
-## greater than 0 are above the perch and values less than 0 are below the
-## perch level.
+## width dimensions. Height is standardized by (approximate) perch height;
+## values greater than 0 are above the perch and values less than 0 are below
+## the perch level.
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Rotate a tunnel so that perches are approximately aligned
+#'
+#' @param obj_name The target viewr object
+#' @param all_heights_min Minimum perch height
+#' @param all_heights_max Maximum perch height
+#' @param perch1_len_min Minimum length value of perch 1
+#' @param perch1_len_max Maximum length value of perch 1
+#' @param perch2_len_min Minimum length value of perch 2
+#' @param perch2_len_max Maximum length value of perch 2
+#' @param perch1_wid_min Minimum width value of perch 1
+#' @param perch1_wid_max Maximum width value of perch 1
+#' @param perch2_wid_min Minimum width value of perch 2
+#' @param perch2_wid_max Maximum witdh value of perch 2
+#' @param ... Additional arguments that may be passed
+#'
+#' @return
+#' @family data cleaning functions
+#' @family tunnel standardization functions
+#' @export
 
 rotate_tunnel <- function(obj_name,
                           all_heights_min = 0.11,
@@ -495,12 +589,12 @@ rotate_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that "position_length" exists in at least one column
   if (!any(grepl("position_length",
@@ -641,7 +735,19 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## Alternative to rotate_tunnel. Writing a version here where perches (or other
 ## landmarks) are coded as rigid bodies from the get-go.
 ##
-## This may get consolidated with rotate_tunnel() at some point...
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Rotate and center a tunnel based on specified landmarks.
+#'
+#' @param obj_name The target viewr object
+#' @param landmark_one Subject name of the first landmark
+#' @param landmark_two Subject name of the second landmark
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @family tunnel standardization functions
+#' @export
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -653,12 +759,12 @@ standardize_tunnel <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that "position_length" exists in at least one column
   if (!any(grepl("position_length",
@@ -820,6 +926,24 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## tunnel will end up. Each *_zero argument is subtracted from its corresponding
 ## axis' data.
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' "Center" the tunnel data, i.e. translation but no rotation
+#'
+#' @param obj_name The target viewr object
+#' @param axes Names of axes to be centered
+#' @param length_method Method for length
+#' @param width_method Method for width
+#' @param height_method Method for height
+#' @param length_zero User-defined value
+#' @param width_zero User-defined value
+#' @param height_zero User-defined value
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @family tunnel standardization functions
+#' @export
+
 redefine_tunnel_center <-
   function(obj_name,
            axes = c("position_length", "position_width", "position_height"),
@@ -836,12 +960,12 @@ redefine_tunnel_center <-
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Check that each column exists
   if (!"position_length" %in% names(obj_name)) {
@@ -957,6 +1081,17 @@ return(obj_new)
 ############################### select_x_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Select data in the middle X percent of the length of the tunnel
+#'
+#' @param obj_name Target viewr object
+#' @param desired_percent Measured from the center outwards
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @export
+
 select_x_percent <- function(obj_name,
                              desired_percent = 33,
                              ...){
@@ -966,12 +1101,12 @@ select_x_percent <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that it's undergone one of our centering steps
-  if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
-    warning("This viewr object does not seem to have been passed through
-one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
-or center_tunnel(). Please proceed with extreme caution.")
-  }
+#   ## Check that it's undergone one of our centering steps
+#   if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
+#     warning("This viewr object does not seem to have been passed through
+# one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
+# or center_tunnel(). Please proceed with extreme caution.")
+#   }
 
   ## Convert percent to proportion
   prop <- desired_percent/100
@@ -1012,17 +1147,21 @@ or center_tunnel(). Please proceed with extreme caution.")
 ## Quick version of separate_trajectories; meant to be used internally within
 ## separate_trajectories itself as we are running through frame gap options
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Quick version of separate_trajectories
+#'
+#' @param obj_name Target viewr object
+#' @param max_frame_gap Must be numeric
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
+#' @export
+
 quick_separate_trajectories <- function(obj_name,
                                         max_frame_gap = 1,
                                         ...){
-  # grouped_frames <-
-  #   obj_name %>%
-  #   dplyr::select(frame, subject) %>%
-  #   dplyr::group_by(subject)
-  #
-  # ## Split that tibble into a list of tibbles -- one per subject
-  # splitz <-
-  #   dplyr::group_split(grouped_frames)
 
   sploot <-
     obj_name %>%
@@ -1066,9 +1205,28 @@ quick_separate_trajectories <- function(obj_name,
 ## thing in certain contexts...
 
 ## max_frame_gap = "autodetect" will try to guesstimate the best value
+## frame_rate_proportion multiplies the value inserted (default = 0.1) and the
+## frame rate to get an upper bound for what the maximum frame gap could be.
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Separate rows of data into separately labeled trajectories.
+#'
+#' @param obj_name Target object
+#' @param max_frame_gap If known, a numeric value to use
+#' @param frame_rate_proportion If autodetect, proportion of frame rate as
+#' reference
+#' @param frame_gap_messaging Should frame gaps be reported in the console?
+#' @param frame_gap_plotting Should frame gap diagnostic plots be shown?
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
+#' @export
 
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
+                                  frame_rate_proportion = 0.10,
                                   frame_gap_messaging = FALSE,
                                   frame_gap_plotting = FALSE,
                                   ...){
@@ -1078,15 +1236,15 @@ separate_trajectories <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that gather_tunnel_data() has been run on the object
-  if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
-    stop("You must gather your party before venturing forth.
-Please use gather_tunnel_data() on this object to gather data columns
-into key-value pairs ")
-  }
+#   ## Check that gather_tunnel_data() has been run on the object
+#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#     stop("You must gather your party before venturing forth.
+# Please use gather_tunnel_data() on this object to gather data columns
+# into key-value pairs ")
+#   }
 
   ## Get subject names
-  subject_names_simple <- attr(obj_name, "subject_names_simple")
+  subject_names_simple <- unique(obj_name$subject)
 
   ## Extract the frames and subjects and group by subjects
   grouped_frames <-
@@ -1174,9 +1332,14 @@ Setting max_frame_gap to ", maxFG_across_subjects)
     message("autodetect is an experimental feature -- please report issues.")
 
     ## Figure out highest number of frame gaps to try
-    ## I am electing to set this to equal 1/4th the magnitude of the frame rate
-    ## Can be refined later!
-    floor(frame_rate/4) -> max_frame_gap_allowed
+    if (!is.numeric(frame_rate_proportion)){
+      stop("frame_rate_proportion must be numeric and between 0 and 1")
+    }
+    if (frame_rate_proportion > 1 || frame_rate_proportion < 0) {
+      stop(
+        "frame_rate_proportion must be expressed as a decimal between 0 and 1")
+    }
+    floor(frame_rate_proportion * frame_rate) -> max_frame_gap_allowed
 
     sploot <- list()
     ## For each subject's tibble, run through the process of finding the elbow
@@ -1202,26 +1365,10 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       mfg_tib <- tibble::tibble(frame_gap_allowed,
                                 trajectory_count)
 
-      ## Get set up for point-line distance computations
-      ## For all points, x = frame gap value, y = traj count
-      len <- nrow(mfg_tib)
-      first_point  <- c(frame_gap_allowed[1],   trajectory_count[1])
-      end_point    <- c(frame_gap_allowed[len], trajectory_count[len])
-
-      ## Compute the distance between each {frame_gap_allowed, trajectory_count}
-      ## and the line defined by the extreme endpoints.
-      ## The "elbow" in the plot will be at the frame gap that maximizes this
-      ## distance
-      mfg_dists <- NULL
-      for (k in 1:len) {
-        mfg_dists[k] <- get_dist_point_line_2d(point = c(frame_gap_allowed[k],
-                                                         trajectory_count[k]),
-                                               line_coord1 = first_point,
-                                               line_coord2 = end_point)
-      }
-
-      ## Set max_frame_gap to the maximum of these distances
-      max_frame_gap[[i]] <- which.max(mfg_dists)
+      ## Find the curve elbow point via `find_curve_elbow()`
+      max_frame_gap[[i]] <- find_curve_elbow(mfg_tib,
+                                             export_type = "row_num",
+                                             plot_curve = FALSE)
 
       if(frame_gap_messaging == TRUE){
         message("For subject: ", subject_names_simple[i],
@@ -1275,32 +1422,24 @@ Setting max_frame_gap to ", maxFG_across_subjects)
   }
 
   }
-#   ## Collect all frame gaps in one tibble
-#   all_frame_gaps <-
-#     unlist(allFGs_by_subject) %>%
-#     tibble::as_tibble_col(column_name = "frame_gap")
-#   ## Remove values below 1 or NA values
-#   cleaned_frame_gaps <-
-#     all_frame_gaps %>%
-#     dplyr::filter(frame_gap > 1) %>%
-#     tidyr::drop_na()
-#
-#   restricted_frame_gaps <-
-#     cleaned_frame_gaps %>%
-#     dplyr::filter(frame_gap < frame_rate)
-#   # hist(restricted_frame_gaps$frame_gap) ## handy
-#
-#
-#
-#   #max_frame_gap <- median(cleaned_frame_gaps$frame_gap) ## backup
-#   message("autodetect is an experimental feature -- please report issues.
-# Estimated best value for max_frame_gap: ", max_frame_gap)
-
 
 
 ############################# get_full_trajectories ############################
 ## Specify a minimum span of the (selected) tunnel and then keep trajectories
 ## that are wider than that span and go from one end to the other
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Specify a minimum span of the (selected) tunnel and then keep trajectories
+#' that are wider than that span and go from one end to the other
+#'
+#' @param obj_name Target viewr object
+#' @param span Span to use; must range from 0 to 1
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
+#' @export
 
 get_full_trajectories <- function(obj_name,
                                   span = 0.8,
@@ -1311,14 +1450,14 @@ get_full_trajectories <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that its axes have been renamed
-  if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
-    stop("Please use separate_trajectories() prior to using this")
-  }
+  # ## Check that its axes have been renamed
+  # if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
+  #   stop("Please use separate_trajectories() prior to using this")
+  # }
 
   summary_obj <-
     obj_name %>%
-    dplyr::group_by(traj_id) %>%
+    dplyr::group_by(sub_traj) %>%
     dplyr::summarise(traj_length = n(),
                      start_length = position_length[1],
                      end_length = position_length[traj_length],
@@ -1344,7 +1483,7 @@ get_full_trajectories <- function(obj_name,
   ## Filter data by the two criteria
   filt_summary <-
     summary_obj %>%
-    dplyr::group_by(traj_id) %>%
+    dplyr::group_by(sub_traj) %>%
     ## Each trajectory must span a minimum porportion of the selected tunnel
     dplyr::filter(length_diff > (span * max_length)) %>%
     ## And the signs (+ or -) at the ends of the trajectories must be opposites
@@ -1352,11 +1491,11 @@ get_full_trajectories <- function(obj_name,
 
   obj_continuous <-
     obj_name %>%
-    dplyr::filter(traj_id %in% filt_summary$traj_id)
+    dplyr::filter(sub_traj %in% filt_summary$sub_traj)
 
   ## Join the columns to add in direction
   obj_defined <-
-    dplyr::right_join(obj_continuous, filt_summary, by = "traj_id") %>%
+    dplyr::right_join(obj_continuous, filt_summary, by = "sub_traj") %>%
     tibble::as_tibble()
 
   ## Leave a note about the span used
@@ -1368,7 +1507,7 @@ get_full_trajectories <- function(obj_name,
 
   ## Leave a note about trajectories removed
   attr(obj_defined, "trajectories_removed") <-
-    length(summary_obj$traj_id) - length(filt_summary$traj_id)
+    length(summary_obj$sub_traj) - length(filt_summary$sub_traj)
 
   ## Export
   return(obj_defined)
@@ -1379,6 +1518,8 @@ get_full_trajectories <- function(obj_name,
 ############################### remove birds with too few flights ###############################
 rmbird_byflightnum <- function(obj_name,
                                flightnum = 5,
+                               vistim1,
+                               vistim2,
                                ...){
   #get list of birds that complete x num flights in BOTH treatments
   rm_bytreat <-
@@ -1392,10 +1533,11 @@ rmbird_byflightnum <- function(obj_name,
     separate(block, c("bird", "treatment")) %>%
     spread(treatment, n)
 
-  #not fully functional cause can't figure out how to make the column a changeable argument
+  vars <- c(vistim1, vistim2)
+
   rm_bytreat <-
     rm_bytreat %>%
-    filter(up >= flightnum & down >= flightnum) %>%
+    filter(.data[[vars[[1]]]] >= flightnum & .data[[vars[[2]]]] >= flightnum) %>%
     select(bird)
 
   obj_name <- inner_join(obj_name, rm_bytreat)
@@ -1441,7 +1583,7 @@ purrplot_by_bird <- function(obj_name,
 
   #for top view (change in lateral position)
   top_view <- obj_name %>%
-    group_by(rigid_body) %>%
+    group_by(subject) %>%
     nest() %>%
     mutate(paths = map(data, ~ggplot(., aes(position_length, position_width, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
@@ -1455,11 +1597,11 @@ purrplot_by_bird <- function(obj_name,
                         geom_vline(xintercept = 0, linetype = "dotted") +
                         coord_flip() +
                         theme_tufte()),
-           filename = paste0(rigid_body,"_top",".png"))
+           filename = paste0(subject,"_top",".png"))
 
   #all of them together:
   top_all_plots <- top_view %>%
-    select(rigid_body, paths, hist) %>%
+    select(subject, paths, hist) %>%
     gather("plot_type", "allplots", 2:3)
 
   birdseye_view <- plot_grid(plotlist = top_all_plots[[3]])
@@ -1469,7 +1611,7 @@ purrplot_by_bird <- function(obj_name,
 
   #for elev view (change in height):
   elev_view <- obj_name %>%
-    group_by(rigid_body) %>%
+    group_by(subject) %>%
     nest() %>%
     mutate(paths = map(data, ~ggplot(., aes(position_length, position_height, colour = treatment)) +
                          geom_point(alpha = .1, show.legend = FALSE) +
@@ -1483,11 +1625,11 @@ purrplot_by_bird <- function(obj_name,
                         geom_vline(xintercept = 0, linetype = "dotted") +
                         coord_flip() +
                         theme_tufte()),
-           filename = paste0(rigid_body,"_elev",".png"))
+           filename = paste0(subject,"_elev",".png"))
 
   #all of them together:
   elev_all_plots <- elev_view %>%
-    select(rigid_body, paths, hist) %>%
+    select(subject, paths, hist) %>%
     gather("plot_type", "allplots", 2:3)
 
   side_view <- plot_grid(plotlist = elev_all_plots[[3]])
@@ -1500,7 +1642,6 @@ purrplot_by_bird <- function(obj_name,
 #AB_top %>%
 #  select(filename, paths) %>%
 #  pwalk(ggsave, path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-
 
 ############################### select_X_percent ###############################
 ## Select data in the middle X percent of the length of the tunnel
@@ -1558,6 +1699,19 @@ select_x_percent_M <- function(obj_name,
 ## what value to use
 ## spits out table and plot to guide decision
 
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Run separate_trajectories() with many different frame gaps to help determine
+#' what value to use
+#'
+#' @param obj_name Input viewr object
+#' @param loops How many total frame gap entries to consider
+#' @param ... Additional arguments
+#'
+#' @return
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
+#' @export
+
 visualize_frame_gap_choice <- function(obj_name,
                                        loops = 20,
                                        ...){
@@ -1583,31 +1737,18 @@ visualize_frame_gap_choice <- function(obj_name,
     i = i +1
   }
 
-  #generate user friendly table and plot
-  mfg_tib <- tibble::tibble(trajectory_count,
-                            frame_gap_allowed,
-                            file_id = "obj_name")
+  ## Collect the info on max frame gaps allowed vs. trajectory counts
+  mfg_tib <- tibble::tibble(frame_gap_allowed,
+                            trajectory_count)
 
-  ## Get set up for point-line distance computations
-  ## For all points, x = frame gap value, y = traj count
-  len <- nrow(mfg_tib)
-  first_point  <- c(frame_gap_allowed[1],   trajectory_count[1])
-  end_point    <- c(frame_gap_allowed[len], trajectory_count[len])
+  ## Find the curve elbow point via `find_curve_elbow()`
+  max_fg <- find_curve_elbow(mfg_tib,
+                             export_type = "row_num",
+                             plot_curve = FALSE)
 
-  ## Compute the distance between each {frame_gap_allowed, trajectory_count}
-  ## and the line defined by the extreme endpoints.
-  ## The "elbow" in the plot will be at the frame gap that maximizes this
-  ## distance
-  mfg_dists <- NULL
-  for (j in 1:len) {
-    mfg_dists[j] <- get_dist_point_line_2d(point = c(frame_gap_allowed[j],
-                                                     trajectory_count[j]),
-                                           line_coord1 = first_point,
-                                           line_coord2 = end_point)
-  }
-
-  ## Set max_frame_gap to the maximum of these distances
-  max_fg <- which.max(mfg_dists)
+  ## Paste filename into export tibble
+  obj_name_arg <- deparse(substitute(obj_name))
+  mfg_tib$file_id <- as.character(obj_name_arg)
 
   mfg_plot <- plot(mfg_tib$frame_gap_allowed,
                    mfg_tib$trajectory_count); abline(v = max_fg)
