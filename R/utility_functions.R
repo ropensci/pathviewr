@@ -1261,7 +1261,7 @@ separate_trajectories <- function(obj_name,
     obj_name %>%
     dplyr::group_by(subject) %>%
     dplyr::group_split()
-  names(subject_tibbles) <- subject_names_simple
+  #names(subject_tibbles) <- subject_names_simple
 
   ## Determine the frame rate of the exported object
   frame_rate <-
