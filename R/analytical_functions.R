@@ -405,7 +405,7 @@ calc_vis_angle <- function(obj_name,
   }
 
   ## Translate vertex_angle from degrees to radians for trig functions
-  deg2rad(vertex_angle)
+  vertex_angle <- deg2rad(vertex_angle)
 
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
