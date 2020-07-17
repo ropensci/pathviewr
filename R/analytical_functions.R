@@ -445,6 +445,36 @@ calc_vis_angle <- function(obj_name,
   # min_dist to negative screen
 
 
+  ######################################### UNFINISHED
+  ## When the bird is outside the boundaries created by orthogonal planes to
+  ## each screen, erroneous visular angles are calculated.
+  ## Therefore we must adjust min_dist values according to position_width
+
+  ## create variable holding the boundary values for each observation
+  obj_name$bound_pos <- obj_name$height_2_vertex * tan(pi/2 - vertex_angle)
+  obj_name$bound_neg <- obj_name$height_2_vertex * -tan(pi/2 - vertex_angle)
+
+
+  obj_name$min_dist_pos <- # overwrite mind_dist_pos
+  ifelse(obj_name$postion_width >=  0 &
+         obj_name$position_width >= obj_name$bound_pos,
+         # if position_width is positive and greater than the boundary value
+          sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
+         # return distance to vertex
+          obj_name$min_dist_pos)
+         # reurn original min_dist_pos calculation
+
+  obj_name$min_dist_neg <-
+  ifelse(obj_name$postion_width <=  0 &
+         obj_name$position_width <= obj_name$bound_neg,
+         # if position_width is negative and smaller than the boundary value
+          sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
+         # return distance to vertex
+          obj_name$min_dist_neg)
+         # return original min_dist_neg calculation
+  ######################################### UNFINISHED
+
+
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
 
