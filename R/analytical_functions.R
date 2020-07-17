@@ -456,7 +456,7 @@ calc_vis_angle <- function(obj_name,
 
 
   obj_name$min_dist_pos <- # overwrite mind_dist_pos
-  ifelse(obj_name$postion_width >=  0 &
+  ifelse(obj_name$position_width >= 0 &
          obj_name$position_width >= obj_name$bound_pos,
          # if position_width is positive and greater than the boundary value
           sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
@@ -465,7 +465,7 @@ calc_vis_angle <- function(obj_name,
          # reurn original min_dist_pos calculation
 
   obj_name$min_dist_neg <-
-  ifelse(obj_name$postion_width <=  0 &
+  ifelse(obj_name$position_width <= 0 &
          obj_name$position_width <= obj_name$bound_neg,
          # if position_width is negative and smaller than the boundary value
           sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
