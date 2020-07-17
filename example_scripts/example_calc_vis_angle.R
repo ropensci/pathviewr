@@ -1,12 +1,12 @@
-## Last updated 2020/0738 by ERP
+## Last updated 2020/07/16 by ERP
 
-#####     Worked example for using calc_vis_angle functions      #####
+##########################  Not fully worked out yet
 
 
-## The calc_vis_angle functions reference the position_width and position_height
+## The calc_vis_angle function references the position_width and position_height
 ## variables of raw motive data files and require the following arguments:
 
-##  Ground plane (gnd_plane) - at baseline, this indicates the vertical distance
+##  gnd_plane - at baseline, this indicates the vertical distance
 ##    between the bottom of the "V" and the height of the grounding tool.
 ##    Following raw data processing using the utility functions, it must
 ##    indicate the vertical distance between the bottom of the "V" and the
@@ -15,26 +15,28 @@
 ##    tunnel). gnd_plane should be reported in the same units as position_width
 ##    and position_height (typically in meters).
 ##
-##  Stimulus parameter (stim_param_pos AND stim_param_neg) - this reflects the
+##  stim_param_pos AND stim_param_neg - these reflects the
 ##    size of the visual stimulus displayed on either side of the tunnel.
 ##    E.g. positive screens displays 10cm wide bars: stim_param_pos = 0.1.
 ##
-##  Vertex angle (vertex_angle) - this is included in the calc_vis_angle_mod
+##  vertex_angle - this is included in the calc_vis_angle_mod
 ##    functions and it represents the acute angle each screen creates with a
 ##    vertical axis. It is also equal to the angle of the "V" divided by 2.
 ##    It's reported in degrees and is converted to radians so that it works with
 ##    the trig functions.
+##
+##  simplify_output - if set to TRUE, this limits output variables to
+##  vis_angle_pos_deg and vis_angle_neg_deg
 
 ###   NOTE: Perhaps these arguments can eventually be supplied or referenced
 ###   from within each file's metadata.
+###   7.14.2020 - perhaps gnd_plane, stim_param_pos, stim_param_neg, and
+###   vertx_angle instead these can be referenced from the data frame itself
+###   after the user has used insert_treatments.
 
 
-## The first several sections of this example simply run through the steps of
-## importing and cleaning raw data files using the utility functions written by
-## VBB.
-## The calc_vis_angle functions will be run on the these objects after they've
-## been processed
-
+## The first several sections of this example simply run through the importing
+## and cleaning pipeline to generate an object that calc_vis_angle can apply to.
 
                       #####   Load packages   #####
 library(tidyverse)
@@ -61,7 +63,7 @@ for (i in 1:length(scripts_list)) {
 
              #####     Working with motive objects      #####
 
-# Lets try an examples using the all in one function (import_and_clean_motive)
+# Lets try an examples using the all in one function (import_and_clean_viewr)
 
                    #####   All in one function   #####
 jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
@@ -115,182 +117,74 @@ identical(jul_29_all_defaults, jul_29_full)
 
 
 
-        ################    calc_vis_angle functions      #############
+        ################    calc_vis_angle      #############
 
-              ####    calc_vis_angle_1 and calc_vis_angle_1.1   ####
-## Assuming fixed horizontal gaze, calculates the visual angle subtended by the
-## length of a stimulus feature on either screen and the eye of the bird.
-## Positive and negative sides of tunnel reflect positive and negative
-## values of "Position_widths".
-# # # # #  NOTE THIS FUNCTION ONLY WORKS WITH VERTEX ANGLE = 45˚  # # # # # #
+## For an experiment with the ground plane set 50cm above the bottom of a 45˚
+## "V" and sine-wave gratings with a period of 10cm displayed on either side of
+## the tunnel, the following arguments would be used.
+## NOTE: in this case, the position of the grounding tool was unknown and
+## therefore gnd_plane is estimated as the height of the perches from the base
+## of the "V".
 
-jul_29_all_defaults_1 <-
-calc_vis_angle_1(jul_29_all_defaults,
-                 gnd_plane = 0.5,
-                 stim_param_pos = 0.1,
-                 stim_param_neg = 0.1)
+full45 <- calc_vis_angle(jul_29_all_defaults,
+                    gnd_plane = 0.5,
+                    stim_param_pos = 0.1,
+                    stim_param_neg = 0.1,
+                    vertex_angle = 45,
+                    simplify_output = FALSE)
+View(full45)
+## this produces 10 additional variables in the dataframe based on the math
+## internal to the function.
 
-jul_29_full_1 <-
-  calc_vis_angle_1(jul_29_full,
-                   gnd_plan = 0.5,
-                   stim_param_pos = 0.1,
-                   stim_param_neg = 0.1)
-# produces new variables for all calculations internal to the function
+## use simplify_output = TRUE to output only the degrees of visual angle on the
+## positive and negative sides of the tunnel
 
-## check to see if everthing worked out the same
-identical(jul_29_all_defaults_1, jul_29_full_1)
-## noice.
+simp45 <- calc_vis_angle(jul_29_all_defaults,
+                    gnd_plane = 0.5,
+                    stim_param_pos = 0.1,
+                    stim_param_neg = 0.1,
+                    vertex_angle = 45,
+                    simplify_output = TRUE)
+View(simp45)
 
-View(jul_29_full_1)
+## One major limitations arises from experiments where vertex_angle > 45˚.
 
+## If the exact same data was obtained in a tunnel set even slightly differently
+## at vertex_angle = 47˚, the output produces negative visual angles (nonsense)
+full60 <- calc_vis_angle(jul_29_all_defaults,
+                    gnd_plane = 0.5,
+                    stim_param_pos = 0.1,
+                    stim_param_neg = 0.1,
+                    vertex_angle = 60,
+                    simplify_output = FALSE)
 
-# This version produces new variables only for the visual angles perceived on the
-# positive and negative sides of the tunnel.
-jul_29_all_defaults_1.1 <-
-  calc_vis_angle_1.1(jul_29_all_defaults,
-                   gnd_plane = 0.5,
-                   stim_param_pos = 0.1,
-                   stim_param_neg = 0.1)
-
-jul_29_full_1.1 <-
-  calc_vis_angle_1.1(jul_29_full,
-                     gnd_plane = 0.5,
-                     stim_param_pos = 0.1,
-                     stim_param_neg = 0.1)
-
-
-## check to see if everthing worked out the same
-identical(jul_29_all_defaults_1.1, jul_29_full_1.1)
-## double noice.
-
-View(jul_29_full_1.1)
+## This is becuase calculating width_2_screen inside the function works properly
+## up to a virtual boundary that extends at a right angle from either screen.
+## This means calc_vis_angle is likely to produce errors in tunnel arrangements
+## where vertex_angle > 45˚.
 
 
+View(test1)
+View(test3)
 
-              ####    calc_vis_angle_2 and calc_vis_angle_2.1   ####
-## Assuming gaze is fixed at the point on each screen such that the axis of gaze
-## is orthogonal to the plane of each screen. This function minimizes the distance
-## to both screens and therefore maximizes the visual angles calculated.
-# # # # #  NOTE THIS FUNCTION ONLY WORKS WITH VERTEX ANGLE = 45˚  # # # # # #
-
-
-jul_29_all_defaults_2 <-
-  calc_vis_angle_2(jul_29_all_defaults,
-                   gnd_plane = 0.5,
-                   stim_param_pos = 0.1,
-                   stim_param_neg = 0.1)
-
-jul_29_full_2 <-
-  calc_vis_angle_2(jul_29_full,
-                   gnd_plane = 0.5,
-                   stim_param_pos = 0.1,
-                   stim_param_neg = 0.1)
-# produces new variables for all calculations internal to the function
-
-## check to see if everthing worked out the same
-identical(jul_29_all_defaults_2, jul_29_full_2)
-## shablam.
-
-View(jul_29_full_2)
-
-
-# This version produces new variables only for the visual angles perceived on the
-# positive and negative sides of the tunnel.
-jul_29_all_defaults_2.1 <-
-  calc_vis_angle_2.1(jul_29_all_defaults,
-                   gnd_plane = 0.5,
-                   stim_param_pos = 0.1,
-                   stim_param_neg = 0.1)
-
-jul_29_full_2.1 <-
-  calc_vis_angle_2.1(jul_29_full,
-                     gnd_plane = 0.5,
-                     stim_param_pos = 0.1,
-                     stim_param_neg = 0.1)
-
-## check to see if everthing worked out the same
-identical(jul_29_all_defaults_2, jul_29_full_2)
-## double shablam.
-
-View(jul_29_full_2.1)
-
-
-
-          ####    calc_vis_angle_mod and calc_vis_angle_mod.1   ####
-## Assuming gaze is fixed at the point on each screen such that the axis of gaze
-## is orthogonal to the plane of each screen, this function function accomodates
-## for different vertex angles that the tunnel may be set at. It minimizes the
-## distance to the screen closer to the bird and therefore maximizes the visual
-## angle calculated for the closer screen.
-## However, this does not hold true for the opposite screen in the following
-## condition. If the vertex angle of the tunnel is > 45˚ and the bird's position
-## extends beyond the boundary created by a 45˚ vertex angle, i.e. the bird is
-## quite close to one screen, then the closest point to the opposite screen is the
-## vertex itself. Given that the birds tend to fly fairly close to the center of
-## the tunnel, this may not be encountered very often.
-
-jul_29_all_defaults_mod <-
-  calc_vis_angle_mod(jul_29_all_defaults,
-                     gnd_plane = 0.5,
-                     vertex_angle = 45,
-                     stim_param_pos = 0.1,
-                     stim_param_neg = 0.1)
-
-jul_29_full_mod <-
-  calc_vis_angle_mod(jul_29_full,
-                     gnd_plane = 0.5,
-                     vertex_angle = 45,
-                     stim_param_pos = 0.1,
-                     stim_param_neg = 0.1)
-# produces new variables for all calculations internal to the function
-
-## check to see if everthing worked out the same
-identical(jul_29_all_defaults_mod, jul_29_full_mod)
-## bazinga!
-
-View(jul_29_full_mod)
-
-
-# This version produces new variables only for the visual angles perceived on the
-# positive and negative sides of the tunnel.
-jul_29_all_defaults_mod.1 <-
-  calc_vis_angle_mod.1(jul_29_all_defaults,
-                     gnd_plane = 0.5,
-                     vertex_angle = 45,
-                     stim_param_pos = 0.1,
-                     stim_param_neg = 0.1)
-
-jul_29_full_mod.1 <-
-  calc_vis_angle_mod.1(jul_29_full,
-                       gnd_plane = 0.5,
-                       vertex_angle = 45,
-                       stim_param_pos = 0.1,
-                       stim_param_neg = 0.1)
-
-## check to see if everthing worked out the same
-identical(jul_29_all_defaults_mod.1, jul_29_full_mod.1)
-## you get it now
-
-View(jul_29_full_mod.1)
-
-
-
-## because vertex angle is set to 45˚, calc_vis_angle_2 and calc_vis_angle_mod
-## should produce identical results
-identical(jul_29_full_2, jul_29_full_mod)
-identical(jul_29_full_2.1, jul_29_full_mod.1)
-# WAT!?
-# it looks the same. I don't get it...
 
 
           ##############    Next Steps    #############
-## Assuming I figure out what's going on  above, the next steps would be to:
+
+##  1. Set gnd_plane automatically by using the distance from the bottom of the
+##  "V" to (0,0,0) by referencing something within rotate_tunnel().
 ##
-##  1. Improve the latest function (calc_vis_angle_mod) by including head
-##  orientation to calculate visual angles based on where the bird
-##  is actually looking. This could take a while
+##  2. Set vertex_angle and stim_param arguments from an insert_treatments()
+##  function elsewhere in the pipeline.
 ##
-##  2. Figure out how to visualize or otherwise use the visual angles calculated
+##  ** external to calc_vis_angle - include ordientation coordinates in
+##  simple plots such that each point represents position and head orientation
+##
+##  3. Include head orientation to calculate visual angles based on where the
+##  bird is actually looking rather than assuming a fixed gaze.
+##  This could take a while...
+##
+##  4. Figure out how to visualize or otherwise use the visual angles calculated
 ##  from these functions.
 ##    - I believe this variable can be the nucleus with which to design functions
 ##    that more accurately estimate optic flow by calculating how it changes over
@@ -298,7 +192,6 @@ identical(jul_29_full_2.1, jul_29_full_mod.1)
 ##    bird's movements.
 
 
-##      Thoughts?
 
 
 
