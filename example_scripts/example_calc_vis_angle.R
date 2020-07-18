@@ -39,8 +39,7 @@
 ## and cleaning pipeline to generate an object that calc_vis_angle can apply to.
 
                       #####   Load packages   #####
-library(tidyverse)
-
+library(tidyverse) # used only for plotting at the end
 
                      #####   Source scripts    #####
 ## First define the directory to inspect
@@ -125,7 +124,6 @@ identical(jul_29_all_defaults, jul_29_full)
 ## NOTE: in this case, the position of the grounding tool was unknown and
 ## therefore gnd_plane is estimated as the height of the perches from the base
 ## of the "V".
-
 full45 <- calc_vis_angle(jul_29_all_defaults,
                     gnd_plane = 0.5,
                     stim_param_pos = 0.1,
@@ -133,12 +131,12 @@ full45 <- calc_vis_angle(jul_29_all_defaults,
                     vertex_angle = 45,
                     simplify_output = FALSE)
 View(full45)
-## this produces 10 additional variables in the dataframe based on the math
-## internal to the function.
+## This produces 10 additional variables in the dataframe based on the math
+## internal to calc_vis_angle.
 
-## use simplify_output = TRUE to output only the degrees of visual angle on the
+
+## Use simplify_output = TRUE to output only the degrees of visual angle on the
 ## positive and negative sides of the tunnel
-
 simp45 <- calc_vis_angle(jul_29_all_defaults,
                     gnd_plane = 0.5,
                     stim_param_pos = 0.1,
@@ -147,25 +145,86 @@ simp45 <- calc_vis_angle(jul_29_all_defaults,
                     simplify_output = TRUE)
 View(simp45)
 
-## One major limitations arises from experiments where vertex_angle > 45˚.
 
-## If the exact same data was obtained in a tunnel set even slightly differently
-## at vertex_angle = 47˚, the output produces negative visual angles (nonsense)
+## calc_vis_angle can accomodate different tunnel vertex angles and now
+## calculates mind_dist correctly even when the bird is flying far from the
+## center line.
+## NOTE: This data was collected at vertex_angle = 45 so changing this argument
+## is not something a user would want to do. But let's see how it affects the
+## values and distribution of angles in the tunnel.
 full60 <- calc_vis_angle(jul_29_all_defaults,
                     gnd_plane = 0.5,
                     stim_param_pos = 0.1,
                     stim_param_neg = 0.1,
                     vertex_angle = 60,
                     simplify_output = FALSE)
-
-## This is becuase calculating width_2_screen inside the function works properly
-## up to a virtual boundary that extends at a right angle from either screen.
-## This means calc_vis_angle is likely to produce errors in tunnel arrangements
-## where vertex_angle > 45˚.
+View(full60)
 
 
-View(test1)
-View(test3)
+###### Visualizing the calculated angles by position in the tunnel  #####
+
+## Plot position in cross section of the tunnel and color points by
+## vis_angle_pos_deg
+ggplot(full45, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = vis_angle_pos_deg),
+             shape = 1, size = 3)
+# greater visual angles closer to positive (right) side of the tunnel
+
+## Now for vertex_angle = 60
+ggplot(full60, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = vis_angle_pos_deg),
+             shape = 1, size = 3)
+# flipping between the graphs you can see a subtle shift in the distribution of
+# angles.
+
+
+
+
+## Now coloring points by vis_angle_neg_deg
+ggplot(full45, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = vis_angle_neg_deg),
+             shape = 1, size = 3)
+# greater visual angles closer to negative (left) side of the tunnel
+
+## And now for vertex_angle = 60
+ggplot(full60, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = vis_angle_neg_deg),
+             shape = 1, size = 3)
+# angain a subtle shift in distribution of angles
+
+
+
+
+## Perhaps we're interested in the sum of the visual angles percieved by the
+## bird
+full45$vis_angle_sum <- full45$vis_angle_pos_deg + full45$vis_angle_neg_deg
+
+ggplot(full45, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = vis_angle_sum),
+             shape = 1, size = 3)
+# largest visual angles at the bottom of the tunnel
+
+
+
+## Top view of the tunnel
+
+## vis_angle_pos_deg
+ggplot(full45, aes(x = position_length, y = position_width)) +
+  geom_point(aes(color = vis_angle_pos_deg),
+             shape = 1, size = 3)
+
+## vis_angle_neg_deg
+ggplot(full45, aes(x = position_length, y = position_width)) +
+  geom_point(aes(color = vis_angle_neg_deg),
+             shape = 1, size = 3)
+
+## vis_angle_sum
+ggplot(full45, aes(x = position_length, y = position_width)) +
+  geom_point(aes(color = vis_angle_sum),
+             shape = 1, size = 3)
+# This view is not very helpful for displaying the sum because height is an
+# important factor
+
 
 
 
@@ -177,24 +236,70 @@ View(test3)
 ##  2. Set vertex_angle and stim_param arguments from an insert_treatments()
 ##  function elsewhere in the pipeline.
 ##
-##  ** external to calc_vis_angle - include ordientation coordinates in
-##  simple plots such that each point represents position and head orientation
+##      ** external to calc_vis_angle - include ordientation coordinates in
+##  plots such that each point represents position and head orientation
 ##
 ##  3. Include head orientation to calculate visual angles based on where the
 ##  bird is actually looking rather than assuming a fixed gaze.
-##  This could take a while...
+##  This one could take a while I'm still wrapping my head around quaternions.
 ##
 ##  4. Figure out how to visualize or otherwise use the visual angles calculated
 ##  from these functions.
-##    - I believe this variable can be the nucleus with which to design functions
-##    that more accurately estimate optic flow by calculating how it changes over
-##    time in various dimensions, i.e. how it increases or decreases with the
-##    bird's movements.
+##    - I believe this variable can be the nucleus with which to design
+##    functions that more accurately estimate optic flow by calculating how it
+##    changes over time in various dimensions, i.e. how it increases or
+##    decreases with the bird's movements.
+##    See rough work below where I'm trying to calculate these running changes.
+##    Perhaps a simple derivative function could be used rather than diff() as
+##    it reduces the number of data points by 1 and then can't be plotted with
+##    time_sec.
 
 
 
+## Testing area for calc_vis_angle uses in optic flow calculations
 
 
+expansion_pos <- diff(full45$vis_angle_pos_deg)/diff(full45$time_sec)
+expansion_neg <- diff(full45$vis_angle_neg_deg)/diff(full45$time_sec)
+
+plot(expansion_pos, expansion_neg)
+
+ang <- diff(full45$vis_angle_pos_deg)
+time <- diff(full45$time_sec)
+vecsum <- sqrt(full45$position_width^2 +
+               full45$position_length^2 +
+               full45$position_height^2)
+vel <- diff(vecsum)
+
+
+
+plot(full45$time_sec, vel)
+plot(full45$position_width,
+     full45$vis_angle_neg_deg,
+     col = 'red')
+points(full45$position_width,
+     full45$vis_angle_pos_deg,
+     col = 'blue')
+
+plot(full45$position_height,
+     full45$vis_angle_pos_deg)
+
+product <- full45$position_height * full45$position_width
+
+plot(product,
+     full45$vis_angle_pos_deg,
+     col = 'red')
+points(product,
+       full45$vis_angle_neg_deg,
+       col = 'blue')
+
+plot(full45$position_width,
+     full45$position_height)
+
+
+plot(full45$frame,
+     full45$vis_angle_neg_deg,
+     col = full45$traj_id)
 
 
 
