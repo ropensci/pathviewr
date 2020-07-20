@@ -483,7 +483,9 @@ calc_vis_angle <- function(obj_name,
   obj_name$vis_angle_pos_deg <- rad2deg(obj_name$vis_angle_pos_rad) # degrees
   obj_name$vis_angle_neg_deg <- rad2deg(obj_name$vis_angle_neg_rad) # degrees
 
-  ## create simple data frame by adding only visual angles in degrees
+  ## create simple data frame by adding min_dist and visual angles in degrees
+  obj_simplify$min_dist_pos <- obj_name$min_dist_pos
+  obj_simplify$min_dist_neg <- obj_name$min_dist_neg
   obj_simplify$vis_angle_pos_deg <- rad2deg(obj_name$vis_angle_pos_rad)
   obj_simplify$vis_angle_neg_deg <- rad2deg(obj_name$vis_angle_neg_rad)
 
