@@ -276,6 +276,79 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
     ## along those lines?
 
 
+
+      #### ERP response  ####
+      ## I like the idea of visualizing the tunnel walls with this plot!
+      ## gnd_plane = 0.5 is only an estimate of the true distance between
+      ## the height of the perches and the vertex. It's definitely worth
+      ## measuring the tunnel again to make it's accurate. I can do that
+      ## next time I go to the lab.
+      ## The TV model dimensions are ~ 1.46m length x 0.83m height. Angled
+      ## at 45˚ meaning the top corners are:
+  0.83 * cos(pi/4) # vertical distance  from (0, 0) = 0.5869m
+      ## gnd_plane  = 0.5, therefore the height is +0.0869m w.r.t the perches
+  0.83 * sin(pi/4) # horizontal distance from (0, 0) is also 0.5869m (duhh
+      ## vertex_angle = 45) therefore the top corners are:
+      ## top right = (0.5869, 0.0869)
+      ## top left = (-0.5869, 0.0869)
+
+      ## checking the angles...
+
+ xyangles(x1 = -0.5869, ## (x1, y1) is topmost on negative side
+           y1 = 0.0869,
+           x2 = 0,       ## (x2, y2) is vertex
+           y2 = -0.5,
+           x3 = 0.5869,  ## (x3, y3) is topmost on positive side
+           y3 = 0.0869)
+      ## shows the tunnel angles at 90˚ which is correct since vertex_angle is
+      ## the angle of the "V" divided by 2 (stupid system I know but we'll chat
+      ## about it)
+
+      ## Let's plot it out again with the walls included
+ ggplot(full45, aes(x = position_width, y = position_height)) +
+   geom_point(aes(color = vis_angle_pos_deg),
+              shape = 1, size = 3) +
+   geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
+                    y = -0.5,
+                    xend = 0.5869,
+                    yend = 0.0869)) +
+   geom_segment(aes(x = 0,         ## NEGATIVE SIDE
+                    y = -0.5,
+                    xend = -0.5869,
+                    yend = 0.0869))
+
+      ## I think this looks reasonably close to the true scenario of flights in
+      ## the tunnel but again, it all depends on how close the estimate of
+      ## gnd_plane = 0.5 is to the correct measurement.
+      ## With gnd_plane = 0.4 the result is...
+
+ gnd40 <- calc_vis_angle(jul_29_all_defaults,
+                         gnd_plane = 0.4,
+                         stim_param_pos = 0.1,
+                         stim_param_neg = 0.1,
+                         vertex_angle = 45,
+                         simplify_output = TRUE)
+
+ ggplot(gnd40, aes(x = position_width, y = position_height)) +
+   geom_point(aes(color = vis_angle_pos_deg),
+              shape = 1, size = 3) +
+   geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
+                    y = -0.4,
+                    xend = 0.5869,
+                    yend = 0.1869)) +
+   geom_segment(aes(x = 0,         ## NEGATIVE SIDE
+                    y = -0.4,
+                    xend = -0.5869,
+                    yend = 0.1869))
+      ## this also looks reasonable.. The correct measurement is probably
+      ## somewhere between 0.4 and 0.5.
+      ## Either way, it's probably in our best interest to include gnd_plane
+      ## (or whatever name we end up using) in the insert_treatments() function
+      ## and call it automatically within calc_vis_angle so the user doesn't
+      ## need to worry about this.
+
+
+
 ## Now coloring points by vis_angle_neg_deg
 ggplot(full45, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = vis_angle_neg_deg),
