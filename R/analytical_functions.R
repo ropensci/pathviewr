@@ -369,11 +369,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'
 #' @details \code{cal_vis_angle} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and
-#' thereby maximizes visual angles. Currently, visual angles are overestimated
-#' when \code{position_width} lies outside the boundaries starting at the
-#' bottom of the "V" and extend at right angles from the planes created by
-#' either side of the tunnel. As \code{vertex_angle} increases from 45 to 90,
-#' this boundary where calc_vis_angle is accurate becomes more restrictive.
+#' thereby maximizes visual angles.
 #'
 #' @return A tibble or data.frame with added variables for
 #' \code{vis_angle_pos_deg} and \code{vis_angle_neg_deg} reported in degrees.
