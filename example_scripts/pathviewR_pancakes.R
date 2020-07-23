@@ -701,3 +701,75 @@ aspect3d("iso")
 plot(test_full$position_length,
      test_full$position_width,
      asp = 1, col = as.factor(test_full$traj_id))
+
+
+##### Quaternions maybe? #####
+library(RSpincalc)
+
+# S <- 1
+# L <- 52 # length; using first trajectory only (rightwards)
+S <- 53
+L <- 98 #(leftwards)
+
+test_pos <- data.frame(position_length = jul_29_full$position_length[S:L],
+                       position_width =  jul_29_full$position_width[S:L],
+                       position_height = jul_29_full$position_height[S:L])
+
+rgl::plot3d(test_pos$position_length,
+            test_pos$position_width,
+            test_pos$position_height,
+            ylim = c(-0.5, 0.5),
+            zlim = c(-0.5, 0));aspect3d("iso")
+
+test_quat <- cbind(jul_29_full$rotation_real[S:L],
+                   jul_29_full$rotation_length[S:L],
+                   jul_29_full$rotation_width[S:L],
+                   jul_29_full$rotation_height[S:L])
+
+test_quat2eulangl <- RSpincalc::Q2EA(test_quat, EulerOrder = "xyz")
+test_quat2eulangl_deg <- apply(test_quat2eulangl, MARGIN = 2, FUN = rad2deg)
+test_quat2eulvec <- RSpincalc::Q2EV(test_quat)
+
+
+alltogether <- data.frame(position_length = jul_29_full$position_length[S:L],
+                          position_width =  jul_29_full$position_width[S:L],
+                          position_height = jul_29_full$position_height[S:L],
+                          jul_29_full$rotation_real[S:L],
+                          jul_29_full$rotation_length[S:L],
+                          jul_29_full$rotation_width[S:L],
+                          jul_29_full$rotation_height[S:L],
+                          test_quat2eulangl_deg,
+                          test_quat2eulvec)
+
+lattice::splom(alltogether[,c(1:3,11:13)])
+
+
+alltogether$len_trans <- alltogether$position_length + (alltogether$X1.1/3)
+alltogether$wid_trans <- alltogether$position_width + (alltogether$X2.1/3)
+alltogether$hei_trans <- alltogether$position_height + (alltogether$X3.1/3)
+
+
+
+as.matrix(test_pos) -> M
+colnames(M) <- NULL
+
+as.matrix(cbind(alltogether$len_trans,
+                alltogether$wid_trans,
+                alltogether$hei_trans)) -> Tr
+
+
+rgl::plot3d(x = M[,1],
+            y = M[,2],
+            z = M[,3],
+            xlim = c(-1, 1),
+            ylim = c(-0.5, 0.5),
+            zlim = c(-0.5, 0.5));aspect3d("iso")
+arrow3d(M[1,1:3], Tr[1,1:3], type = "lines", col = "red")
+arrow3d(M[10,1:3], Tr[10,1:3], type = "lines", col = "orange")
+arrow3d(M[15,1:3], Tr[15,1:3], type = "lines", col = "yellow")
+arrow3d(M[20,1:3], Tr[20,1:3], type = "lines", col = "green")
+arrow3d(M[30,1:3], Tr[30,1:3], type = "lines", col = "blue")
+arrow3d(M[35,1:3], Tr[35,1:3], type = "lines", col = "grey30")
+arrow3d(M[36,1:3], Tr[36,1:3], type = "lines", col = "black")
+arrow3d(M[37,1:3], Tr[37,1:3], type = "lines", col = "grey70")
+arrow3d(M[50,1:3], Tr[50,1:3], type = "lines", col = "purple")
