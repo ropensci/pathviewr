@@ -364,11 +364,28 @@ read_flydra_data <-
     ## The data we'd like to tibble-ize is spread across various components
     ## of the list. We need to put it together manually.
 
+    ## First extract the kalmanized componenets
+    kalm_tib <-
+      tibble::tibble(
+        kalman.frame = mat_read$kalman.frame,
+        kalman.x = mat_read$kalman.x,
+        kalman.y = mat_read$kalman.y,
+        kalman.z = mat_read$kalman.z
+      ) %>%
+      ## For some reason, frames may be out of order
+      ## So sort this tibble by kalman.frame
+      dplyr::arrange(by = kalman.frame)
+
+    ## There may be duplication of frames or rows entirely.
+    ## These duplications should be removed via distinct()
+    kalm_distinct <-
+      dplyr::distinct(kalm_tib, NAME = kalman.frame, .keep_all = TRUE)
+
     ## First get the dimensions of the data
     data_length <- length(mat_read$kalman.y)
 
     ## Now extract all the frames
-    framez <- mat_read$kalman.frame
+    framez <- kalm_distinct$kalman.frame
     frame_tib <- tibble::tibble(frame = framez)
     ## Because frames may have been dropped, we will first generate a
     ## full sequence that begins and ends on the min and max frames.
@@ -398,9 +415,9 @@ read_flydra_data <-
         frame = frame_tib$frame,
         time_sec = joined_frame_time_seq$time,
         subject = subject_name,
-        position_length = mat_read$kalman.x,
-        position_width = mat_read$kalman.y,
-        position_height = mat_read$kalman.z
+        position_length = kalm_distinct$kalman.x,
+        position_width  = kalm_distinct$kalman.y,
+        position_height = kalm_distinct$kalman.z
       )
 
     ## Add metadata as attributes()

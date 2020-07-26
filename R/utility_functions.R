@@ -1165,8 +1165,8 @@ quick_separate_trajectories <- function(obj_name,
 
   sploot <-
     obj_name %>%
-    dplyr::select(frame, subject) %>%
-    dplyr::group_by(subject) %>%
+    dplyr::select(frame) %>%
+    #dplyr::group_by(subject) %>%
     ## group by seq_id which is the diff between successive frames
     ## is greater than max_frame_gap
     dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap))
@@ -1283,22 +1283,23 @@ separate_trajectories <- function(obj_name,
 
   ## If max_frame_gap is a numeric
     if (is.numeric(max_frame_gap)) {
-      ## Check that max_frame_gap does not exceed the
+      mufasa <- max_frame_gap
+      ## Now check that max_frame_gap does not exceed the
       ## actual max across subjects
-      if (max_frame_gap > maxFG_across_subjects) {
+      if (mufasa > maxFG_across_subjects) {
         message("Largest frame gap detected exceeds max_frame_gap argument.
 Setting max_frame_gap to ", maxFG_across_subjects)
-        max_frame_gap <- maxFG_across_subjects
+        mufasa <- maxFG_across_subjects
       }
 
       ## max_frame_gap has now been verified or estimated by this function.
       sploot <-
         obj_name %>%
-        dplyr::select(frame, subject) %>%
-        dplyr::group_by(subject) %>%
+        dplyr::select(frame) %>%
+        #dplyr::group_by(subject) %>%
         ## group by seq_id which is the diff between successive frames
         ## is greater than max_frame_gap
-        dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap))
+        dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > mufasa))
 
       ## Duplicate obj_name to avoid overwriting important stuff
       obj_new <- obj_name
@@ -1316,7 +1317,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       ## in from the original obj_name
 
       ## Leave a note about the max frame gap used
-      attr(obj_new,"max_frame_gap") <- max_frame_gap
+      attr(obj_new,"max_frame_gap") <- mufasa
 
       ## Leave a note that we rotated and translated the data set
       attr(obj_new,"pathviewR_steps") <-
