@@ -1,4 +1,4 @@
-## Last updated: 2020-07-11 VBB
+## Last updated: 2020-07-26 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -363,7 +363,9 @@ plot(jul_29_labeled_steve$position_length,
 jul_29_full <-
   jul_29_labeled %>% get_full_trajectories(span = 0.95)
 attr(jul_29_full, "pathviewR_steps")
-
+plot(jul_29_full$position_length,
+     jul_29_full$position_width,
+     asp = 1, col = as.factor(jul_29_full$traj_id))
 
 ####################### compute instantaneous velocities #######################
 ## 2020-06-26: This revised function how has more flexiblity in what a user can
@@ -407,16 +409,115 @@ jul_29_unsimple_velocity_fail <-
 ######################### one function to rule them all ########################
 ## Let's see if we can make an all-in-one that behaves nicely when the user
 ## would like to specify non-default values to the arguments.
-## 2020-06-26: added velocity to the all-in-one, right before select_x_percent()
 
 jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
 
 ## Testing first with all defaults (no supplied arguments)
+## this sets max_frame_gap to 1 (no autodetect)
 jul_29_all_defaults <-
   jul_29_path %>% import_and_clean_viewr()
 jul_29_all_defaults # seems to work
 class(jul_29_all_defaults) # looks complete
 attributes(jul_29_all_defaults)
+plot(jul_29_all_defaults$position_length,
+     jul_29_all_defaults$position_width,
+     asp = 1, col = as.factor(jul_29_all_defaults$traj_id))
+
+## plot each trajectory (this is extensive!)
+## probably best to clear all your plots before running this:
+trajs <- unique(jul_29_all_defaults$sub_traj)
+for (i in 1:length(trajs)){
+  tmp <- jul_29_all_defaults %>% filter(sub_traj == trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(jul_29_all_defaults$position_length),
+                max(jul_29_all_defaults$position_length)),
+       ylim = c(min(jul_29_all_defaults$position_width),
+                max(jul_29_all_defaults$position_width))
+       )
+}
+
+## Testing now with autodetect
+jul_29_mfg_autodetect <-
+  jul_29_path %>% import_and_clean_viewr(max_frame_gap = "autodetect",
+                                         frame_gap_messaging = TRUE)
+jul_29_mfg_autodetect # seems to work
+class(jul_29_mfg_autodetect) # looks complete
+attributes(jul_29_mfg_autodetect)
+plot(jul_29_mfg_autodetect$position_length,
+     jul_29_mfg_autodetect$position_width,
+     asp = 1, col = as.factor(jul_29_mfg_autodetect$traj_id))
+
+## plot each trajectory (this is extensive!)
+## probably best to clear all your plots before running this:
+auto_trajs <- unique(jul_29_mfg_autodetect$sub_traj)
+for (i in 1:length(auto_trajs)){
+  tmp <- jul_29_mfg_autodetect %>% filter(sub_traj == auto_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = auto_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(jul_29_mfg_autodetect$position_length),
+                max(jul_29_mfg_autodetect$position_length)),
+       ylim = c(min(jul_29_mfg_autodetect$position_width),
+                max(jul_29_mfg_autodetect$position_width))
+  )
+}
+## OK something is broken here. Now I want to see what happens when done
+## explicitly instead
+
+## Testing now with autodetect
+jul_29_mfg_auto_explicit <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent() %>%
+  ## skip rename_viewr_characters(), which defaults to FALSE anyway
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_gap_messaging = TRUE) %>%
+  get_full_trajectories()
+jul_29_mfg_auto_explicit # seems to work
+class(jul_29_mfg_auto_explicit) # looks complete
+attributes(jul_29_mfg_auto_explicit)
+identical(jul_29_mfg_autodetect, jul_29_mfg_auto_explicit)
+plot(jul_29_mfg_auto_explicit$position_length,
+     jul_29_mfg_auto_explicit$position_width,
+     asp = 1, col = as.factor(jul_29_mfg_auto_explicit$traj_id))
+
+## plot each trajectory (this is extensive!)
+## probably best to clear all your plots before running this:
+auto_expl_trajs <- unique(jul_29_mfg_auto_explicit$sub_traj)
+for (i in 1:length(auto_expl_trajs)){
+  tmp <- jul_29_mfg_auto_explicit %>% filter(sub_traj == auto_expl_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = auto_expl_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(jul_29_mfg_auto_explicit$position_length),
+                max(jul_29_mfg_auto_explicit$position_length)),
+       ylim = c(min(jul_29_mfg_auto_explicit$position_width),
+                max(jul_29_mfg_auto_explicit$position_width))
+  )
+}
+
+
+
+
+
+
+
 
 ## Done explicitly:
 jul_29_all_defaults_explicit <-
@@ -428,6 +529,7 @@ jul_29_all_defaults_explicit <-
   rotate_tunnel() %>%
   get_velocity() %>%
   select_x_percent() %>%
+  ## skip rename_viewr_characters(), which defaults to FALSE anyway
   separate_trajectories() %>%
   get_full_trajectories()
 
@@ -438,6 +540,10 @@ identical(jul_29_all_defaults, jul_29_all_defaults_explicit)
 jul_29_percent74 <-
   jul_29_path %>% import_and_clean_viewr(desired_percent = 74)
 # works!
+plot(jul_29_percent74$position_length,
+     jul_29_percent74$position_width,
+     asp = 1, col = as.factor(jul_29_percent74$traj_id))
+
 
 ## Done explicitly:
 jul_29_percent74_explicit <-
@@ -531,7 +637,60 @@ jul_29_alltest2 <-
   jul_29_path %>%
   import_and_clean_viewr("boop")
 
-#################################### roz2016 ###################################
+
+
+jul_29_test <-
+  jul_29_path %>%
+  import_and_clean_viewr(velocity_min = 1,
+                         velocity_max = 10,
+                         desired_percent = 75,
+                         target_column = "subject",
+                         pattern = " 00.",
+                         replacement = "",
+                         max_frame_gap = "autodetect",
+                         frame_gap_messaging = TRUE,
+                         frame_gap_plotting = FALSE,
+                         span = .6)
+#testing get_full_trajs:
+summary_obj <-
+  jul_29_test %>%
+  dplyr::group_by(sub_traj) %>%
+  dplyr::summarise(traj_length = n(),
+                   start_length = position_length[1],
+                   end_length = position_length[traj_length],
+                   length_diff = abs(end_length - start_length),
+                   start_length_sign = sign(start_length),
+                   end_length_sign = sign(end_length))
+test <- filter(jul_29_test, sub_traj == "device08_1")
+
+
+jul_29_defaults <-
+  jul_29_path %>%
+  import_and_clean_viewr(target_column = "subject",
+                         pattern = " 00.",
+                         replacement = "")
+jul_29_rename <- jul_29_defaults %>%
+  rename_viewr_characters(pattern = " 00.")
+
+jul_29_sep <-
+  jul_29_rename %>%
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_gap_messaging = TRUE,
+                        frame_gap_plotting = TRUE)
+attributes(jul_29_sep)
+
+jul_29_full <-
+  jul_29_sep %>%
+  get_full_trajectories(span = .6)
+
+jul_29_test %>%
+  mutate(traj_id = as.character(sub_traj)) %>%
+  ggplot(aes(position_length, position_height, color = sub_traj)) +
+  geom_point() +
+  scale_color_viridis_d() +
+  theme(legend.position = "none")
+
+  #################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this
 ## package.
 

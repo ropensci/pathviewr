@@ -1395,7 +1395,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       obj_new <- obj_name
 
       ## Meld sploot together
-      new_sploot <- bind_rows(sploot)
+      new_sploot <- dplyr::bind_rows(sploot)
 
       ## new column (traj_id) is this seq_id
       obj_new$traj_id <- new_sploot$seq_id

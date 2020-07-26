@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-12 VBB
+## Last updated: 2020-07-26 VBB
 
 
 ################################# clean_viewr ##################################
@@ -273,6 +273,7 @@ or by removing the extraneous argument(s)")
 #' @param standardization_option default TRUE,
 #' @param get_velocity default TRUE,
 #' @param select_x_percent default TRUE,
+#' @param rename_viewr_characters default FALSE,
 #' @param separate_trajectories default TRUE,
 #' @param get_full_trajectories default TRUE,
 #' @param ... Additional arguments passed to the corresponding functions.
@@ -288,6 +289,7 @@ import_and_clean_viewr <- function(file_name,
                                    standardization_option = "rotate_tunnel",
                                    get_velocity = TRUE,
                                    select_x_percent = TRUE,
+                                   rename_viewr_characters = FALSE,
                                    separate_trajectories = TRUE,
                                    get_full_trajectories = TRUE,
                                    ...){
@@ -331,6 +333,8 @@ import_and_clean_viewr <- function(file_name,
                        "velocity_min", "velocity_max")
     ## select_x_percent()
     select_args <- c("desired_percent")
+    ## rename_viewr_characters()
+    rename_args <- c("target_column", "pattern", "replacement")
     ## separate_trajectories()
     separate_args <- c("max_frame_gap", "frame_rate_proportion",
                        "frame_gap_messaging", "frame_gap_plotting")
@@ -340,8 +344,8 @@ import_and_clean_viewr <- function(file_name,
   valid_args <- c(read_args, relabel_args, trim_args,
                   rotate_args, standardize_args, center_args,
                   velocity_args,
-                  select_args, separate_args, get_full_traj_args
-                  )
+                  select_args, rename_args, separate_args, get_full_traj_args
+  )
 
   arg_names <- names(list(...))
   ## Check for any unrecognized arguments and message() about them
@@ -457,6 +461,24 @@ or by removing the extraneous argument(s)")
 "At least one argument for select_x_percent() was supplied,
 but select_x_percent was set to FALSE.
 Please resolve by either setting select_x_percent to TRUE
+or by removing the extraneous argument(s)")
+    }
+    obj <- obj
+  }
+
+  if (rename_viewr_characters == TRUE) {
+    params <- list(...)
+    obj <-
+      obj %>%
+      rename_viewr_characters(target_column = params$target_column,
+                              pattern = params$pattern,
+                              replacement = params$replacement)
+  } else {
+    if (any(arg_names %in% rename_args)){
+      stop(
+        "At least one argument for rename_viewr_characters() was supplied,
+but rename_viewr_characters was set to FALSE.
+Please resolve by either setting rename_viewr_characters to TRUE
 or by removing the extraneous argument(s)")
     }
     obj <- obj
