@@ -512,9 +512,65 @@ for (i in 1:length(auto_expl_trajs)){
   )
 }
 
-
-
-
+## test object for feeding into separate_ during troubleshooting:
+obj_name <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent()
+plot(obj_name$position_length,
+     obj_name$position_width,
+     asp = 1, col = as.factor(obj_name$subject))
+max_frame_gap = "autodetect"
+frame_rate_proportion = 0.10
+frame_gap_messaging = FALSE
+frame_gap_plotting = FALSE
+## NOW GO WITHIN separate_trajectories() AND RUN EACH LINE INDIVIDUALLY
+## the end result will be a new object: obj_new
+## NOW THAT SEPARATE HAS BEEN DONE:
+plot(obj_new$position_length,
+     obj_new$position_width,
+     asp = 1, col = as.factor(obj_new$traj_id))
+obj_name_trajs <- unique(obj_new$sub_traj)
+for (i in 1:length(obj_name_trajs)){
+  tmp <- obj_new %>% filter(sub_traj == obj_name_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = obj_name_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(obj_new$position_length),
+                max(obj_new$position_length)),
+       ylim = c(min(obj_new$position_width),
+                max(obj_new$position_width))
+  )
+}
+## Trajectories are now separated properly. Many are shitty, but that should
+## be dealt with in the subsequent step:
+obj_full <-
+  obj_new %>%
+  get_full_trajectories(span = 0.6)
+obj_full_trajs <- unique(obj_full$sub_traj)
+## clear all plots! then run:
+for (i in 1:length(obj_full_trajs)){
+  tmp <- obj_full %>% filter(sub_traj == obj_full_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = obj_full_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(obj_full$position_length),
+                max(obj_full$position_length)),
+       ylim = c(min(obj_full$position_width),
+                max(obj_full$position_width))
+  )
+}
 
 
 
@@ -644,6 +700,7 @@ jul_29_test <-
   import_and_clean_viewr(velocity_min = 1,
                          velocity_max = 10,
                          desired_percent = 75,
+                         rename_viewr_characters = TRUE,
                          target_column = "subject",
                          pattern = " 00.",
                          replacement = "",
@@ -666,11 +723,15 @@ test <- filter(jul_29_test, sub_traj == "device08_1")
 
 jul_29_defaults <-
   jul_29_path %>%
-  import_and_clean_viewr(target_column = "subject",
-                         pattern = " 00.",
-                         replacement = "")
+  import_and_clean_viewr(velocity_min = 1,
+                         velocity_max = 10,
+                         rename_viewr_characters = FALSE,
+                         separate_trajectories = FALSE,
+                         get_full_trajectories = FALSE)
 jul_29_rename <- jul_29_defaults %>%
-  rename_viewr_characters(pattern = " 00.")
+  rename_viewr_characters(target_column = "subject",
+                          pattern = " 00.",
+                          replacement = "")
 
 jul_29_sep <-
   jul_29_rename %>%

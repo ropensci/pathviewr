@@ -1244,7 +1244,7 @@ separate_trajectories <- function(obj_name,
 #   }
 
   ## Get subject names
-  subject_names_simple <- unique(obj_name$subject)
+  subject_names_simple <- base::unique(obj_name$subject)
 
   ## Extract the frames and subjects and group by subjects
   grouped_frames <-
@@ -1339,13 +1339,17 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       stop(
         "frame_rate_proportion must be expressed as a decimal between 0 and 1")
     }
-    floor(frame_rate_proportion * frame_rate) -> max_frame_gap_allowed
+    ## the maximal frame gap cannot exceed a (user-specified) proportion
+    ## of the frame_rate. Use floor() to ensure it is an integer.
+    max_frame_gap_allowed <-
+      base::floor(frame_rate_proportion * frame_rate)
 
     sploot <- list()
+    mufasa <- NULL
     ## For each subject's tibble, run through the process of finding the elbow
     for (i in 1:length(subject_tibbles)){
       ## Make a bunch of empty vectors to dump info
-      mfg <- NULL ## These must be NULL so they can be re-written with each loop
+      mfg <- NULL ## All must be NULL so they can be re-written with each loop
       cts <- NULL
       trajectory_count <- NULL
       frame_gap_allowed <- NULL
@@ -1366,17 +1370,17 @@ Setting max_frame_gap to ", maxFG_across_subjects)
                                 trajectory_count)
 
       ## Find the curve elbow point via `find_curve_elbow()`
-      max_frame_gap[[i]] <- find_curve_elbow(mfg_tib,
+      mufasa[[i]] <- find_curve_elbow(mfg_tib,
                                              export_type = "row_num",
                                              plot_curve = FALSE)
 
       if(frame_gap_messaging == TRUE){
         message("For subject: ", subject_names_simple[i],
-", estimated best value for max_frame_gap: ", max_frame_gap[[i]])
+", estimated best value for max_frame_gap: ", mufasa[[i]])
       }
 
       if(frame_gap_plotting == TRUE){
-      plot(mfg_tib); abline(v = max_frame_gap[[i]])
+      plot(mfg_tib); abline(v = mufasa[[i]])
         ## refine this later to specify the subject name & make it pretty etc
       }
 
@@ -1387,7 +1391,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
         # dplyr::group_by(subject) %>%
         ## group by seq_id which is the diff between successive frames
         ## is greater than max_frame_gap
-        dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > max_frame_gap[[i]]))
+        dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > mufasa[[i]]))
 
     }
 
@@ -1410,7 +1414,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       ## in from the original obj_name
 
       ## Leave a note about the max frame gaps used
-      attr(obj_new,"max_frame_gap") <- max_frame_gap
+      attr(obj_new,"max_frame_gap") <- unlist(mufasa)
 
       ## Leave a note that we rotated and translated the data set
       attr(obj_new,"pathviewR_steps") <-
