@@ -1,0 +1,32 @@
+---
+title: "Basics of data import and cleaning in pathviewR"
+author: "Vikram B. Baliga"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basics of data import and cleaning in pathviewR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Data import via `pathviewR`
+
+In this vignette, we will provide an overview of how data may be imported and wrangled to prepare data objects for analyses. 
+
+At present, we offer support for `.csv` files exported from Optitrack's Motive software (link) as well as `.mat` files exported from Flydra (link).
+
+We'll begin by loading `pathviewR` and a few other packages
+
+```{r package_loading, message=FALSE, warning=FALSE}
+library(pathviewR)
+library(tidyverse)
+```
+
+To be continued...
