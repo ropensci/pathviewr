@@ -13,6 +13,7 @@ import_and_clean_viewr(
   standardization_option = "rotate_tunnel",
   get_velocity = TRUE,
   select_x_percent = TRUE,
+  rename_viewr_characters = FALSE,
   separate_trajectories = TRUE,
   get_full_trajectories = TRUE,
   ...
@@ -34,6 +35,8 @@ import_and_clean_viewr(
 \item{get_velocity}{default TRUE,}
 
 \item{select_x_percent}{default TRUE,}
+
+\item{rename_viewr_characters}{default FALSE,}
 
 \item{separate_trajectories}{default TRUE,}
 

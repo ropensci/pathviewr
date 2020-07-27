@@ -78,12 +78,12 @@ attributes(jul_29)
 
 }
 \seealso{
-\code{\link{read_flydra_data}} for importing Flydra data
+\code{\link{read_flydra_mat}} for importing Flydra data
 
 Other data import functions: 
 \code{\link{import_and_clean_batch}()},
 \code{\link{import_batch}()},
-\code{\link{read_flydra_data}()}
+\code{\link{read_flydra_mat}()}
 }
 \author{
 Vikram B. Baliga
