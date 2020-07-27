@@ -28,4 +28,7 @@ Imports:
     R.matlab (>= 3.6.2),
     data.table (>= 1.12.8)
 Suggests: 
-    rhdf5 (>= 2.32.0)
+    rhdf5 (>= 2.32.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
