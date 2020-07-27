@@ -108,10 +108,12 @@ clean_viewr_batch <- function(obj_list,
 #'
 #' @param file_path_list A list of file paths
 #' @param import_method Either "flydra" or "motive"
-#' @param file_id Optional
+#' @inheritParams read_flydra_mat
+#' @inheritParams read_motive_csv
 #' @param subject_name For Flydra, the subject name applied to all files
 #' @param frame_rate For Flydra, the frame rate applied to all files
-#' simplified?
+#' @param simplify_marker_naming For Motive, if Markers are encountered, should
+#'  they be renamed from "Subject:marker" to "marker"? Defaults to TRUE
 #' @param import_messaging Should this function report each time a file has been
 #' processed?
 #' @param ... Additional arguments to specify how data should be cleaned.

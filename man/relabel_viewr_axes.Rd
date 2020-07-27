@@ -61,7 +61,7 @@ jul_29 <-
 names(jul_29)
 
 ## Now use relabel_viewr_axes() to rename these variables using _length,
-_width, and _height instead
+## _width, and _height instead
 jul_29_relabeled <-
   relabel_viewr_axes(jul_29,
                      tunnel_length = "_z",

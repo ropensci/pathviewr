@@ -94,7 +94,7 @@ get_header_viewr <- function(obj_name,
 #' names(jul_29)
 #'
 #' ## Now use relabel_viewr_axes() to rename these variables using _length,
-#' _width, and _height instead
+#' ## _width, and _height instead
 #' jul_29_relabeled <-
 #'   relabel_viewr_axes(jul_29,
 #'                      tunnel_length = "_z",
@@ -128,7 +128,7 @@ relabel_viewr_axes <- function(obj_name,
     stop("tunnel_height should be a character vector")
   }
 
-  namez <- names(obj_name)
+  namez <- base::names(obj_name)
   # THE FOLLOWING STEP MUST COME BEFORE WIDTH RENAMING! This is because the
   # 'real' dimension in quaternion notation is denoted "w", which conflicts
   # with the "w" in width
@@ -194,6 +194,7 @@ relabel_viewr_axes <- function(obj_name,
 #'
 #' @examples
 #' library(pathviewR)
+#' library(tidyverse)
 #'
 #' ## Import the july 29 example data included in the package
 #' jul_29 <-
@@ -201,11 +202,11 @@ relabel_viewr_axes <- function(obj_name,
 #'                              package = 'pathviewR'))
 #'
 #' ## First use relabel_viewr_axes() to rename these variables using _length,
-#' _width, and _height instead
+#' ## _width, and _height instead
 #' jul_29_relabeled <- relabel_viewr_axes(jul_29)
 #'
 #' ## Now use gather_tunnel_data() to gather colums into tidy format
-#' jul_29_gathered <- gather_tunnel_data(jul_29)
+#' jul_29_gathered <- gather_tunnel_data(jul_29_relabeled)
 #'
 #' ## Column names reflect the way in which data were reformatted:
 #' names(jul_29_gathered)
@@ -1381,7 +1382,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       }
 
       if(frame_gap_plotting == TRUE){
-      plot(mfg_tib); abline(v = mufasa[[i]])
+      plot(mfg_tib); graphics::abline(v = mufasa[[i]])
         ## refine this later to specify the subject name & make it pretty etc
       }
 
@@ -1756,7 +1757,7 @@ visualize_frame_gap_choice <- function(obj_name,
   mfg_tib$file_id <- as.character(obj_name_arg)
 
   mfg_plot <- plot(mfg_tib$frame_gap_allowed,
-                   mfg_tib$trajectory_count); abline(v = max_fg)
+                   mfg_tib$trajectory_count); graphics::abline(v = max_fg)
 
   return(list(mfg_tib, mfg_plot))
 

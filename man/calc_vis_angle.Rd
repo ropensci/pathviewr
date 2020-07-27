@@ -32,6 +32,8 @@ stimuli presented on the negative side of the tunnel
 \item{vertex_angle}{The angle (in degrees) subtended by a vertical axis and
 the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
 \code{vertex_angle)} defaults to 45.}
+
+\item{simplify_output}{EP please add details here!!}
 }
 \value{
 A tibble or data.frame with added variables for

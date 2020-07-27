@@ -14,6 +14,8 @@ defaults to \code{basename(file_name)}.}
 
 \item{simplify_marker_naming}{If Markers are encountered, should they be
 renamed from "Subject:marker" to "marker"? Defaults to TRUE}
+
+\item{...}{Additional arguments passed from other \code{pathviewR} functions}
 }
 \value{
 A tibble with numerical data in columns. The first two columns will

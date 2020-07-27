@@ -14,6 +14,7 @@
 #' defaults to \code{basename(file_name)}.
 #' @param simplify_marker_naming If Markers are encountered, should they be
 #' renamed from "Subject:marker" to "marker"? Defaults to TRUE
+#' @param ... Additional arguments passed from other \code{pathviewR} functions
 #'
 #' @details Uses \code{data.table::fread()} to import data from a CSV file and
 #' ultimately store it in a tibble. This object is also labeled with the

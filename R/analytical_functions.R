@@ -335,7 +335,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
   elbow <- which.max(mfg_dists)
 
   if(plot_curve == TRUE){
-    plot(data_matrix); abline(v = elbow)
+    plot(data_matrix); graphics::abline(v = elbow)
   }
 
   ## Export
@@ -366,6 +366,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' @param stim_param_neg The same convention as \code{stim_param_pos} but for
 #' stimuli presented on the negative side of the tunnel
 #' (i.e. \code{position_width < 0}).
+#' @param simplify_output EP please add details here!!
 #'
 #' @details \code{cal_vis_angle} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and
