@@ -43,7 +43,7 @@ Batch import of files for either Motive or Flydra (but not a mix of both)
 \seealso{
 Other data import functions: 
 \code{\link{import_and_clean_batch}()},
-\code{\link{read_flydra_data}()},
+\code{\link{read_flydra_mat}()},
 \code{\link{read_motive_csv}()}
 
 Other batch functions: 

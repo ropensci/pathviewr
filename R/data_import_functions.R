@@ -45,7 +45,7 @@
 #' @author Vikram B. Baliga
 #'
 #' @family data import functions
-#' @seealso \code{\link{read_flydra_data}} for importing Flydra data
+#' @seealso \code{\link{read_flydra_mat}} for importing Flydra data
 #'
 #' @examples
 #' library(pathviewR)
@@ -308,7 +308,7 @@ problems.",
   }
 
 
-################################# read_flydra_data #############################
+################################# read_flydra_mat #############################
 ## Time is now encoded as a function of frame_rate and the specific labeling
 ## of frames within the imported flydra object
 
@@ -329,7 +329,7 @@ problems.",
 #'
 #' @export
 
-read_flydra_data <-
+read_flydra_mat <-
   function(mat_file,
            file_id = NA,
            subject_name,
