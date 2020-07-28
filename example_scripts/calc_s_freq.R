@@ -48,7 +48,7 @@ calc_s_freq <- function(obj_name,
 
 
   ## When the bird is outside the boundaries created by orthogonal planes to
-  ## each screen, erroneous visual angles are calculated based based on a
+  ## each screen, erroneous visual angles are calculated based on a
   ## minimum distance to either screen.
   ## Therefore min_dist values need to be adjusted according to position_width
 
@@ -63,18 +63,18 @@ calc_s_freq <- function(obj_name,
   ## tunnel. min_dist refers to the minimum distance between the bird and either
   ## screen.
   obj_name$min_dist_pos <-
-    ifelse(obj_name$position_width >= 0 &
-             obj_name$position_width >= obj_name$bound_pos,
-           # if position_width is positive and greater than the boundary value
+    ifelse(obj_name$position_width <= 0 &
+             obj_name$position_width <= obj_name$bound_neg,
+           # if position_width is negative and less than the boundary value
            sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
            # return distance to vertex
            obj_name$width_2_screen_pos * sin(deg2rad(90)- vertex_angle))
            # return minimum distance to positive screen
 
   obj_name$min_dist_neg <-
-    ifelse(obj_name$position_width <= 0 &
-             obj_name$position_width <= obj_name$bound_neg,
-           # if position_width is negative and smaller than the boundary value
+    ifelse(obj_name$position_width >= 0 &
+             obj_name$position_width >= obj_name$bound_pos,
+           # if position_width is positive and greater than the boundary value
            sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
            # return distance to vertex
            obj_name$width_2_screen_neg * sin(deg2rad(90) - vertex_angle))
