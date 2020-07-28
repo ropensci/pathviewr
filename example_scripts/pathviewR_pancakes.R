@@ -751,7 +751,115 @@ jul_29_test %>%
   scale_color_viridis_d() +
   theme(legend.position = "none")
 
-  #################################### roz2016 ###################################
+
+
+
+##### __ different file #####
+
+test2_path <- "./inst/extdata/july-29_group-II_10-40.csv"
+
+
+## test object for feeding into separate_ during troubleshooting:
+obj_name <-
+  test2_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent()
+plot(obj_name$position_length,
+     obj_name$position_width,
+     asp = 1, col = as.factor(obj_name$subject))
+max_frame_gap = "autodetect"
+frame_rate_proportion = 0.10
+frame_gap_messaging = FALSE
+frame_gap_plotting = FALSE
+## NOW GO WITHIN separate_trajectories() AND RUN EACH LINE INDIVIDUALLY
+## the end result will be a new object: obj_new
+## NOW THAT SEPARATE HAS BEEN DONE:
+plot(obj_new$position_length,
+     obj_new$position_width,
+     asp = 1, col = as.factor(obj_new$sub_traj))
+obj_name_trajs <- unique(obj_new$sub_traj)
+for (i in 1:length(obj_name_trajs)){
+  tmp <- obj_new %>% filter(sub_traj == obj_name_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = obj_name_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(obj_new$position_length),
+                max(obj_new$position_length)),
+       ylim = c(min(obj_new$position_width),
+                max(obj_new$position_width))
+  )
+}
+## Trajectories are now separated properly. Many are shitty, but that should
+## be dealt with in the subsequent step:
+obj_full <-
+  obj_new %>%
+  get_full_trajectories(span = 0.9)
+obj_full_trajs <- unique(obj_full$sub_traj)
+## clear all plots! then run:
+for (i in 1:length(obj_full_trajs)){
+  tmp <- obj_full %>% filter(sub_traj == obj_full_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = obj_full_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(obj_full$position_length),
+                max(obj_full$position_length)),
+       ylim = c(min(obj_full$position_width),
+                max(obj_full$position_width))
+  )
+}
+
+#### __ different file - test ####
+test2_path <- "./inst/extdata/july-29_group-II_10-40.csv"
+
+test2_mfg_auto_explicit <-
+  test2_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent() %>%
+  ## skip rename_viewr_characters(), which defaults to FALSE anyway
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_gap_messaging = TRUE) %>%
+  get_full_trajectories()
+test2_mfg_auto_explicit # seems to work
+plot(test2_mfg_auto_explicit$position_length,
+     test2_mfg_auto_explicit$position_width,
+     asp = 1, col = as.factor(test2_mfg_auto_explicit$sub_traj))
+
+## plot each trajectory (this is extensive!)
+## probably best to clear all your plots before running this:
+auto_expl_trajs <- unique(test2_mfg_auto_explicit$sub_traj)
+for (i in 1:length(auto_expl_trajs)){
+  tmp <- test2_mfg_auto_explicit %>% filter(sub_traj == auto_expl_trajs[i])
+  plot(tmp$position_length,
+       tmp$position_width,
+       asp = 1,
+       ## add a title that indicates sub_traj
+       main = auto_expl_trajs[i],
+       ## keep the same dimensions across all plots:
+       xlim = c(min(test2_mfg_auto_explicit$position_length),
+                max(test2_mfg_auto_explicit$position_length)),
+       ylim = c(min(test2_mfg_auto_explicit$position_width),
+                max(test2_mfg_auto_explicit$position_width))
+  )
+}
+
+
+#################################### roz2016 ###################################
 ## Going to start adding things to help me integrate flydra data into this
 ## package.
 
@@ -837,7 +945,7 @@ abline(h = 1.44)
 #### __testing pathviewR flydra functions ####
 ## Test pancake
 test_mat <-
-  read_flydra_data(
+  read_flydra_mat(
     "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat",
     subject_name = "steve")
 
@@ -915,7 +1023,19 @@ test_full <-
 ## 3D plot
 rgl::plot3d(x = test_full$position_length,
             y = test_full$position_width,
-            z = test_full$position_height)
+            z = test_full$position_height,
+            col = unique(test_full$sub_traj))
+library(scales)
+n <- length(unique(test_full$sub_traj))
+dat.col <- data.frame(grps = unique(test_full$sub_traj),
+                      colz = rainbow(n))  ## you can also use  brewer_pal()(n)
+trj <- tibble(grps = test_full$sub_traj)
+data_col <- left_join(trj, dat.col)
+
+rgl::plot3d(x = test_full$position_length,
+            y = test_full$position_width,
+            z = test_full$position_height,
+            col = data_col$colz)
 aspect3d("iso")
 ## 2D overhead
 plot(test_full$position_length,

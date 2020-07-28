@@ -1389,31 +1389,29 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       ## max_frame_gap has now been verified or estimated by this function.
       sploot[[i]] <-
         subject_tibbles[[i]] %>%
-        dplyr::select(frame) %>%
-        # dplyr::group_by(subject) %>%
+        dplyr::select(frame, subject) %>%
         ## group by seq_id which is the diff between successive frames
         ## is greater than max_frame_gap
-        dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > mufasa[[i]]))
+        dplyr::group_by(traj_id = cumsum(c(1, diff(frame)) > mufasa[[i]])) %>%
+        ## generate a sub_traj
+        dplyr::mutate(sub_traj = paste0(subject,"_",traj_id))
 
     }
 
       ## Duplicate obj_name to avoid overwriting important stuff
-      obj_new <- obj_name
+      obj_tmp <- obj_name
 
       ## Meld sploot together
       new_sploot <- dplyr::bind_rows(sploot)
 
-      ## new column (traj_id) is this seq_id
-      obj_new$traj_id <- new_sploot$seq_id
+      ## add new column (sub_traj)
+      obj_new <- left_join(obj_tmp, new_sploot,
+                            by = c("frame", "subject"))
+      # obj_new$traj_id <- new_sploot$seq_id
 
-      ## Also combine the subject ID so that we're sure trajectories
-      ## correspond to unique subjects
-      obj_new$sub_traj <- paste0(obj_new$subject,"_",obj_new$traj_id)
-
-      ## Coerce to tibble
-      obj_new <- tibble::as_tibble(obj_new)
-      ## Note to self -- if this ever erases attributes, they can be pasted back
-      ## in from the original obj_name
+      # ## Also combine the subject ID so that we're sure trajectories
+      # ## correspond to unique subjects
+      # obj_new$sub_traj <- paste0(obj_new$subject,"_",obj_new$traj_id)
 
       ## Leave a note about the max frame gaps used
       attr(obj_new,"max_frame_gap") <- unlist(mufasa)
