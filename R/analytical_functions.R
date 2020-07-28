@@ -366,7 +366,10 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' @param stim_param_neg The same convention as \code{stim_param_pos} but for
 #' stimuli presented on the negative side of the tunnel
 #' (i.e. \code{position_width < 0}).
-#' @param simplify_output EP please add details here!!
+#' @param simplify_output If TRUE, the returned object includes minimum distance
+#' as well as the visual angles (in degrees) to either side of the
+#' tunnel. If FALSE, the returned object includes all variables internal to the
+#' calculation.
 #'
 #' @details \code{cal_vis_angle} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and
@@ -452,8 +455,8 @@ calc_vis_angle <- function(obj_name,
 
 
   obj_name$min_dist_pos <- # overwrite min_dist_pos
-  ifelse(obj_name$position_width >= 0 &
-         obj_name$position_width >= obj_name$bound_pos,
+  ifelse(obj_name$position_width <= 0 &
+         obj_name$position_width <= obj_name$bound_neg,
          # if position_width is positive and greater than the boundary value
           sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
          # return distance to vertex
@@ -461,8 +464,8 @@ calc_vis_angle <- function(obj_name,
          # reurn original min_dist_pos calculation
 
   obj_name$min_dist_neg <-
-  ifelse(obj_name$position_width <= 0 &
-         obj_name$position_width <= obj_name$bound_neg,
+  ifelse(obj_name$position_width >= 0 &
+         obj_name$position_width >= obj_name$bound_pos,
          # if position_width is negative and smaller than the boundary value
           sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
          # return distance to vertex
