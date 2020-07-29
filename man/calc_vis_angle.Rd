@@ -33,7 +33,10 @@ stimuli presented on the negative side of the tunnel
 the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
 \code{vertex_angle)} defaults to 45.}
 
-\item{simplify_output}{EP please add details here!!}
+\item{simplify_output}{If TRUE, the returned object includes minimum distance
+as well as the visual angles (in degrees) to either side of the
+tunnel. If FALSE, the returned object includes all variables internal to the
+calculation.}
 }
 \value{
 A tibble or data.frame with added variables for

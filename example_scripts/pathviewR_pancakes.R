@@ -1,4 +1,4 @@
-## Last updated: 2020-07-26 VBB
+## Last updated: 2020-07-28 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -29,8 +29,6 @@ package.check <- lapply(packages, # applies the function to a list and returns
                           }
                         }
 )
-## (EP) on my machine, R.matlab didn't auto-install/load like the others...
-
 
 ################################ script sourcing ###############################
 ## Now that we've package-ized things, we not longer use source() to load up
@@ -45,7 +43,6 @@ devtools::load_all()
 jul_29_path <-
   './inst/extdata/july-29_group-I_16-20.csv'
 
-## New import function. Let VBB know if there are issues!!!
 jul_29 <-
   read_motive_csv(jul_29_path, simplify_marker_naming = TRUE)
 
@@ -98,9 +95,6 @@ jul_29 <- relabel_viewr_axes(jul_29,
                              tunnel_height = "_y",
                              real = "_w")
 
-## Note that we now have an auto-generated Help file via roxygen:
-?relabel_viewr_axes
-
 elsa_renamed <- relabel_viewr_axes(elsa_dat) # use all defaults
 
 ####################### gather data into simpler format ########################
@@ -123,7 +117,7 @@ elsa_gathered <- gather_tunnel_data(elsa_renamed)
 jul_29_subjectsrenamed <-
   rename_viewr_characters(jul_29_gathered,
                           target_column =  "subject", ## This is the default
-                          pattern = " 002", ## No default here; must be entered
+                          pattern = " 00.", ## No default here; must be entered
                           replacement = "") ## The default
 ## Using replacement = "" amounts to removing the "pattern" characters from
 ## the cells within the target_column. So the above removes " 002" from each
