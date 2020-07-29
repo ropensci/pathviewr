@@ -419,13 +419,13 @@ plot(jul_29_all_defaults$position_length,
 
 ## plot each trajectory (this is extensive!)
 ## probably best to clear all your plots before running this:
-trajs <- unique(jul_29_all_defaults$sub_traj)
+trajs <- unique(jul_29_all_defaults$file_sub_traj)
 for (i in 1:length(trajs)){
-  tmp <- jul_29_all_defaults %>% filter(sub_traj == trajs[i])
+  tmp <- jul_29_all_defaults %>% filter(file_sub_traj == trajs[i])
   plot(tmp$position_length,
        tmp$position_width,
        asp = 1,
-       ## add a title that indicates sub_traj
+       ## add a title that indicates file_sub_traj
        main = trajs[i],
        ## keep the same dimensions across all plots:
        xlim = c(min(jul_29_all_defaults$position_length),

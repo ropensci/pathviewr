@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-12 VBB
+## Last updated: 2020-07-28 VBB
 
 
 ################################# get_header_viewr #############################
@@ -1269,6 +1269,9 @@ separate_trajectories <- function(obj_name,
     get_header_viewr(obj_name)$value[5] %>% ## 5th line of header
     as.numeric()
 
+  ## Get File ID
+  flid <- attr(obj_name, "file_id")
+
   ## Now determine the maximum gap within each subject's set of frames
   ## This has to be done on a per-subject basis because frame numbering
   ## in obj_name$frame is recycled as new subjects are encountered (going
@@ -1296,26 +1299,19 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       ## max_frame_gap has now been verified or estimated by this function.
       sploot <-
         obj_name %>%
-        dplyr::select(frame) %>%
-        #dplyr::group_by(subject) %>%
+        dplyr::select(frame, subject) %>%
         ## group by seq_id which is the diff between successive frames
         ## is greater than max_frame_gap
-        dplyr::group_by(seq_id = cumsum(c(1, diff(frame)) > mufasa))
+        dplyr::group_by(traj_id = cumsum(c(1, diff(frame)) > mufasa)) %>%
+        ## generate a sub_traj
+        dplyr::mutate(file_sub_traj = paste0(flid,"_",subject,"_",traj_id))
 
       ## Duplicate obj_name to avoid overwriting important stuff
-      obj_new <- obj_name
+      obj_tmp <- obj_name
 
-      ## new column (traj_id) is this seq_id
-      obj_new$traj_id <- sploot$seq_id
-
-      ## Also combine the subject ID so that we're sure trajectories
-      ## correspond to unique subjects
-      obj_new$sub_traj <- paste0(obj_new$subject,"_",obj_new$traj_id)
-
-      ## Coerce to tibble
-      obj_new <- tibble::as_tibble(obj_new)
-      ## Note to self -- if this ever erases attributes, they can be pasted back
-      ## in from the original obj_name
+      ## add new column (sub_traj)
+      obj_new <- left_join(obj_tmp, sploot,
+                           by = c("frame", "subject"))
 
       ## Leave a note about the max frame gap used
       attr(obj_new,"max_frame_gap") <- mufasa
@@ -1394,7 +1390,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
         ## is greater than max_frame_gap
         dplyr::group_by(traj_id = cumsum(c(1, diff(frame)) > mufasa[[i]])) %>%
         ## generate a sub_traj
-        dplyr::mutate(sub_traj = paste0(subject,"_",traj_id))
+        dplyr::mutate(file_sub_traj = paste0(flid,"_",subject,"_",traj_id))
 
     }
 
@@ -1407,11 +1403,6 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       ## add new column (sub_traj)
       obj_new <- left_join(obj_tmp, new_sploot,
                             by = c("frame", "subject"))
-      # obj_new$traj_id <- new_sploot$seq_id
-
-      # ## Also combine the subject ID so that we're sure trajectories
-      # ## correspond to unique subjects
-      # obj_new$sub_traj <- paste0(obj_new$subject,"_",obj_new$traj_id)
 
       ## Leave a note about the max frame gaps used
       attr(obj_new,"max_frame_gap") <- unlist(mufasa)
@@ -1461,7 +1452,7 @@ get_full_trajectories <- function(obj_name,
 
   summary_obj <-
     obj_name %>%
-    dplyr::group_by(sub_traj) %>%
+    dplyr::group_by(file_sub_traj) %>%
     dplyr::summarise(traj_length = n(),
                      start_length = position_length[1],
                      end_length = position_length[traj_length],
@@ -1487,7 +1478,7 @@ get_full_trajectories <- function(obj_name,
   ## Filter data by the two criteria
   filt_summary <-
     summary_obj %>%
-    dplyr::group_by(sub_traj) %>%
+    dplyr::group_by(file_sub_traj) %>%
     ## Each trajectory must span a minimum porportion of the selected tunnel
     dplyr::filter(length_diff > (span * max_length)) %>%
     ## And the signs (+ or -) at the ends of the trajectories must be opposites
@@ -1495,11 +1486,11 @@ get_full_trajectories <- function(obj_name,
 
   obj_continuous <-
     obj_name %>%
-    dplyr::filter(sub_traj %in% filt_summary$sub_traj)
+    dplyr::filter(file_sub_traj %in% filt_summary$file_sub_traj)
 
   ## Join the columns to add in direction
   obj_defined <-
-    dplyr::right_join(obj_continuous, filt_summary, by = "sub_traj") %>%
+    dplyr::right_join(obj_continuous, filt_summary, by = "file_sub_traj") %>%
     tibble::as_tibble()
 
   ## Leave a note about the span used
@@ -1511,7 +1502,7 @@ get_full_trajectories <- function(obj_name,
 
   ## Leave a note about trajectories removed
   attr(obj_defined, "trajectories_removed") <-
-    length(summary_obj$sub_traj) - length(filt_summary$sub_traj)
+    length(summary_obj$file_sub_traj) - length(filt_summary$file_sub_traj)
 
   ## Export
   return(obj_defined)
