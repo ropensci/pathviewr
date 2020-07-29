@@ -10,12 +10,9 @@ packages <- c("devtools",
               "readxl",
               "R.matlab",
               "ggthemes",
-              "viridis",
               "gridExtra",
               "data.table",
-              "RColorBrewer",
-              "rgl",
-              "plot3D")
+              "rgl")
 ## Now for each package listed, first check to see if the package is already
 ## installed. If it is installed, it's simply loaded. If not, it's downloaded
 ## from CRAN and then installed and loaded.
@@ -31,12 +28,10 @@ package.check <- lapply(packages, # applies the function to a list and returns
 )
 
 ################################ script sourcing ###############################
-## Now that we've package-ized things, we not longer use source() to load up
-## our functions. Instead, we can load our pathviewR package via
-## devtools::load_all(). See sec 2.8 in the R packages guide by Wickham & Bryan
-## for more on this.
-
+## devtools::load_all() ensures that functions housed in /R but for which we
+## have not written roxygen documentation are still loaded and avaliable to us
 devtools::load_all()
+
 
 ################################# data import ##################################
 ## Using example file from Melissa
@@ -85,10 +80,8 @@ names(wing_rom_unsimple) # Subject:marker explicit naming
 
 names(elsa_dat) # simpilfy works out just fine with this one
 
-################################## rename axes #################################
-## I get confused by the axis definitions. So I use the `relabel_viewr_axes()`
-## utility function to rename the variables
 
+################################## rename axes #################################
 jul_29 <- relabel_viewr_axes(jul_29,
                              tunnel_length = "_z",
                              tunnel_width = "_x",
@@ -97,12 +90,8 @@ jul_29 <- relabel_viewr_axes(jul_29,
 
 elsa_renamed <- relabel_viewr_axes(elsa_dat) # use all defaults
 
-####################### gather data into simpler format ########################
-## The gathering function will take all data from a given session and
-## organize it so that all data of a given type are within one column, i.e.
-## all position lengths are in Position_length, as opposed to separate
-## length columns for each rigid body.
 
+####################### gather data into simpler format ########################
 jul_29_gathered <- gather_tunnel_data(jul_29)
 elsa_gathered <- gather_tunnel_data(elsa_renamed)
 
@@ -123,50 +112,11 @@ jul_29_subjectsrenamed <-
 ## the cells within the target_column. So the above removes " 002" from each
 ## subject name (if it was there)
 
-## I called it rename_viewr_characters() instead of rename_viewer_subjects()
-## because this can acutally be applied to any column. This flexibility could
-## come in handy if the user wants to revise the naming system in the traj_id
-## column made by separate_trajectories() or if they want to revise names within
-## columns that are added on by something else (e.g. a "treatments" column)
-##
-## That all said, I'm not terribly fond of the name, so suggestions are welcome!
-
 
 ################################# trim outliers ################################
-## Use trim_tunnel_outliers() to remove artifacts and other outlier data
-## This function relies on the user supplying estimates of the min and max
-## values that are acceptable as data on each axis. Data ouside these ranges
-## are filtered out. Best to plot data beforehand and check!!
-
-## Plotting first!! (commented out for ease of use)
-  # ## Plot of length vs height for July 29
-  # plot(jul_29_gathered$position_length,
-  #      jul_29_gathered$position_height,
-  #       asp=1)
-  #    abline(v = -0.06) # length min
-  #    abline(v = 2.6)   # length max
-  #    abline(h = -0.25) # height min
-  #    abline(h = 0.35)  # height max
-  #  ## Length vs width
-  #  ## Keeping width estimates very wide since crazy artifacts don't really
-  #  ## manifest in this dimension
-  #  plot(jul_29_gathered$position_length,
-  #       jul_29_gathered$position_width,
-  #       asp=1)
-  #    abline(v = -0.06) # length min
-  #    abline(v = 2.6)   # length max
-  #    abline(h = 0.8)   # width max (very generous)
-  #    abline(h = -0.8)  # width min (very generous)
-
-## Now use trim_tunnel_outliers() to trim out artifacts
 ## Defaults were defined by what worked for July 29th
-
 jul_29_trimmed <- trim_tunnel_outliers(jul_29_subjectsrenamed)
 
-# ## We can check that it worked by plotting length vs. height...etc again
-# plot(jul_29_trimmed$position_length,
-#      jul_29_trimmed$position_height,
-#      asp=1)
 
 ################################# rotate tunnel ################################
 ## Use rotate_tunnel() to do two things simulatenously:
@@ -176,12 +126,9 @@ jul_29_trimmed <- trim_tunnel_outliers(jul_29_subjectsrenamed)
 ## above the perch and values less than 0 are below the perch level.
 
 ## IMPORTANT NOTE: ALL THE DEFAULT VALUES IN THE FUNCTION ARE BASED ON WHAT
-## WORKS FOR JULY 29. THESE VALUES WILL (LIKELY) NEED TO BE CHANGED FOR OTHER
-## DATA SETS!!
+## WORKS FOR JULY 29.
 jul_29_rotated <-
   jul_29_trimmed %>% rotate_tunnel()
-
-attributes(jul_29_rotated)
 
 
 ############################### standardize tunnel #############################
@@ -362,13 +309,10 @@ plot(jul_29_full$position_length,
      asp = 1, col = as.factor(jul_29_full$traj_id))
 
 ####################### compute instantaneous velocities #######################
-## 2020-06-26: This revised function how has more flexiblity in what a user can
-## do and when the user can choose to implement it. I'll play around in this
-## section to see how it behaves and give some examples of how people may want
-## to use it
-
-## Appending velocity data as new columns on an exisiting viewr object
+## Append velocity data as new columns on an exisiting viewr object. Can be done
+## anytime, but highly recommended it at least be after the gather step
 ## The argument `add_to_viewr` is TRUE by default and will add columns
+
 jul_29_full_with_velocity <-
   jul_29_full %>% get_velocity()
 ## But if you don't want a billion columns, go with a simple velocity output:
@@ -435,6 +379,23 @@ for (i in 1:length(trajs)){
        )
 }
 
+## Done explicitly:
+jul_29_all_defaults_explicit <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent() %>%
+  ## skip rename_viewr_characters(), which defaults to FALSE anyway
+  separate_trajectories() %>%
+  get_full_trajectories()
+
+## Are jul_29_all_defaults and jul_29_all_defaults_explicit the same?
+identical(jul_29_all_defaults, jul_29_all_defaults_explicit)
+
 ## Testing now with autodetect
 jul_29_mfg_autodetect <-
   jul_29_path %>% import_and_clean_viewr(max_frame_gap = "autodetect",
@@ -463,128 +424,6 @@ for (i in 1:length(auto_trajs)){
                 max(jul_29_mfg_autodetect$position_width))
   )
 }
-## OK something is broken here. Now I want to see what happens when done
-## explicitly instead
-
-## Testing now with autodetect
-jul_29_mfg_auto_explicit <-
-  jul_29_path %>%
-  read_motive_csv() %>%
-  relabel_viewr_axes() %>%
-  gather_tunnel_data() %>%
-  trim_tunnel_outliers() %>%
-  rotate_tunnel() %>%
-  get_velocity() %>%
-  select_x_percent() %>%
-  ## skip rename_viewr_characters(), which defaults to FALSE anyway
-  separate_trajectories(max_frame_gap = "autodetect",
-                        frame_gap_messaging = TRUE) %>%
-  get_full_trajectories()
-jul_29_mfg_auto_explicit # seems to work
-class(jul_29_mfg_auto_explicit) # looks complete
-attributes(jul_29_mfg_auto_explicit)
-identical(jul_29_mfg_autodetect, jul_29_mfg_auto_explicit)
-plot(jul_29_mfg_auto_explicit$position_length,
-     jul_29_mfg_auto_explicit$position_width,
-     asp = 1, col = as.factor(jul_29_mfg_auto_explicit$traj_id))
-
-## plot each trajectory (this is extensive!)
-## probably best to clear all your plots before running this:
-auto_expl_trajs <- unique(jul_29_mfg_auto_explicit$sub_traj)
-for (i in 1:length(auto_expl_trajs)){
-  tmp <- jul_29_mfg_auto_explicit %>% filter(sub_traj == auto_expl_trajs[i])
-  plot(tmp$position_length,
-       tmp$position_width,
-       asp = 1,
-       ## add a title that indicates sub_traj
-       main = auto_expl_trajs[i],
-       ## keep the same dimensions across all plots:
-       xlim = c(min(jul_29_mfg_auto_explicit$position_length),
-                max(jul_29_mfg_auto_explicit$position_length)),
-       ylim = c(min(jul_29_mfg_auto_explicit$position_width),
-                max(jul_29_mfg_auto_explicit$position_width))
-  )
-}
-
-## test object for feeding into separate_ during troubleshooting:
-obj_name <-
-  jul_29_path %>%
-  read_motive_csv() %>%
-  relabel_viewr_axes() %>%
-  gather_tunnel_data() %>%
-  trim_tunnel_outliers() %>%
-  rotate_tunnel() %>%
-  get_velocity() %>%
-  select_x_percent()
-plot(obj_name$position_length,
-     obj_name$position_width,
-     asp = 1, col = as.factor(obj_name$subject))
-max_frame_gap = "autodetect"
-frame_rate_proportion = 0.10
-frame_gap_messaging = FALSE
-frame_gap_plotting = FALSE
-## NOW GO WITHIN separate_trajectories() AND RUN EACH LINE INDIVIDUALLY
-## the end result will be a new object: obj_new
-## NOW THAT SEPARATE HAS BEEN DONE:
-plot(obj_new$position_length,
-     obj_new$position_width,
-     asp = 1, col = as.factor(obj_new$traj_id))
-obj_name_trajs <- unique(obj_new$sub_traj)
-for (i in 1:length(obj_name_trajs)){
-  tmp <- obj_new %>% filter(sub_traj == obj_name_trajs[i])
-  plot(tmp$position_length,
-       tmp$position_width,
-       asp = 1,
-       ## add a title that indicates sub_traj
-       main = obj_name_trajs[i],
-       ## keep the same dimensions across all plots:
-       xlim = c(min(obj_new$position_length),
-                max(obj_new$position_length)),
-       ylim = c(min(obj_new$position_width),
-                max(obj_new$position_width))
-  )
-}
-## Trajectories are now separated properly. Many are shitty, but that should
-## be dealt with in the subsequent step:
-obj_full <-
-  obj_new %>%
-  get_full_trajectories(span = 0.6)
-obj_full_trajs <- unique(obj_full$sub_traj)
-## clear all plots! then run:
-for (i in 1:length(obj_full_trajs)){
-  tmp <- obj_full %>% filter(sub_traj == obj_full_trajs[i])
-  plot(tmp$position_length,
-       tmp$position_width,
-       asp = 1,
-       ## add a title that indicates sub_traj
-       main = obj_full_trajs[i],
-       ## keep the same dimensions across all plots:
-       xlim = c(min(obj_full$position_length),
-                max(obj_full$position_length)),
-       ylim = c(min(obj_full$position_width),
-                max(obj_full$position_width))
-  )
-}
-
-
-
-
-## Done explicitly:
-jul_29_all_defaults_explicit <-
-  jul_29_path %>%
-  read_motive_csv() %>%
-  relabel_viewr_axes() %>%
-  gather_tunnel_data() %>%
-  trim_tunnel_outliers() %>%
-  rotate_tunnel() %>%
-  get_velocity() %>%
-  select_x_percent() %>%
-  ## skip rename_viewr_characters(), which defaults to FALSE anyway
-  separate_trajectories() %>%
-  get_full_trajectories()
-
-## Are jul_29_all_defaults and jul_29_all_defaults_explicit the same?
-identical(jul_29_all_defaults, jul_29_all_defaults_explicit)
 
 ## Let's try a different X% of the tunnel
 jul_29_percent74 <-
@@ -593,7 +432,6 @@ jul_29_percent74 <-
 plot(jul_29_percent74$position_length,
      jul_29_percent74$position_width,
      asp = 1, col = as.factor(jul_29_percent74$traj_id))
-
 
 ## Done explicitly:
 jul_29_percent74_explicit <-
@@ -632,309 +470,8 @@ jul_29_percent74_span95_explicit <-
 identical(jul_29_percent74_span95, jul_29_percent74_span95_explicit)
 ## noice noice noice!!!
 
-## 2020-06-25: post re-write of the function, the above testing in this
-## subsection still produces valid results. Yay! That said, I want to to test
-## other parts of this. So what follows will be attempts to break how the
-## all-in-one works to showcase its behavior. Suggestions very welcome!!
-
-## Let's try a B.S. option for the standardization_option argument
-jul_29_steve <-
-  jul_29_path %>% import_and_clean_viewr(standardization_option = "steve")
-## Fails! And it gives informative error messages!
-
-## Let's try skipping the separate_trajectories step:
-jul_29_skipseparate <-
-  jul_29_path %>% import_and_clean_viewr(separate_trajectories = FALSE)
-## Fails! And it gives an informative error message!
-
-## Skip trimming tunnel outliers
-jul_29_skiptrim <-
-  jul_29_path %>% import_and_clean_viewr(trim_tunnel_outliers = FALSE)
-## Seems to work!
-
-## Skip trimming and get_full_trajectories
-jul_29_skiptrim_and_full <-
-  jul_29_path %>% import_and_clean_viewr(trim_tunnel_outliers = FALSE,
-                                         get_full_trajectories = FALSE)
-## Skipping two steps seems to work! Note, these two were chosen because doing
-## so won't break anything.
-
-## Obviously, skipping certain steps will break the pipeline or otherwise cause
-## problems. But users should be tasked to think carefully about what they're
-## implementing.
-
-## Also, opting for `add_to_viewr = FALSE` in get_velocity() will break the
-## pipeline right before select_x_percent().
-jul_29_dontaddvelocity <-
-  jul_29_path %>% import_and_clean_viewr(add_to_viewr = FALSE)
-
-## Trying to resolve what Melissa mentioned in:
-## https://github.com/vbaliga/pathviewR/issues/14
-jul_29_alltest1 <-
-  jul_29_path %>%
-  import_and_clean_viewr(separate_trajectories = FALSE,
-                         get_full_trajectories = FALSE,
-                         max_frame_gap = 3,
-                         span = 0.95,
-                         steve = "boop")
-## The function now stops and reports an explicit error message about:
-## 1) any unrecognized arguments (here: steve); these are simply ignored
-## 2) any unused arguments. The function stops and produces (what I hope is)
-## an informative error
-
-## Unnamed AND unrecognized arguments are silently ignored, though:
-jul_29_alltest2 <-
-  jul_29_path %>%
-  import_and_clean_viewr("boop")
-
-
-
-jul_29_test <-
-  jul_29_path %>%
-  import_and_clean_viewr(velocity_min = 1,
-                         velocity_max = 10,
-                         desired_percent = 75,
-                         rename_viewr_characters = TRUE,
-                         target_column = "subject",
-                         pattern = " 00.",
-                         replacement = "",
-                         max_frame_gap = "autodetect",
-                         frame_gap_messaging = TRUE,
-                         frame_gap_plotting = FALSE,
-                         span = .6)
-#testing get_full_trajs:
-summary_obj <-
-  jul_29_test %>%
-  dplyr::group_by(sub_traj) %>%
-  dplyr::summarise(traj_length = n(),
-                   start_length = position_length[1],
-                   end_length = position_length[traj_length],
-                   length_diff = abs(end_length - start_length),
-                   start_length_sign = sign(start_length),
-                   end_length_sign = sign(end_length))
-test <- filter(jul_29_test, sub_traj == "device08_1")
-
-
-jul_29_defaults <-
-  jul_29_path %>%
-  import_and_clean_viewr(velocity_min = 1,
-                         velocity_max = 10,
-                         rename_viewr_characters = FALSE,
-                         separate_trajectories = FALSE,
-                         get_full_trajectories = FALSE)
-jul_29_rename <- jul_29_defaults %>%
-  rename_viewr_characters(target_column = "subject",
-                          pattern = " 00.",
-                          replacement = "")
-
-jul_29_sep <-
-  jul_29_rename %>%
-  separate_trajectories(max_frame_gap = "autodetect",
-                        frame_gap_messaging = TRUE,
-                        frame_gap_plotting = TRUE)
-attributes(jul_29_sep)
-
-jul_29_full <-
-  jul_29_sep %>%
-  get_full_trajectories(span = .6)
-
-jul_29_test %>%
-  mutate(traj_id = as.character(sub_traj)) %>%
-  ggplot(aes(position_length, position_height, color = sub_traj)) +
-  geom_point() +
-  scale_color_viridis_d() +
-  theme(legend.position = "none")
-
-
-
-
-##### __ different file #####
-
-test2_path <- "./inst/extdata/july-29_group-II_10-40.csv"
-
-
-## test object for feeding into separate_ during troubleshooting:
-obj_name <-
-  test2_path %>%
-  read_motive_csv() %>%
-  relabel_viewr_axes() %>%
-  gather_tunnel_data() %>%
-  trim_tunnel_outliers() %>%
-  rotate_tunnel() %>%
-  get_velocity() %>%
-  select_x_percent()
-plot(obj_name$position_length,
-     obj_name$position_width,
-     asp = 1, col = as.factor(obj_name$subject))
-max_frame_gap = "autodetect"
-frame_rate_proportion = 0.10
-frame_gap_messaging = FALSE
-frame_gap_plotting = FALSE
-## NOW GO WITHIN separate_trajectories() AND RUN EACH LINE INDIVIDUALLY
-## the end result will be a new object: obj_new
-## NOW THAT SEPARATE HAS BEEN DONE:
-plot(obj_new$position_length,
-     obj_new$position_width,
-     asp = 1, col = as.factor(obj_new$sub_traj))
-obj_name_trajs <- unique(obj_new$sub_traj)
-for (i in 1:length(obj_name_trajs)){
-  tmp <- obj_new %>% filter(sub_traj == obj_name_trajs[i])
-  plot(tmp$position_length,
-       tmp$position_width,
-       asp = 1,
-       ## add a title that indicates sub_traj
-       main = obj_name_trajs[i],
-       ## keep the same dimensions across all plots:
-       xlim = c(min(obj_new$position_length),
-                max(obj_new$position_length)),
-       ylim = c(min(obj_new$position_width),
-                max(obj_new$position_width))
-  )
-}
-## Trajectories are now separated properly. Many are shitty, but that should
-## be dealt with in the subsequent step:
-obj_full <-
-  obj_new %>%
-  get_full_trajectories(span = 0.9)
-obj_full_trajs <- unique(obj_full$sub_traj)
-## clear all plots! then run:
-for (i in 1:length(obj_full_trajs)){
-  tmp <- obj_full %>% filter(sub_traj == obj_full_trajs[i])
-  plot(tmp$position_length,
-       tmp$position_width,
-       asp = 1,
-       ## add a title that indicates sub_traj
-       main = obj_full_trajs[i],
-       ## keep the same dimensions across all plots:
-       xlim = c(min(obj_full$position_length),
-                max(obj_full$position_length)),
-       ylim = c(min(obj_full$position_width),
-                max(obj_full$position_width))
-  )
-}
-
-#### __ different file - test ####
-test2_path <- "./inst/extdata/july-29_group-II_10-40.csv"
-
-test2_mfg_auto_explicit <-
-  test2_path %>%
-  read_motive_csv() %>%
-  relabel_viewr_axes() %>%
-  gather_tunnel_data() %>%
-  trim_tunnel_outliers() %>%
-  rotate_tunnel() %>%
-  get_velocity() %>%
-  select_x_percent() %>%
-  ## skip rename_viewr_characters(), which defaults to FALSE anyway
-  separate_trajectories(max_frame_gap = "autodetect",
-                        frame_gap_messaging = TRUE) %>%
-  get_full_trajectories()
-test2_mfg_auto_explicit # seems to work
-plot(test2_mfg_auto_explicit$position_length,
-     test2_mfg_auto_explicit$position_width,
-     asp = 1, col = as.factor(test2_mfg_auto_explicit$sub_traj))
-
-## plot each trajectory (this is extensive!)
-## probably best to clear all your plots before running this:
-auto_expl_trajs <- unique(test2_mfg_auto_explicit$sub_traj)
-for (i in 1:length(auto_expl_trajs)){
-  tmp <- test2_mfg_auto_explicit %>% filter(sub_traj == auto_expl_trajs[i])
-  plot(tmp$position_length,
-       tmp$position_width,
-       asp = 1,
-       ## add a title that indicates sub_traj
-       main = auto_expl_trajs[i],
-       ## keep the same dimensions across all plots:
-       xlim = c(min(test2_mfg_auto_explicit$position_length),
-                max(test2_mfg_auto_explicit$position_length)),
-       ylim = c(min(test2_mfg_auto_explicit$position_width),
-                max(test2_mfg_auto_explicit$position_width))
-  )
-}
-
 
 #################################### roz2016 ###################################
-## Going to start adding things to help me integrate flydra data into this
-## package.
-
-## rhdf5 is on Bioconductor and needed to open H5 files
-# if (!requireNamespace("BiocManager", quietly = TRUE))
-#   install.packages("BiocManager")
-# BiocManager::install(version = "3.11")
-# BiocManager::install("rhdf5")
-
-library(rhdf5)
-## import metadata from H5 files
-## rhdf5::h5ls() is used to determine how H5 files are structured
-  ex1_h5_ls <-
-    rhdf5::h5ls("./inst/extdata/roz2016/DATA20160619_124428.h5")
-  ex1_h5_kalmanized_ls <-
-    rhdf5::h5ls("./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5")
-  ex1_h5_smoothcache_ls <-
-    rhdf5::h5ls(
-      "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.kh5-smoothcache")
-## the .mat file can be read via R.matlab::readMat()
-  ex1_h5_mat <-
-    R.matlab::readMat(
-      "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat")
-
-## So observations are 33294 rows long but kalman vars are 33066. Why? Where
-## does this difference of 228 rows arise?
-  plot(ex1_h5_mat$kalman.x[1:33066], ex1_h5_mat$kalman.y[1:33066])
-  plot(ex1_h5_mat$observation.x[1:33294], ex1_h5_mat$observation.y[1:33294])
-## Comparing these two plots makes me think that two things were done:
-## 1) Trajectories were smoothed via a kalman filter (duh)
-## 2) Gaps in trajectories were also filled via said filter. Will need to think
-## about whether I agree with doing this. Guess it's ok for now.
-##
-## Accordingly, the sizes of the two data sets need not be identical. And even
-## more importantly, there won't be an a priori expectation of how the two sets
-## differ in length -- rather, it will be an emergent property of how & when the
-## trajectory gaps arose. Oof.
-
-## Also:
-  sum(as.numeric(ex1_h5_smoothcache_ls$dim[-1])) # equals 33066!!
-
-## Some more fun with metadata
-## The rows within ex1_h5_ls$name provide the names of grouped metadata
-## This info can be used in conjunction with rhdf5::h5read() to formally
-## import these metadata, e.g.
-  ex1_cam_info <- rhdf5::h5read("./inst/extdata/roz2016/DATA20160619_124428.h5",
-                                name = "cam_info")
-  ex1_data2d <- rhdf5::h5read("./inst/extdata/roz2016/DATA20160619_124428.h5",
-                              name = "data2d_distorted") #this one fails :(
-
-  ex1_kalmanized_trigger_clock <-
-    rhdf5::h5read('./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5',
-                  name = "trigger_clock_info")
-
-  ex1_kalmanized_textlog <-
-    rhdf5::h5read('./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5',
-                  name = "textlog")
-
-## Thoughts on next steps:
-## A read_flydra_mat() function can be written to use R.matlab::readMat() to
-## import the .MAT file. The .MAT file does not contain all the necessary
-## metadata; these will need to be imported from the accompanying H5 files.
-##
-## An as_viewr() function can be written in parallel that is inspired by the
-## way read_flydra_mat() is composed. An end user will likely have data
-## organized as a data.frame or tibble already, but what they will need explicit
-## instruction on is what & how metadata should be included & formatted.
-
-## Let's plot in 3D
-rgl::plot3d(x = ex1_h5_mat$kalman.x,
-            y = ex1_h5_mat$kalman.y,
-            z = ex1_h5_mat$kalman.z)
-aspect3d("iso")
-## Perches seems to be on oppose ends of x-axis and z-axis seems to correspond
-## to height (up vs. down).
-
-## 2D plot -- using this to estimate perch height for now
-plot(x = ex1_h5_mat$kalman.x,
-     y = ex1_h5_mat$kalman.z,
-     asp = 1)
-abline(h = 1.44)
 
 #### __testing pathviewR flydra functions ####
 ## Test pancake
@@ -946,44 +483,6 @@ test_mat <-
 #attributes(test_mat)
 attr(test_mat,"header")
 attr(test_mat,"pathviewR_steps")
-
-## Where this bring us:
-## The way data were exported from flydra gives us the ability to skip over the
-## relabel_viewr_axes() and gather_tunnel_data() steps. I am also fairly
-## confident that we can skip the trim_tunnel_outliers() and most of the
-## rotate/standardize_tunnel() steps. That said, an important feature of the
-## rotate/standardize_tunnel() functions is that the coordinates are shifted so
-## that (0, 0, 0) is at the center of the data, which then sets up subsequent
-## functions like select_x_percent() to work from the middle of the tunnel
-## outwards. Using select_x_percent() on the flydra data now amounts to the
-## following:
-
-## Import data and proceed directly to select_x_percent()
-test_selected <-
-  test_mat %>%
-  select_x_percent(desired_percent = 50)
-
-## Full (non-selected) data plot:
-rgl::plot3d(x = test_mat$position_length,
-            y = test_mat$position_width,
-            z = test_mat$position_height)
-aspect3d("iso")
-
-## Post-select_x_percent()
-rgl::plot3d(x = test_selected$position_length,
-            y = test_selected$position_width,
-            z = test_selected$position_height)
-aspect3d("iso")
-## Because length = 0 is at one perch (one extreme end of the tunnel),
-## select_x_percent() clips the data incorrectly.
-
-## SO, that means that the flydra data will need to be standardized
-## such that (0, 0, 0) is the center of the data. This is probably easily done
-## for the _length and _width axes, but _height may take some thinking. I
-## believe (/ am very much hoping!) that the perch heights were written down in
-## Roz's notebook. We could then set the perch height to equal 0, thereby
-## leaving us with positive values indicating position above the perch level and
-## negative values indicating positions below perch level.
 
 #### __centering function ####
 test_centered <-
@@ -1015,26 +514,21 @@ test_full <-
   separate_trajectories(max_frame_gap = 1) %>%
   get_full_trajectories(span = 0.95)
 ## 3D plot
-rgl::plot3d(x = test_full$position_length,
-            y = test_full$position_width,
-            z = test_full$position_height,
-            col = unique(test_full$sub_traj))
 library(scales)
-n <- length(unique(test_full$sub_traj))
-dat.col <- data.frame(grps = unique(test_full$sub_traj),
+n <- length(unique(test_full$file_sub_traj))
+dat.col <- data.frame(grps = unique(test_full$file_sub_traj),
                       colz = rainbow(n))  ## you can also use  brewer_pal()(n)
-trj <- tibble(grps = test_full$sub_traj)
+trj <- tibble(grps = test_full$file_sub_traj)
 data_col <- left_join(trj, dat.col)
-
 rgl::plot3d(x = test_full$position_length,
             y = test_full$position_width,
             z = test_full$position_height,
             col = data_col$colz)
-aspect3d("iso")
+
 ## 2D overhead
 plot(test_full$position_length,
      test_full$position_width,
-     asp = 1, col = as.factor(test_full$traj_id))
+     asp = 1, col = as.factor(test_full$file_sub_traj))
 
 
 ##### Quaternions maybe? #####

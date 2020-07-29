@@ -1310,8 +1310,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       obj_tmp <- obj_name
 
       ## add new column (sub_traj)
-      obj_new <- left_join(obj_tmp, sploot,
-                           by = c("frame", "subject"))
+      obj_new <- dplyr::left_join(obj_tmp, sploot,
+                                  by = c("frame", "subject"))
 
       ## Leave a note about the max frame gap used
       attr(obj_new,"max_frame_gap") <- mufasa
@@ -1401,8 +1401,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       new_sploot <- dplyr::bind_rows(sploot)
 
       ## add new column (sub_traj)
-      obj_new <- left_join(obj_tmp, new_sploot,
-                            by = c("frame", "subject"))
+      obj_new <- dplyr::left_join(obj_tmp, new_sploot,
+                                  by = c("frame", "subject"))
 
       ## Leave a note about the max frame gaps used
       attr(obj_new,"max_frame_gap") <- unlist(mufasa)
