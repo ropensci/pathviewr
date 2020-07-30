@@ -165,10 +165,4 @@ plot_viewr_trajectories <- function(obj_name,
     }
   }
 
-
-
-
-
-
-
 }

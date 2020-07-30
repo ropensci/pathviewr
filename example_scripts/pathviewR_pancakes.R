@@ -1,4 +1,4 @@
-## Last updated: 2020-07-28 VBB
+## Last updated: 2020-07-30 VBB
 
 ## Script for testing things out as functions are written and showcasing worked
 ## examples.
@@ -27,10 +27,37 @@ package.check <- lapply(packages, # applies the function to a list and returns
                         }
 )
 
-################################ script sourcing ###############################
-## devtools::load_all() ensures that functions housed in /R but for which we
-## have not written roxygen documentation are still loaded and avaliable to us
+## Source un-exported pathviewR things too
 devtools::load_all()
+
+
+############################## quick data import ###############################
+jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
+
+jul_29_all_defaults <-
+  jul_29_path %>% import_and_clean_viewr()
+
+jul_29_mfg_autodetect <-
+  jul_29_path %>% import_and_clean_viewr(max_frame_gap = "autodetect",
+                                         frame_gap_messaging = TRUE)
+
+jul_29_full <-
+  jul_29_path %>%
+  read_motive_csv() %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent(desired_percent = 75) %>%
+  ## skip rename_viewr_characters(), which defaults to FALSE anyway
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_gap_messaging = TRUE) %>%
+  get_full_trajectories(span = 0.95)
+attr(jul_29_full, "pathviewR_steps")
+plot(jul_29_full$position_length,
+     jul_29_full$position_width,
+     asp = 1, col = as.factor(jul_29_full$file_sub_traj))
 
 
 ################################# data import ##################################
@@ -63,7 +90,7 @@ elsa_dat <-
     "./inst/extdata/feb-20_mixed-group_10-35_trunc.csv"
   )
 
-#### __simplify_marker_naming examples ####
+################### __simplify_marker_naming examples ##########################
 ## Via names() we can see what the `simplify_marker_naming` argument does
 names(jul_29)
 names(jul_29_unsimple) # should be identical to the above

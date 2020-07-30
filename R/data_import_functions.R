@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-12 VBB
+## Last updated: 2020-07-30 VBB
 
 
 ############################### read_motive_csv ################################
@@ -294,6 +294,7 @@ problems.",
     attr(data, "pathviewR_steps") <- "viewr"
     attr(data, "file_id") <- file_id
     attr(data, "file_mtime") <- mtime
+    attr(data, "frame_rate") <- header$value[5] %>% as.numeric()
     attr(data, "header") <- header
     attr(data, "Motive_IDs") <- ids
     attr(data, "subject_names_full") <- names_vec[-c(1,2)]
@@ -303,6 +304,7 @@ problems.",
     attr(data, "data_types_simple") <- base::unique(types)
     attr(data, "d1") <- data_names_part_one
     attr(data, "d2") <- data_names_part_two
+    attr(data, "import_method") <- "motive"
 
     ## Export
     return(data)
@@ -429,14 +431,128 @@ read_flydra_mat <-
     ## format.
     attr(data, "file_id") <- file_id
     attr(data, "file_mtime") <- mtime
+    attr(data, "frame_rate") <- frame_rate
     ## We will opt to store the original matlab file as an attribute since
     ## it very likely contains things we may need later. Hard to say what
     ## exactly right now; this is motivated by spidey-sense...
     ## It also doubles the object size -- not very ideal. Fix this soon!
     attr(data, "flydra_mat") <- mat_read
     attr(data, "header") <- attr(mat_read, "header")
+    attr(data, "import_method") <- "flydra"
 
     ## Export
     return(data)
   }
 
+
+################################### as_viewr ###################################
+
+#' Convert data from another format into a viewr object
+#'
+#' @param obj_name A tibble or data frame containing movement trajectories
+#' @param frame_rate Must be a single numeric value indicating capture frame
+#'   rate in frames per second.
+#' @param frame Column number of obj_name that contains frame numbers
+#' @param time_sec Column number of obj_name that contains time (must be in
+#'   seconds)
+#' @param subject Column number of obj_name that contains subject name(s)
+#' @param position_length Column number of obj_name that contains length-axis
+#'   position values
+#' @param position_width Column number of obj_name that contains width-axis
+#'   position values
+#' @param position_height Column number of obj_name that contains height-axis
+#'   postion values
+#' @param include_rotation Are rotation data included? Defaults to FALSE
+#' @param rotation_real Column number of obj_name that contains the "real" axis
+#'   of quaternion rotation data
+#' @param rotation_length Column number of obj_name that contains the length
+#'   axis of quaternion rotation data
+#' @param rotation_width Column number of obj_name that contains the width axis
+#'   of quaternion rotation data
+#' @param rotation_height Column number of obj_name that contains the height
+#'   axis of quaternion rotation data
+#'
+#' @return A tibble that is organized to be compliant with other
+#'   \code{pathviewR} functions and that contains the attributes
+#'   \code{pathviewR_steps} with entries set to \code{c("viewr",
+#'   "renamed_tunnel", "gathered_tunnel")}
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @examples
+#'
+#' ## Create a dummy data frame
+#' df <- data.frame(frame = seq(1, 100, by = 1),
+#'                  time_sec = seq(0, by = 0.01, length.out = 100),
+#'                  subject = "bob",
+#'                  z = rnorm(100),
+#'                  x = rnorm(100),
+#'                  y = rnorm(100))
+#'
+#' ## Use as_viewr() to convert it into a viewr object
+#' test <-
+#'   as_viewr(
+#'     df,
+#'     frame = 1,
+#'     time_sec = 2,
+#'     subject = 3,
+#'     position_length = 5,
+#'     position_width = 6,
+#'     position_height = 4
+#'   )
+
+
+as_viewr <- function(obj_name,
+                     frame_rate = 100,
+                     frame,
+                     time_sec,
+                     subject,
+                     position_length,
+                     position_width,
+                     position_height,
+                     include_rotation = FALSE,
+                     rotation_real,
+                     rotation_length,
+                     rotation_width,
+                     rotation_height
+                     ){
+
+  ## Check that obj_name is a tibble or data.frame
+  if (!is_tibble(obj_name))
+    if (!is.data.frame(obj_name))
+    stop("A tibble or data.frame must be supplied to the obj_name argument.")
+
+  ## Extract each variable
+  data <- data.frame(
+    frame           = obj_name[, frame],
+    time_sec        = obj_name[, time_sec],
+    subject         = obj_name[, subject],
+    position_length = obj_name[, position_length],
+    position_width  = obj_name[, position_width],
+    position_height = obj_name[, position_height]
+  )
+  colnames(data) <- c("frame", "time_sec", "subject",
+                      "position_length", "position_width", "position_height")
+  data <- tibble::tibble(data)
+
+  ## Optional arguments, depending on data
+  if (include_rotation == TRUE){
+    data$rotation_real   <- obj_name[,rotation_real]
+    data$rotation_length <- obj_name[,rotation_length]
+    data$rotation_width  <- obj_name[,rotation_width]
+    data$rotation_height <- obj_name[,rotation_height]
+    }
+
+  ## Add metadata as attributes()
+  attr(data, "pathviewR_steps") <-
+    c("viewr", "renamed_tunnel", "gathered_tunnel")
+  ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
+  ## tibble is being created above and we are basically already in gathered
+  ## format.
+  attr(data, "file_id") <- deparse(quote(obj_name))
+  attr(data, "frame_rate") <- frame_rate
+  attr(data, "import_method") <- "as_viewr"
+
+  return(data)
+}

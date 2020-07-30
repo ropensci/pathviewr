@@ -339,10 +339,10 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 
   ## Add metadata as attributes()
   attributes_list <-
-    c("file_id", "file_mtime", "header",
+    c("file_id", "file_mtime", "frame_rate", "header",
       "Motive_IDs", "subject_names_full", "subject_names_simple",
       "data_names", "data_types_full", "data_types_simple" ,
-      "d1", "d2")
+      "d1", "d2", "import_method")
 
   for (i in 1:length(attributes_list)){
     attr(gathered_data, attributes_list[i]) <-
@@ -517,13 +517,15 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
     tibble::as_tibble()
 
   ## Add metadata as attributes()
-  attr(obj_name,"file_id") ->      attr(filt_widths,"file_id")
-  attr(obj_name,"file_mtime") ->   attr(filt_widths,"file_mtime")
-  attr(obj_name,"header") ->       attr(filt_widths,"header")
-  attr(obj_name,"rigid_bodies") -> attr(filt_widths,"rigid_bodies")
-  attr(obj_name,"data_names") ->   attr(filt_widths,"data_names")
-  attr(obj_name,"d1") ->           attr(filt_widths,"d1")
-  attr(obj_name,"d2") ->           attr(filt_widths,"d2")
+  attr(obj_name,"file_id") ->       attr(filt_widths,"file_id")
+  attr(obj_name,"file_mtime") ->    attr(filt_widths,"file_mtime")
+  attr(obj_name,"frame_rate") ->    attr(filt_widths,"frame_rate")
+  attr(obj_name,"header") ->        attr(filt_widths,"header")
+  attr(obj_name,"rigid_bodies") ->  attr(filt_widths,"rigid_bodies")
+  attr(obj_name,"data_names") ->    attr(filt_widths,"data_names")
+  attr(obj_name,"d1") ->            attr(filt_widths,"d1")
+  attr(obj_name,"d2") ->            attr(filt_widths,"d2")
+  attr(obj_name,"import_method") -> attr(filt_widths,"import_method")
 
   ## Leave a note that we trimmed tunnel outliers
   attr(filt_widths,"pathviewR_steps") <-
@@ -1262,11 +1264,10 @@ separate_trajectories <- function(obj_name,
     obj_name %>%
     dplyr::group_by(subject) %>%
     dplyr::group_split()
-  #names(subject_tibbles) <- subject_names_simple
 
   ## Determine the frame rate of the exported object
   frame_rate <-
-    get_header_viewr(obj_name)$value[5] %>% ## 5th line of header
+    attr(obj_name, "frame_rate") %>% ## 5th line of header
     as.numeric()
 
   ## Get File ID
