@@ -202,22 +202,6 @@ jul_29_selected <-
 jul_29_labeled <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = 5)
 
-# ## Plot with unique colors for combinations of rigid bodies and trajectories
-# ## We run out of colors, so they're recycled. Interpret carefully...
-plot(jul_29_labeled$position_length,
-     jul_29_labeled$position_width,
-     asp = 1, col = as.factor(jul_29_labeled$sub_traj))
-
-## Or simply by rigid body ID
-plot(jul_29_labeled$position_length,
-     jul_29_labeled$position_width,
-     asp = 1, col = as.factor(jul_29_labeled$subject))
-
-## Or simply by trajectory ID
-plot(jul_29_labeled$position_length,
-     jul_29_labeled$position_width,
-     asp = 1, col = as.factor(jul_29_labeled$traj_id))
-
 #### __behavior of max_frame_gap ####
 ## Entering a numeric still allows it to behave as it did before (above example
 ## shows this already)
@@ -227,7 +211,7 @@ jul_29_labeled_unselected <-
   jul_29_rotated %>% separate_trajectories(max_frame_gap = 1)
 plot(jul_29_labeled_unselected$position_length,
      jul_29_labeled_unselected$position_width,
-     asp = 1, col = as.factor(jul_29_labeled_unselected$traj_id))
+     asp = 1, col = as.factor(jul_29_labeled_unselected$file_sub_traj))
 ## Note that it takes a bit longer if you're using a pre-select_x_percent object
 ## since there are many more rows. But the plot checks out!
 
@@ -240,7 +224,7 @@ jul_29_labeled_overflow <-
 ## also amounts to setting all the data as belonging to one trajectory:
 plot(jul_29_labeled_overflow$position_length,
      jul_29_labeled_overflow$position_width,
-     asp = 1, col = as.factor(jul_29_labeled_overflow$traj_id))
+     asp = 1, col = as.factor(jul_29_labeled_overflow$file_sub_traj))
 
 ## A final neat trick among numeric entries for max_frame_gap is setting it to
 ## any value lower than 1. I haven't played around with this thoroughly, but
@@ -250,7 +234,7 @@ jul_29_labeled_negatory <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = -1)
 plot(jul_29_labeled_negatory$position_length,
      jul_29_labeled_negatory$position_width,
-     asp = 1, col = as.factor(jul_29_labeled_negatory$traj_id))
+     asp = 1, col = as.factor(jul_29_labeled_negatory$file_sub_traj))
 ## I consider this a "cheat code" for cases in which it may make sense to treat
 ## each observation as a unique grouping factor. I don't exactly know why that
 ## would be good, but my spidey sense tells me it may prove useful someday...
@@ -261,7 +245,7 @@ jul_29_labeled_autodetect <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = "autodetect")
 plot(jul_29_labeled_autodetect$position_length,
      jul_29_labeled_autodetect$position_width,
-     asp = 1, col = as.factor(jul_29_labeled_autodetect$traj_id))
+     asp = 1, col = as.factor(jul_29_labeled_autodetect$file_sub_traj))
 ## Frame gap values are reported in attributes:
   attr(jul_29_labeled_autodetect, "max_frame_gap")
 ## Use frame_gap_messaging = TRUE to get reports of selecte frame gaps
@@ -287,7 +271,7 @@ jul_29_labeled_steve <-
   jul_29_selected %>% separate_trajectories(max_frame_gap = "steve")
 plot(jul_29_labeled_steve$position_length,
      jul_29_labeled_steve$position_width,
-     asp = 1, col = as.factor(jul_29_labeled_steve$traj_id))
+     asp = 1, col = as.factor(jul_29_labeled_steve$file_sub_traj))
 ## Then again, all trajectory labels are set to 0. So perhaps this task
 ## fails successfully!
 
@@ -306,7 +290,7 @@ jul_29_full <-
 attr(jul_29_full, "pathviewR_steps")
 plot(jul_29_full$position_length,
      jul_29_full$position_width,
-     asp = 1, col = as.factor(jul_29_full$traj_id))
+     asp = 1, col = as.factor(jul_29_full$file_sub_traj))
 
 ####################### compute instantaneous velocities #######################
 ## Append velocity data as new columns on an exisiting viewr object. Can be done
@@ -359,7 +343,7 @@ class(jul_29_all_defaults) # looks complete
 attributes(jul_29_all_defaults)
 plot(jul_29_all_defaults$position_length,
      jul_29_all_defaults$position_width,
-     asp = 1, col = as.factor(jul_29_all_defaults$traj_id))
+     asp = 1, col = as.factor(jul_29_all_defaults$file_sub_traj))
 
 ## plot each trajectory (this is extensive!)
 ## probably best to clear all your plots before running this:
@@ -405,7 +389,7 @@ class(jul_29_mfg_autodetect) # looks complete
 attributes(jul_29_mfg_autodetect)
 plot(jul_29_mfg_autodetect$position_length,
      jul_29_mfg_autodetect$position_width,
-     asp = 1, col = as.factor(jul_29_mfg_autodetect$traj_id))
+     asp = 1, col = as.factor(jul_29_mfg_autodetect$file_sub_traj))
 
 ## plot each trajectory (this is extensive!)
 ## probably best to clear all your plots before running this:
@@ -431,7 +415,7 @@ jul_29_percent74 <-
 # works!
 plot(jul_29_percent74$position_length,
      jul_29_percent74$position_width,
-     asp = 1, col = as.factor(jul_29_percent74$traj_id))
+     asp = 1, col = as.factor(jul_29_percent74$file_sub_traj))
 
 ## Done explicitly:
 jul_29_percent74_explicit <-
