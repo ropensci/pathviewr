@@ -43,7 +43,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
-        tmp <- obj_name %>% filter(file_sub_traj == obj_name_trajs[i])
+        tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_length,
              tmp$position_width,
              asp = 1,
@@ -63,7 +63,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
-        tmp <- obj_name %>% filter(file_sub_traj == obj_name_trajs[i])
+        tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_length,
              tmp$position_height,
              asp = 1,
@@ -86,7 +86,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
-        tmp <- obj_name %>% filter(file_sub_traj == obj_name_trajs[i])
+        tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_width,
              tmp$position_length,
              asp = 1,
@@ -106,7 +106,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
-        tmp <- obj_name %>% filter(file_sub_traj == obj_name_trajs[i])
+        tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_width,
              tmp$position_height,
              asp = 1,
@@ -129,7 +129,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
-        tmp <- obj_name %>% filter(file_sub_traj == obj_name_trajs[i])
+        tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_height,
              tmp$position_length,
              asp = 1,
@@ -149,7 +149,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
-        tmp <- obj_name %>% filter(file_sub_traj == obj_name_trajs[i])
+        tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_height,
              tmp$position_width,
              asp = 1,

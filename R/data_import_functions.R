@@ -519,7 +519,7 @@ as_viewr <- function(obj_name,
                      ){
 
   ## Check that obj_name is a tibble or data.frame
-  if (!is_tibble(obj_name))
+  if (!tibble::is_tibble(obj_name))
     if (!is.data.frame(obj_name))
     stop("A tibble or data.frame must be supplied to the obj_name argument.")
 
