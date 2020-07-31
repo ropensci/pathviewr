@@ -49,6 +49,7 @@ motive_data
 
 Important metadata are stored as attributes. We won't go through all of these,
 but here are a couple important ones.
+
 ``` {r metadata}
 ## E.g. to see the header of the original file:
 attr(motive_data, "header")
@@ -58,6 +59,9 @@ attr(motive_data, "subject_names_simple")
 
 ## Types of data included
 attr(motive_data, "data_types_simple")
+
+## Frame rate
+attr(motive_data, "frame_rate")
 ```
 
 ### Flydra Matlab files
@@ -127,6 +131,7 @@ Use `trim_tunnel_outliers()` to remove artifacts and other outlier data. This
 step is entirely optional, and really should be used when the user is confident
 that data outside certain ranges are artifacts or other bugs. Data ouside these
 ranges are filtered out. Best to plot data beforehand and check!!
+
 ```{r gather_and_trim}
 ## First gather and show the new column names
 motive_gathered <-
