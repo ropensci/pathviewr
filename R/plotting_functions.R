@@ -39,7 +39,7 @@ plot_viewr_trajectories <- function(obj_name,
   if (plot_axes[1] == "length"){
     if (plot_axes[2] == "width") {
       if (multi_plot == TRUE) {
-        par(mar = c(1, 1, 1, 1))
+        par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
@@ -49,6 +49,8 @@ plot_viewr_trajectories <- function(obj_name,
              asp = 1,
              ## add a title that indicates sub_traj
              main = obj_name_trajs[i],
+             ## add sub-title to indicate i
+             sub = paste0("trajectory #",i),
              ## keep the same dimensions across all plots:
              xlim = c(min(obj_name$position_length),
                       max(obj_name$position_length)),
@@ -59,7 +61,7 @@ plot_viewr_trajectories <- function(obj_name,
     }
     if (plot_axes[2] == "height") {
       if (multi_plot == TRUE) {
-        par(mar = c(1, 1, 1, 1))
+        par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
@@ -69,6 +71,8 @@ plot_viewr_trajectories <- function(obj_name,
              asp = 1,
              ## add a title that indicates sub_traj
              main = obj_name_trajs[i],
+             ## add sub-title to indicate i
+             sub = paste0("trajectory #",i),
              ## keep the same dimensions across all plots:
              xlim = c(min(obj_name$position_length),
                       max(obj_name$position_length)),
@@ -82,7 +86,7 @@ plot_viewr_trajectories <- function(obj_name,
   if (plot_axes[1] == "width"){
     if (plot_axes[2] == "length") {
       if (multi_plot == TRUE) {
-        par(mar = c(1, 1, 1, 1))
+        par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
@@ -92,6 +96,8 @@ plot_viewr_trajectories <- function(obj_name,
              asp = 1,
              ## add a title that indicates sub_traj
              main = obj_name_trajs[i],
+             ## add sub-title to indicate i
+             sub = paste0("trajectory #",i),
              ## keep the same dimensions across all plots:
              xlim = c(min(obj_name$position_width),
                       max(obj_name$position_width)),
@@ -102,7 +108,7 @@ plot_viewr_trajectories <- function(obj_name,
     }
     if (plot_axes[2] == "height") {
       if (multi_plot == TRUE) {
-        par(mar = c(1, 1, 1, 1))
+        par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
@@ -112,6 +118,8 @@ plot_viewr_trajectories <- function(obj_name,
              asp = 1,
              ## add a title that indicates sub_traj
              main = obj_name_trajs[i],
+             ## add sub-title to indicate i
+             sub = paste0("trajectory #",i),
              ## keep the same dimensions across all plots:
              xlim = c(min(obj_name$position_width),
                       max(obj_name$position_width)),
@@ -125,7 +133,7 @@ plot_viewr_trajectories <- function(obj_name,
   if (plot_axes[1] == "height"){
     if (plot_axes[2] == "length") {
       if (multi_plot == TRUE) {
-        par(mar = c(1, 1, 1, 1))
+        par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
@@ -135,6 +143,8 @@ plot_viewr_trajectories <- function(obj_name,
              asp = 1,
              ## add a title that indicates sub_traj
              main = obj_name_trajs[i],
+             ## add sub-title to indicate i
+             sub = paste0("trajectory #",i),
              ## keep the same dimensions across all plots:
              xlim = c(min(obj_name$position_height),
                       max(obj_name$position_height)),
@@ -145,7 +155,7 @@ plot_viewr_trajectories <- function(obj_name,
     }
     if (plot_axes[2] == "width") {
       if (multi_plot == TRUE) {
-        par(mar = c(1, 1, 1, 1))
+        par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
       for (i in 1:length(obj_name_trajs)){
@@ -155,6 +165,8 @@ plot_viewr_trajectories <- function(obj_name,
              asp = 1,
              ## add a title that indicates sub_traj
              main = obj_name_trajs[i],
+             ## add sub-title to indicate i
+             sub = paste0("trajectory #",i),
              ## keep the same dimensions across all plots:
              xlim = c(min(obj_name$position_height),
                       max(obj_name$position_height)),
