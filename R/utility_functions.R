@@ -1511,6 +1511,54 @@ get_full_trajectories <- function(obj_name,
 }
 
 
+############################## section tunnel by ###############################
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Chop data into X sections (of equal size) along a specified axis
+#'
+#' @param obj_name Input data
+#' @param axis Chosen axis, must match name of column exactly
+#' @param number_of_sections Total number of sections
+#'
+#' @return A new column added to the input data object called \code{section_id},
+#'   which is an ordered factor that indicates grouping.
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+
+
+section_tunnel_by <- function(obj_name,
+                              axis = "position_length",
+                              number_of_sections = 20){
+
+  ## Find the specified axis
+  dimension <- obj_name[, grepl(axis, colnames(obj_name),
+                                ignore.case = FALSE)][[1]]
+
+  ## Extract the axis
+  vec <- tibble::tibble(x = as.vector(dimension))
+  colnames(vec) <- "x"
+
+  ## Now cut using strata defintions and store back in obj_name
+  obj_name$section_id <-
+    base::cut(x = vec$x,
+              breaks = number_of_sections,
+              labels = FALSE,
+              include.lowest = FALSE,
+              right = TRUE,
+              ordered_result = TRUE)
+
+  ## Leave a note that this was done
+  attr(obj_name, "pathviewR_steps") <-
+    c(attr(obj_name, "pathviewR_steps"), "tunnel_sectioned")
+
+  ## Export
+  return(obj_name)
+}
+
+
 ############################### remove birds with too few flights ###############################
 rmbird_byflightnum <- function(obj_name,
                                flightnum = 5,
