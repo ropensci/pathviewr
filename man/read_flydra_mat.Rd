@@ -7,7 +7,7 @@
 read_flydra_mat(mat_file, file_id = NA, subject_name, frame_rate = 100, ...)
 }
 \arguments{
-\item{mat_file}{The MAT file from Flydra}
+\item{mat_file}{A file (or path to file) in .mat format, exported from Flydra}
 
 \item{file_id}{(Optional) identifier for this file. If not supplied, this
 defaults to \code{basename(file_name)}.}
@@ -16,13 +16,20 @@ defaults to \code{basename(file_name)}.}
 
 \item{frame_rate}{The capture frame rate of the session}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments that may be passed from other pathviewR
+functions}
 }
 \value{
-
+A tibble with numerical data in columns. The first two columns will
+have frame numbers and time (assumed to be in secs), respectively. Columns
+3 through 5 will contain position data. Note that unlike the behavior of
+\code{read_motive_csv()} this function produces "tidy" data that have
+already been gathered into key-value pairs based on subject.
 }
 \description{
-Import data from a MAT file exported from Flydra software
+\code{read_flydra_mat()} is designed to import data from a \code{.mat} file
+that has been exported from Flydra software. The resultant object is a tibble
+that additionally has important metadata stored as attributes (see Details).
 }
 \seealso{
 \code{\link{read_motive_csv}} for importing Motive data

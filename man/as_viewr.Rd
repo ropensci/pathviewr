@@ -7,17 +7,17 @@
 as_viewr(
   obj_name,
   frame_rate = 100,
-  frame,
-  time_sec,
-  subject,
-  position_length,
-  position_width,
-  position_height,
+  frame_col,
+  time_col,
+  subject_col,
+  position_length_col,
+  position_width_col,
+  position_height_col,
   include_rotation = FALSE,
-  rotation_real,
-  rotation_length,
-  rotation_width,
-  rotation_height
+  rotation_real_col,
+  rotation_length_col,
+  rotation_width_col,
+  rotation_height_col
 )
 }
 \arguments{
@@ -26,34 +26,34 @@ as_viewr(
 \item{frame_rate}{Must be a single numeric value indicating capture frame
 rate in frames per second.}
 
-\item{frame}{Column number of obj_name that contains frame numbers}
+\item{frame_col}{Column number of obj_name that contains frame numbers}
 
-\item{time_sec}{Column number of obj_name that contains time (must be in
+\item{time_col}{Column number of obj_name that contains time (must be in
 seconds)}
 
-\item{subject}{Column number of obj_name that contains subject name(s)}
+\item{subject_col}{Column number of obj_name that contains subject name(s)}
 
-\item{position_length}{Column number of obj_name that contains length-axis
+\item{position_length_col}{Column number of obj_name that contains
+length-axis position values}
+
+\item{position_width_col}{Column number of obj_name that contains width-axis
 position values}
 
-\item{position_width}{Column number of obj_name that contains width-axis
-position values}
-
-\item{position_height}{Column number of obj_name that contains height-axis
-postion values}
+\item{position_height_col}{Column number of obj_name that contains
+height-axis postion values}
 
 \item{include_rotation}{Are rotation data included? Defaults to FALSE}
 
-\item{rotation_real}{Column number of obj_name that contains the "real" axis
-of quaternion rotation data}
-
-\item{rotation_length}{Column number of obj_name that contains the length
+\item{rotation_real_col}{Column number of obj_name that contains the "real"
 axis of quaternion rotation data}
 
-\item{rotation_width}{Column number of obj_name that contains the width axis
-of quaternion rotation data}
+\item{rotation_length_col}{Column number of obj_name that contains the length
+axis of quaternion rotation data}
 
-\item{rotation_height}{Column number of obj_name that contains the height
+\item{rotation_width_col}{Column number of obj_name that contains the width
+axis of quaternion rotation data}
+
+\item{rotation_height_col}{Column number of obj_name that contains the height
 axis of quaternion rotation data}
 }
 \value{
@@ -63,11 +63,13 @@ A tibble that is organized to be compliant with other
   "renamed_tunnel", "gathered_tunnel")}
 }
 \description{
-Convert data from another format into a viewr object
+Should you have data from a non-Motive, non-Flydra source, this function can
+be used to ensure your data are put into the right format to work with other
+pathviewR functions.
 }
 \examples{
 
-## Create a dummy data frame
+## Create a dummy data frame with simulated (nonsense) data
 df <- data.frame(frame = seq(1, 100, by = 1),
                  time_sec = seq(0, by = 0.01, length.out = 100),
                  subject = "bob",
@@ -79,12 +81,13 @@ df <- data.frame(frame = seq(1, 100, by = 1),
 test <-
   as_viewr(
     df,
-    frame = 1,
-    time_sec = 2,
-    subject = 3,
-    position_length = 5,
-    position_width = 6,
-    position_height = 4
+    frame_rate = 100,
+    frame_col = 1,
+    time_col = 2,
+    subject_col = 3,
+    position_length_col = 5,
+    position_width_col = 6,
+    position_height_col = 4
   )
 }
 \author{

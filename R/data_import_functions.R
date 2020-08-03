@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-30 VBB
+## Last updated: 2020-08-02 VBB
 
 
 ############################### read_motive_csv ################################
@@ -41,6 +41,7 @@
 #' rigid bodies and/or markers that appear in the Motive CSV file. Each row
 #' corresponds to the position or rotation of all objects at a given time
 #' (frame).
+#'
 #' @export
 #'
 #' @author Vikram B. Baliga
@@ -315,17 +316,25 @@ problems.",
 ## Time is now encoded as a function of frame_rate and the specific labeling
 ## of frames within the imported flydra object
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Import data from a MAT file exported from Flydra software
 #'
-#' @param mat_file The MAT file from Flydra
+#' \code{read_flydra_mat()} is designed to import data from a \code{.mat} file
+#' that has been exported from Flydra software. The resultant object is a tibble
+#' that additionally has important metadata stored as attributes (see Details).
+#'
+#' @param mat_file A file (or path to file) in .mat format, exported from Flydra
 #' @param file_id (Optional) identifier for this file. If not supplied, this
 #' defaults to \code{basename(file_name)}.
 #' @param subject_name Name that will be assigned to the subject
 #' @param frame_rate The capture frame rate of the session
-#' @param ... Additional arguments
+#' @param ... Additional arguments that may be passed from other pathviewR
+#'   functions
 #'
-#' @return
+#' @return A tibble with numerical data in columns. The first two columns will
+#'   have frame numbers and time (assumed to be in secs), respectively. Columns
+#'   3 through 5 will contain position data. Note that unlike the behavior of
+#'   \code{read_motive_csv()} this function produces "tidy" data that have
+#'   already been gathered into key-value pairs based on subject.
 #'
 #' @family data import functions
 #' @seealso \code{\link{read_motive_csv}} for importing Motive data
@@ -449,40 +458,45 @@ read_flydra_mat <-
 
 #' Convert data from another format into a viewr object
 #'
+#' Should you have data from a non-Motive, non-Flydra source, this function can
+#' be used to ensure your data are put into the right format to work with other
+#' pathviewR functions.
+#'
 #' @param obj_name A tibble or data frame containing movement trajectories
 #' @param frame_rate Must be a single numeric value indicating capture frame
 #'   rate in frames per second.
-#' @param frame Column number of obj_name that contains frame numbers
-#' @param time_sec Column number of obj_name that contains time (must be in
+#' @param frame_col Column number of obj_name that contains frame numbers
+#' @param time_col Column number of obj_name that contains time (must be in
 #'   seconds)
-#' @param subject Column number of obj_name that contains subject name(s)
-#' @param position_length Column number of obj_name that contains length-axis
+#' @param subject_col Column number of obj_name that contains subject name(s)
+#' @param position_length_col Column number of obj_name that contains
+#'   length-axis position values
+#' @param position_width_col Column number of obj_name that contains width-axis
 #'   position values
-#' @param position_width Column number of obj_name that contains width-axis
-#'   position values
-#' @param position_height Column number of obj_name that contains height-axis
-#'   postion values
+#' @param position_height_col Column number of obj_name that contains
+#'   height-axis postion values
 #' @param include_rotation Are rotation data included? Defaults to FALSE
-#' @param rotation_real Column number of obj_name that contains the "real" axis
-#'   of quaternion rotation data
-#' @param rotation_length Column number of obj_name that contains the length
+#' @param rotation_real_col Column number of obj_name that contains the "real"
 #'   axis of quaternion rotation data
-#' @param rotation_width Column number of obj_name that contains the width axis
-#'   of quaternion rotation data
-#' @param rotation_height Column number of obj_name that contains the height
+#' @param rotation_length_col Column number of obj_name that contains the length
+#'   axis of quaternion rotation data
+#' @param rotation_width_col Column number of obj_name that contains the width
+#'   axis of quaternion rotation data
+#' @param rotation_height_col Column number of obj_name that contains the height
 #'   axis of quaternion rotation data
 #'
 #' @return A tibble that is organized to be compliant with other
 #'   \code{pathviewR} functions and that contains the attributes
 #'   \code{pathviewR_steps} with entries set to \code{c("viewr",
 #'   "renamed_tunnel", "gathered_tunnel")}
+#'
 #' @export
 #'
 #' @author Vikram B. Baliga
 #'
 #' @examples
 #'
-#' ## Create a dummy data frame
+#' ## Create a dummy data frame with simulated (nonsense) data
 #' df <- data.frame(frame = seq(1, 100, by = 1),
 #'                  time_sec = seq(0, by = 0.01, length.out = 100),
 #'                  subject = "bob",
@@ -494,28 +508,29 @@ read_flydra_mat <-
 #' test <-
 #'   as_viewr(
 #'     df,
-#'     frame = 1,
-#'     time_sec = 2,
-#'     subject = 3,
-#'     position_length = 5,
-#'     position_width = 6,
-#'     position_height = 4
+#'     frame_rate = 100,
+#'     frame_col = 1,
+#'     time_col = 2,
+#'     subject_col = 3,
+#'     position_length_col = 5,
+#'     position_width_col = 6,
+#'     position_height_col = 4
 #'   )
 
 
 as_viewr <- function(obj_name,
                      frame_rate = 100,
-                     frame,
-                     time_sec,
-                     subject,
-                     position_length,
-                     position_width,
-                     position_height,
+                     frame_col,
+                     time_col,
+                     subject_col,
+                     position_length_col,
+                     position_width_col,
+                     position_height_col,
                      include_rotation = FALSE,
-                     rotation_real,
-                     rotation_length,
-                     rotation_width,
-                     rotation_height
+                     rotation_real_col,
+                     rotation_length_col,
+                     rotation_width_col,
+                     rotation_height_col
                      ){
 
   ## Check that obj_name is a tibble or data.frame
@@ -525,12 +540,12 @@ as_viewr <- function(obj_name,
 
   ## Extract each variable
   data <- data.frame(
-    frame           = obj_name[, frame],
-    time_sec        = obj_name[, time_sec],
-    subject         = obj_name[, subject],
-    position_length = obj_name[, position_length],
-    position_width  = obj_name[, position_width],
-    position_height = obj_name[, position_height]
+    frame           = obj_name[, frame_col],
+    time_sec        = obj_name[, time_col],
+    subject         = obj_name[, subject_col],
+    position_length = obj_name[, position_length_col],
+    position_width  = obj_name[, position_width_col],
+    position_height = obj_name[, position_height_col]
   )
   colnames(data) <- c("frame", "time_sec", "subject",
                       "position_length", "position_width", "position_height")
@@ -538,10 +553,10 @@ as_viewr <- function(obj_name,
 
   ## Optional arguments, depending on data
   if (include_rotation == TRUE){
-    data$rotation_real   <- obj_name[,rotation_real]
-    data$rotation_length <- obj_name[,rotation_length]
-    data$rotation_width  <- obj_name[,rotation_width]
-    data$rotation_height <- obj_name[,rotation_height]
+    data$rotation_real   <- obj_name[,rotation_real_col]
+    data$rotation_length <- obj_name[,rotation_length_col]
+    data$rotation_width  <- obj_name[,rotation_width_col]
+    data$rotation_height <- obj_name[,rotation_height_col]
     }
 
   ## Add metadata as attributes()
