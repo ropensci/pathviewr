@@ -15,7 +15,7 @@ get_dist_point_line_2d(point, line_coord1, line_coord2)
 \item{line_coord2}{2D coordinates of a second point on the line as c(x,y)}
 }
 \value{
-
+A numeric: the distance
 }
 \description{
 Compute the distance between a point and a line in a 2D space (i.e. on an
@@ -25,9 +25,12 @@ XY plane)
 Other mathematical functions: 
 \code{\link{deg2rad}()},
 \code{\link{find_curve_elbow}()},
-\code{\link{get_3dcross_prod}()},
+\code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line_3d}()},
 \code{\link{get_velocity}()},
 \code{\link{rad2deg}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{mathematical functions}

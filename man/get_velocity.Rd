@@ -30,27 +30,36 @@ get_velocity(
 \item{add_to_viewr}{Default TRUE; should velocity data be added as new
 columns or should this function create a new simpler object?}
 
-\item{velocity_min}{Should data below a certain velocity be filtered out? If
-so, enter a numeric. If not, keep NA.}
+\item{velocity_min}{Should data below a certain velocity be filtered out of
+the object? If so, enter a numeric. If not, keep NA.}
 
-\item{velocity_max}{Should data above a certain velocity be filtered out? If
-so, enter a numeric. If not, keep NA.}
+\item{velocity_max}{Should data above a certain velocity be filtered out of
+the object? If so, enter a numeric. If not, keep NA.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments passed to or from other pathviewR functions.}
 }
 \value{
-
+If \code{add_to_viewr} is \code{TRUE}, additional columns are
+appended to the input viewr object. If \code{FALSE}, a standalone tibble is
+created. Either way, an "instantaneous" velocity is computed as the
+difference in position divided by the difference in time as each successive
+row is encountered. Additionally, velocities along each of the three
+position axes are computed and provided as addtional columns.
 }
 \description{
-Get instantaneous velocity for subjects
+Velocity (both overall and per-axis) is computed for each row in the data
+(see Details)
 }
 \seealso{
 Other mathematical functions: 
 \code{\link{deg2rad}()},
 \code{\link{find_curve_elbow}()},
-\code{\link{get_3dcross_prod}()},
+\code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line_2d}()},
 \code{\link{get_dist_point_line_3d}()},
 \code{\link{rad2deg}()}
+}
+\author{
+Vikram B. Baliga and Melissa S. Armstrong
 }
 \concept{mathematical functions}

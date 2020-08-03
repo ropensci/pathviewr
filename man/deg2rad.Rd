@@ -7,21 +7,31 @@
 deg2rad(deg)
 }
 \arguments{
-\item{deg}{Degrees (numeric)}
+\item{deg}{Degrees (a numeric of any length >= 1)}
 }
 \value{
-
+The angle(s) in radians (as a numeric vector of the same length)
 }
 \description{
 Convert degrees to radians
 }
+\examples{
+## One input
+deg2rad(90)
+
+## Multiple inputs
+deg2rad(c(5, 10, 15, 20))
+}
 \seealso{
 Other mathematical functions: 
 \code{\link{find_curve_elbow}()},
-\code{\link{get_3dcross_prod}()},
+\code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line_2d}()},
 \code{\link{get_dist_point_line_3d}()},
 \code{\link{get_velocity}()},
 \code{\link{rad2deg}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{mathematical functions}

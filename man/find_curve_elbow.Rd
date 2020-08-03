@@ -16,7 +16,11 @@ frame is returned.}
 \item{plot_curve}{Default FALSE; should the curve be plotted?}
 }
 \value{
-
+If \code{export_type} is \code{row_num} the row number of the elbow
+point is returned. If anything else is used for that argument, the entire
+row of the original data frame on which the "elbow" is located is returned.
+If \code{plot_curve} is \code{TRUE}, the curve is plotted along with a
+vertical line drawn at the computed elbow point.
 }
 \description{
 For bivariate data that show monotonic decreases (e.g. plots of trajectory
@@ -26,13 +30,22 @@ the first observation and the final observation. Then, the distance between
 that line and each observation is calculated. The "elbow" of the curve is the
 observation that maximizes this distance.
 }
+\examples{
+df <- data.frame(x = seq(1:10),
+                 y = 1/seq(1:10))
+plot(df)
+find_curve_elbow(df, plot_curve = TRUE)
+}
 \seealso{
 Other mathematical functions: 
 \code{\link{deg2rad}()},
-\code{\link{get_3dcross_prod}()},
+\code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line_2d}()},
 \code{\link{get_dist_point_line_3d}()},
 \code{\link{get_velocity}()},
 \code{\link{rad2deg}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{mathematical functions}

@@ -1,13 +1,11 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-12 VBB
+## Last updated: 2020-08-02 VBB
 
 ################################## get_velocity ################################
-## Get instantaneous velocity for all subjects
-##
-## do we need to adjust to account for frame/time gaps?
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Get instantaneous velocity for subjects
+#'
+#' Velocity (both overall and per-axis) is computed for each row in the data
+#' (see Details)
 #'
 #' @param obj_name Input viewr object
 #' @param time_col Name of the column containing time
@@ -16,14 +14,23 @@
 #' @param height_col Name of the column containing height dimension
 #' @param add_to_viewr Default TRUE; should velocity data be added as new
 #'   columns or should this function create a new simpler object?
-#' @param velocity_min Should data below a certain velocity be filtered out? If
-#'   so, enter a numeric. If not, keep NA.
-#' @param velocity_max Should data above a certain velocity be filtered out? If
-#'   so, enter a numeric. If not, keep NA.
-#' @param ... Additional arguments.
+#' @param velocity_min Should data below a certain velocity be filtered out of
+#'   the object? If so, enter a numeric. If not, keep NA.
+#' @param velocity_max Should data above a certain velocity be filtered out of
+#'   the object? If so, enter a numeric. If not, keep NA.
+#' @param ... Additional arguments passed to or from other pathviewR functions.
 #'
-#' @return
+#' @return If \code{add_to_viewr} is \code{TRUE}, additional columns are
+#'   appended to the input viewr object. If \code{FALSE}, a standalone tibble is
+#'   created. Either way, an "instantaneous" velocity is computed as the
+#'   difference in position divided by the difference in time as each successive
+#'   row is encountered. Additionally, velocities along each of the three
+#'   position axes are computed and provided as addtional columns.
+#'
+#' @author Vikram B. Baliga and Melissa S. Armstrong
+#'
 #' @family mathematical functions
+#'
 #' @export
 
 get_velocity <- function(obj_name,
@@ -110,39 +117,45 @@ Please check that you have entered the name of the height variable correctly.")
 
   #let's add some threshold arguments to set biologically reasonable limits
   #velocity_min
-  if (is.numeric(velocity_min)){
+  if (is.numeric(velocity_min)) {
     ## filter velocity
     obj_new <- obj_new %>%
       dplyr::filter(velocity > velocity_min)
 
     ## Leave a note set velocity_min via get_velocity()
     #leave note even if not added to viewr object?
-    attr(obj_new,"velocity_min") <- velocity_min
+    attr(obj_new, "velocity_min") <- velocity_min
 
-  } else { ## if FALSE
+  } else {
+    ## if FALSE
     obj_new <- obj_new
     #if is character instead of numeric:
     if (is.character(velocity_min)) {
-      stop("velocity_min is character.
-    Please check that you have entered the velocity_min variable correctly.")
+      stop(
+        "velocity_min is character.
+    Please check that you have entered the velocity_min variable correctly."
+      )
     }
   }
   #velocity_max
-  if (is.numeric(velocity_max)){
+  if (is.numeric(velocity_max)) {
     ## filter velocity
     obj_new <- obj_new %>%
       dplyr::filter(velocity < velocity_max)
 
     ## Leave a note set velocity_min via get_velocity()
     #leave note even if not added to viewr object?
-    attr(obj_new,"velocity_max") <- velocity_max
+    attr(obj_new, "velocity_max") <- velocity_max
 
-  } else { ## if FALSE
+  } else {
+    ## if FALSE
     obj_new <- obj_new
     #if is character instead of numeric:
     if (is.character(velocity_max)) {
-      stop("velocity_max is character.
-    Please check that you have entered the velocity_max variable correctly.")
+      stop(
+        "velocity_max is character.
+    Please check that you have entered the velocity_max variable correctly."
+      )
     }
   }
 
@@ -152,12 +165,6 @@ Please check that you have entered the name of the height variable correctly.")
 }
 
 ############################## get_dist_point_line_2d ##########################
-## Compute the distance between a point and a line in a 2D space (i.e. on an
-## XY plane)
-##
-## NOTE: CANNOT SET DEFAULTS TO c(0, 0) AS IT MESSES UP THE FUNCTION INTERNALLY
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Compute the distance between a point and a line in a 2D space (i.e. on an
 #' XY plane)
 #'
@@ -165,7 +172,10 @@ Please check that you have entered the name of the height variable correctly.")
 #' @param line_coord1 2D coordinates of one point on the line as c(x,y)
 #' @param line_coord2 2D coordinates of a second point on the line as c(x,y)
 #'
-#' @return
+#' @return A numeric: the distance
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family mathematical functions
 #' @export
 
@@ -180,20 +190,26 @@ get_dist_point_line_2d <- function(point,
 }
 
 
-################################ get_3dcross_prod ##############################
-## Compute the cross product of 3D vectors
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+################################ get_3d_cross_prod ##############################
 #' Compute the cross product of two 3D vectors
 #'
 #' @param v1 First vector, as c(x,y,z)
 #' @param v2 Second vector, as c(x,y,z)
 #'
-#' @return
+#' @return A vector of length 3 that describes the cross-product
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family mathematical functions
+#'
 #' @export
+#'
+#' @examples
+#' v1 <- c(1, 1, 3)
+#' v2 <- c(3, 1, 3)
+#' get_3d_cross_prod(v1, v2)
 
-get_3dcross_prod <- function(v1,
+get_3d_cross_prod <- function(v1,
                              v2){
   v3 <- vector()
   v3[1] <- v1[2] * v2[3] - v1[3] * v2[2]
@@ -203,16 +219,16 @@ get_3dcross_prod <- function(v1,
 }
 
 ############################## get_dist_point_line_3d ##########################
-## Compute the distance between a point and a line in 3D space
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Compute the distance between a point and a line in 3D space
 #'
 #' @param point 3D coordinates of the point as c(x, y, z)
 #' @param line_coord1 3D coordinates of one point on the line as c(x, y, z)
 #' @param line_coord2 3D coordinates of a second point on the line as c(x, y, z)
 #'
-#' @return
+#' @return A numeric: the distance
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family mathematical functions
 #' @export
 
@@ -221,7 +237,7 @@ get_dist_point_line_3d <- function(point,
                                    line_coord2) {
   v1 <- line_coord1 - line_coord2
   v2 <- point - line_coord1
-  v3 <- get_3dcross_prod(v1, v2)
+  v3 <- get_3d_cross_prod(v1, v2)
   area <- sqrt(sum(v3 * v3)) / 2
   dist <- 2 * area / sqrt(sum(v1 * v1))
   return(dist)
@@ -229,16 +245,23 @@ get_dist_point_line_3d <- function(point,
 
 
 #################################### rad2deg ###################################
-## convert radians to degrees
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Convert radians to degrees
 #'
-#' @param rad Radians (numeric)
+#' @param rad Radians (a numeric of any length >= 1)
 #'
-#' @return
+#' @return The angle(s) in degrees (as a numeric vector of the same length)
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family mathematical functions
 #' @export
+#'
+#' @examples
+#' ## One input
+#' rad2deg(pi/2)
+#'
+#' ## Multiple inputs
+#' rad2deg(c(pi / 2, pi, 2 * pi))
 
 rad2deg <- function(rad) {
 
@@ -253,16 +276,24 @@ rad2deg <- function(rad) {
 
 
 #################################### deg2rad ###################################
-## convert degrees to radians
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Convert degrees to radians
 #'
-#' @param deg Degrees (numeric)
+#' @param deg Degrees (a numeric of any length >= 1)
 #'
-#' @return
+#' @return The angle(s) in radians (as a numeric vector of the same length)
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family mathematical functions
+#'
 #' @export
+#'
+#' @examples
+#' ## One input
+#' deg2rad(90)
+#'
+#' ## Multiple inputs
+#' deg2rad(c(5, 10, 15, 20))
 
 deg2rad <- function(deg) {
 
@@ -276,8 +307,6 @@ deg2rad <- function(deg) {
 }
 
 ################################# find_curve_elbow #############################
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Find the "elbow" of a curve.
 #'
 #' For bivariate data that show monotonic decreases (e.g. plots of trajectory
@@ -293,9 +322,22 @@ deg2rad <- function(deg) {
 #'   frame is returned.
 #' @param plot_curve Default FALSE; should the curve be plotted?
 #'
-#' @return
+#' @return If \code{export_type} is \code{row_num} the row number of the elbow
+#'   point is returned. If anything else is used for that argument, the entire
+#'   row of the original data frame on which the "elbow" is located is returned.
+#'   If \code{plot_curve} is \code{TRUE}, the curve is plotted along with a
+#'   vertical line drawn at the computed elbow point.
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family mathematical functions
 #' @export
+#'
+#' @examples
+#' df <- data.frame(x = seq(1:10),
+#'                  y = 1/seq(1:10))
+#' plot(df)
+#' find_curve_elbow(df, plot_curve = TRUE)
 
 find_curve_elbow <- function(data_frame,
                              export_type = "row_num",

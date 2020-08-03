@@ -7,21 +7,31 @@
 rad2deg(rad)
 }
 \arguments{
-\item{rad}{Radians (numeric)}
+\item{rad}{Radians (a numeric of any length >= 1)}
 }
 \value{
-
+The angle(s) in degrees (as a numeric vector of the same length)
 }
 \description{
 Convert radians to degrees
+}
+\examples{
+## One input
+rad2deg(pi/2)
+
+## Multiple inputs
+rad2deg(c(pi / 2, pi, 2 * pi))
 }
 \seealso{
 Other mathematical functions: 
 \code{\link{deg2rad}()},
 \code{\link{find_curve_elbow}()},
-\code{\link{get_3dcross_prod}()},
+\code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line_2d}()},
 \code{\link{get_dist_point_line_3d}()},
 \code{\link{get_velocity}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{mathematical functions}
