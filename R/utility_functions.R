@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-03 VBB
+## Last updated: 2020-08-04 VBB
 
 
 ################################# get_header_viewr #############################
@@ -357,6 +357,87 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   return(gathered_data)
 }
 
+
+############################# rescale_tunnel_data #############################
+
+#' Rescale position data within a \code{viewr} object
+#'
+#' Should data have been exported at an incorrect scale, apply an isometric
+#' transformation to the position data and associated mean marker errors (if
+#' found)
+#'
+#' @param obj_name Input \code{viewr} object
+#' @param original_scale The original scale at which data were exported. See
+#'   Details if unknown.
+#' @param desired_scale The desired scale
+#' @param ... Additional arguments passed to/from other pathviewR functions
+#'
+#' @details The \code{desired_scale} is divided by the \code{original_scale} to
+#'   determine a \code{scale_ratio} internally. If the \code{original_scale} is
+#'   not explicitly known, set it to 1 and then set \code{desired_scale} to be
+#'   whatever scaling ratio you have in mind. E.g. setting \code{original_scale}
+#'   to 1 and then \code{desired_scale} to 0.7 will multiply all position axis
+#'   values by 0.7.
+#'
+#'   The default arguments of \code{original_scale = 0.5} and
+#'   \code{desired_scale = 1} apply a doubling of tunnel size isometrically.
+#'
+#' @return A \code{viewr} object that has position data (and
+#'   \code{mean_marker_error data}, if found) adjusted by the ratio of
+#'   \code{desired_scale/original_scale}.
+#'
+#' @author Vikram B. Baliga
+#'
+#' @export
+
+
+rescale_tunnel_data <- function(obj_name,
+                                original_scale = 0.5,
+                                desired_scale = 1,
+                                ...){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+  ## Scales should be numeric
+  if (!is.numeric(original_scale)) {
+    stop("original_scale should be numeric")
+  }
+  if (!is.numeric(desired_scale)) {
+    stop("desired_scale should be a numeric")
+  }
+
+  ## Compute scale ratio
+  scale_ratio <- desired_scale / original_scale
+
+  ## Make a backup
+  obj_new <- obj_name
+
+  ## Adjust positions by scale ratio
+  obj_new <-
+    obj_name %>%
+    dplyr::mutate(
+      position_length = position_length * scale_ratio,
+      position_width  = position_width  * scale_ratio,
+      position_height = position_height * scale_ratio
+    )
+
+  ## If mean marker error exists, adjust it too
+  if ("mean_marker_error" %in% names(obj_name)) {
+    obj_new <-
+      obj_new %>%
+      dplyr::mutate(
+        mean_marker_error = mean_marker_error * scale_ratio
+        )
+  }
+
+  ## Leave a note that we rescaled the data
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "data_rescaled")
+
+  return(obj_new)
+}
 
 ########################### rename_viewr_characters ############################
 ## Quick utility function to use str_replace with mutate(across()) to batch-
