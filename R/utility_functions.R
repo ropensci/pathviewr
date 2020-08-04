@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-28 VBB
+## Last updated: 2020-08-03 VBB
 
 
 ################################# get_header_viewr #############################
@@ -1358,7 +1358,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       while (j < max_frame_gap_allowed + 1) {
         mfg[[j]] = quick_separate_trajectories(subject_tibbles[[i]],
                                                max_frame_gap = j)
-        cts[[j]] = count(mfg[[j]], traj_id)
+        cts[[j]] = dplyr::count(mfg[[j]], traj_id)
         trajectory_count[j] = nrow(cts[[j]])
         frame_gap_allowed[j] = j
         j = j +1

@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-02 VBB
+## Last updated: 2020-08-03 VBB
 
 
 ############################### read_motive_csv ################################
@@ -85,8 +85,8 @@ read_motive_csv <-
     ## Import checks
       if (missing(file_name))
         stop("A file_name is required")
-      if (!file.exists(file_name))
-        stop(paste0("File ", file_name, " not found!"))
+      # if (!file.exists(file_name))
+      #   stop(paste0("File ", file_name, " not found!"))
 
     ## Open connection to file for reading in text mode
       file_con <- file(file_name, "r")
@@ -351,8 +351,8 @@ read_flydra_mat <-
     ## Import checks
     if (missing(mat_file))
       stop("A mat_file is required")
-    if (!file.exists(mat_file))
-      stop(paste0("File ", mat_file, " not found!"))
+    # if (!file.exists(mat_file))
+    #   stop(paste0("File ", mat_file, " not found!"))
 
     ## For now, we will assume that only one subject (one individual
     ## hummingbird) is present in the data. Since these subject names were not
