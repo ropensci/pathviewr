@@ -3,6 +3,7 @@
 export("%>%")
 export(as_viewr)
 export(bind_viewr_objects)
+export(calc_s_freq)
 export(calc_vis_angle)
 export(clean_viewr)
 export(clean_viewr_batch)

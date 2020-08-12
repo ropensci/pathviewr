@@ -28,12 +28,10 @@ plot_viewr_trajectories <- function(obj_name,
                                     plot_axes = c("length", "width"),
                                     multi_plot = FALSE){
 
-  ## ADD CHECKS LATER AND/OR PROVIDE MEANINGFUL ERROR MESSAGES
-
   ## Collect names of trajectories
   obj_name_trajs <- unique(obj_name$file_sub_traj)
   ## For multi-plotting, find out what the square root of the total number
-  ## of trajectories is and add 1
+  ## of trajectories is. This will be used to set par(mfrow()).
   sqrt_traj_count <- ceiling(sqrt(length(obj_name_trajs)))
 
   if (plot_axes[1] == "length"){
