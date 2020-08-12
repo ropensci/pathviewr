@@ -221,16 +221,16 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 
     ## So, with those conditions, it's time for some SohCahToa:
     ##   For the positive side:
-    ##     tan(deg2rad(45/2)) = x / 0.5
-    ##     0.5 * tan(deg2rad(45/2)) = x
+    ##     tan(deg_2_rad(45/2)) = x / 0.5
+    ##     0.5 * tan(deg_2_rad(45/2)) = x
     ##     0.2071068 = x
     ##   Therefore, the topmost point on the positive side is at (0.207, 0)
     ##   Since the tunnel is assumed symmetric about width = 0, the topmost
     ##   point on the neg side is (-0.207,0).
     ##   And for fun, the length of the hypotenuse, h, (i.e. the length of the
     ##   walls themselves) is:
-    ##     cos(deg2rad(45/2)) = 0.5 / h
-    ##     h = 0.5 / cos(deg2rad(45/2))
+    ##     cos(deg_2_rad(45/2)) = 0.5 / h
+    ##     h = 0.5 / cos(deg_2_rad(45/2))
     ##     h = 0.5411961
     ##   As a check:
        sqrt((0.2071068 ^2) + (0.5^2)) ## equates to 0.5411961

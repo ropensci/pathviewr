@@ -566,7 +566,7 @@ test_quat <- cbind(jul_29_full$rotation_real[S:L],
                    jul_29_full$rotation_height[S:L])
 
 test_quat2eulangl <- RSpincalc::Q2EA(test_quat, EulerOrder = "xyz")
-test_quat2eulangl_deg <- apply(test_quat2eulangl, MARGIN = 2, FUN = rad2deg)
+test_quat2eulangl_deg <- apply(test_quat2eulangl, MARGIN = 2, FUN = rad_2_deg)
 test_quat2eulvec <- RSpincalc::Q2EV(test_quat)
 
 

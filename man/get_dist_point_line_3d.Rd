@@ -21,12 +21,12 @@ Compute the distance between a point and a line in 3D space
 }
 \seealso{
 Other mathematical functions: 
-\code{\link{deg2rad}()},
+\code{\link{deg_2_rad}()},
 \code{\link{find_curve_elbow}()},
 \code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line_2d}()},
 \code{\link{get_velocity}()},
-\code{\link{rad2deg}()}
+\code{\link{rad_2_deg}()}
 }
 \author{
 Vikram B. Baliga
