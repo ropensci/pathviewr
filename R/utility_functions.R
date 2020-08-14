@@ -744,7 +744,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
                            y3 = tunnel_arbitrary[2])
 
   ## Now convert to radians, which will be used during the rotation later
-  alpharad <- deg2rad(tunnel_angle)
+  alpharad <- deg_2_rad(tunnel_angle)
 
   ## Now translate all data in Length and Width so that the tunnel centerpoint
   ## is at (0,0) for (length, width). Keep heights as-is for now?
@@ -924,7 +924,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
                            y3 = tunnel_arbitrary[2])
 
   ## Now convert to radians, which will be used during the rotation later
-  alpharad <- deg2rad(tunnel_angle)
+  alpharad <- deg_2_rad(tunnel_angle)
 
   ## Now translate all data in Length and Width so that the tunnel centerpoint
   ## is at (0,0) for (length, width). Keep heights as-is for now?

@@ -244,7 +244,7 @@ get_dist_point_line_3d <- function(point,
 }
 
 
-#################################### rad2deg ###################################
+#################################### rad_2_deg ###################################
 #' Convert radians to degrees
 #'
 #' @param rad Radians (a numeric of any length >= 1)
@@ -258,12 +258,12 @@ get_dist_point_line_3d <- function(point,
 #'
 #' @examples
 #' ## One input
-#' rad2deg(pi/2)
+#' rad_2_deg(pi/2)
 #'
 #' ## Multiple inputs
-#' rad2deg(c(pi / 2, pi, 2 * pi))
+#' rad_2_deg(c(pi / 2, pi, 2 * pi))
 
-rad2deg <- function(rad) {
+rad_2_deg <- function(rad) {
 
   ## Check that it's a numeric
   if (!any(class(rad) == "numeric")) {
@@ -275,7 +275,7 @@ rad2deg <- function(rad) {
 }
 
 
-#################################### deg2rad ###################################
+#################################### deg_2_rad ###################################
 #' Convert degrees to radians
 #'
 #' @param deg Degrees (a numeric of any length >= 1)
@@ -290,12 +290,12 @@ rad2deg <- function(rad) {
 #'
 #' @examples
 #' ## One input
-#' deg2rad(90)
+#' deg_2_rad(90)
 #'
 #' ## Multiple inputs
-#' deg2rad(c(5, 10, 15, 20))
+#' deg_2_rad(c(5, 10, 15, 20))
 
-deg2rad <- function(deg) {
+deg_2_rad <- function(deg) {
 
   ## Check that it's a numeric
   if (!any(class(deg) == "numeric")) {
@@ -448,7 +448,7 @@ calc_vis_angle <- function(obj_name,
   }
 
   ## Translate vertex_angle from degrees to radians for trig functions
-  vertex_angle <- deg2rad(vertex_angle)
+  vertex_angle <- deg_2_rad(vertex_angle)
 
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
@@ -523,14 +523,14 @@ calc_vis_angle <- function(obj_name,
     # radians
   obj_name$vis_angle_neg_rad <- 2*atan(stim_param_neg/(2*obj_name$min_dist_neg))
     # radians
-  obj_name$vis_angle_pos_deg <- rad2deg(obj_name$vis_angle_pos_rad) # degrees
-  obj_name$vis_angle_neg_deg <- rad2deg(obj_name$vis_angle_neg_rad) # degrees
+  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
+  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
 
   ## create simple data frame by adding min_dist and visual angles in degrees
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
   obj_simplify$min_dist_neg <- obj_name$min_dist_neg
-  obj_simplify$vis_angle_pos_deg <- rad2deg(obj_name$vis_angle_pos_rad)
-  obj_simplify$vis_angle_neg_deg <- rad2deg(obj_name$vis_angle_neg_rad)
+  obj_simplify$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad)
+  obj_simplify$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad)
 
   ## return simple or complete data table based on simplify argument
   if(simplify_output == TRUE){
@@ -598,7 +598,7 @@ calc_s_freq <- function(obj_name,
   }
 
   ## Translate vertex_angle from degrees to radians for trig functions
-  vertex_angle <- deg2rad(vertex_angle)
+  vertex_angle <- deg_2_rad(vertex_angle)
 
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
@@ -632,9 +632,9 @@ calc_s_freq <- function(obj_name,
   ## Therefore min_dist values need to be adjusted according to position_width
 
   ## create variable of boundary values for each observation
-  obj_name$bound_pos <- obj_name$height_2_vertex * tan(deg2rad(90) -
+  obj_name$bound_pos <- obj_name$height_2_vertex * tan(deg_2_rad(90) -
                                                          vertex_angle)
-  obj_name$bound_neg <- obj_name$height_2_vertex * -tan(deg2rad(90) -
+  obj_name$bound_neg <- obj_name$height_2_vertex * -tan(deg_2_rad(90) -
                                                           vertex_angle)
 
 
@@ -647,7 +647,7 @@ calc_s_freq <- function(obj_name,
            # if position_width is negative and less than the boundary value
            sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
            # return distance to vertex
-           obj_name$width_2_screen_pos * sin(deg2rad(90)- vertex_angle))
+           obj_name$width_2_screen_pos * sin(deg_2_rad(90)- vertex_angle))
   # return minimum distance to positive screen
 
   obj_name$min_dist_neg <-
@@ -656,13 +656,13 @@ calc_s_freq <- function(obj_name,
            # if position_width is positive and greater than the boundary value
            sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
            # return distance to vertex
-           obj_name$width_2_screen_neg * sin(deg2rad(90) - vertex_angle))
+           obj_name$width_2_screen_neg * sin(deg_2_rad(90) - vertex_angle))
   # return minimum distance to negative screen
 
 
   ## Calculate distance along plane of screen equal to 1˚ of visual angle.
-  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg2rad(1))
-  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg2rad(1))
+  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
+  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
 
   ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
   ## visual angle.

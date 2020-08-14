@@ -19,7 +19,7 @@ calc_s_freq <- function(obj_name,
   }
 
   ## Translate vertex_angle from degrees to radians for trig functions
-  vertex_angle <- deg2rad(vertex_angle)
+  vertex_angle <- deg_2_rad(vertex_angle)
 
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
@@ -53,9 +53,9 @@ calc_s_freq <- function(obj_name,
   ## Therefore min_dist values need to be adjusted according to position_width
 
   ## create variable of boundary values for each observation
-  obj_name$bound_pos <- obj_name$height_2_vertex * tan(deg2rad(90) -
+  obj_name$bound_pos <- obj_name$height_2_vertex * tan(deg_2_rad(90) -
                                                          vertex_angle)
-  obj_name$bound_neg <- obj_name$height_2_vertex * -tan(deg2rad(90) -
+  obj_name$bound_neg <- obj_name$height_2_vertex * -tan(deg_2_rad(90) -
                                                           vertex_angle)
 
 
@@ -68,7 +68,7 @@ calc_s_freq <- function(obj_name,
            # if position_width is negative and less than the boundary value
            sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
            # return distance to vertex
-           obj_name$width_2_screen_pos * sin(deg2rad(90)- vertex_angle))
+           obj_name$width_2_screen_pos * sin(deg_2_rad(90)- vertex_angle))
            # return minimum distance to positive screen
 
   obj_name$min_dist_neg <-
@@ -77,13 +77,13 @@ calc_s_freq <- function(obj_name,
            # if position_width is positive and greater than the boundary value
            sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
            # return distance to vertex
-           obj_name$width_2_screen_neg * sin(deg2rad(90) - vertex_angle))
+           obj_name$width_2_screen_neg * sin(deg_2_rad(90) - vertex_angle))
            # return minimum distance to negative screen
 
 
   ## Calculate distance along plane of screen equal to 1˚ of visual angle.
-  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg2rad(1))
-  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg2rad(1))
+  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
+  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
 
   ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
   ## visual angle.
