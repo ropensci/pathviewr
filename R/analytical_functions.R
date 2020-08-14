@@ -391,8 +391,9 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 
 
 #################        calc_vis_angle       ###################
-
-#' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
+#' Estimate visual angles in a V shaped tunnel
+#'
+#' Based on rigid body, i.e animal head positions in a V-shaped tunnel,
 #' \code{calc_vis_angle()} calculates the visual angles created by lateral
 #' visual stimuli.
 #'
@@ -543,7 +544,8 @@ calc_vis_angle <- function(obj_name,
 
 
 ##########################    calc_s_freq     ###########################
-
+#' Estimate spatial frequency of stimuli in V-shaped tunnel
+#'
 #' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
 #' \code{calc_s_freq()} calculates how the animal percieves the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
@@ -561,7 +563,7 @@ calc_vis_angle <- function(obj_name,
 #' stimuli presented on the negative side of the tunnel
 #' (i.e. \code{position_width < 0}).
 #' @param simplify_output If TRUE, the returned object includes minimum distance
-#' as well as the visual angles (in degrees) to either side of the
+#' as well as the spatial freqencies perceived on either side of the
 #' tunnel. If FALSE, the returned object includes all variables internal to the
 #' calculation.
 #'

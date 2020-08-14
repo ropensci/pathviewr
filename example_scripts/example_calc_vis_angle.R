@@ -134,25 +134,6 @@ View(full45)
 ## This produces 10 additional variables in the dataframe based on the math
 ## internal to calc_vis_angle.
 
-    #### _VBB_questions_1 #####
-    ## In the calculation:
-    ##   obj_name$height_2_screen <- obj_name$height_2_vertex -
-    ## (abs(obj_name$position_width) / tan(vertex_angle))
-    ##
-    ## Should it not be:
-    ##   obj_name$height_2_screen <- obj_name$height_2_vertex -
-    ## (abs(obj_name$position_width) / tan(vertex_angle/2))
-    ##
-    ## Just to check -- the way stim_param_pos and _neg work imply that
-    ## the stimulus is a horizontal pattern, right? To put it another
-    ## way, I don't see how a vertically-oriented pattern can be used
-    ## with the dimensions along which visual angles are being recorded.
-    ##
-    ## Both of thes really could just be a lack of understanding on my
-    ## part, so it would be great if we could zoom about this so I can
-    ## get a better sense. I will send you another doc with illustrations
-    ## to see if we can hash this out.
-
 
 ## Use simplify_output = TRUE to output only the degrees of visual angle on the
 ## positive and negative sides of the tunnel
@@ -164,10 +145,6 @@ simp45 <- calc_vis_angle(jul_29_all_defaults,
                     simplify_output = TRUE)
 View(simp45)
 
-    #### _VBB_suggestions_1 #####
-    ## Just a small suggestion -- could min_dist (pos and neg) be valuable
-    ## to include in the simplifed output too? I think distance to the
-    ## walls could come in handy.
 
 ## calc_vis_angle can accomodate different tunnel vertex angles and now
 ## calculates mind_dist correctly even when the bird is flying far from the
@@ -200,85 +177,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 # flipping between the graphs you can see a subtle shift in the distribution of
 # angles.
 
-    #### _VBB_suggestions_2 #####
-    ## These plots are awesome! Easy to make sense of them.
-    ##
-    ## One feature that would also be helpful would be to add a visualization of
-    ## the tunnel itself, which would require inferring the coordinates of the
-    ## tunnel. I think we can reasonably approximate some of this using the
-    ## inputs from calc_vis_angle() alone.
-
-    ## Here's what we assume:
-    ## - With gnd_plane = 0.5, we assume the vertex is at -0.5 on the height
-    ##   axis. Therefore the vertex is located at (0, -0.5) for (width, height);
-    ##   ignoring length for now.
-    ## - With vertex_angle = 45, we assume the vertex angle (duh).
-    ## - It may not be feasible to know the height of the tunnel, i.e. where
-    ##   on the position_height axis the walls actually end. So, I suggest we
-    ##   use position_height = 0 as a first-pass approximation. Therefore, the
-    ##   two topmost points of the tunnel walls will be at (?, 0) and (-?, 0),
-    ##   for the positive and negative side, respectively (again, ignore length)
-
-    ## So, with those conditions, it's time for some SohCahToa:
-    ##   For the positive side:
-    ##     tan(deg2rad(45/2)) = x / 0.5
-    ##     0.5 * tan(deg2rad(45/2)) = x
-    ##     0.2071068 = x
-    ##   Therefore, the topmost point on the positive side is at (0.207, 0)
-    ##   Since the tunnel is assumed symmetric about width = 0, the topmost
-    ##   point on the neg side is (-0.207,0).
-    ##   And for fun, the length of the hypotenuse, h, (i.e. the length of the
-    ##   walls themselves) is:
-    ##     cos(deg2rad(45/2)) = 0.5 / h
-    ##     h = 0.5 / cos(deg2rad(45/2))
-    ##     h = 0.5411961
-    ##   As a check:
-       sqrt((0.2071068 ^2) + (0.5^2)) ## equates to 0.5411961
-
-    ## Also if we use the three points (two topmost and vertex), we should
-    ## be able to back-calculate the vertex angle to confirm it is ~45
-       xyangles(x1 = -0.2071, ## (x1, y1) is topmost on negative side
-                y1 = 0,
-                x2 = 0,       ## (x2, y2) is vertex
-                y2 = -0.5,
-                x3 = 0.2071,  ## (x3, y3) is topmost on positive side
-                y3 = 0)
-       ## I get 44.99867, which is basically 45. So this all seems to work.
-
-    ## Yoinking the vis_angle_pos_deg plot and adding walls:
-       ggplot(full45, aes(x = position_width, y = position_height)) +
-         geom_point(aes(color = vis_angle_pos_deg),
-                    shape = 1, size = 3) +
-         geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
-                          y = -0.5,
-                          xend = 0.207,
-                          yend = 0)) +
-         geom_segment(aes(x = 0,         ## NEGATIVE SIDE
-                          y = -0.5,
-                          xend = -0.207,
-                          yend = 0))
-
-    ## Judging by this visualization, I think either the vertex angle is
-    ## actually greater than 45 (i.e. the "V" is wider than 45deg) or the
-    ## ground plane placement should be lower.
-    ## Is it worth re-measuring the tunnel in lab?
-
-    ## Related to all this, the information of tunnel coordinates can be
-    ## inferred from user inputs to cal_vis_angle. I think it would be
-    ## nice to add these coordinates in as attributes to the object. That
-    ## way, successive pathviewR functions can make use of these info, and
-    ## also they will be available if the user wants to add them to a plot.
-
-    ## Also, do you mind if we rename gnd_plane? We are using the ground
-    ## plane as an approximator of the vertex location. So if we are to
-    ## make things more generic (i.e. for other users) we could opt to
-    ## rename this as vertex_height, vertex_relative_height, or something
-    ## along those lines?
-
-
-
-      #### ERP response  ####
-      ## I like the idea of visualizing the tunnel walls with this plot!
+      ## In response to VBB comments:
       ## gnd_plane = 0.5 is only an estimate of the true distance between
       ## the height of the perches and the vertex. It's definitely worth
       ## measuring the tunnel again to make it's accurate. I can do that
@@ -306,6 +205,18 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 
       ## Let's plot it out again with the walls included
  ggplot(full45, aes(x = position_width, y = position_height)) +
+   geom_point(aes(color = vis_angle_neg_deg),
+              shape = 1, size = 3) +
+   geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
+                    y = -0.5,
+                    xend = 0.5869,
+                    yend = 0.0869)) +
+   geom_segment(aes(x = 0,         ## NEGATIVE SIDE
+                    y = -0.5,
+                    xend = -0.5869,
+                    yend = 0.0869))
+
+ ggplot(full45, aes(x = position_length, y = position_height)) +
    geom_point(aes(color = vis_angle_pos_deg),
               shape = 1, size = 3) +
    geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
@@ -317,7 +228,8 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
                     xend = -0.5869,
                     yend = 0.0869))
 
-      ## I think this looks reasonably close to the true scenario of flights in
+
+       ## I think this looks reasonably close to the true scenario of flights in
       ## the tunnel but again, it all depends on how close the estimate of
       ## gnd_plane = 0.5 is to the correct measurement.
       ## With gnd_plane = 0.4 the result is...
@@ -330,7 +242,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
                          simplify_output = TRUE)
 
  ggplot(gnd40, aes(x = position_width, y = position_height)) +
-   geom_point(aes(color = vis_angle_pos_deg),
+   geom_point(aes(color = vis_angle_neg_deg),
               shape = 1, size = 3) +
    geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
                     y = -0.4,
