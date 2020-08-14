@@ -2,9 +2,7 @@
 % Please edit documentation in R/analytical_functions.R
 \name{calc_vis_angle}
 \alias{calc_vis_angle}
-\title{Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
-\code{calc_vis_angle()} calculates the visual angles created by lateral
-visual stimuli.}
+\title{Estimate visual angles in a V shaped tunnel}
 \usage{
 calc_vis_angle(
   obj_name,
@@ -43,7 +41,7 @@ A tibble or data.frame with added variables for
 \code{vis_angle_pos_deg} and \code{vis_angle_neg_deg} reported in degrees.
 }
 \description{
-Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
+Based on rigid body, i.e animal head positions in a V-shaped tunnel,
 \code{calc_vis_angle()} calculates the visual angles created by lateral
 visual stimuli.
 }

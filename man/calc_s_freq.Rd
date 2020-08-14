@@ -2,9 +2,7 @@
 % Please edit documentation in R/analytical_functions.R
 \name{calc_s_freq}
 \alias{calc_s_freq}
-\title{Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
-\code{calc_s_freq()} calculates how the animal percieves the visual stimuli
-in terms of its spatial frequency modulated by distance to the stimulus.}
+\title{Estimate spatial frequency of stimuli in V-shaped tunnel}
 \usage{
 calc_s_freq(
   obj_name,
@@ -34,7 +32,7 @@ the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
 \code{vertex_angle)} defaults to 45.}
 
 \item{simplify_output}{If TRUE, the returned object includes minimum distance
-as well as the visual angles (in degrees) to either side of the
+as well as the spatial freqencies perceived on either side of the
 tunnel. If FALSE, the returned object includes all variables internal to the
 calculation.}
 }
