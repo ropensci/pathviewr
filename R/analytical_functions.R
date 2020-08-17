@@ -544,7 +544,7 @@ calc_vis_angle <- function(obj_name,
 
 
 ##########################    calc_s_freq     ###########################
-#' Estimate spatial frequency of stimuli in V-shaped tunnel
+#' Estimate spatial frequency of visual stimuli in V-shaped tunnel
 #'
 #' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
 #' \code{calc_s_freq()} calculates how the animal percieves the visual stimuli
@@ -685,7 +685,64 @@ calc_s_freq <- function(obj_name,
 }
 
 
+##############################  estimate_sf_box   #############################
+#' Estimate spatial frequency of visual stimuli in box shaped tunnel
+#'
+#' Based on rigid body, i.e animal head positions in a box shaped tunnel,
+#' \code{calc_s_freq()} calculates how the animal percieves the visual stimuli
+#' in terms of its spatial frequency modulated by distance to the stimulus.
+#'
+#' @param obj_name A tibble or data.frame with attribute \code{viewr}
+#'
+#' @details \code{estimate_sf_box} assumes fixed gaze at the point on the
+#' either side of the tunnel that minimizes the distance to visual stimuli and
+#' thereby minimizes spatial frequencies.
+#'
+#' @return A tibble or data.frame with added variables \code{min_dist_pos} and
+#' \code{min_dist_neg} describing the minimum distance to the tunnel walls as
+#' well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1˚ of
+#' visual angle.
+#'
+#' @author Eric R. Press
+#'
+#' @family optic flow functions
+#'
+#' @examples
+#'
+#' @export
 
+
+estimate_sf_box <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that insert_treatments has been run
+  if (!any(attr(obj_name, "pathviewR_steps") == "treatments_added")){
+    stop("Please run insert_treatments() prior to use")
+  }
+
+  ## Calculate minimum distance to each screen
+  obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
+  obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
+
+  ## Calculate distance along plane of the wall equal to 1˚ of visual angle.
+  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
+  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
+
+  ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
+  ## visual angle.
+  obj_name$s_freq_pos <- deg_dist_pos / obj_name$stim_param_pos
+  obj_name$s_freq_neg <- deg_dist_neg / obj_name$stim_param_neg
+
+  ## Leave note that spatial frequencies were calculated on dataset
+  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+                                         "frequencies_calculated")
+
+  return(obj_name)
+}
 
 
 ## Remaining three functions originally written by Christina Harvey
