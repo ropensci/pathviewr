@@ -74,13 +74,13 @@ insert_treatments <- function(obj_name,
     } else if (obj_name$treatment[[i]] == "latD"){
       obj_name$stim_param_neg[[i]] <- 0.1
     } else if (obj_name$treatment[[i]] == "latE"){
-      obj_name$stim_param_pos[[i]] <- 0.1
+      obj_name$stim_param_neg[[i]] <- 0.1
     } else if (obj_name$treatment[[i]] == "latF"){
-      obj_name$stim_param_pos[[i]] <- 0.1
+      obj_name$stim_param_neg[[i]] <- 0.1
     } else if (obj_name$treatment[[i]] == "latG"){
-      obj_name$stim_param_pos[[i]] <- 0.1
+      obj_name$stim_param_neg[[i]] <- 0.1
     } else if (obj_name$treatment[[i]] == "latH"){
-      obj_name$stim_param_pos[[i]] <- 0.1
+      obj_name$stim_param_neg[[i]] <- 0.1
     }
   }
 
