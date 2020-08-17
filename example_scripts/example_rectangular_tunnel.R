@@ -59,3 +59,62 @@ plot(test_cleaned$position_length,
 ## with you how the spatial frequency parameter could be used as an argument. I
 ## am happy if you keep it in the same format as your other functions for now,
 ## i.e. with a stim_param_pos and stim_param_neg
+
+
+
+### estimate_sf_box
+
+estimate_sf_box <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that insert_treatments has been run
+  if (!any(attr(obj_name, "pathviewR_steps") == "treatments_added")){
+    stop("Please run insert_treatments() prior to use")
+  }
+
+  ## Calculate minimum distance to each screen
+  obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
+  obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
+
+  ## Calculate distance along plane of the wall equal to 1˚ of visual angle.
+  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
+  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
+
+  ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
+  ## visual angle.
+  obj_name$s_freq_pos <- deg_dist_pos / obj_name$stim_param_pos
+  obj_name$s_freq_neg <- deg_dist_neg / obj_name$stim_param_neg
+
+  ## Leave note that spatial frequencies were calculated on dataset
+  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+                                         "frequencies_calculated")
+
+  return(obj_name)
+}
+
+
+#### testing zone ####
+
+roz <- insert_treatments(test_cleaned,
+                         pos_wall = 0.5,
+                         neg_wall = -0.5,
+                         front_wall = 1.5,
+                         treatment = "latA")
+
+
+roz <- estimate_sf_box(roz)
+
+View(roz)
+
+ggplot(roz, aes(position_width, position_height)) +
+  geom_point(size = 4, aes(color = s_freq_pos))
+
+ggplot(roz, aes(position_width, position_height)) +
+  geom_point(size = 4, aes(color = s_freq_neg))
+
+
+
