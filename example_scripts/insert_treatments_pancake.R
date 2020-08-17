@@ -7,8 +7,11 @@
 ### This function must be run after get_full_trajectories
 
 insert_treatments <- function(obj_name,
-                              vertex_height,
-                              vertex_angle,
+                              vertex_height = NULL,
+                              vertex_angle = NULL,
+                              pos_wall = NULL,
+                              neg_wall = NULL,
+                              front_wall = NULL,
                               treatment = NULL){
 
   ## Check that it's a viewr object
@@ -21,19 +24,37 @@ insert_treatments <- function(obj_name,
     stop("Run get_full_trajectories() prior to use")
   }
 
+  ## NOTE: add in a check that either V-shaped OR box tunnel arguments are
+  ## supplied
+
+
   ## Translate arguments into variables at beginning of data frame
   ## NOTE: make sure this doesn't eff up other functions that depend on the
   ## position of certain variables remaining constant
+  if (attr(obj_name, "import_method") == "motive"){
   obj_name <- tibble::add_column(obj_name, .before = "frame",
                                  vertex_height = vertex_height,
                                  vertex_angle = deg_2_rad(vertex_angle),
                                  treatment = treatment)
+  } else if (attr(obj_name, "import_method") == "flydra"){
+    obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   pos_wall = pos_wall,
+                                   neg_wall = neg_wall,
+                                   front_wall = front_wall,
+                                   treatment = treatment)
+  }
 
   ## Add arguments into metadata......surewhynot
-  attr(obj_name, "vertex_height") <- vertex_height
-  attr(obj_name, "vertex_angle") <- vertex_angle
-  attr(obj_name, "treatment") <- treatment
-
+  if (attr(obj_name, "import_method") == "motive"){
+    attr(obj_name, "vertex_height") <- vertex_height
+    attr(obj_name, "vertex_angle") <- vertex_angle
+    attr(obj_name, "treatment") <- treatment
+  } else if (attr(obj_name, "import_method") == "flydra"){
+    attr(obj_name, "pos_wall") <- pos_wall
+    attr(obj_name, "neg_wall") <- neg_wall
+    attr(obj_name, "front_wall") <- front_wall
+    attr(obj_name, "treatment") <- treatment
+  }
 
   ## Create empty stim_param variables
   obj_name$stim_param_pos <- vector(mode = "numeric", length = nrow(obj_name))
@@ -102,8 +123,13 @@ t <- insert_treatments(jul_29_full,
 
 View(t)
 
-attributes(test)
-
-jul_29_full
+attributes(t)
 
 
+
+roz <- insert_treatments(test_cleaned,
+                         pos_wall = 0.5,
+                         neg_wall = -0.5,
+                         front_wall = 1.5,
+                         treatment = "latA")
+attributes(roz)
