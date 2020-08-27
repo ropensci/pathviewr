@@ -2,7 +2,7 @@
 % Please edit documentation in R/analytical_functions.R
 \name{calc_s_freq}
 \alias{calc_s_freq}
-\title{Estimate spatial frequency of stimuli in V-shaped tunnel}
+\title{Estimate spatial frequency of visual stimuli in V-shaped tunnel}
 \usage{
 calc_s_freq(
   obj_name,
@@ -56,7 +56,8 @@ thereby minimizes spatial frequencies.
 }
 \seealso{
 Other optic flow functions: 
-\code{\link{calc_vis_angle}()}
+\code{\link{calc_vis_angle}()},
+\code{\link{estimate_sf_box}()}
 }
 \author{
 Eric R. Press
