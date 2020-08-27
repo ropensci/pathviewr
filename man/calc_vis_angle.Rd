@@ -55,8 +55,8 @@ thereby maximizes visual angles.
 }
 \seealso{
 Other optic flow functions: 
-\code{\link{calc_s_freq}()},
-\code{\link{estimate_sf_box}()}
+\code{\link{calc_sf_V}()},
+\code{\link{calc_sf_box}()}
 }
 \author{
 Eric R. Press
