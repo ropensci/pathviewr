@@ -64,7 +64,7 @@ plot(test_cleaned$position_length,
 
 ### estimate_sf_box
 
-estimate_sf_box <- function(obj_name){
+calc_sf_box <- function(obj_name){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
@@ -106,7 +106,7 @@ roz <- insert_treatments(test_cleaned,
                          treatment = "latA")
 
 
-roz <- estimate_sf_box(roz)
+roz <- calc_sf_box(roz)
 
 View(roz)
 
