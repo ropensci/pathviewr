@@ -1592,7 +1592,7 @@ get_full_trajectories <- function(obj_name,
 }
 
 
-############################## section tunnel by ###############################
+############################## section_tunnel_by ###############################
 
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Chop data into X sections (of equal size) along a specified axis
@@ -1637,6 +1637,97 @@ section_tunnel_by <- function(obj_name,
 
   ## Export
   return(obj_name)
+}
+
+
+############################## exclude_by_velocity #############################
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Remove trajectories entirely, based on velocity thresholds
+#'
+#' Remove trajectories from a viewr object that contain instances of velocity
+#' known to be spurious.
+#'
+#' @param obj_name Input viewr object
+#' @param vel_min Default \code{NULL}. If a numeric is entered, trajectories
+#'   that have at least one observation with velocity less than \code{vel_min}
+#'   are removed.
+#' @param vel_maxDefault \code{NULL}. If a numeric is entered, trajectories that
+#'   have at least one observation with velocity greater than \code{vel_max} are
+#'   removed.
+#'
+#' @return A new viewr object that is identical to the input object but now
+#'   excludes any trajectories that contain observations with velocity less than
+#'   \code{vel_min} (if specified) and/or velocity greater than \code{vel_max}
+#'   (if specified)
+#' @export
+#'
+#' @author Vikram B. Baliga
+
+
+exclude_by_velocity <- function(obj_name,
+                                vel_min = NULL,
+                                vel_max = NULL){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Get a list of all the unique trajectories
+  unique_trajs <- unique(obj_name$file_sub_traj)
+
+  ## Remove trajectories with velocities below a threshold
+  if (is.numeric(vel_min)) {
+    ## Find the data that are below the threshold
+    below_thresh <-
+      obj_name %>%
+      dplyr::filter(velocity < vel_min) %>%
+      select(file_sub_traj) %>%
+      unique() %>%
+      as_vector()
+    ## Remove these trajectories from the original object
+    obj_name <-
+      obj_name %>%
+      filter(!(file_sub_traj %in% below_thresh))
+  } else {
+    ## if FALSE
+    obj_name <- obj_name
+    #if is character instead of numeric:
+    if (is.character(vel_min)) {
+      stop(
+        "vel_min is character.
+    Please check that you have entered the vel_min as a numeric."
+      )
+    }
+  }
+
+  ## Remove trajectories with velocities above a threshold
+  if (is.numeric(vel_max)) {
+    ## Find the data that are above the threshold
+    above_thresh <-
+      obj_name %>%
+      dplyr::filter(velocity > vel_max) %>%
+      select(file_sub_traj) %>%
+      unique() %>%
+      as_vector()
+    ## Remove these trajectories from the original object
+    obj_name <-
+      obj_name %>%
+      filter(!(file_sub_traj %in% above_thresh))
+  } else {
+    ## if FALSE
+    obj_name <- obj_name
+    #if is character instead of numeric:
+    if (is.character(vel_max)) {
+      stop(
+        "vel_max is character.
+    Please check that you have entered the vel_max as a numeric."
+      )
+    }
+  }
+
+
 }
 
 
