@@ -543,11 +543,11 @@ calc_vis_angle <- function(obj_name,
 
 
 
-##########################    calc_s_freq     ###########################
+##########################    calc_sf_V     ###########################
 #' Estimate spatial frequency of visual stimuli in V-shaped tunnel
 #'
 #' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
-#' \code{calc_s_freq()} calculates how the animal percieves the visual stimuli
+#' \code{calc_sf_V()} calculates how the animal percieves the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr}
@@ -567,7 +567,7 @@ calc_vis_angle <- function(obj_name,
 #' tunnel. If FALSE, the returned object includes all variables internal to the
 #' calculation.
 #'
-#' @details \code{cal_s_freq} assumes fixed gaze at the point on the
+#' @details \code{cal_sf_V} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and
 #' thereby minimizes spatial frequencies.
 #'
@@ -585,12 +585,12 @@ calc_vis_angle <- function(obj_name,
 
 
 
-calc_s_freq <- function(obj_name,
-                        gnd_plane,
-                        stim_param_pos,
-                        stim_param_neg,
-                        vertex_angle = 45,
-                        simplify_output = FALSE){
+calc_sf_V <- function(obj_name,
+                      gnd_plane,
+                      stim_param_pos,
+                      stim_param_neg,
+                      vertex_angle = 45,
+                      simplify_output = FALSE){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
