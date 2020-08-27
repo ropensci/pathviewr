@@ -712,7 +712,7 @@ calc_s_freq <- function(obj_name,
 #' @export
 
 
-estimate_sf_box <- function(obj_name){
+calc_sf_box <- function(obj_name){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
