@@ -685,16 +685,16 @@ calc_s_freq <- function(obj_name,
 }
 
 
-##############################  estimate_sf_box   #############################
-#' Estimate spatial frequency of visual stimuli in box shaped tunnel
+##############################  calc_sf_box   #############################
+#' Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box
 #'
 #' Based on rigid body, i.e animal head positions in a box shaped tunnel,
-#' \code{calc_s_freq()} calculates how the animal percieves the visual stimuli
+#' \code{calc_sf_box()} calculates how the animal percieves the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
 #' @param obj_name A tibble or data.frame with attribute \code{viewr}
 #'
-#' @details \code{estimate_sf_box} assumes fixed gaze at the point on the
+#' @details \code{calc_sf_box} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and
 #' thereby minimizes spatial frequencies.
 #'
