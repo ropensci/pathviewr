@@ -43,6 +43,7 @@ motive_data <-
     system.file("extdata", "july-29_group-I_16-20.csv",
                 package = 'pathviewR')
   )
+
 ## This produces a tibble 
 motive_data
 ``` 
@@ -117,6 +118,7 @@ motive_relabeled <-
     tunnel_height = "_y",
     real = "_w"
   )
+
 names(motive_relabeled)
 ```
 
@@ -128,15 +130,16 @@ will be expected by subsequent funtions, so skipping this step is also
 ill-advised.**
 
 Use `trim_tunnel_outliers()` to remove artifacts and other outlier data. This
-step is entirely optional, and really should be used when the user is confident
+step is entirely optional, and should only be used when the user is confident
 that data outside certain ranges are artifacts or other bugs. Data ouside these
-ranges are filtered out. Best to plot data beforehand and check!!
+ranges are then filtered out. Best to plot data beforehand and check!!
 
 ```{r gather_and_trim}
 ## First gather and show the new column names
 motive_gathered <-
   motive_relabeled %>%
   gather_tunnel_data()
+
 names(motive_gathered)
 
 ## Now trim, using ranges we know to safely include data
@@ -154,8 +157,98 @@ motive_trimmed <-
   )
 ```
 
+### Standardization of tunnel position and coordinates
+The coordinate system of the tunnel itself may require adjustment or
+standardization. For example, data collected across different days may show
+slight differences in coordinate systems if calibration equipment was not used
+in identical ways. Moreover, the user may want to redefine how the coorinate
+system itself is defined (i.e. change the location of `(0, 0, 0)` to another
+place within the tunnel.
+
+pathviewR offers three main choices for such standardization:  
+
+- `redefine_tunnel_center()`: Sets the location of 0 on any or all axes to a new
+location. See the Help page for this function to see the four different methods
+by which a user can specify this. No rotation of the tunnel is performed.  
+
+- `standardize_tunnel()`: Use specified landmarks (`subjects` within the `viewr`
+object) to rotate and translate the location of a tunnel, setting `(0, 0, 0)` to
+the center of the tunnel (centering).
+
+- `rotate_tunnel`:  Rotate and center a tunnel based on user-defined coordinates
+(i.e. similar to `standardize_tunnel()` but for cases where specified landmarks
+are not in the data).  
+
+Two quick examples will follow, using our motive and Flydra data:
+
+```{r rotate_example}
+## Rotate and center the motive data set:
+motive_rotated <-
+  motive_trimmed %>% 
+  rotate_tunnel(
+    perch1_len_min = -0.06,
+    perch1_len_max = 0.06,
+    perch2_len_min = 2.48,
+    perch2_len_max = 2.6,
+    perch1_wid_min = 0.09,
+    perch1_wid_max = 0.31,
+    perch2_wid_min = 0.13,
+    perch2_wid_max = 0.35
+  )
+```
+In the above, virtual perches are defined by the user using the arguments shown.
+The center of each perch is then found and then the locations of the two perch
+centers are then used to 1) set  `(0, 0, 0)` to the point that is equidistant
+from the perches (i.e. the middle of the tunnel) and 2) rotate the tunnel about
+the height axis so that both perch width coordinates are at 0. This may be
+easier to understand through plotting:
+```{r rotate_example_plots}
+## Quick (base-R) plot of the original data
+plot(motive_trimmed$position_length,
+     motive_trimmed$position_width,
+     asp = 1)
+
+## Quick (base-R) plot of the rotated data
+plot(motive_rotated$position_length,
+     motive_rotated$position_width,
+     asp = 1)
+```
+
+Differences due to rotation may be extremely subtle, but the redefining of `(0,
+0, 0)` to the middle of the tunnel should be clear from contrasting the axes of
+the plots.
+
+Flydra data typically do not need to be rotated, so we will instead use
+`redfine_tunnel_center()` to adjust the location of `(0, 0, 0)`:
+
+```{r redefine_tunnel_example}
+## Re-center the Flydra data set:
+flydra_centered <-
+  flydra_data %>%
+  redefine_tunnel_center(length_method = "middle",
+                         height_method = "user-defined",
+                         height_zero = 1.44)
+```
+
+Here, we are using `length_method = "middle"` to use the middle of the range of
+"length" data to set length = 0 (a translation), making no change to the width
+axis, and then specifiying that height = 0 should be equal to the value `1.44`
+from the original data (another translation. Again, plotting may help; note that this time, we'll plot length x height (instead of width):
+
+```{r redefine_example_plots}
+## Quick (base-R) plot of the original data
+plot(flydra_data$position_length,
+     flydra_data$position_height,
+     asp = 1)
+
+## Quick (base-R) plot of the redefined data
+plot(flydra_centered$position_length,
+     flydra_centered$position_height,
+     asp = 1)
+```
+
 Next sections TBD: 
-1) rotate vs. standardize vs. redefine center
+x 1) rotate vs. standardize vs. redefine center
 2) select x percent 
 3) separate trajectories (and link to another vignette)
 4) get full trajectories

@@ -662,7 +662,7 @@ rotate_tunnel <- function(obj_name,
                           all_heights_min = 0.11,
                           all_heights_max = 0.3,
                           ## perch 1 = left (near length = 0); perch 2 = right
-                          perch1_len_min = -.06,
+                          perch1_len_min = -0.06,
                           perch1_len_max = 0.06,
                           perch2_len_min = 2.48,
                           perch2_len_max = 2.6,
