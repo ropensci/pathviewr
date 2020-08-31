@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-12 VBB
+## Last updated: 2020-08-31 VBB
 
 
 ################################# clean_viewr ##################################
@@ -9,7 +9,8 @@
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' For an imported viewr object, run through the cleaning pipeline as desired
 #'
-#' @param obj_name The viewr object to be processed
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param relabel_viewr_axes default TRUE,
 #' @param gather_tunnel_data default TRUE,
 #' @param trim_tunnel_outliers default TRUE,

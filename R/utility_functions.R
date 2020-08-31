@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-04 VBB
+## Last updated: 2020-08-31 VBB
 
 
 ################################# get_header_viewr #############################
@@ -8,8 +8,8 @@
 #' A function to quickly return the information stored in the header of the
 #' original data file imported via \code{pathviewR}'s \code{read_} functions.
 #'
-#' @param obj_name A tibble imported via \code{pathviewR}'s \code{read_}
-#' functions with value \code{viewr} appearing in the attribute
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' \code{pathviewR_steps}
 #' @param ... Additional arguments that may be passed to other \code{pathviewR}
 #' functions
@@ -55,7 +55,8 @@ get_header_viewr <- function(obj_name,
 #' and "height". \code{relabel_viewr_axes()} is a function that takes a
 #' \code{viewr} object and allows the user to rename its variables.
 #'
-#' @param obj_name A tibble or data.frame with attribute \code{viewr}
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param tunnel_length The dimension that corresponds to tunnel length. Set to
 #' \code{tunnel_length = "_z"} by default. Argument should contain a character
 #' vector with a leading underscore (see Details)
@@ -166,9 +167,8 @@ relabel_viewr_axes <- function(obj_name,
 #' to the position (and potentially rotation) of a single subject during an
 #' observed frame and time.
 #'
-#' @param obj_name A tibble or data.frame with attribute \code{viewr} that has
-#' ideally been passed through \code{relabel_viewr_axes()}. See Details for
-#' formatting requirements.
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param NA_drop Should rows with NAs be dropped? Defaults to \code{TRUE}
 #' @param ... Additional arguments that can be passed to other \code{pathviewR}
 #' functions such as \code{relabel_viewr_axes()} or \code{read_motive_csv()}
@@ -366,7 +366,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' transformation to the position data and associated mean marker errors (if
 #' found)
 #'
-#' @param obj_name Input \code{viewr} object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param original_scale The original scale at which data were exported. See
 #'   Details if unknown.
 #' @param desired_scale The desired scale
@@ -440,19 +441,20 @@ rescale_tunnel_data <- function(obj_name,
 }
 
 ########################### rename_viewr_characters ############################
-## Quick utility function to use str_replace with mutate(across()) to batch-
-## rename subjects via pattern detection.
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Quick utility function to use str_replace with mutate(across()) to batch-
 #' rename subjects via pattern detection.
 #'
-#' @param obj_name The target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param target_column The target column; defaults to "subject"
 #' @param pattern The (regex) pattern to be replaced
 #' @param replacement The replacement text. Must be a character
 #'
-#' @return
+#' @return A tibble or data frame in which subjects have been renamed according
+#'   to the \code{pattern} and \code{replacement} supplied by the user.
+#'
+#' @author Vikram B. Baliga
 #'
 #' @family data cleaning functions
 #'
@@ -518,7 +520,8 @@ rename_viewr_characters <- function(obj_name,
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Trim out artifacts and other outliers from the extremes of the tunnel
 #'
-#' @param obj_name The target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param lengths_min Minimum length
 #' @param lengths_max Maximum length
 #' @param widths_min Minimum width
@@ -636,7 +639,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Rotate a tunnel so that perches are approximately aligned
 #'
-#' @param obj_name The target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param all_heights_min Minimum perch height
 #' @param all_heights_max Maximum perch height
 #' @param perch1_len_min Minimum length value of perch 1
@@ -823,7 +827,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Rotate and center a tunnel based on specified landmarks.
 #'
-#' @param obj_name The target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param landmark_one Subject name of the first landmark
 #' @param landmark_two Subject name of the second landmark
 #' @param ... Additional arguments
@@ -1013,7 +1018,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' "Center" the tunnel data, i.e. translation but no rotation
 #'
-#' @param obj_name The target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param axes Names of axes to be centered
 #' @param length_method Method for length
 #' @param width_method Method for width
@@ -1168,7 +1174,8 @@ return(obj_new)
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Select data in the middle X percent of the length of the tunnel
 #'
-#' @param obj_name Target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param desired_percent Measured from the center outwards
 #' @param ... Additional arguments
 #'
@@ -1234,7 +1241,8 @@ select_x_percent <- function(obj_name,
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Quick version of separate_trajectories
 #'
-#' @param obj_name Target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param max_frame_gap Must be numeric
 #' @param ... Additional arguments
 #'
@@ -1295,7 +1303,8 @@ quick_separate_trajectories <- function(obj_name,
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Separate rows of data into separately labeled trajectories.
 #'
-#' @param obj_name Target object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param max_frame_gap If known, a numeric value to use
 #' @param frame_rate_proportion If autodetect, proportion of frame rate as
 #' reference
@@ -1509,7 +1518,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' Specify a minimum span of the (selected) tunnel and then keep trajectories
 #' that are wider than that span and go from one end to the other
 #'
-#' @param obj_name Target viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param span Span to use; must range from 0 to 1
 #' @param ... Additional arguments
 #'
@@ -1597,7 +1607,8 @@ get_full_trajectories <- function(obj_name,
 ## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Chop data into X sections (of equal size) along a specified axis
 #'
-#' @param obj_name Input data
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param axis Chosen axis, must match name of column exactly
 #' @param number_of_sections Total number of sections
 #'
@@ -1648,7 +1659,8 @@ section_tunnel_by <- function(obj_name,
 #' Remove trajectories from a viewr object that contain instances of velocity
 #' known to be spurious.
 #'
-#' @param obj_name Input viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param vel_min Default \code{NULL}. If a numeric is entered, trajectories
 #'   that have at least one observation with velocity less than \code{vel_min}
 #'   are removed.
@@ -1919,7 +1931,8 @@ select_x_percent_M <- function(obj_name,
 #' Run separate_trajectories() with many different frame gaps to help determine
 #' what value to use
 #'
-#' @param obj_name Input viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param loops How many total frame gap entries to consider
 #' @param ... Additional arguments
 #'

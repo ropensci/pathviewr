@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-02 VBB
+## Last updated: 2020-08-31 VBB
 
 ################################## get_velocity ################################
 #' Get instantaneous velocity for subjects
@@ -7,7 +7,8 @@
 #' Velocity (both overall and per-axis) is computed for each row in the data
 #' (see Details)
 #'
-#' @param obj_name Input viewr object
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param time_col Name of the column containing time
 #' @param length_col Name of the column containing length dimension
 #' @param width_col Name of the column containing width dimension
@@ -397,7 +398,8 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' \code{calc_vis_angle()} calculates the visual angles created by lateral
 #' visual stimuli.
 #'
-#' @param obj_name A tibble or data.frame with attribute \code{viewr}
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param vertex_angle The angle (in degrees) subtended by a vertical axis and
 #' the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
 #' \code{vertex_angle)} defaults to 45.
@@ -550,7 +552,8 @@ calc_vis_angle <- function(obj_name,
 #' \code{calc_sf_V()} calculates how the animal percieves the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
-#' @param obj_name A tibble or data.frame with attribute \code{viewr}
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param vertex_angle The angle (in degrees) subtended by a vertical axis and
 #' the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
 #' \code{vertex_angle)} defaults to 45.
@@ -692,7 +695,8 @@ calc_sf_V <- function(obj_name,
 #' \code{calc_sf_box()} calculates how the animal percieves the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
-#' @param obj_name A tibble or data.frame with attribute \code{viewr}
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
 #'
 #' @details \code{calc_sf_box} assumes fixed gaze at the point on the
 #' either side of the tunnel that minimizes the distance to visual stimuli and

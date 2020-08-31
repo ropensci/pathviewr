@@ -1,12 +1,13 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-30 VBB
+## Last updated: 2020-08-31 VBB
 
 ########################### plot_viewr_trajectories ############################
 
 #' Plot each trajectory within a viewr object
 #'
-#' @param obj_name A viewr object that has been passed through
-#'   \code{separate_trajectories()} or \code{get_full_trajectories()}.
+#' @param obj_name #' A viewr object (a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+#'   through \code{separate_trajectories()} or \code{get_full_trajectories()}.
 #' @param plot_axes Which position axes should be plotted? A character vector
 #'   including exactly two of the following choices must be supplied:
 #'   \code{length}, \code{width}, \code{height}. Default is c("length",

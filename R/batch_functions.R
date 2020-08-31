@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-07-12 VBB
+## Last updated: 2020-08-31 VBB
 
 
 ################################# import_batch #################################
@@ -77,7 +77,8 @@ import_batch <- function(file_path_list,
 #' For a list of viewr files, run through the pipeline (from relabel axes
 #' up through get full trajectories, as desired) via clean_viewr()
 #'
-#' @param obj_list A list of viewr files (i.e. a list of tibbles)
+#' @param obj_list A list of viewr files (i.e. a list of tibbles that each have
+#'   attribute \code{pathviewR_steps} that includes \code{"viewr"})
 #' @param ... Arguments to be passed in that specify how this function should
 #' clean files.
 #'
