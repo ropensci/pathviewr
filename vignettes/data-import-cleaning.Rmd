@@ -165,7 +165,10 @@ in identical ways. Moreover, the user may want to redefine how the coorinate
 system itself is defined (i.e. change the location of `(0, 0, 0)` to another
 place within the tunnel.
 
-pathviewR offers three main choices for such standardization:  
+Note that having `(0, 0, 0)` set to the center of the tunnel is required for 
+all subsequent `pathviewR` functions to work.
+
+`pathviewR` offers three main choices for such standardization:  
 
 - `redefine_tunnel_center()`: Sets the location of 0 on any or all axes to a new
 location. See the Help page for this function to see the four different methods
@@ -233,7 +236,8 @@ flydra_centered <-
 Here, we are using `length_method = "middle"` to use the middle of the range of
 "length" data to set length = 0 (a translation), making no change to the width
 axis, and then specifiying that height = 0 should be equal to the value `1.44`
-from the original data (another translation. Again, plotting may help; note that this time, we'll plot length x height (instead of width):
+from the original data (another translation). Again, plotting may help; note
+that this time, we'll plot length x height (instead of width):
 
 ```{r redefine_example_plots}
 ## Quick (base-R) plot of the original data
@@ -247,8 +251,120 @@ plot(flydra_centered$position_length,
      asp = 1)
 ```
 
-Next sections TBD: 
-x 1) rotate vs. standardize vs. redefine center
-2) select x percent 
-3) separate trajectories (and link to another vignette)
-4) get full trajectories
+
+### Selecting a region of interest
+This required step has benefits that are twofold: 1) treatment effects on animal
+movement may only manifest over certain regions of the tunnel, and 2) focusing
+on a subset of the data makes it easier to define explicit trajectories and run
+computations faster.
+
+The region of interest is defined via the function `select_x_percent()`. Once
+tunnel coordinates have been standardized (via one of the function in the
+previous section), `select_x_percent()` then selects the middle `x` percent
+(along the length axis) of the tunnel as the region of interest. For example,
+selecing 50 percent would start from the center of the tunnel and move 25% of
+the tunnel along positive length and 25% along negative length values to then
+select the middle 50% of the tunnel.
+
+Quick examples:
+```{r select_x_examples}
+## Motive data: select the middle 50% of the tunnel as the region of interest
+motive_selected <-
+  motive_rotated %>% select_x_percent(50)
+
+## Quick plot:
+plot(motive_selected$position_length,
+     motive_selected$position_width,
+     asp = 1)
+
+## Flydra data:
+flydra_selected <-
+  flydra_centered %>% select_x_percent(50)
+
+## Quick plot:
+plot(flydra_selected$position_length,
+     flydra_selected$position_width,
+     asp = 1)
+```
+
+### Isolating each trajectory
+The `pathviewR` standard for defining a trajectory is: continuous movement from
+one side of the tunnel to the other over the span of the region of interest.
+Note that this definition does not strictly require linear movement from one end
+to the other; an animal could make several loops inside the region of interest
+within a given trajectory.  
+
+Isolating trajectories is handled via he `separate_trajectories()` function in
+`pathviewR`. Note that a region of interest must be selected beforehand via
+`select_x_percent()`.  
+
+Because cameras may occasionally drop frames, we allow the user to permit some
+relaxation of how stringent the "continuous movement" criterion is. This is
+handled via the `max_frame_gap` argument within `separate_trajectories()`. For
+more details, please see VIGNETTE XXX (LINK HERE).  
+
+In our Motive example, we'll use the automated feature built into the function
+to guesstimate the best `max_frame_gap` allowed. When frame gaps larger than
+`max_frame_gap` are encountered, the function will force the defining of a new
+trajectory. But if frame gaps smaller than `max_frame_gap` are encountered,
+keeping observations within the same trajectory is permitted.
+
+In the Flydra example, we'll simply set `max_frame_gap` to `1` so that no frame
+gaps are allowed (movement must be continuous with no gaps).
+```{r separate_examples}
+motive_labeled <-
+  motive_selected %>% 
+  separate_trajectories(max_frame_gap = "autodetect")
+
+flydra_labeled <-
+  flydra_selected %>% 
+  separate_trajectories(max_frame_gap = 1)
+```
+
+### Retain only complete trajectories
+Now that trajectories have been isolated and labeled, the final cleaning step is
+to retain only the trajectories that completely span from one end of the region
+of interest to the other.
+
+This final step is handled via `pathviewR`'s `get_full_trajectories()`.
+
+There is a built-in "fuzziness" feature: because trajectories may not have
+observations exactly at the beginning or the end of the region of interest, it
+may be necessary to allow trajectories to be slightly shorter than the range of
+the selected region of interst. The `span` parameter of this function handles
+this. By supplying a numeric proportion from `0` to `1`, a user may allow
+trajectories to span that proportion of the selected region. For example,
+setting `span = 0.95` will keep all trajectories that span 95% of the length of
+the selected region of interest. Setting `span = 1` (not recommended) will
+strictly keep trajectories that start and end at the **exact** cut-offs of the
+selected region of interest.
+
+For these reasons, `span`s of `0.99` to `0.95` are generally recommended. The
+best choice ultimately depends on your capture frame rate as well as your own
+judgement. Should you desire to set it lower (which you can), you may instead
+consider using a smaller region of interest (i.e. set the `desired_percent`
+parameter in `select_x_percent()` to be lower).
+
+```{r get_full_examples}
+## Motive
+motive_full <-
+  motive_labeled %>% 
+  get_full_trajectories(span = 0.95)
+
+plot(motive_full$position_length,
+     motive_full$position_width,
+     asp = 1, col = as.factor(motive_full$file_sub_traj))
+
+## Flydra
+flydra_full <-
+  flydra_labeled %>% 
+  get_full_trajectories(span = 0.95)
+
+plot(flydra_full$position_length,
+     flydra_full$position_width,
+     asp = 1, col = as.factor(flydra_full$file_sub_traj))
+```
+
+That's all!
+
+🐢
