@@ -17,7 +17,8 @@ get_velocity(
 )
 }
 \arguments{
-\item{obj_name}{Input viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{time_col}{Name of the column containing time}
 

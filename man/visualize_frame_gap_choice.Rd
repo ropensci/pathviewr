@@ -8,7 +8,8 @@ what value to use}
 visualize_frame_gap_choice(obj_name, loops = 20, ...)
 }
 \arguments{
-\item{obj_name}{Input viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{loops}{How many total frame gap entries to consider}
 

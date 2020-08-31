@@ -7,7 +7,8 @@
 select_x_percent(obj_name, desired_percent = 33, ...)
 }
 \arguments{
-\item{obj_name}{Target viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{desired_percent}{Measured from the center outwards}
 

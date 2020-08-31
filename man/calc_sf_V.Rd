@@ -14,7 +14,8 @@ calc_sf_V(
 )
 }
 \arguments{
-\item{obj_name}{A tibble or data.frame with attribute \code{viewr}}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{gnd_plane}{The vertical distance (in meters) between the bottom of the
 "V" and the horizontal plane through the origin (0,0,0).}

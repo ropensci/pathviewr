@@ -7,7 +7,8 @@
 calc_sf_box(obj_name)
 }
 \arguments{
-\item{obj_name}{A tibble or data.frame with attribute \code{viewr}}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 }
 \value{
 A tibble or data.frame with added variables \code{min_dist_pos} and

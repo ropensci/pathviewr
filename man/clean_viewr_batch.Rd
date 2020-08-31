@@ -8,7 +8,8 @@ up through get full trajectories, as desired) via clean_viewr()}
 clean_viewr_batch(obj_list, ...)
 }
 \arguments{
-\item{obj_list}{A list of viewr files (i.e. a list of tibbles)}
+\item{obj_list}{A list of viewr files (i.e. a list of tibbles that each have
+attribute \code{pathviewR_steps} that includes \code{"viewr"})}
 
 \item{...}{Arguments to be passed in that specify how this function should
 clean files.}

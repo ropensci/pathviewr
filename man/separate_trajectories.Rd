@@ -14,7 +14,8 @@ separate_trajectories(
 )
 }
 \arguments{
-\item{obj_name}{Target object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{max_frame_gap}{If known, a numeric value to use}
 

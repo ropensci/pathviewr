@@ -12,7 +12,8 @@ standardize_tunnel(
 )
 }
 \arguments{
-\item{obj_name}{The target viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{landmark_one}{Subject name of the first landmark}
 

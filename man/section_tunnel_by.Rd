@@ -7,7 +7,8 @@
 section_tunnel_by(obj_name, axis = "position_length", number_of_sections = 20)
 }
 \arguments{
-\item{obj_name}{Input data}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{axis}{Chosen axis, must match name of column exactly}
 

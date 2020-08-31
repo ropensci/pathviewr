@@ -8,7 +8,8 @@ that are wider than that span and go from one end to the other}
 get_full_trajectories(obj_name, span = 0.8, ...)
 }
 \arguments{
-\item{obj_name}{Target viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{span}{Span to use; must range from 0 to 1}
 

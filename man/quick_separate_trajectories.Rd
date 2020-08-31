@@ -7,7 +7,8 @@
 quick_separate_trajectories(obj_name, max_frame_gap = 1, ...)
 }
 \arguments{
-\item{obj_name}{Target viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{max_frame_gap}{Must be numeric}
 

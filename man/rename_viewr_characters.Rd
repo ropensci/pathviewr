@@ -13,7 +13,8 @@ rename_viewr_characters(
 )
 }
 \arguments{
-\item{obj_name}{The target viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{target_column}{The target column; defaults to "subject"}
 
@@ -22,7 +23,8 @@ rename_viewr_characters(
 \item{replacement}{The replacement text. Must be a character}
 }
 \value{
-
+A tibble or data frame in which subjects have been renamed according
+to the \code{pattern} and \code{replacement} supplied by the user.
 }
 \description{
 Quick utility function to use str_replace with mutate(across()) to batch-
@@ -41,5 +43,8 @@ Other data cleaning functions:
 \code{\link{standardize_tunnel}()},
 \code{\link{trim_tunnel_outliers}()},
 \code{\link{visualize_frame_gap_choice}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{data cleaning functions}

@@ -19,7 +19,8 @@ clean_viewr(
 )
 }
 \arguments{
-\item{obj_name}{The viewr object to be processed}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{relabel_viewr_axes}{default TRUE,}
 

@@ -7,7 +7,8 @@
 exclude_by_velocity(obj_name, vel_min = NULL, vel_max = NULL)
 }
 \arguments{
-\item{obj_name}{Input viewr object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{vel_min}{Default \code{NULL}. If a numeric is entered, trajectories
 that have at least one observation with velocity less than \code{vel_min}

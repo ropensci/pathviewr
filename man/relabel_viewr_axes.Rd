@@ -14,7 +14,8 @@ relabel_viewr_axes(
 )
 }
 \arguments{
-\item{obj_name}{A tibble or data.frame with attribute \code{viewr}}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{tunnel_length}{The dimension that corresponds to tunnel length. Set to
 \code{tunnel_length = "_z"} by default. Argument should contain a character

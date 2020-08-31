@@ -7,8 +7,8 @@
 get_header_viewr(obj_name, ...)
 }
 \arguments{
-\item{obj_name}{A tibble imported via \code{pathviewR}'s \code{read_}
-functions with value \code{viewr} appearing in the attribute
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}
 \code{pathviewR_steps}}
 
 \item{...}{Additional arguments that may be passed to other \code{pathviewR}

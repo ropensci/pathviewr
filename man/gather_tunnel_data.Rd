@@ -7,9 +7,8 @@
 gather_tunnel_data(obj_name, NA_drop = TRUE, ...)
 }
 \arguments{
-\item{obj_name}{A tibble or data.frame with attribute \code{viewr} that has
-ideally been passed through \code{relabel_viewr_axes()}. See Details for
-formatting requirements.}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{NA_drop}{Should rows with NAs be dropped? Defaults to \code{TRUE}}
 

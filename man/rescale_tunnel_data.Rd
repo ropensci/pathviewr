@@ -7,7 +7,8 @@
 rescale_tunnel_data(obj_name, original_scale = 0.5, desired_scale = 1, ...)
 }
 \arguments{
-\item{obj_name}{Input \code{viewr} object}
+\item{obj_name}{The input viewr object; a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{original_scale}{The original scale at which data were exported. See
 Details if unknown.}

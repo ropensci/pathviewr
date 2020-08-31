@@ -11,8 +11,9 @@ plot_viewr_trajectories(
 )
 }
 \arguments{
-\item{obj_name}{A viewr object that has been passed through
-\code{separate_trajectories()} or \code{get_full_trajectories()}.}
+\item{obj_name}{#' A viewr object (a tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+through \code{separate_trajectories()} or \code{get_full_trajectories()}.}
 
 \item{plot_axes}{Which position axes should be plotted? A character vector
 including exactly two of the following choices must be supplied:
