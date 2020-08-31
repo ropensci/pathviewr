@@ -1545,7 +1545,7 @@ get_full_trajectories <- function(obj_name,
   summary_obj <-
     obj_name %>%
     dplyr::group_by(file_sub_traj) %>%
-    dplyr::summarise(traj_length = n(),
+    dplyr::summarise(traj_length = dplyr::n(),
                      start_length = position_length[1],
                      end_length = position_length[traj_length],
                      length_diff = abs(end_length - start_length),
