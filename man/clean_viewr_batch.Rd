@@ -27,4 +27,7 @@ Other batch functions:
 \code{\link{import_and_clean_batch}()},
 \code{\link{import_batch}()}
 }
+\author{
+Vikram B. Baliga
+}
 \concept{batch functions}

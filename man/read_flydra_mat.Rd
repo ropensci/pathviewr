@@ -39,4 +39,7 @@ Other data import functions:
 \code{\link{import_batch}()},
 \code{\link{read_motive_csv}()}
 }
+\author{
+Vikram B. Baliga
+}
 \concept{data import functions}

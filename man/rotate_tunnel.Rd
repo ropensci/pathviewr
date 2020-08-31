@@ -46,10 +46,25 @@ rotate_tunnel(
 \item{...}{Additional arguments that may be passed}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+been rotated according to user specifications.
 }
 \description{
-Rotate a tunnel so that perches are approximately aligned
+The rotation is applied about the height axis and affects tunnel length and
+width only, i.e. no rotation of height.
+}
+\details{
+The user first estimates the locations of the perches by specifying
+bounds for where each perch is located. The function then computes the
+center of each bounding box and estimates that to be the midpoint of each
+perch. Then the center point of the tunnel (center between the perch
+midpoints) is estimated. The angle between perch1_center,
+tunnel_center_point, and arbitrary point along the length axis
+(tunnel_center_point - 1 on length) is estimated. That angle is then used
+to rotate the data, again only in the length and width dimensions. Height
+is standardized by (approximate) perch height; values greater than 0 are
+above the perch and values less than 0 are below the perch level.
 }
 \seealso{
 Other data cleaning functions: 
@@ -68,6 +83,9 @@ Other data cleaning functions:
 Other tunnel standardization functions: 
 \code{\link{redefine_tunnel_center}()},
 \code{\link{standardize_tunnel}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{data cleaning functions}
 \concept{tunnel standardization functions}

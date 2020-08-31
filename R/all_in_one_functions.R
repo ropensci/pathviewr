@@ -3,26 +3,44 @@
 
 
 ################################# clean_viewr ##################################
-## run through the pipeline for a single viewr object that has already been
-## imported
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' All-in-one function to clean imported objects
+#'
 #' For an imported viewr object, run through the cleaning pipeline as desired
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param relabel_viewr_axes default TRUE,
-#' @param gather_tunnel_data default TRUE,
-#' @param trim_tunnel_outliers default TRUE,
-#' @param standardization_option default "rotate_tunnel",
-#' @param get_velocity default TRUE,
-#' @param select_x_percent default TRUE,
-#' @param rename_viewr_characters default FALSE,
-#' @param separate_trajectories default TRUE,
-#' @param get_full_trajectories default TRUE,
+#' @param relabel_viewr_axes default TRUE, should axes be relabeled?
+#' @param gather_tunnel_data default TRUE, should tunnel data be gathered?
+#' @param trim_tunnel_outliers default TRUE, outliers be trimmed?
+#' @param standardization_option default "rotate_tunnel"; which standardization
+#'   option should be used? See Details for more.
+#' @param get_velocity default TRUE, should velocity be computed?
+#' @param select_x_percent default TRUE, should a region of interest be
+#'   selected?
+#' @param rename_viewr_characters default FALSE, should subjects be renamed?
+#' @param separate_trajectories default TRUE, should trajectories be defined?
+#' @param get_full_trajectories default TRUE, should only full trajectories be
+#'   retained.
 #' @param ... Additional arugments passed to any of the corresponding functions
 #'
-#' @return
+#' @details Each argument corresponds to a standalone function in
+#'   \code{pathviewR}. E.g. the parameter \code{relabel_viewr_axes} allows a
+#'   user to choose whether \code{pathviewR::relabel_viewr_axes()} is run
+#'   internally. Should the user desire to use any non-default parameter values
+#'   for any functions included here, they should be supplied to this function
+#'   as additional arugments formatted exactly as they would appear in their
+#'   corresponding function(s). E.g. if the "autodetect" feature in
+#'   \code{pathviewR::separate_trajectories()} is desired, add an argument
+#'   \code{max_frame_gap = "autodetect"} to the arguments supplied to this
+#'   function.
+#'
+#' @return A viewr object (tibble or data.frame with attribute \code{pathviewR_steps} that includes \code{"viewr"}) that has passed through several \code{pathviewR} functions as desired by the user, resulting in data that have been cleaned and ready for analyses.
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family all in one functions
+#'
 #' @export
 
 clean_viewr <- function(obj_name,
@@ -263,23 +281,22 @@ or by removing the extraneous argument(s)")
 ## Use all of the preceding functions to construct an all-in-one function for
 ## ease of use.
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
-#' Import a file and run through as many cleaning steps as desired.
+#' Import + clean_viewr()
+#'
+#' Import a file and then, akin to \code{clean_viewr}, run through as many
+#' cleaning steps as desired.
 #'
 #' @param file_name Target file
 #' @param file_id Optional
-#' @param relabel_viewr_axes default TRUE,
-#' @param gather_tunnel_data default TRUE,
-#' @param trim_tunnel_outliers default TRUE,
-#' @param standardization_option default TRUE,
-#' @param get_velocity default TRUE,
-#' @param select_x_percent default TRUE,
-#' @param rename_viewr_characters default FALSE,
-#' @param separate_trajectories default TRUE,
-#' @param get_full_trajectories default TRUE,
+#' @inheritParams clean_viewr
 #' @param ... Additional arguments passed to the corresponding functions.
 #'
-#' @return
+#' @inherit clean_viewr return details
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family all in one functions
+#'
 #' @export
 
 import_and_clean_viewr <- function(file_name,

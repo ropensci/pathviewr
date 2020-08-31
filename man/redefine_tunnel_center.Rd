@@ -37,10 +37,23 @@ redefine_tunnel_center(
 \item{...}{Additional arguments}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+been translated according to the user's inputs, generally with \code{(0, 0,
+  0,)} being relocated to the center of the tunnel.
 }
 \description{
-"Center" the tunnel data, i.e. translation but no rotation
+Redefine the center \code{(0, 0, 0,)} of the tunnel data via translating
+positions along axes.
+}
+\details{
+For each \code{_method} argument, there are four choices of how centering is
+handled: 1) "original" keeps axis as is -- this is how width and (possibly)
+height should be handled for flydra data; 2) "middle" is the middle of the
+range of data: (min + max) / 2; 3) "median" is the median value of data on
+that axis. Probably not recommended; and 4) "user-defined" lets the user
+customize where the (0, 0, 0) point in the tunnel will end up. Each
+\code{_zero} argument is subtracted from its corresponding axis' data.
 }
 \seealso{
 Other data cleaning functions: 
@@ -59,6 +72,9 @@ Other data cleaning functions:
 Other tunnel standardization functions: 
 \code{\link{rotate_tunnel}()},
 \code{\link{standardize_tunnel}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{data cleaning functions}
 \concept{tunnel standardization functions}

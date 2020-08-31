@@ -34,10 +34,13 @@ trim_tunnel_outliers(
 \item{...}{Additional arguments}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+the specified ranges has been excluded.
 }
 \description{
-Trim out artifacts and other outliers from the extremes of the tunnel
+The user provides estimates of min and max values of data. This function then
+trims out anything beyond these estimates.
 }
 \seealso{
 Other data cleaning functions: 
@@ -52,5 +55,8 @@ Other data cleaning functions:
 \code{\link{separate_trajectories}()},
 \code{\link{standardize_tunnel}()},
 \code{\link{visualize_frame_gap_choice}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{data cleaning functions}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/all_in_one_functions.R
 \name{import_and_clean_viewr}
 \alias{import_and_clean_viewr}
-\title{Import a file and run through as many cleaning steps as desired.}
+\title{Import + clean_viewr()}
 \usage{
 import_and_clean_viewr(
   file_name,
@@ -24,29 +24,53 @@ import_and_clean_viewr(
 
 \item{file_id}{Optional}
 
-\item{relabel_viewr_axes}{default TRUE,}
+\item{relabel_viewr_axes}{default TRUE, should axes be relabeled?}
 
-\item{gather_tunnel_data}{default TRUE,}
+\item{gather_tunnel_data}{default TRUE, should tunnel data be gathered?}
 
-\item{trim_tunnel_outliers}{default TRUE,}
+\item{trim_tunnel_outliers}{default TRUE, outliers be trimmed?}
 
-\item{standardization_option}{default TRUE,}
+\item{standardization_option}{default "rotate_tunnel"; which standardization
+option should be used? See Details for more.}
 
-\item{get_velocity}{default TRUE,}
+\item{get_velocity}{default TRUE, should velocity be computed?}
 
-\item{select_x_percent}{default TRUE,}
+\item{select_x_percent}{default TRUE, should a region of interest be
+selected?}
 
-\item{rename_viewr_characters}{default FALSE,}
+\item{rename_viewr_characters}{default FALSE, should subjects be renamed?}
 
-\item{separate_trajectories}{default TRUE,}
+\item{separate_trajectories}{default TRUE, should trajectories be defined?}
 
-\item{get_full_trajectories}{default TRUE,}
+\item{get_full_trajectories}{default TRUE, should only full trajectories be
+retained.}
 
 \item{...}{Additional arguments passed to the corresponding functions.}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute \code{pathviewR_steps} that includes \code{"viewr"}) that has passed through several \code{pathviewR} functions as desired by the user, resulting in data that have been cleaned and ready for analyses.
 }
 \description{
-Import a file and run through as many cleaning steps as desired.
+Import a file and then, akin to \code{clean_viewr}, run through as many
+cleaning steps as desired.
 }
+\details{
+Each argument corresponds to a standalone function in
+\code{pathviewR}. E.g. the parameter \code{relabel_viewr_axes} allows a
+user to choose whether \code{pathviewR::relabel_viewr_axes()} is run
+internally. Should the user desire to use any non-default parameter values
+for any functions included here, they should be supplied to this function
+as additional arugments formatted exactly as they would appear in their
+corresponding function(s). E.g. if the "autodetect" feature in
+\code{pathviewR::separate_trajectories()} is desired, add an argument
+\code{max_frame_gap = "autodetect"} to the arguments supplied to this
+function.
+}
+\seealso{
+Other all in one functions: 
+\code{\link{clean_viewr}()}
+}
+\author{
+Vikram B. Baliga
+}
+\concept{all in one functions}

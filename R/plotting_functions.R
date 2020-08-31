@@ -1,6 +1,73 @@
 ## Part of the pathviewR package
 ## Last updated: 2020-08-31 VBB
 
+
+########################### visualize_frame_gap_choice #########################
+## run separate_trajectories with many different frame gaps to help determine
+## what value to use
+## spits out table and plot to guide decision
+
+## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Run separate_trajectories() with many different frame gaps to help determine
+#' what value to use
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#' @param loops How many total frame gap entries to consider
+#' @param ... Additional arguments
+#'
+#' @return
+#' @author Melissa S. Armstrong and Vikram B. Baliga
+#' @family data cleaning functions
+#' @family functions that define or clean trajectories
+#' @export
+
+visualize_frame_gap_choice <- function(obj_name,
+                                       loops = 20,
+                                       ...){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  # make a bunch of empty vectors to dump info
+  mfg <- vector("list", loops)
+  cts <- vector("list", loops)
+  trajectory_count <- vector(mode = "double", loops)
+  frame_gap_allowed <- vector(mode = "double", loops)
+
+  # loop through user defined number of max frame gap values
+  i <- 1
+  while (i < loops + 1) {
+    mfg[[i]] = quick_separate_trajectories(obj_name, max_frame_gap = i)
+    cts[[i]] = count(mfg[[i]], traj_id)
+    trajectory_count[i] = nrow(cts[[i]])
+    frame_gap_allowed[i] = i
+    i = i +1
+  }
+
+  ## Collect the info on max frame gaps allowed vs. trajectory counts
+  mfg_tib <- tibble::tibble(frame_gap_allowed,
+                            trajectory_count)
+
+  ## Find the curve elbow point via `find_curve_elbow()`
+  max_fg <- find_curve_elbow(mfg_tib,
+                             export_type = "row_num",
+                             plot_curve = FALSE)
+
+  ## Paste filename into export tibble
+  obj_name_arg <- deparse(substitute(obj_name))
+  mfg_tib$file_id <- as.character(obj_name_arg)
+
+  mfg_plot <- plot(mfg_tib$frame_gap_allowed,
+                   mfg_tib$trajectory_count); graphics::abline(v = max_fg)
+
+  return(list(mfg_tib, mfg_plot))
+
+}
+
+
 ########################### plot_viewr_trajectories ############################
 
 #' Plot each trajectory within a viewr object

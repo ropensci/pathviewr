@@ -51,5 +51,8 @@ Other batch functions:
 \code{\link{clean_viewr_batch}()},
 \code{\link{import_and_clean_batch}()}
 }
+\author{
+Vikram B. Baliga
+}
 \concept{batch functions}
 \concept{data import functions}

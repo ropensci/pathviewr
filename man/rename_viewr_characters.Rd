@@ -2,8 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{rename_viewr_characters}
 \alias{rename_viewr_characters}
-\title{Quick utility function to use str_replace with mutate(across()) to batch-
-rename subjects via pattern detection.}
+\title{Rename subjects in the data via pattern detection}
 \usage{
 rename_viewr_characters(
   obj_name,

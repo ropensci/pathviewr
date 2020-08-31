@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{standardize_tunnel}
 \alias{standardize_tunnel}
-\title{Rotate and center a tunnel based on specified landmarks.}
+\title{Rotate and center a tunnel based on landmarks}
 \usage{
 standardize_tunnel(
   obj_name,
@@ -22,10 +22,22 @@ standardize_tunnel(
 \item{...}{Additional arguments}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+been rotated according to the positions of the landmarks in the data.
 }
 \description{
-Rotate and center a tunnel based on specified landmarks.
+Similar to \code{rotate_tunnel()}; rotate and center tunnel data based on
+landmarks (specific subjects in the data).
+}
+\details{
+The center point of the tunnel is estimated as the point between the
+two landmarks. The angle between landmark_one, tunnel_center_point, and
+arbitrary point along the length axis (tunnel_center_point - 1 on length)
+is estimated. That angle is then used to rotate the data, again only in the
+length and width dimensions. Height is standardized by average landmark
+heigh; values greater than 0 are above the landmarks and values less than 0
+are below the landmark level.
 }
 \seealso{
 Other data cleaning functions: 
@@ -44,6 +56,9 @@ Other data cleaning functions:
 Other tunnel standardization functions: 
 \code{\link{redefine_tunnel_center}()},
 \code{\link{rotate_tunnel}()}
+}
+\author{
+Vikram B. Baliga
 }
 \concept{data cleaning functions}
 \concept{tunnel standardization functions}

@@ -41,5 +41,8 @@ Other functions that define or clean trajectories:
 \code{\link{separate_trajectories}()},
 \code{\link{visualize_frame_gap_choice}()}
 }
+\author{
+Vikram B. Baliga
+}
 \concept{data cleaning functions}
 \concept{functions that define or clean trajectories}

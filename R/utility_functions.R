@@ -190,6 +190,8 @@ relabel_viewr_axes <- function(obj_name,
 #'
 #' @export
 #'
+#' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
 #'
 #' @examples
@@ -442,6 +444,8 @@ rescale_tunnel_data <- function(obj_name,
 
 ########################### rename_viewr_characters ############################
 
+#' Rename subjects in the data via pattern detection
+#'
 #' Quick utility function to use str_replace with mutate(across()) to batch-
 #' rename subjects via pattern detection.
 #'
@@ -511,14 +515,11 @@ rename_viewr_characters <- function(obj_name,
 }
 
 ############################ trim_tunnel_outliers ##############################
-## Trim out artifacts and other outliers from the extremes of the tunnel
-## User provides estimates of min and max values of data and function then
-## trims out anything beyond these estimates.
-## I highly recommend plotting data beforehand and checking that estimates
-## make sense!!!!!!
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Trim out artifacts and other outliers from the extremes of the tunnel
+#'
+#' The user provides estimates of min and max values of data. This function then
+#' trims out anything beyond these estimates.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
@@ -530,8 +531,14 @@ rename_viewr_characters <- function(obj_name,
 #' @param heights_max Maximum height
 #' @param ... Additional arguments
 #'
-#' @return
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+#'   the specified ranges has been excluded.
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
+#'
 #' @export
 
 trim_tunnel_outliers <- function(obj_name,
@@ -621,23 +628,11 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 
 
 ################################ rotate_tunnel #################################
-## Function to rotate a tunnel so that perches are approximately aligned
-## Rotation is applied to length and width data
-## The user first estimates the locations of the perches by specifying
-## bounds for where each perch is located.
-## The function then computes the center of each bounding box and estimates
-## that to be the midpoint of each perch
-## Then the center point of the tunnel (center between the perch midpoints) is
-## estimated
-## The angle between perch1_center, tunnel_center_point, and arbitrary point
-## along the length axis (tunnel_center_point - 1 on length) is estimated.
-## That angle is then used to rotate the data, again only in the length and
-## width dimensions. Height is standardized by (approximate) perch height;
-## values greater than 0 are above the perch and values less than 0 are below
-## the perch level.
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Rotate a tunnel so that perches are approximately aligned
+#'
+#' The rotation is applied about the height axis and affects tunnel length and
+#' width only, i.e. no rotation of height.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
@@ -653,9 +648,26 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param perch2_wid_max Maximum witdh value of perch 2
 #' @param ... Additional arguments that may be passed
 #'
-#' @return
+#' @details The user first estimates the locations of the perches by specifying
+#'   bounds for where each perch is located. The function then computes the
+#'   center of each bounding box and estimates that to be the midpoint of each
+#'   perch. Then the center point of the tunnel (center between the perch
+#'   midpoints) is estimated. The angle between perch1_center,
+#'   tunnel_center_point, and arbitrary point along the length axis
+#'   (tunnel_center_point - 1 on length) is estimated. That angle is then used
+#'   to rotate the data, again only in the length and width dimensions. Height
+#'   is standardized by (approximate) perch height; values greater than 0 are
+#'   above the perch and values less than 0 are below the perch level.
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+#'   been rotated according to user specifications.
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
 #' @family tunnel standardization functions
+#'
 #' @export
 
 rotate_tunnel <- function(obj_name,
@@ -820,12 +832,11 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 
 
 ############################# standardize_tunnel ###############################
-## Alternative to rotate_tunnel. Writing a version here where perches (or other
-## landmarks) are coded as rigid bodies from the get-go.
-##
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
-#' Rotate and center a tunnel based on specified landmarks.
+#' Rotate and center a tunnel based on landmarks
+#'
+#' Similar to \code{rotate_tunnel()}; rotate and center tunnel data based on
+#' landmarks (specific subjects in the data).
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
@@ -833,9 +844,23 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param landmark_two Subject name of the second landmark
 #' @param ... Additional arguments
 #'
-#' @return
+#' @details The center point of the tunnel is estimated as the point between the
+#'   two landmarks. The angle between landmark_one, tunnel_center_point, and
+#'   arbitrary point along the length axis (tunnel_center_point - 1 on length)
+#'   is estimated. That angle is then used to rotate the data, again only in the
+#'   length and width dimensions. Height is standardized by average landmark
+#'   heigh; values greater than 0 are above the landmarks and values less than 0
+#'   are below the landmark level.
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+#'   been rotated according to the positions of the landmarks in the data.
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
 #' @family tunnel standardization functions
+#'
 #' @export
 
 standardize_tunnel <- function(obj_name,
@@ -1004,19 +1029,11 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 }
 
 ############################# redefine_tunnel_center ###########################
-## "Center" the tunnel data, i.e. translation but no rotation
-## This is primarily designed for use with flydra data
-## Four choices of how centering is handled:
-## "original" keeps axis as is -- this is how width and (possibly) height should
-## be handled for flydra data
-## "middle" is the middle of the range of data: (min + max) / 2
-## "median" is the median value of data on that axis. Probably not recommended
-## "user-defined" lets the user customize where the (0, 0, 0) point in the
-## tunnel will end up. Each *_zero argument is subtracted from its corresponding
-## axis' data.
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' "Center" the tunnel data, i.e. translation but no rotation
+#'
+#' Redefine the center \code{(0, 0, 0,)} of the tunnel data via translating
+#' positions along axes.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
@@ -1029,9 +1046,25 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param height_zero User-defined value
 #' @param ... Additional arguments
 #'
-#' @return
+#' @details
+#' For each \code{_method} argument, there are four choices of how centering is
+#' handled: 1) "original" keeps axis as is -- this is how width and (possibly)
+#' height should be handled for flydra data; 2) "middle" is the middle of the
+#' range of data: (min + max) / 2; 3) "median" is the median value of data on
+#' that axis. Probably not recommended; and 4) "user-defined" lets the user
+#' customize where the (0, 0, 0) point in the tunnel will end up. Each
+#' \code{_zero} argument is subtracted from its corresponding axis' data.
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+#'   been translated according to the user's inputs, generally with \code{(0, 0,
+#'   0,)} being relocated to the center of the tunnel.
+#'
+#' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
 #' @family tunnel standardization functions
+#'
 #' @export
 
 redefine_tunnel_center <-
@@ -1180,6 +1213,7 @@ return(obj_new)
 #' @param ... Additional arguments
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family data cleaning functions
 #' @export
 
@@ -1247,6 +1281,7 @@ select_x_percent <- function(obj_name,
 #' @param ... Additional arguments
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
 #' @export
@@ -1313,6 +1348,7 @@ quick_separate_trajectories <- function(obj_name,
 #' @param ... Additional arguments
 #'
 #' @return
+#' @author Vikram B. Baliga and Melissa S. Armstrong
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
 #' @export
@@ -1524,6 +1560,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' @param ... Additional arguments
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
 #' @export
@@ -1921,67 +1958,3 @@ select_x_percent_M <- function(obj_name,
   return(obj_name)
 }
 
-
-########################### visualize_frame_gap_choice #########################
-## run separate_trajectories with many different frame gaps to help determine
-## what value to use
-## spits out table and plot to guide decision
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
-#' Run separate_trajectories() with many different frame gaps to help determine
-#' what value to use
-#'
-#' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param loops How many total frame gap entries to consider
-#' @param ... Additional arguments
-#'
-#' @return
-#' @family data cleaning functions
-#' @family functions that define or clean trajectories
-#' @export
-
-visualize_frame_gap_choice <- function(obj_name,
-                                       loops = 20,
-                                       ...){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  # make a bunch of empty vectors to dump info
-  mfg <- vector("list", loops)
-  cts <- vector("list", loops)
-  trajectory_count <- vector(mode = "double", loops)
-  frame_gap_allowed <- vector(mode = "double", loops)
-
-  # loop through user defined number of max frame gap values
-  i <- 1
-  while (i < loops + 1) {
-    mfg[[i]] = quick_separate_trajectories(obj_name, max_frame_gap = i)
-    cts[[i]] = count(mfg[[i]], traj_id)
-    trajectory_count[i] = nrow(cts[[i]])
-    frame_gap_allowed[i] = i
-    i = i +1
-  }
-
-  ## Collect the info on max frame gaps allowed vs. trajectory counts
-  mfg_tib <- tibble::tibble(frame_gap_allowed,
-                            trajectory_count)
-
-  ## Find the curve elbow point via `find_curve_elbow()`
-  max_fg <- find_curve_elbow(mfg_tib,
-                             export_type = "row_num",
-                             plot_curve = FALSE)
-
-  ## Paste filename into export tibble
-  obj_name_arg <- deparse(substitute(obj_name))
-  mfg_tib$file_id <- as.character(obj_name_arg)
-
-  mfg_plot <- plot(mfg_tib$frame_gap_allowed,
-                   mfg_tib$trajectory_count); graphics::abline(v = max_fg)
-
-  return(list(mfg_tib, mfg_plot))
-
-}

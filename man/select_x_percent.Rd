@@ -34,4 +34,7 @@ Other data cleaning functions:
 \code{\link{trim_tunnel_outliers}()},
 \code{\link{visualize_frame_gap_choice}()}
 }
+\author{
+Vikram B. Baliga
+}
 \concept{data cleaning functions}

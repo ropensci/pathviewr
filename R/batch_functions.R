@@ -21,6 +21,7 @@
 #' @param ... Additional arguments (may remove this if needed)
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family data import functions
 #' @family batch functions
 #' @export
@@ -83,6 +84,7 @@ import_batch <- function(file_path_list,
 #' clean files.
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family batch functions
 #' @export
 
@@ -120,6 +122,7 @@ clean_viewr_batch <- function(obj_list,
 #' @param ... Additional arguments to specify how data should be cleaned.
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family data import functions
 #' @family batch functions
 #' @export
@@ -181,6 +184,7 @@ import_and_clean_batch <- function(file_path_list,
 #' @param obj_list A list of viewr objects
 #'
 #' @return
+#' @author Vikram B. Baliga
 #' @family batch functions
 #' @export
 

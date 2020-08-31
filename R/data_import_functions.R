@@ -336,6 +336,7 @@ problems.",
 #'   \code{read_motive_csv()} this function produces "tidy" data that have
 #'   already been gathered into key-value pairs based on subject.
 #'
+#' @author Vikram B. Baliga
 #' @family data import functions
 #' @seealso \code{\link{read_motive_csv}} for importing Motive data
 #'
@@ -516,7 +517,6 @@ read_flydra_mat <-
 #'     position_width_col = 6,
 #'     position_height_col = 4
 #'   )
-
 
 as_viewr <- function(obj_name,
                      frame_rate = 100,
