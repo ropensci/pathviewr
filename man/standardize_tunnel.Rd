@@ -19,7 +19,7 @@ standardize_tunnel(
 
 \item{landmark_two}{Subject name of the second landmark}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute

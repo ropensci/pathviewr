@@ -2,8 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{get_full_trajectories}
 \alias{get_full_trajectories}
-\title{Specify a minimum span of the (selected) tunnel and then keep trajectories
-that are wider than that span and go from one end to the other}
+\title{Retain trajectories that span a selected region of interest}
 \usage{
 get_full_trajectories(obj_name, span = 0.8, ...)
 }
@@ -11,16 +10,35 @@ get_full_trajectories(obj_name, span = 0.8, ...)
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{span}{Span to use; must range from 0 to 1}
+\item{span}{Span to use; must be numeric and between 0 and 1}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which only
+trajectories that span the region of interest are retained. Data are
+labeled by direction  (either "leftwards" or "rightwards") with respect to
+their starting and ending \code{position_length} values in the
+\code{direction} column.
 }
 \description{
-Specify a minimum span of the (selected) tunnel and then keep trajectories
-that are wider than that span and go from one end to the other
+Specify a minimum span of the selected region of interest and then keep
+trajectories that are wider than that span and go from one end to the other
+of the region.
+}
+\details{
+Because trajectories may not have observations exactly at the
+beginning or the end of the region of interest, it may be necessary to allow
+trajectories to be slightly shorter than the range of the selected region of
+interst. The \code{span} parameter of this function handles this. By
+supplying a numeric proportion from 0 to 1, a user may allow trajectories to
+span that proportion of the selected region. For example, setting \code{span
+= 0.95} will keep all trajectories that span 95\% of the length of the
+selected region of interest. Setting \code{span = 1} (not recommended) will
+strictly keep trajectories that start and end at the exact cut-offs of the
+selected region of interest. For these reasons, \code{span}s of 0.99 to 0.95
+are generally recommended.
 }
 \seealso{
 Other data cleaning functions: 

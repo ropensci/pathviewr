@@ -17,22 +17,53 @@ separate_trajectories(
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{max_frame_gap}{If known, a numeric value to use}
+\item{max_frame_gap}{Default 1; defines the largest permissible gap in data
+before a new trajectory is forced to be defined. Can be either a numeric
+value or "autodetect". See Details for more.}
 
-\item{frame_rate_proportion}{If autodetect, proportion of frame rate as
-reference}
+\item{frame_rate_proportion}{Default 0.10; if \code{max_frame_gap =
+  "autodetect"}, proportion of frame rate to be used as a reference (see
+Details).}
 
-\item{frame_gap_messaging}{Should frame gaps be reported in the console?}
+\item{frame_gap_messaging}{Default FALSE; should frame gaps be reported in
+the console?}
 
-\item{frame_gap_plotting}{Should frame gap diagnostic plots be shown?}
+\item{frame_gap_plotting}{Default FALSE; should frame gap diagnostic plots be
+shown?}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
+\code{file_sub_traj} is added, which labels trajectories within the data by
+concatenaing file name, subject name, and a trajectory number (all
+separated by underscores).
 }
 \description{
 Separate rows of data into separately labeled trajectories.
+}
+\details{
+This function is designed to separate rows of data into separately
+labeled trajectories.
+
+The \code{max_frame_gap} parameter determines how trajectories will be
+separated. If numeric, the function uses the supplied value as the largest
+permissible gap in frames before a new trajectory is defined.
+
+If \code{max_frame_gap = "autodetect"} is used, the function
+attempts to guesstimate the best value(s) of \code{max_frame_gap}. This is
+performed separately for each subject in the data set, i.e. as many
+\code{max_frame_gap} values will be estimated as there are unique subjects.
+The highest possible value of any \code{max_frame_gap} is first set as a
+proportion of the capture frame rate, as defined by the
+\code{frame_rate_proportion} parameter (default 0.10). For each subject, a
+plot of total trajectory counts vs. max frame gap values is created
+internally (but can be plotted via setting
+\code{frame_gap_plotting = TRUE}). As larger max frame gaps are allowed,
+trajectory count will necessarily decrease but may reach a value that
+likely represents the "best" option. The "elbow" of that plot is then used
+to find an estimate of the best max frame gap value to use.
 }
 \seealso{
 Other data cleaning functions: 

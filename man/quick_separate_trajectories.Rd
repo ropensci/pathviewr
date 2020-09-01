@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{quick_separate_trajectories}
 \alias{quick_separate_trajectories}
-\title{Quick version of separate_trajectories}
+\title{Quick version of separate_trajectories()}
 \usage{
 quick_separate_trajectories(obj_name, max_frame_gap = 1, ...)
 }
@@ -10,15 +10,30 @@ quick_separate_trajectories(obj_name, max_frame_gap = 1, ...)
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{max_frame_gap}{Must be numeric}
+\item{max_frame_gap}{Unlike the corresponding parameter in
+\code{separate_trajectories}, must be a single numeric here.}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
+\code{file_sub_traj} is added, which labels trajectories within the data by
+concatenaing file name, subject name, and a trajectory number (all
+separated by underscores).
 }
 \description{
-Quick version of separate_trajectories
+Mostly meant for internal use but available nevertheless.
+}
+\details{
+This function is designed to separate rows of data into separately
+labeled trajectories.
+
+The \code{max_frame_gap} parameter determines how trajectories will be
+separated. \code{max_frame_gap} defines the largest permissible gap in data
+before a new trajectory is forced to be defined. In this function, only a
+single numeric can be supplied to this parameter (unlike the case in
+\code{separate_trajectories}).
 }
 \seealso{
 Other data cleaning functions: 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{section_tunnel_by}
 \alias{section_tunnel_by}
-\title{Chop data into X sections (of equal size) along a specified axis}
+\title{Bin data along a specified axis}
 \usage{
 section_tunnel_by(obj_name, axis = "position_length", number_of_sections = 20)
 }
@@ -20,6 +20,10 @@ which is an ordered factor that indicates grouping.
 }
 \description{
 Chop data into X sections (of equal size) along a specified axis
+}
+\details{
+The idea is to bin the data along a specified axis, generally
+\code{position_length}.
 }
 \author{
 Vikram B. Baliga

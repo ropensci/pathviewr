@@ -43,7 +43,7 @@ rotate_tunnel(
 
 \item{perch2_wid_max}{Maximum witdh value of perch 2}
 
-\item{...}{Additional arguments that may be passed}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute

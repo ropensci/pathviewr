@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{select_x_percent}
 \alias{select_x_percent}
-\title{Select data in the middle X percent of the length of the tunnel}
+\title{Select a region of interest within the tunnel}
 \usage{
 select_x_percent(obj_name, desired_percent = 33, ...)
 }
@@ -10,12 +10,15 @@ select_x_percent(obj_name, desired_percent = 33, ...)
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{desired_percent}{Measured from the center outwards}
+\item{desired_percent}{Numeric, the percent of the total length of the tunnel
+that will define the region of interest. Measured from the center outwards.}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
-
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+the region of interest have been removed.
 }
 \description{
 Select data in the middle X percent of the length of the tunnel

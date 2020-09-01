@@ -529,7 +529,7 @@ rename_viewr_characters <- function(obj_name,
 #' @param widths_max Maximum width
 #' @param heights_min Minimum height
 #' @param heights_max Maximum height
-#' @param ... Additional arguments
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
@@ -646,7 +646,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param perch1_wid_max Maximum width value of perch 1
 #' @param perch2_wid_min Minimum width value of perch 2
 #' @param perch2_wid_max Maximum witdh value of perch 2
-#' @param ... Additional arguments that may be passed
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
 #' @details The user first estimates the locations of the perches by specifying
 #'   bounds for where each perch is located. The function then computes the
@@ -842,7 +842,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param landmark_one Subject name of the first landmark
 #' @param landmark_two Subject name of the second landmark
-#' @param ... Additional arguments
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
 #' @details The center point of the tunnel is estimated as the point between the
 #'   two landmarks. The angle between landmark_one, tunnel_center_point, and
@@ -1044,7 +1044,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param length_zero User-defined value
 #' @param width_zero User-defined value
 #' @param height_zero User-defined value
-#' @param ... Additional arguments
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
 #' @details
 #' For each \code{_method} argument, there are four choices of how centering is
@@ -1202,19 +1202,25 @@ return(obj_new)
 }
 
 ############################### select_x_percent ###############################
-## Select data in the middle X percent of the length of the tunnel
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Select a region of interest within the tunnel
+#'
 #' Select data in the middle X percent of the length of the tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param desired_percent Measured from the center outwards
-#' @param ... Additional arguments
+#' @param desired_percent Numeric, the percent of the total length of the tunnel
+#'   that will define the region of interest. Measured from the center outwards.
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
-#' @return
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+#'   the region of interest have been removed.
+#'
 #' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
+#'
 #' @export
 
 select_x_percent <- function(obj_name,
@@ -1269,21 +1275,31 @@ select_x_percent <- function(obj_name,
 
 
 ########################## quick_separate_trajectories #########################
-## Quick version of separate_trajectories; meant to be used internally within
-## separate_trajectories itself as we are running through frame gap options
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
-#' Quick version of separate_trajectories
+#' Quick version of separate_trajectories()
 #'
-#' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param max_frame_gap Must be numeric
-#' @param ... Additional arguments
+#' Mostly meant for internal use but available nevertheless.
 #'
-#' @return
+#' @inheritParams separate_trajectories
+#' @param max_frame_gap Unlike the corresponding parameter in
+#'   \code{separate_trajectories}, must be a single numeric here.
+#'
+#' @details This function is designed to separate rows of data into separately
+#'   labeled trajectories.
+#'
+#'   The \code{max_frame_gap} parameter determines how trajectories will be
+#'   separated. \code{max_frame_gap} defines the largest permissible gap in data
+#'   before a new trajectory is forced to be defined. In this function, only a
+#'   single numeric can be supplied to this parameter (unlike the case in
+#'   \code{separate_trajectories}).
+#'
+#' @inherit separate_trajectories return
+#'
 #' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
+#'
 #' @export
 
 quick_separate_trajectories <- function(obj_name,
@@ -1324,33 +1340,55 @@ quick_separate_trajectories <- function(obj_name,
 
 
 ############################# separate_trajectories ############################
-## Specify a maximum frame gap and then use this to separate rows of data
-## into separately labeled trajectories.
 
-## max_frame_gap lower than 1 will make every point into a separate trajectory.
-## Even negative values will do so. I'm inclined think this could be a useful
-## thing in certain contexts...
-
-## max_frame_gap = "autodetect" will try to guesstimate the best value
-## frame_rate_proportion multiplies the value inserted (default = 0.1) and the
-## frame rate to get an upper bound for what the maximum frame gap could be.
-
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Separate rows of data into separately labeled trajectories.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param max_frame_gap If known, a numeric value to use
-#' @param frame_rate_proportion If autodetect, proportion of frame rate as
-#' reference
-#' @param frame_gap_messaging Should frame gaps be reported in the console?
-#' @param frame_gap_plotting Should frame gap diagnostic plots be shown?
-#' @param ... Additional arguments
+#' @param max_frame_gap Default 1; defines the largest permissible gap in data
+#'   before a new trajectory is forced to be defined. Can be either a numeric
+#'   value or "autodetect". See Details for more.
+#' @param frame_rate_proportion Default 0.10; if \code{max_frame_gap =
+#'   "autodetect"}, proportion of frame rate to be used as a reference (see
+#'   Details).
+#' @param frame_gap_messaging Default FALSE; should frame gaps be reported in
+#'   the console?
+#' @param frame_gap_plotting Default FALSE; should frame gap diagnostic plots be
+#'   shown?
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
-#' @return
+#' @details This function is designed to separate rows of data into separately
+#'   labeled trajectories.
+#'
+#'   The \code{max_frame_gap} parameter determines how trajectories will be
+#'   separated. If numeric, the function uses the supplied value as the largest
+#'   permissible gap in frames before a new trajectory is defined.
+#'
+#'   If \code{max_frame_gap = "autodetect"} is used, the function
+#'   attempts to guesstimate the best value(s) of \code{max_frame_gap}. This is
+#'   performed separately for each subject in the data set, i.e. as many
+#'   \code{max_frame_gap} values will be estimated as there are unique subjects.
+#'   The highest possible value of any \code{max_frame_gap} is first set as a
+#'   proportion of the capture frame rate, as defined by the
+#'   \code{frame_rate_proportion} parameter (default 0.10). For each subject, a
+#'   plot of total trajectory counts vs. max frame gap values is created
+#'   internally (but can be plotted via setting
+#'   \code{frame_gap_plotting = TRUE}). As larger max frame gaps are allowed,
+#'   trajectory count will necessarily decrease but may reach a value that
+#'   likely represents the "best" option. The "elbow" of that plot is then used
+#'   to find an estimate of the best max frame gap value to use.
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
+#'   \code{file_sub_traj} is added, which labels trajectories within the data by
+#'   concatenaing file name, subject name, and a trajectory number (all
+#'   separated by underscores).
+#'
 #' @author Vikram B. Baliga and Melissa S. Armstrong
+#'
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
+#'
 #' @export
 
 separate_trajectories <- function(obj_name,
@@ -1547,22 +1585,42 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 
 
 ############################# get_full_trajectories ############################
-## Specify a minimum span of the (selected) tunnel and then keep trajectories
-## that are wider than that span and go from one end to the other
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
-#' Specify a minimum span of the (selected) tunnel and then keep trajectories
-#' that are wider than that span and go from one end to the other
+#' Retain trajectories that span a selected region of interest
+#'
+#' Specify a minimum span of the selected region of interest and then keep
+#' trajectories that are wider than that span and go from one end to the other
+#' of the region.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param span Span to use; must range from 0 to 1
-#' @param ... Additional arguments
+#' @param span Span to use; must be numeric and between 0 and 1
+#' @param ... Additional arguments passed to/from other pathviewR functions
 #'
-#' @return
+#' @details Because trajectories may not have observations exactly at the
+#' beginning or the end of the region of interest, it may be necessary to allow
+#' trajectories to be slightly shorter than the range of the selected region of
+#' interst. The \code{span} parameter of this function handles this. By
+#' supplying a numeric proportion from 0 to 1, a user may allow trajectories to
+#' span that proportion of the selected region. For example, setting \code{span
+#' = 0.95} will keep all trajectories that span 95% of the length of the
+#' selected region of interest. Setting \code{span = 1} (not recommended) will
+#' strictly keep trajectories that start and end at the exact cut-offs of the
+#' selected region of interest. For these reasons, \code{span}s of 0.99 to 0.95
+#' are generally recommended.
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which only
+#'   trajectories that span the region of interest are retained. Data are
+#'   labeled by direction  (either "leftwards" or "rightwards") with respect to
+#'   their starting and ending \code{position_length} values in the
+#'   \code{direction} column.
+#'
 #' @author Vikram B. Baliga
+#'
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
+#'
 #' @export
 
 get_full_trajectories <- function(obj_name,
@@ -1641,13 +1699,17 @@ get_full_trajectories <- function(obj_name,
 
 ############################## section_tunnel_by ###############################
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Bin data along a specified axis
+#'
 #' Chop data into X sections (of equal size) along a specified axis
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
 #' @param axis Chosen axis, must match name of column exactly
 #' @param number_of_sections Total number of sections
+#'
+#' @details The idea is to bin the data along a specified axis, generally
+#'   \code{position_length}.
 #'
 #' @return A new column added to the input data object called \code{section_id},
 #'   which is an ordered factor that indicates grouping.
@@ -1701,7 +1763,7 @@ section_tunnel_by <- function(obj_name,
 #' @param vel_min Default \code{NULL}. If a numeric is entered, trajectories
 #'   that have at least one observation with velocity less than \code{vel_min}
 #'   are removed.
-#' @param vel_maxDefault \code{NULL}. If a numeric is entered, trajectories that
+#' @param vel_max Default \code{NULL}. If a numeric is entered, trajectories that
 #'   have at least one observation with velocity greater than \code{vel_max} are
 #'   removed.
 #'

@@ -31,7 +31,7 @@ trim_tunnel_outliers(
 
 \item{heights_max}{Maximum height}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute

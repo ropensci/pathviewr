@@ -34,7 +34,7 @@ redefine_tunnel_center(
 
 \item{height_zero}{User-defined value}
 
-\item{...}{Additional arguments}
+\item{...}{Additional arguments passed to/from other pathviewR functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
