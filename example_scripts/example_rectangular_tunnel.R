@@ -32,7 +32,7 @@ devtools::load_all()
 ## Test pancake
 test_mat <-
   read_flydra_mat(
-    "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat",
+    "./inst/extdata/DATA20160709_093733.kalmanized.h5-short-only.mat",
     subject_name = "steve")
 
 ## Clean it up -- these are the settings I've been using
