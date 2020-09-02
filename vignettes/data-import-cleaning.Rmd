@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -88,8 +88,8 @@ be used throughout the resultant `tibble`.
 ## the package
 flydra_data <-
   read_flydra_mat(
-    system.file("extdata/roz2016/", 
-                "DATA20160619_125218.kalmanized.h5-short-only.mat",
+    system.file("extdata", 
+                "DATA20160709_093733.kalmanized.h5-short-only.mat",
                 package = 'pathviewR'),
     subject_name = "birdie_wooster"
   )

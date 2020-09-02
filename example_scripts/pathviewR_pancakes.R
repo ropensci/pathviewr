@@ -488,42 +488,21 @@ identical(jul_29_percent74_span95, jul_29_percent74_span95_explicit)
 ## Test pancake
 test_mat <-
   read_flydra_mat(
-    "./inst/extdata/roz2016/DATA20160619_124428.kalmanized.h5-short-only.mat",
-    subject_name = "steve")
-
-#attributes(test_mat)
-attr(test_mat,"header")
-attr(test_mat,"pathviewR_steps")
-
-#### __centering function ####
-test_centered <-
-  test_mat %>%
+    "./inst/extdata/DATA20160709_093733.kalmanized.h5-short-only.mat",
+    subject_name = "steve"
+  ) %>%
   redefine_tunnel_center(length_method = "middle",
                          height_method = "user-defined",
-                         height_zero = 1.44)
-
-#open3d() ## if needed
-rgl::plot3d(x = test_centered$position_length,
-            y = test_centered$position_width,
-            z = test_centered$position_height)
-aspect3d("iso")
-## Hot damn! It worked!!
-
-## Let's see if we can plug into select_x_percent() now
-test_selected <-
-  test_centered %>%
-  select_x_percent(desired_percent = 50)
-## 3D plot
-rgl::plot3d(x = test_selected$position_length,
-            y = test_selected$position_width,
-            z = test_selected$position_height)
-aspect3d("iso")
-
-## Next steps
-test_full <-
-  test_selected %>%
+                         height_zero = 1.44) %>%
+  select_x_percent(desired_percent = 50) %>%
   separate_trajectories(max_frame_gap = 1) %>%
   get_full_trajectories(span = 0.95)
+## 2D overhead
+plot(test_mat$position_length,
+     test_mat$position_width,
+     asp = 1, col = as.factor(test_mat$file_sub_traj))
+
+
 ## 3D plot
 library(scales)
 n <- length(unique(test_full$file_sub_traj))
@@ -535,11 +514,6 @@ rgl::plot3d(x = test_full$position_length,
             y = test_full$position_width,
             z = test_full$position_height,
             col = data_col$colz)
-
-## 2D overhead
-plot(test_full$position_length,
-     test_full$position_width,
-     asp = 1, col = as.factor(test_full$file_sub_traj))
 
 
 ##### Quaternions maybe? #####
