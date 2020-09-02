@@ -488,7 +488,7 @@ identical(jul_29_percent74_span95, jul_29_percent74_span95_explicit)
 ## Test pancake
 test_mat <-
   read_flydra_mat(
-    "./inst/extdata/DATA20160709_093733.kalmanized.h5-short-only.mat",
+    "./inst/extdata/pathviewR_flydra_example_data.mat",
     subject_name = "steve"
   ) %>%
   redefine_tunnel_center(length_method = "middle",
