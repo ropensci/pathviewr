@@ -1842,181 +1842,33 @@ exclude_by_velocity <- function(obj_name,
 }
 
 
-############################### remove birds with too few flights ###############################
-rmbird_byflightnum <- function(obj_name,
-                               flightnum = 5,
-                               vistim1,
-                               vistim2,
-                               ...){
-  #get list of birds that complete x num flights in BOTH treatments
-  rm_bytreat <-
+############################### rm subjects by trajectory number ###############################
+
+rm_by_trajnum <- function(obj_name,
+                          trajnum = 5,
+                          stim1,
+                          stim2,
+                          ...){
+  #get list of subjects that complete x num trajectories in BOTH treatments
+  rm_bytraj <-
     obj_name %>%
-    unite(block, "bird", "treatment", sep = "_") %>%
-    group_by(block) %>%
-    nest() %>%
-    mutate(n = data %>%
-             map_dbl(~ length(.$traj))) %>%
-    select(block, n) %>%
-    separate(block, c("bird", "treatment")) %>%
-    spread(treatment, n)
+    tidyr::unite(block, "subject", "treatment", sep = "_") %>%
+    dplyr::group_by(block) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(n = data %>%
+                    purrr::map_dbl(~ length(.$file_sub_traj))) %>%
+    dplyr::select(block, n) %>%
+    tidyr::separate(block, c("subject", "treatment")) %>%
+    tidyr::pivot_wider(names_from = treatment, values_from = n, values_fill = 0)
 
-  vars <- c(vistim1, vistim2)
+  vars <- c(stim1, stim2)
 
-  rm_bytreat <-
-    rm_bytreat %>%
-    filter(.data[[vars[[1]]]] >= flightnum & .data[[vars[[2]]]] >= flightnum) %>%
-    select(bird)
+  rm_bytraj <-
+    rm_bytraj %>%
+    dplyr::filter(.data[[vars[[1]]]] >= trajnum & .data[[vars[[2]]]] >= trajnum) %>%
+    dplyr::select(subject)
 
-  obj_name <- inner_join(obj_name, rm_bytreat)
-
-}
-
-
-############################### plot by bird ###############################
-## Generate plots of each individual--hoping to loop to auto go through all birds in each treatment...
-
-plot_by_bird_manually <- function(obj_name){
-
-  paths_obj_name <- ggplot(obj_name) +
-    geom_point(aes(position_length, position_width, colour = treatment), alpha = .1, show.legend = FALSE) +
-    theme(legend.position = "none") +
-    theme_tufte()
-
-  hist_obj_name <- ggplot(obj_name) +
-    geom_histogram(aes(position_width, fill = treatment), alpha = .5, position = "identity", show.legend = FALSE) +
-    coord_flip() +
-    theme(legend.position = "none") +
-    theme_tufte()
-
-  obj_name_plot <- grid.arrange(paths_obj_name,hist_obj_name, nrow=1, widths=c(2,.5))
-
-  ggsave(paste(deparse(substitute(obj_name)), ".png", sep = ""), obj_name_plot,
-         path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-
-  length(unique(obj_name$traj_id))
-}
-
-## to use purr, need to rearrange
-## not sure at this time how to use this to combine both plots (paths and hist) so have them separate for now
-
-purrplot_by_bird <- function(obj_name,
-                             treatment,
-                             ...){
-  #set axes limits based on data
-  height_limits <- c(max(abs(range(obj_name$position_height)))*-1,
-                     max(abs(range(obj_name$position_height))))
-  width_limits <- c(max(abs(range(obj_name$position_width)))*-1,
-                    max(abs(range(obj_name$position_width))))
-
-  #for top view (change in lateral position)
-  top_view <- obj_name %>%
-    group_by(subject) %>%
-    nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_length, position_width, colour = treatment)) +
-                         geom_point(alpha = .1, show.legend = FALSE) +
-                         ylim(width_limits) +
-                         geom_hline(yintercept = 0, linetype = "dotted") +
-                         coord_fixed(ratio = 1) +
-                         theme_tufte()),
-           hist = map(data, ~ggplot(., aes(x = position_width, fill = treatment)) +
-                        geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
-                        xlim(width_limits) +
-                        geom_vline(xintercept = 0, linetype = "dotted") +
-                        coord_flip() +
-                        theme_tufte()),
-           filename = paste0(subject,"_top",".png"))
-
-  #all of them together:
-  top_all_plots <- top_view %>%
-    select(subject, paths, hist) %>%
-    gather("plot_type", "allplots", 2:3)
-
-  birdseye_view <- plot_grid(plotlist = top_all_plots[[3]])
-
-  ggsave(paste0(treatment,"_", "topview.png"), birdseye_view,
-         path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-
-  #for elev view (change in height):
-  elev_view <- obj_name %>%
-    group_by(subject) %>%
-    nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_length, position_height, colour = treatment)) +
-                         geom_point(alpha = .1, show.legend = FALSE) +
-                         ylim(height_limits) +
-                         geom_hline(yintercept = 0, linetype = "dotted") +
-                         coord_fixed(ratio = 1) +
-                         theme_tufte()),
-           hist = map(data, ~ggplot(., aes(position_height, fill = treatment)) +
-                        geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
-                        xlim(height_limits) +
-                        geom_vline(xintercept = 0, linetype = "dotted") +
-                        coord_flip() +
-                        theme_tufte()),
-           filename = paste0(subject,"_elev",".png"))
-
-  #all of them together:
-  elev_all_plots <- elev_view %>%
-    select(subject, paths, hist) %>%
-    gather("plot_type", "allplots", 2:3)
-
-  side_view <- plot_grid(plotlist = elev_all_plots[[3]])
-
-  ggsave(paste0(treatment,"_", "elevview.png"), side_view,
-         path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-}
-
-#to save each plot separately:
-#AB_top %>%
-#  select(filename, paths) %>%
-#  pwalk(ggsave, path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-
-############################### select_X_percent ###############################
-## Select data in the middle X percent of the length of the tunnel
-
-select_x_percent_M <- function(obj_name,
-                               desired_percent = 33,
-                               ...){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  # ## Check that its axes have been renamed
-  # if (!any(class(obj_name) == "tunnel_rotated")) {
-  #   stop("Please use rotate_tunnel() to align data prior to using this")
-  # }
-
-  ## Convert percent to proportion
-  prop <- desired_percent/100
-
-  ## Get tunnel length
-  tunnel_range <- range(obj_name$position_length)
-  tunnel_length <- sum(abs(tunnel_range[1]), abs(tunnel_range[2]))
-
-  ## Determine the range of lengths that will be needed
-  ## Multiply tunnel length by the proportion, then divide by 2 to get
-  ## the postive (towards the right) and negative (towards the left) halves
-  lengths_needed <- (tunnel_length * prop)/2
-  midpoint <- tunnel_length / 2
-
-  ## Now filter by lengths
   obj_name <-
-    obj_name %>%
-    dplyr::filter(position_length < midpoint + lengths_needed) %>%
-    dplyr::filter(position_length > (midpoint - lengths_needed)) %>%
-    tibble::as_tibble()
+    dplyr::inner_join(obj_name, rm_bytraj)
 
-  ## Leave a note about the proportion used
-  attr(obj_name,"percent_selected") <- desired_percent
-  attr(obj_name,"full_tunnel_length") <- tunnel_length
-  attr(obj_name,"selected_tunnel_length") <- tunnel_length * prop
-
-  ## Leave a note that we rotated and translated the data set
-  attr(obj_name,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "percent_selected_M")
-
-  ## Export
-  return(obj_name)
 }
-
