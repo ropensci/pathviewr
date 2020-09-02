@@ -18,10 +18,15 @@ knitr::opts_chunk$set(
 
 ## Data import via `pathviewR`
 
-We presently support `.csv` files exported from Optitrack's Motive software
-(link) as well as `.mat` files exported from Flydra (link).
+Our `read_` functions presently support `.csv` files exported from 
+[Optitrack's Motive](https://optitrack.com/products/motive/) software 
+as well as `.mat` files exported from 
+[Flydra](https://github.com/strawlab/flydra).
 
-We'll start by loading `pathviewR`
+Should you have data from other sources, please see the function `as_viewr()`
+and the ACCOMPANYING VIGNETTE (LINK!).
+
+We'll start by loading `pathviewR`.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewR installed:
@@ -38,9 +43,15 @@ library(pathviewR)
 ```{r import_motive}
 ## Import the july 29 example data included in 
 ## the package
+# motive_data <-
+#   read_motive_csv(
+#     system.file("extdata", "july-29_group-I_16-20.csv",
+#                 package = 'pathviewR')
+#   )
+
 motive_data <-
   read_motive_csv(
-    system.file("extdata", "july-29_group-I_16-20.csv",
+    system.file("extdata", "july-29_group-I_16-20_truncated.csv",
                 package = 'pathviewR')
   )
 
@@ -48,8 +59,8 @@ motive_data <-
 motive_data
 ``` 
 
-Important metadata are stored as attributes. We won't go through all of these,
-but here are a couple important ones.
+Metadata are stored as attributes. We won't go through all of these, but here
+are a couple important ones.
 
 ``` {r metadata}
 ## E.g. to see the header of the original file:
@@ -80,7 +91,7 @@ flydra_data <-
     system.file("extdata/roz2016/", 
                 "DATA20160619_125218.kalmanized.h5-short-only.mat",
                 package = 'pathviewR'),
-    subject_name = "bird"
+    subject_name = "birdie_wooster"
   )
 
 ## Similarly, this produces a tibble with important 
@@ -94,20 +105,21 @@ Data exported via either Motive or Flydra are not typically "tidy". Functions in
 interpreted.
 
 Several functions to clean and wrangle data are available, and we have a
-suggested pipeline for how these steps should be handled.
+suggested pipeline for how these steps should be handled. The rest of this
+vignette will cover these steps.
 
 And speaking of pipes, all functions in `pathviewR` are pipe-friendly. We will
 detail each step separately, but each of the subsequent steps may be piped, e.g.
 `data %>% relabel_viewr_axes() %>% gather_tunnel_data()` etc etc
 
 ### Relabeling axes, gathering data columns, and trimming outliers
-Axis labels (x, y, z) may be applied in abitrary ways by software. A user might
+Axis labels (x, y, z) may be applied in arbitrary ways by software. A user might
 intuitively think the z axis represents height, but the original software may
 label it as the y axis instead.
 
 `relabel_viewr_axes` provides a means to relabel axes with  "tunnel_length",
 "tunnel_width", and "tunnel_height". **These axis labels will be expected by
-subsequent funtions, so skipping this step is ill-advised.**
+subsequent functions, so skipping this step is ill-advised.**
 
 ```{r relabel_axes}
 motive_relabeled <-
@@ -124,14 +136,14 @@ names(motive_relabeled)
 
 Akin to the behavior of `dplyr::gather()`, `gather_tunnel_data()` will take all
 data from a given session and organize it so that all data of a given type are
-within one column, i.e. all position lengths are in `Position_length`, as
+within one column, i.e. all position lengths are in `position_length`, as
 opposed to separate length columns for each rigid body. **These column names
-will be expected by subsequent funtions, so skipping this step is also
+will be expected by subsequent functions, so skipping this step is also
 ill-advised.**
 
 Use `trim_tunnel_outliers()` to remove artifacts and other outlier data. This
 step is entirely optional, and should only be used when the user is confident
-that data outside certain ranges are artifacts or other bugs. Data ouside these
+that data outside certain ranges are artifacts or other bugs. Data outside these
 ranges are then filtered out. Best to plot data beforehand and check!!
 
 ```{r gather_and_trim}
@@ -161,7 +173,7 @@ motive_trimmed <-
 The coordinate system of the tunnel itself may require adjustment or
 standardization. For example, data collected across different days may show
 slight differences in coordinate systems if calibration equipment was not used
-in identical ways. Moreover, the user may want to redefine how the coorinate
+in identical ways. Moreover, the user may want to redefine how the coordinate
 system itself is defined (i.e. change the location of `(0, 0, 0)` to another
 place within the tunnel.
 
@@ -199,12 +211,14 @@ motive_rotated <-
     perch2_wid_max = 0.35
   )
 ```
+
 In the above, virtual perches are defined by the user using the arguments shown.
 The center of each perch is then found and then the locations of the two perch
 centers are then used to 1) set  `(0, 0, 0)` to the point that is equidistant
 from the perches (i.e. the middle of the tunnel) and 2) rotate the tunnel about
 the height axis so that both perch width coordinates are at 0. This may be
 easier to understand through plotting:
+
 ```{r rotate_example_plots}
 ## Quick (base-R) plot of the original data
 plot(motive_trimmed$position_length,
@@ -217,9 +231,9 @@ plot(motive_rotated$position_length,
      asp = 1)
 ```
 
-Differences due to rotation may be extremely subtle, but the redefining of `(0,
-0, 0)` to the middle of the tunnel should be clear from contrasting the axes of
-the plots.
+Differences due to rotation may be extremely subtle, but the redefining of 
+`(0, 0, 0)` to the middle of the tunnel should be clear from contrasting the
+axes of the plots.
 
 Flydra data typically do not need to be rotated, so we will instead use
 `redfine_tunnel_center()` to adjust the location of `(0, 0, 0)`:
@@ -235,7 +249,7 @@ flydra_centered <-
 
 Here, we are using `length_method = "middle"` to use the middle of the range of
 "length" data to set length = 0 (a translation), making no change to the width
-axis, and then specifiying that height = 0 should be equal to the value `1.44`
+axis, and then specifying that height = 0 should be equal to the value `1.44`
 from the original data (another translation). Again, plotting may help; note
 that this time, we'll plot length x height (instead of width):
 
@@ -251,7 +265,6 @@ plot(flydra_centered$position_length,
      asp = 1)
 ```
 
-
 ### Selecting a region of interest
 This required step has benefits that are twofold: 1) treatment effects on animal
 movement may only manifest over certain regions of the tunnel, and 2) focusing
@@ -262,7 +275,7 @@ The region of interest is defined via the function `select_x_percent()`. Once
 tunnel coordinates have been standardized (via one of the function in the
 previous section), `select_x_percent()` then selects the middle `x` percent
 (along the length axis) of the tunnel as the region of interest. For example,
-selecing 50 percent would start from the center of the tunnel and move 25% of
+selecting 50 percent would start from the center of the tunnel and move 25% of
 the tunnel along positive length and 25% along negative length values to then
 select the middle 50% of the tunnel.
 
@@ -310,7 +323,8 @@ trajectory. But if frame gaps smaller than `max_frame_gap` are encountered,
 keeping observations within the same trajectory is permitted.
 
 In the Flydra example, we'll simply set `max_frame_gap` to `1` so that no frame
-gaps are allowed (movement must be continuous with no gaps).
+gaps are allowed (movement must be continuous with no dropped frames).
+
 ```{r separate_examples}
 motive_labeled <-
   motive_selected %>% 
@@ -331,7 +345,7 @@ This final step is handled via `pathviewR`'s `get_full_trajectories()`.
 There is a built-in "fuzziness" feature: because trajectories may not have
 observations exactly at the beginning or the end of the region of interest, it
 may be necessary to allow trajectories to be slightly shorter than the range of
-the selected region of interst. The `span` parameter of this function handles
+the selected region of interest. The `span` parameter of this function handles
 this. By supplying a numeric proportion from `0` to `1`, a user may allow
 trajectories to span that proportion of the selected region. For example,
 setting `span = 0.95` will keep all trajectories that span 95% of the length of
@@ -341,7 +355,7 @@ selected region of interest.
 
 For these reasons, `span`s of `0.99` to `0.95` are generally recommended. The
 best choice ultimately depends on your capture frame rate as well as your own
-judgement. Should you desire to set it lower (which you can), you may instead
+judgment. Should you desire to set it lower (which you can), you may instead
 consider using a smaller region of interest (i.e. set the `desired_percent`
 parameter in `select_x_percent()` to be lower).
 
