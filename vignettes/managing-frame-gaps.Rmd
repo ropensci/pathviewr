@@ -1,0 +1,39 @@
+---
+title: "Managing frame gaps with pathviewR"
+author: "Melissa S. Armstrong"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Managing frame gaps with pathviewR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Data import via `pathviewR`
+
+Our `read_` functions presently support `.csv` files exported from 
+[Optitrack's Motive](https://optitrack.com/products/motive/) software 
+as well as `.mat` files exported from 
+[Flydra](https://github.com/strawlab/flydra).
+
+Should you have data from other sources, please see the function `as_viewr()`
+and the ACCOMPANYING VIGNETTE (LINK!).
+
+We'll start by loading `pathviewR`.
+
+```{r package_loading, message=FALSE, warning=FALSE}
+## If you do not already have pathviewR installed:
+# install.packages("devtools")
+# devtools::install_github("vbaliga/pathviewR")
+
+library(pathviewR)
+```
+
+### Motive CSV files
