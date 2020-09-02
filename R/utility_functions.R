@@ -178,7 +178,7 @@ relabel_viewr_axes <- function(obj_name,
 #' be one of the following: \code{position_length}, \code{position_width}, or
 #' \code{position_height}. Each of these three dimensions must be present in the
 #' data. Collectively, this means that names like \code{bird01_position_length}
-#' or \code{larry_position_height} are acceptible, but \code{bird01_x} or
+#' or \code{larry_position_height} are acceptable, but \code{bird01_x} or
 #' \code{bird01_length} are not.
 #'
 #' @return A tibble in "tidy" format which is formatted to have every row
@@ -645,7 +645,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param perch1_wid_min Minimum width value of perch 1
 #' @param perch1_wid_max Maximum width value of perch 1
 #' @param perch2_wid_min Minimum width value of perch 2
-#' @param perch2_wid_max Maximum witdh value of perch 2
+#' @param perch2_wid_max Maximum width value of perch 2
 #' @param ... Additional arguments passed to/from other pathviewR functions
 #'
 #' @details The user first estimates the locations of the perches by specifying
@@ -849,8 +849,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #'   arbitrary point along the length axis (tunnel_center_point - 1 on length)
 #'   is estimated. That angle is then used to rotate the data, again only in the
 #'   length and width dimensions. Height is standardized by average landmark
-#'   heigh; values greater than 0 are above the landmarks and values less than 0
-#'   are below the landmark level.
+#'   height; values greater than 0 are above the landmarks and values less than
+#'   0 are below the landmark level.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
@@ -1381,7 +1381,7 @@ quick_separate_trajectories <- function(obj_name,
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
 #'   \code{file_sub_traj} is added, which labels trajectories within the data by
-#'   concatenaing file name, subject name, and a trajectory number (all
+#'   concatenating file name, subject name, and a trajectory number (all
 #'   separated by underscores).
 #'
 #' @author Vikram B. Baliga and Melissa S. Armstrong
@@ -1600,7 +1600,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' @details Because trajectories may not have observations exactly at the
 #' beginning or the end of the region of interest, it may be necessary to allow
 #' trajectories to be slightly shorter than the range of the selected region of
-#' interst. The \code{span} parameter of this function handles this. By
+#' interest. The \code{span} parameter of this function handles this. By
 #' supplying a numeric proportion from 0 to 1, a user may allow trajectories to
 #' span that proportion of the selected region. For example, setting \code{span
 #' = 0.95} will keep all trajectories that span 95% of the length of the

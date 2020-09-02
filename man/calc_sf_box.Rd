@@ -18,7 +18,7 @@ visual angle.
 }
 \description{
 Based on rigid body, i.e animal head positions in a box shaped tunnel,
-\code{calc_sf_box()} calculates how the animal percieves the visual stimuli
+\code{calc_sf_box()} calculates how the animal perceives the visual stimuli
 in terms of its spatial frequency modulated by distance to the stimulus.
 }
 \details{

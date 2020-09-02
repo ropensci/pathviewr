@@ -475,7 +475,7 @@ read_flydra_mat <-
 #' @param position_width_col Column number of obj_name that contains width-axis
 #'   position values
 #' @param position_height_col Column number of obj_name that contains
-#'   height-axis postion values
+#'   height-axis position values
 #' @param include_rotation Are rotation data included? Defaults to FALSE
 #' @param rotation_real_col Column number of obj_name that contains the "real"
 #'   axis of quaternion rotation data

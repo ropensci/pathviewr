@@ -19,7 +19,7 @@ quick_separate_trajectories(obj_name, max_frame_gap = 1, ...)
 A viewr object (tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
 \code{file_sub_traj} is added, which labels trajectories within the data by
-concatenaing file name, subject name, and a trajectory number (all
+concatenating file name, subject name, and a trajectory number (all
 separated by underscores).
 }
 \description{

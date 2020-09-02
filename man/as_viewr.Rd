@@ -40,7 +40,7 @@ length-axis position values}
 position values}
 
 \item{position_height_col}{Column number of obj_name that contains
-height-axis postion values}
+height-axis position values}
 
 \item{include_rotation}{Are rotation data included? Defaults to FALSE}
 

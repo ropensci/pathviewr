@@ -395,10 +395,10 @@ default, but may be turned off by using `FALSE`. Argument names correspond to
 standalone functions in `pathviewR`, and if the user wants to use non-default values for corresponding arguments, they should also be supplied for any steps 
 that are set to `TRUE`. 
 
-For example, if the user keeps `select_x_percent = TRUE` as an arugment in
+For example, if the user keeps `select_x_percent = TRUE` as an argument in
 `clean_viewr()`, the `select_x_percent()` function is run internally. This means
 that should the user desire to select a region of interest that does not match
-the default value of 33 percent, an additional arugment should be supplied to
+the default value of 33 percent, an additional argument should be supplied to
 `clean_viewr()` as if it were being supplied to `select_x_percent()` itself, 
 e.g.: `desired_percent = 50`.
 

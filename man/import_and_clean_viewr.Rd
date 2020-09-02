@@ -60,7 +60,7 @@ Each argument corresponds to a standalone function in
 user to choose whether \code{pathviewR::relabel_viewr_axes()} is run
 internally. Should the user desire to use any non-default parameter values
 for any functions included here, they should be supplied to this function
-as additional arugments formatted exactly as they would appear in their
+as additional arguments formatted exactly as they would appear in their
 corresponding function(s). E.g. if the "autodetect" feature in
 \code{pathviewR::separate_trajectories()} is desired, add an argument
 \code{max_frame_gap = "autodetect"} to the arguments supplied to this

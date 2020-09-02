@@ -34,7 +34,7 @@ have subject names and axis names separated by underscores. Axis names must
 be one of the following: \code{position_length}, \code{position_width}, or
 \code{position_height}. Each of these three dimensions must be present in the
 data. Collectively, this means that names like \code{bird01_position_length}
-or \code{larry_position_height} are acceptible, but \code{bird01_x} or
+or \code{larry_position_height} are acceptable, but \code{bird01_x} or
 \code{bird01_length} are not.
 }
 \examples{

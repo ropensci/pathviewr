@@ -45,7 +45,7 @@ appended to the input viewr object. If \code{FALSE}, a standalone tibble is
 created. Either way, an "instantaneous" velocity is computed as the
 difference in position divided by the difference in time as each successive
 row is encountered. Additionally, velocities along each of the three
-position axes are computed and provided as addtional columns.
+position axes are computed and provided as additional columns.
 }
 \description{
 Velocity (both overall and per-axis) is computed for each row in the data

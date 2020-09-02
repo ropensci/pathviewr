@@ -31,7 +31,7 @@ of the region.
 Because trajectories may not have observations exactly at the
 beginning or the end of the region of interest, it may be necessary to allow
 trajectories to be slightly shorter than the range of the selected region of
-interst. The \code{span} parameter of this function handles this. By
+interest. The \code{span} parameter of this function handles this. By
 supplying a numeric proportion from 0 to 1, a user may allow trajectories to
 span that proportion of the selected region. For example, setting \code{span
 = 0.95} will keep all trajectories that span 95\% of the length of the

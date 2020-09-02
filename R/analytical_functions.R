@@ -26,7 +26,7 @@
 #'   created. Either way, an "instantaneous" velocity is computed as the
 #'   difference in position divided by the difference in time as each successive
 #'   row is encountered. Additionally, velocities along each of the three
-#'   position axes are computed and provided as addtional columns.
+#'   position axes are computed and provided as additional columns.
 #'
 #' @author Vikram B. Baliga and Melissa S. Armstrong
 #'
@@ -549,7 +549,7 @@ calc_vis_angle <- function(obj_name,
 #' Estimate spatial frequency of visual stimuli in V-shaped tunnel
 #'
 #' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
-#' \code{calc_sf_V()} calculates how the animal percieves the visual stimuli
+#' \code{calc_sf_V()} calculates how the animal perceives the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
@@ -566,7 +566,7 @@ calc_vis_angle <- function(obj_name,
 #' stimuli presented on the negative side of the tunnel
 #' (i.e. \code{position_width < 0}).
 #' @param simplify_output If TRUE, the returned object includes minimum distance
-#' as well as the spatial freqencies perceived on either side of the
+#' as well as the spatial frequencies perceived on either side of the
 #' tunnel. If FALSE, the returned object includes all variables internal to the
 #' calculation.
 #'
@@ -692,7 +692,7 @@ calc_sf_V <- function(obj_name,
 #' Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box
 #'
 #' Based on rigid body, i.e animal head positions in a box shaped tunnel,
-#' \code{calc_sf_box()} calculates how the animal percieves the visual stimuli
+#' \code{calc_sf_box()} calculates how the animal perceives the visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute

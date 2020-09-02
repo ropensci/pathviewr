@@ -22,14 +22,14 @@
 #' @param separate_trajectories default TRUE, should trajectories be defined?
 #' @param get_full_trajectories default TRUE, should only full trajectories be
 #'   retained.
-#' @param ... Additional arugments passed to any of the corresponding functions
+#' @param ... Additional arguments passed to any of the corresponding functions
 #'
 #' @details Each argument corresponds to a standalone function in
 #'   \code{pathviewR}. E.g. the parameter \code{relabel_viewr_axes} allows a
 #'   user to choose whether \code{pathviewR::relabel_viewr_axes()} is run
 #'   internally. Should the user desire to use any non-default parameter values
 #'   for any functions included here, they should be supplied to this function
-#'   as additional arugments formatted exactly as they would appear in their
+#'   as additional arguments formatted exactly as they would appear in their
 #'   corresponding function(s). E.g. if the "autodetect" feature in
 #'   \code{pathviewR::separate_trajectories()} is desired, add an argument
 #'   \code{max_frame_gap = "autodetect"} to the arguments supplied to this

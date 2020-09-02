@@ -41,7 +41,7 @@ rotate_tunnel(
 
 \item{perch2_wid_min}{Minimum width value of perch 2}
 
-\item{perch2_wid_max}{Maximum witdh value of perch 2}
+\item{perch2_wid_max}{Maximum width value of perch 2}
 
 \item{...}{Additional arguments passed to/from other pathviewR functions}
 }

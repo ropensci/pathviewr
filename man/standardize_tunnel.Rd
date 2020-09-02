@@ -36,8 +36,8 @@ two landmarks. The angle between landmark_one, tunnel_center_point, and
 arbitrary point along the length axis (tunnel_center_point - 1 on length)
 is estimated. That angle is then used to rotate the data, again only in the
 length and width dimensions. Height is standardized by average landmark
-heigh; values greater than 0 are above the landmarks and values less than 0
-are below the landmark level.
+height; values greater than 0 are above the landmarks and values less than
+0 are below the landmark level.
 }
 \seealso{
 Other data cleaning functions: 
