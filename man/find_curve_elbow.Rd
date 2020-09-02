@@ -39,7 +39,10 @@ find_curve_elbow(df, plot_curve = TRUE)
 \seealso{
 Other mathematical functions: 
 \code{\link{deg_2_rad}()},
+\code{\link{get_2d_angle}()},
+\code{\link{get_3d_angle}()},
 \code{\link{get_3d_cross_prod}()},
+\code{\link{get_dist_point_line}()},
 \code{\link{get_velocity}()},
 \code{\link{rad_2_deg}()}
 }

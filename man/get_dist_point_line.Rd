@@ -27,6 +27,17 @@ The function accepts 2D coordinates or 3D coordinates, but note that
 the dimensions of all supplied arguments must match; all coordinates must
 be 2D or they all must be 3D.
 }
+\seealso{
+Other mathematical functions: 
+\code{\link{deg_2_rad}()},
+\code{\link{find_curve_elbow}()},
+\code{\link{get_2d_angle}()},
+\code{\link{get_3d_angle}()},
+\code{\link{get_3d_cross_prod}()},
+\code{\link{get_velocity}()},
+\code{\link{rad_2_deg}()}
+}
 \author{
 Vikram B. Baliga
 }
+\concept{mathematical functions}

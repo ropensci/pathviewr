@@ -166,6 +166,7 @@ Please check that you have entered the name of the height variable correctly.")
 
 }
 
+
 ############################## get_dist_point_line #############################
 
 #' Compute distance between a point and a line
@@ -184,6 +185,8 @@ Please check that you have entered the name of the height variable correctly.")
 #'   between the point and the line.
 #'
 #' @author Vikram B. Baliga
+#'
+#' @family mathematical functions
 #'
 #' @export
 
@@ -236,6 +239,7 @@ get_dist_point_line <- function(point,
 
 
 ################################ get_3d_cross_prod ##############################
+
 #' Compute the cross product of two 3D vectors
 #'
 #' @param v1 First vector, as c(x,y,z)
@@ -264,6 +268,7 @@ get_3d_cross_prod <- function(v1,
 }
 
 #################################### rad_2_deg ###################################
+
 #' Convert radians to degrees
 #'
 #' @param rad Radians (a numeric of any length >= 1)
@@ -273,6 +278,7 @@ get_3d_cross_prod <- function(v1,
 #' @author Vikram B. Baliga
 #'
 #' @family mathematical functions
+#'
 #' @export
 #'
 #' @examples
@@ -295,6 +301,7 @@ rad_2_deg <- function(rad) {
 
 
 #################################### deg_2_rad ###################################
+
 #' Convert degrees to radians
 #'
 #' @param deg Degrees (a numeric of any length >= 1)
@@ -345,6 +352,8 @@ deg_2_rad <- function(deg) {
 #'
 #' @author Vikram B. Baliga
 #'
+#' @family mathematical functions
+#'
 #' @export
 
 get_2d_angle <- function(x1, y1,
@@ -391,6 +400,8 @@ get_2d_angle <- function(x1, y1,
 #'
 #' @author Vikram B. Baliga
 #'
+#' @family mathematical functions
+#'
 #' @export
 
 get_3d_angle <- function(x1, y1, z1,
@@ -414,6 +425,7 @@ get_3d_angle <- function(x1, y1, z1,
   ## export
   return(theta)
 }
+
 
 ################################## xyzplaneangles ##############################
 ## Originally written by Christina Harvey; not currently exported but may be
@@ -461,6 +473,7 @@ xyzplaneangles <- function(x1,y1,z1,x2,y2,z2,x3,y3,z3, #plane 1
 
 
 ################################# find_curve_elbow #############################
+
 #' Find the "elbow" of a curve.
 #'
 #' For bivariate data that show monotonic decreases (e.g. plots of trajectory
@@ -485,6 +498,7 @@ xyzplaneangles <- function(x1,y1,z1,x2,y2,z2,x3,y3,z3, #plane 1
 #' @author Vikram B. Baliga
 #'
 #' @family mathematical functions
+#'
 #' @export
 #'
 #' @examples
@@ -545,7 +559,8 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 }
 
 
-#################        calc_vis_angle       ###################
+#########################        calc_vis_angle       ##########################
+
 #' Estimate visual angles in a V shaped tunnel
 #'
 #' Based on rigid body, i.e animal head positions in a V-shaped tunnel,
@@ -699,7 +714,8 @@ calc_vis_angle <- function(obj_name,
 
 
 
-##########################    calc_sf_V     ###########################
+###############################    calc_sf_V     ###############################
+
 #' Estimate spatial frequency of visual stimuli in V-shaped tunnel
 #'
 #' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
@@ -842,7 +858,8 @@ calc_sf_V <- function(obj_name,
 }
 
 
-##############################  calc_sf_box   #############################
+##################################  calc_sf_box   ##############################
+
 #' Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box
 #'
 #' Based on rigid body, i.e animal head positions in a box shaped tunnel,

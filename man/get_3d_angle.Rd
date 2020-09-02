@@ -36,6 +36,17 @@ Everything supplied to arguments must be singular numeric values.
 The second point (x2, y2, z2) is treated as the vertex, and the angle beween
 the three points in 3D space is computed.
 }
+\seealso{
+Other mathematical functions: 
+\code{\link{deg_2_rad}()},
+\code{\link{find_curve_elbow}()},
+\code{\link{get_2d_angle}()},
+\code{\link{get_3d_cross_prod}()},
+\code{\link{get_dist_point_line}()},
+\code{\link{get_velocity}()},
+\code{\link{rad_2_deg}()}
+}
 \author{
 Vikram B. Baliga
 }
+\concept{mathematical functions}

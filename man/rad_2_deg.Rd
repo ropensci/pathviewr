@@ -26,7 +26,10 @@ rad_2_deg(c(pi / 2, pi, 2 * pi))
 Other mathematical functions: 
 \code{\link{deg_2_rad}()},
 \code{\link{find_curve_elbow}()},
+\code{\link{get_2d_angle}()},
+\code{\link{get_3d_angle}()},
 \code{\link{get_3d_cross_prod}()},
+\code{\link{get_dist_point_line}()},
 \code{\link{get_velocity}()}
 }
 \author{
