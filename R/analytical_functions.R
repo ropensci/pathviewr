@@ -325,6 +325,141 @@ deg_2_rad <- function(deg) {
 
 }
 
+
+################################## get_2d_angle ###############################
+
+#' Compute an angle in 2D space
+#'
+#' @param x1 x-coordinate of first point
+#' @param y1 y-coordinate of first point
+#' @param x2 x-coordinate of second point (vertex)
+#' @param y2 y-coordinate of second point (vertex)
+#' @param x3 x-coordinate of third point
+#' @param y3 y-coordinate of third point
+#'
+#' @details Everything supplied to arguments must be singular numeric values.
+#' The second point (x2, y2) is treated as the vertex, and the angle beween
+#' the three points in 2D space is computed.
+#'
+#' @return A numeric vector that provides the angular measurement in degrees.
+#'
+#' @author Vikram B. Baliga
+#'
+#' @export
+
+get_2d_angle <- function(x1, y1,
+                         x2, y2,
+                         x3, y3) {
+
+  ## re-assignment, to avoid confusion
+  i1 <- x1
+  i2 <- x2
+  i3 <- x3
+  j1 <- y1
+  j2 <- y2
+  j3 <- y3
+
+  ## compute angle
+  a <- c(i1, j1) - c(i2, j2)
+  b <- c(i3, j3) - c(i2, j2)
+  theta <- acos(sum(a * b) / (sqrt(sum(a * a)) * sqrt(sum(b * b)))) * (180 /
+                                                                         pi)
+  ## export
+  return(theta)
+}
+
+
+################################## get_3d_angle ###############################
+
+#' Compute an angle in 3D space
+#'
+#' @param x1 x-coordinate of first point
+#' @param y1 y-coordinate of first point
+#' @param z1 z-coordinate of first point
+#' @param x2 x-coordinate of second point (vertex)
+#' @param y2 y-coordinate of second point (vertex)
+#' @param z2 y-coordinate of second point (vertex)
+#' @param x3 x-coordinate of third point
+#' @param y3 y-coordinate of third point
+#' @param z3 z-coordinate of third point
+#'
+#' @details Everything supplied to arguments must be singular numeric values.
+#' The second point (x2, y2, z2) is treated as the vertex, and the angle beween
+#' the three points in 3D space is computed.
+#'
+#' @return A numeric vector that provides the angular measurement in degrees.
+#'
+#' @author Vikram B. Baliga
+#'
+#' @export
+
+get_3d_angle <- function(x1, y1, z1,
+                         x2, y2, z2,
+                         x3, y3, z3) {
+
+  ## compute diffs
+  i1 <- x2 - x1
+  i2 <- x2 - x3
+  j1 <- y2 - y1
+  j2 <- y2 - y3
+  k1 <- z2 - z1
+  k2 <- z2 - z3
+
+  ## compute angle
+  dotprod <- (i1 * i2) + (j1 * j2) + (k1 * k2)
+  len1 <- sqrt(i1 ^ 2 + j1 ^ 2 + k1 ^ 2)
+  len2 <- sqrt(i2 ^ 2 + j2 ^ 2 + k2 ^ 2)
+  theta <- acos(dotprod / (len1 * len2)) * (180 / pi)
+
+  ## export
+  return(theta)
+}
+
+################################## xyzplaneangles ##############################
+## Originally written by Christina Harvey; not currently exported but may be
+## incorporated into the package in the future.
+## Computes angles between two planes in 3D space
+
+xyzplaneangles <- function(x1,y1,z1,x2,y2,z2,x3,y3,z3, #plane 1
+                           x4,y4,z4,x5,y5,z5,x6,y6,z6){ #plane 2
+  #x1_std,y1_std,z1_std,x2_std,y2_std,z2_std,x3_std,y3_std,z3_std){
+
+  ## Originally written by Christina Harvey
+
+  #This computes the angle betweeon two planes composed of three points each
+  #--- Vectors of Plane 1 - create vector from two 3D pts
+  i1 = x2-x1
+  j1 = y2-y1
+  k1 = z2-z1
+  i2 = x2-x3
+  j2 = y2-y3
+  k2 = z2-z3
+  #--- Vectors of Plane 2 - create vector from two 3D pts
+  i3 = x5-x4
+  j3 = y5-y4
+  k3 = z5-z4
+  i4 = x5-x6
+  j4 = y5-y6
+  k4 = z5-z6
+  #--- Orthogonal Vector of Plane 1 - Cross Product of the vectors on the plane
+  i5 = j1*k2-k1*j2
+  j5 = k1*i2-i1*k2
+  k5 = i1*j2-j1*i2
+  #--- Orthogonal Vector of Plane 2 - Cross Product of the vectors on the plane
+  i6 = j3*k4-k3*j4
+  j6 = k3*i4-i3*k4
+  k6 = i3*j4-j3*i4
+  #--- Dot Product of Orthogonal Vectors
+  dotprod = ((i5*i6)+(j5*j6)+(k5*k6))
+  len1    = sqrt(i5^2+j5^2+k5^2)
+  len2    = sqrt(i6^2+j6^2+k6^2)
+  interior = dotprod/(len1*len2)
+  theta   = acos(interior)*(180/pi)
+
+  return(theta)
+}
+
+
 ################################# find_curve_elbow #############################
 #' Find the "elbow" of a curve.
 #'
@@ -765,72 +900,5 @@ calc_sf_box <- function(obj_name){
                                          "frequencies_calculated")
 
   return(obj_name)
-}
-
-
-## Remaining three functions originally written by Christina Harvey
-## May adapt for our purposes in the future
-#angles in 3D space
-xyzangles <- function(x1,y1,z1,x2,y2,z2,x3,y3,z3){
-  i1=x2-x1
-  i2=x2-x3
-  j1=y2-y1
-  j2=y2-y3
-  k1=z2-z1
-  k2=z2-z3
-  dotprod=(i1*i2)+(j1*j2)+(k1*k2)
-  len1=sqrt(i1^2+j1^2+k1^2)
-  len2=sqrt(i2^2+j2^2+k2^2)
-  theta=acos(dotprod/(len1*len2))*(180/pi)
-  theta
-}
-
-
-#angles in 2D space
-xyangles<-function(x1,y1,x2,y2,x3,y3){
-  i1=x1;i2=x2;i3=x3
-  j1=y1;j2=y2;j3=y3
-  a=c(i1,j1)-c(i2,j2)
-  b=c(i3,j3)-c(i2,j2)
-  theta=acos(sum(a*b)/(sqrt(sum(a*a))*sqrt(sum(b*b))))*(180/pi)
-  theta
-}
-
-
-#angles between two planes in 3D space
-xyzplaneangles <- function(x1,y1,z1,x2,y2,z2,x3,y3,z3, #plane 1
-                           x4,y4,z4,x5,y5,z5,x6,y6,z6){ #plane 2
-  #x1_std,y1_std,z1_std,x2_std,y2_std,z2_std,x3_std,y3_std,z3_std){
-  #This computes the angle betweeon two planes composed of three points each
-  #--- Vectors of Plane 1 - create vector from two 3D pts
-  i1 = x2-x1
-  j1 = y2-y1
-  k1 = z2-z1
-  i2 = x2-x3
-  j2 = y2-y3
-  k2 = z2-z3
-  #--- Vectors of Plane 2 - create vector from two 3D pts
-  i3 = x5-x4
-  j3 = y5-y4
-  k3 = z5-z4
-  i4 = x5-x6
-  j4 = y5-y6
-  k4 = z5-z6
-  #--- Orthogonal Vector of Plane 1 - Cross Product of the vectors on the plane
-  i5 = j1*k2-k1*j2
-  j5 = k1*i2-i1*k2
-  k5 = i1*j2-j1*i2
-  #--- Orthogonal Vector of Plane 2 - Cross Product of the vectors on the plane
-  i6 = j3*k4-k3*j4
-  j6 = k3*i4-i3*k4
-  k6 = i3*j4-j3*i4
-  #--- Dot Product of Orthogonal Vectors
-  dotprod = ((i5*i6)+(j5*j6)+(k5*k6))
-  len1    = sqrt(i5^2+j5^2+k5^2)
-  len2    = sqrt(i6^2+j6^2+k6^2)
-  interior = dotprod/(len1*len2)
-  theta   = acos(interior)*(180/pi)
-
-  return(theta)
 }
 

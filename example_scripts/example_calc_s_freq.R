@@ -217,7 +217,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 
     ## Also if we use the three points (two topmost and vertex), we should
     ## be able to back-calculate the vertex angle to confirm it is ~45
-       xyangles(x1 = -0.2071, ## (x1, y1) is topmost on negative side
+       get_2d_angle(x1 = -0.2071, ## (x1, y1) is topmost on negative side
                 y1 = 0,
                 x2 = 0,       ## (x2, y2) is vertex
                 y2 = -0.5,
@@ -275,7 +275,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 
       ## checking the angles...
 
- xyangles(x1 = -0.5869, ## (x1, y1) is topmost on negative side
+ get_2d_angle(x1 = -0.5869, ## (x1, y1) is topmost on negative side
            y1 = 0.0869,
            x2 = 0,       ## (x2, y2) is vertex
            y2 = -0.5,

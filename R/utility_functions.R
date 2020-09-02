@@ -750,9 +750,9 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   ## Point 1 = perch1_midpoint
   ## Point 2 = tunnel_centerpoint
   ## Point 3 = tunnel_arbitrary
-  ## Using xyangles() instead its 3D counterpart because we're gonna keep
+  ## Using get_2d_angle() instead its 3D counterpart because we're gonna keep
   ## height constant throughout
-  tunnel_angle <- xyangles(x1 = perch1_len,
+  tunnel_angle <- get_2d_angle(x1 = perch1_len,
                            y1 = perch1_wid,
                            x2 = tunnel_centerpoint[1],
                            y2 = tunnel_centerpoint[2],
@@ -944,9 +944,9 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   ## Point 1 = perch1_midpoint
   ## Point 2 = tunnel_centerpoint
   ## Point 3 = tunnel_arbitrary
-  ## Using xyangles() instead its 3D counterpart because we're gonna keep
+  ## Using get_2d_angle() instead its 3D counterpart because we're gonna keep
   ## height constant throughout
-  tunnel_angle <- xyangles(x1 = as.numeric(landmark1_med_pos)[1],
+  tunnel_angle <- get_2d_angle(x1 = as.numeric(landmark1_med_pos)[1],
                            y1 = as.numeric(landmark1_med_pos)[2],
                            x2 = tunnel_centerpoint[1],
                            y2 = tunnel_centerpoint[2],
