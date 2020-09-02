@@ -1,7 +1,8 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-31 VBB
+## Last updated: 2020-09-02 VBB
 
 ################################## get_velocity ################################
+
 #' Get instantaneous velocity for subjects
 #'
 #' Velocity (both overall and per-axis) is computed for each row in the data
@@ -165,28 +166,71 @@ Please check that you have entered the name of the height variable correctly.")
 
 }
 
-############################## get_dist_point_line_2d ##########################
-#' Compute the distance between a point and a line in a 2D space (i.e. on an
-#' XY plane)
+############################## get_dist_point_line #############################
+
+#' Compute distance between a point and a line
 #'
-#' @param point 2D coordinates of the point as c(x,y)
-#' @param line_coord1 2D coordinates of one point on the line as c(x,y)
-#' @param line_coord2 2D coordinates of a second point on the line as c(x,y)
+#' @param point 2D or 3D coordinates of the point as c(x,y) or c(x,y,z)
+#' @param line_coord1 2D or 3D coordinates of one point on the line as c(x,y) or
+#'   c(x,y,z)
+#' @param line_coord2 2D or 3D coordinates of a second point on the line as
+#'   c(x,y) or c(x,y,z)
 #'
-#' @return A numeric: the distance
+#' @details The function accepts 2D coordinates or 3D coordinates, but note that
+#'   the dimensions of all supplied arguments must match; all coordinates must
+#'   be 2D or they all must be 3D.
+#'
+#' @return A numeric vector of length 1 that provides the euclidean distance
+#'   between the point and the line.
 #'
 #' @author Vikram B. Baliga
 #'
-#' @family mathematical functions
 #' @export
 
-get_dist_point_line_2d <- function(point,
-                                   line_coord1,
-                                   line_coord2) {
-  v1 <- line_coord1 - line_coord2
-  v2 <- point - line_coord1
-  m <- cbind(v1, v2)
-  dist <- abs(det(m)) / sqrt(sum(v1 * v1))
+get_dist_point_line <- function(point,
+                                line_coord1,
+                                line_coord2) {
+
+  ## check if 2D or 3D case is supplied
+  if (length(point) == 2) {
+    ## ensure the line coords are also 2D
+    if (!length(line_coord1) == 2) {
+      stop("All coordinates must be either all 2D or all 3D (not a mix of each)"
+           )
+    }
+    if (!length(line_coord2) == 2) {
+      stop("All coordinates must be either all 2D or all 3D (not a mix of each)"
+      )
+    }
+
+    ## Compute
+    v1 <- line_coord1 - line_coord2
+    v2 <- point - line_coord1
+    m <- cbind(v1, v2)
+    dist <- abs(det(m)) / sqrt(sum(v1 * v1))
+  }
+
+  ## if above is false, it's 3D
+  if (length(point) == 3) {
+    ## ensure the line coords are also 2D
+    if (!length(line_coord1) == 3) {
+      stop("All coordinates must be either all 2D or all 3D (not a mix of each)"
+           )
+    }
+    if (!length(line_coord2) == 3) {
+      stop("All coordinates must be either all 2D or all 3D (not a mix of each)"
+      )
+    }
+
+    ## Compute
+    v1 <- line_coord1 - line_coord2
+    v2 <- point - line_coord1
+    v3 <- get_3d_cross_prod(v1, v2)
+    area <- sqrt(sum(v3 * v3)) / 2
+    dist <- 2 * area / sqrt(sum(v1 * v1))
+  }
+
+  ## export
   return(dist)
 }
 
@@ -218,32 +262,6 @@ get_3d_cross_prod <- function(v1,
   v3[3] <- v1[1] * v2[2] - v1[2] * v2[1]
   return(v3)
 }
-
-############################## get_dist_point_line_3d ##########################
-#' Compute the distance between a point and a line in 3D space
-#'
-#' @param point 3D coordinates of the point as c(x, y, z)
-#' @param line_coord1 3D coordinates of one point on the line as c(x, y, z)
-#' @param line_coord2 3D coordinates of a second point on the line as c(x, y, z)
-#'
-#' @return A numeric: the distance
-#'
-#' @author Vikram B. Baliga
-#'
-#' @family mathematical functions
-#' @export
-
-get_dist_point_line_3d <- function(point,
-                                   line_coord1,
-                                   line_coord2) {
-  v1 <- line_coord1 - line_coord2
-  v2 <- point - line_coord1
-  v3 <- get_3d_cross_prod(v1, v2)
-  area <- sqrt(sum(v3 * v3)) / 2
-  dist <- 2 * area / sqrt(sum(v1 * v1))
-  return(dist)
-}
-
 
 #################################### rad_2_deg ###################################
 #' Convert radians to degrees
@@ -350,8 +368,6 @@ find_curve_elbow <- function(data_frame,
 Please ensure there are only two columns, ordered x-axis first, y-axis second")
   }
 
-  ## ADD A NUMERIC CHECK HERE EVENTUALLY
-
   ## Convert to matrix for speedier handling
   data_matrix <- as.matrix(data_frame)
   first_col   <- data_matrix[,1]
@@ -368,10 +384,13 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
   ## distance
   mfg_dists <- NULL
   for (k in 1:len) {
-    mfg_dists[k] <- get_dist_point_line_2d(point = c(first_col[k],
-                                                     second_col[k]),
-                                           line_coord1 = first_point,
-                                           line_coord2 = end_point)
+    mfg_dists[k] <-
+      get_dist_point_line(
+        point = c(first_col[k],
+                  second_col[k]),
+        line_coord1 = first_point,
+        line_coord2 = end_point
+      )
   }
 
   ## Set elbow to the maximum of these distances

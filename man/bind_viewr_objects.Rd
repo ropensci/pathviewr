@@ -2,7 +2,7 @@
 % Please edit documentation in R/batch_functions.R
 \name{bind_viewr_objects}
 \alias{bind_viewr_objects}
-\title{Combine multiple viewr objects into a single viwer object}
+\title{Bind viewr objects}
 \usage{
 bind_viewr_objects(obj_list)
 }
@@ -10,10 +10,14 @@ bind_viewr_objects(obj_list)
 \item{obj_list}{A list of viewr objects}
 }
 \value{
-
+A single viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) that combines all the
+rows of the source viewr objects in \code{obj_list}. Metadata may not
+necessarily be retained and therefore \code{attributes} should be used with
+caution.
 }
 \description{
-Combine multiple viewr objects into a single viwer object
+Combine a list of multiple viewr objects into a single viewr object
 }
 \seealso{
 Other batch functions: 

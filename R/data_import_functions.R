@@ -337,7 +337,9 @@ problems.",
 #'   already been gathered into key-value pairs based on subject.
 #'
 #' @author Vikram B. Baliga
+#'
 #' @family data import functions
+#'
 #' @seealso \code{\link{read_motive_csv}} for importing Motive data
 #'
 #' @export
@@ -492,6 +494,8 @@ read_flydra_mat <-
 #'   "renamed_tunnel", "gathered_tunnel")}
 #'
 #' @export
+#'
+#' @family data import functions
 #'
 #' @author Vikram B. Baliga
 #'

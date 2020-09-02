@@ -1,13 +1,11 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-31 VBB
+## Last updated: 2020-09-02 VBB
 
 
 ########################### visualize_frame_gap_choice #########################
-## run separate_trajectories with many different frame gaps to help determine
-## what value to use
-## spits out table and plot to guide decision
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
+#' Visualize the consequence of using various max_frame_gap values
+#'
 #' Run separate_trajectories() with many different frame gaps to help determine
 #' what value to use
 #'
@@ -16,10 +14,16 @@
 #' @param loops How many total frame gap entries to consider
 #' @param ... Additional arguments
 #'
-#' @return
+#' @return A plot and a tibble, each of which shows the total number of
+#'   trajectories that result from using the specified range of
+#'   \code{max_frame_gap} values.
+#'
 #' @author Melissa S. Armstrong and Vikram B. Baliga
+#'
 #' @family data cleaning functions
+#' @family plotting functions
 #' @family functions that define or clean trajectories
+#'
 #' @export
 
 visualize_frame_gap_choice <- function(obj_name,
@@ -72,7 +76,7 @@ visualize_frame_gap_choice <- function(obj_name,
 
 #' Plot each trajectory within a viewr object
 #'
-#' @param obj_name #' A viewr object (a tibble or data.frame with attribute
+#' @param obj_name A viewr object (a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
 #'   through \code{separate_trajectories()} or \code{get_full_trajectories()}.
 #' @param plot_axes Which position axes should be plotted? A character vector
