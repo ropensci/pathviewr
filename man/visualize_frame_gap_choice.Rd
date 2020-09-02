@@ -2,8 +2,7 @@
 % Please edit documentation in R/plotting_functions.R
 \name{visualize_frame_gap_choice}
 \alias{visualize_frame_gap_choice}
-\title{Run separate_trajectories() with many different frame gaps to help determine
-what value to use}
+\title{Visualize the consequence of using various max_frame_gap values}
 \usage{
 visualize_frame_gap_choice(obj_name, loops = 20, ...)
 }
@@ -16,7 +15,9 @@ visualize_frame_gap_choice(obj_name, loops = 20, ...)
 \item{...}{Additional arguments}
 }
 \value{
-
+A plot and a tibble, each of which shows the total number of
+trajectories that result from using the specified range of
+\code{max_frame_gap} values.
 }
 \description{
 Run separate_trajectories() with many different frame gaps to help determine
@@ -36,6 +37,9 @@ Other data cleaning functions:
 \code{\link{standardize_tunnel}()},
 \code{\link{trim_tunnel_outliers}()}
 
+Other plotting functions: 
+\code{\link{plot_viewr_trajectories}()}
+
 Other functions that define or clean trajectories: 
 \code{\link{get_full_trajectories}()},
 \code{\link{quick_separate_trajectories}()},
@@ -46,3 +50,4 @@ Melissa S. Armstrong and Vikram B. Baliga
 }
 \concept{data cleaning functions}
 \concept{functions that define or clean trajectories}
+\concept{plotting functions}

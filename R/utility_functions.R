@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-31 VBB
+## Last updated: 2020-09-02 VBB
 
 
 ################################# get_header_viewr #############################

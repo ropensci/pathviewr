@@ -83,6 +83,7 @@ attributes(jul_29)
 \code{\link{read_flydra_mat}} for importing Flydra data
 
 Other data import functions: 
+\code{\link{as_viewr}()},
 \code{\link{import_and_clean_batch}()},
 \code{\link{import_batch}()},
 \code{\link{read_flydra_mat}()}

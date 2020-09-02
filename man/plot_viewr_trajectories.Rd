@@ -11,7 +11,7 @@ plot_viewr_trajectories(
 )
 }
 \arguments{
-\item{obj_name}{#' A viewr object (a tibble or data.frame with attribute
+\item{obj_name}{A viewr object (a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
 through \code{separate_trajectories()} or \code{get_full_trajectories()}.}
 
@@ -30,6 +30,10 @@ A (base-R) series of plots or single plot (if \code{multi_plot =
 }
 \description{
 Plot each trajectory within a viewr object
+}
+\seealso{
+Other plotting functions: 
+\code{\link{visualize_frame_gap_choice}()}
 }
 \author{
 Vikram B. Baliga

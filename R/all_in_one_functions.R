@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-08-31 VBB
+## Last updated: 2020-09-02 VBB
 
 
 ################################# clean_viewr ##################################
@@ -35,7 +35,10 @@
 #'   \code{max_frame_gap = "autodetect"} to the arguments supplied to this
 #'   function.
 #'
-#' @return A viewr object (tibble or data.frame with attribute \code{pathviewR_steps} that includes \code{"viewr"}) that has passed through several \code{pathviewR} functions as desired by the user, resulting in data that have been cleaned and ready for analyses.
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) that has passed
+#'   through several \code{pathviewR} functions as desired by the user,
+#'   resulting in data that have been cleaned and ready for analyses.
 #'
 #' @author Vikram B. Baliga
 #'

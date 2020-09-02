@@ -48,7 +48,10 @@ retained.}
 \item{...}{Additional arguments passed to the corresponding functions.}
 }
 \value{
-A viewr object (tibble or data.frame with attribute \code{pathviewR_steps} that includes \code{"viewr"}) that has passed through several \code{pathviewR} functions as desired by the user, resulting in data that have been cleaned and ready for analyses.
+A viewr object (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}) that has passed
+through several \code{pathviewR} functions as desired by the user,
+resulting in data that have been cleaned and ready for analyses.
 }
 \description{
 Import a file and then, akin to \code{clean_viewr}, run through as many

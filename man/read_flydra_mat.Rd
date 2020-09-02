@@ -35,6 +35,7 @@ that additionally has important metadata stored as attributes (see Details).
 \code{\link{read_motive_csv}} for importing Motive data
 
 Other data import functions: 
+\code{\link{as_viewr}()},
 \code{\link{import_and_clean_batch}()},
 \code{\link{import_batch}()},
 \code{\link{read_motive_csv}()}

@@ -35,13 +35,19 @@ a file has been imported?}
 \item{...}{Additional arguments (may remove this if needed)}
 }
 \value{
-
+A list of viewr objects (tibble or data.frame with attribute
+\code{pathviewR_steps} that includes \code{"viewr"}).
 }
 \description{
 Batch import of files for either Motive or Flydra (but not a mix of both)
 }
+\details{
+Refer to \code{read_motive_csv()} and \code{read_flydra_mat()} for
+details of data import methods.
+}
 \seealso{
 Other data import functions: 
+\code{\link{as_viewr}()},
 \code{\link{import_and_clean_batch}()},
 \code{\link{read_flydra_mat}()},
 \code{\link{read_motive_csv}()}
