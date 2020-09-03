@@ -41,17 +41,12 @@ library(pathviewR)
 `.csv` files exported from Motive can be imported via `read_motive_csv()`
 
 ```{r import_motive}
-## Import the july 29 example data included in 
+## Import the Motive example data included in 
 ## the package
-# motive_data <-
-#   read_motive_csv(
-#     system.file("extdata", "july-29_group-I_16-20.csv",
-#                 package = 'pathviewR')
-#   )
 
 motive_data <-
   read_motive_csv(
-    system.file("extdata", "july-29_group-I_16-20_truncated.csv",
+    system.file("extdata", "pathviewR_motive_example_data.csv",
                 package = 'pathviewR')
   )
 
@@ -89,7 +84,7 @@ be used throughout the resultant `tibble`.
 flydra_data <-
   read_flydra_mat(
     system.file("extdata", 
-                "DATA20160709_093733.kalmanized.h5-short-only.mat",
+                "pathviewR_flydra_example_data.mat",
                 package = 'pathviewR'),
     subject_name = "birdie_wooster"
   )
