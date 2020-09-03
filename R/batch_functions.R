@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-02 VBB
+## Last updated: 2020-09-03 VBB
 
 
 ################################# import_batch #################################
@@ -75,8 +75,6 @@ import_batch <- function(file_path_list,
 
 
 ################################# clean_viewr_batch #############################
-## for a list of viewr files, run through the pipeline (from relabel axes
-## up through get full trajectories, as desired) via clean_viewr()
 
 #' Batch clean viewr files
 #'
@@ -119,8 +117,6 @@ clean_viewr_batch <- function(obj_list,
 
 
 ############################ import_and_clean_batch ############################
-## Like clean viewr batch, but with import as the first step too
-##
 
 #' Batch import and clean files
 #'

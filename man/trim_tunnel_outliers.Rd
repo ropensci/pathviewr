@@ -17,7 +17,9 @@ trim_tunnel_outliers(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
+structured as though it has been passed through those functions).}
 
 \item{lengths_min}{Minimum length}
 
@@ -41,6 +43,10 @@ the specified ranges has been excluded.
 \description{
 The user provides estimates of min and max values of data. This function then
 trims out anything beyond these estimates.
+}
+\details{
+Anything supplied to _min or _max arguments should be single numeric
+values.
 }
 \seealso{
 Other data cleaning functions: 

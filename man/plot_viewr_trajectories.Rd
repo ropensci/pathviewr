@@ -31,6 +31,23 @@ A (base-R) series of plots or single plot (if \code{multi_plot =
 \description{
 Plot each trajectory within a viewr object
 }
+\examples{
+library(pathviewR)
+
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                             package = 'pathviewR'))
+
+motive_full <-
+  motive_data \%>\%
+  clean_viewr(desired_percent = 50,
+              max_frame_gap = "autodetect",
+              span = 0.95)
+
+plot_viewr_trajectories(motive_full, multi_plot = FALSE)
+plot_viewr_trajectories(motive_full, multi_plot = TRUE)
+}
 \seealso{
 Other plotting functions: 
 \code{\link{visualize_frame_gap_choice}()}

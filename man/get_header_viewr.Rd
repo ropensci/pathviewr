@@ -25,13 +25,13 @@ original data file imported via \code{pathviewR}'s \code{read_} functions.
 \examples{
 library(pathviewR)
 
-## Import the july 29 example data included in the package
-jul_29 <-
-  read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+## Import the Motive example data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                              package = 'pathviewR'))
 
 ## Now display the Header information
-get_header_viewr(jul_29)
+get_header_viewr(motive_data)
 }
 \author{
 Vikram B. Baliga

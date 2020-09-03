@@ -39,22 +39,21 @@ or \code{larry_position_height} are acceptable, but \code{bird01_x} or
 }
 \examples{
 library(pathviewR)
-library(tidyverse)
 
-## Import the july 29 example data included in the package
-jul_29 <-
-  read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+## Import the Motive example data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                              package = 'pathviewR'))
 
 ## First use relabel_viewr_axes() to rename these variables using _length,
 ## _width, and _height instead
-jul_29_relabeled <- relabel_viewr_axes(jul_29)
+motive_data_relabeled <- relabel_viewr_axes(motive_data)
 
 ## Now use gather_tunnel_data() to gather colums into tidy format
-jul_29_gathered <- gather_tunnel_data(jul_29_relabeled)
+motive_data_gathered <- gather_tunnel_data(motive_data_relabeled)
 
 ## Column names reflect the way in which data were reformatted:
-names(jul_29_gathered)
+names(motive_data_gathered)
 }
 \seealso{
 Other data cleaning functions: 

@@ -86,7 +86,8 @@ test_mat <-
                          height_zero = 1.44) %>%
   select_x_percent(desired_percent = 50) %>%
   separate_trajectories(max_frame_gap = 1) %>%
-  get_full_trajectories(span = 0.95)
+  get_full_trajectories(span = 0.95) %>%
+  section_tunnel_by(10)
 
 ## 2D overhead
 plot(test_mat$position_length,

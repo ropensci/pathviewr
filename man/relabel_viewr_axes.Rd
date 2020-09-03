@@ -53,25 +53,25 @@ instances of _Y with _length in the names of variables.
 
 library(pathviewR)
 
-## Import the july 29 example data included in the package
-jul_29 <-
-  read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+## Import the Motive example data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                              package = 'pathviewR'))
 
 ## Names of variables are labeled with _x, _y, _z, which we'd like to rename
-names(jul_29)
+names(motive_data)
 
 ## Now use relabel_viewr_axes() to rename these variables using _length,
 ## _width, and _height instead
-jul_29_relabeled <-
-  relabel_viewr_axes(jul_29,
+motive_data_relabeled <-
+  relabel_viewr_axes(motive_data,
                      tunnel_length = "_z",
                      tunnel_width = "_x",
                      tunnel_height = "_y",
                      real = "_w")
 
 ## See the result
-names(jul_29_relabeled)
+names(motive_data_relabeled)
 }
 \seealso{
 Other data cleaning functions: 

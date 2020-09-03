@@ -65,7 +65,7 @@ for (i in 1:length(scripts_list)) {
 # Lets try an examples using the all in one function (import_and_clean_viewr)
 
                    #####   All in one function   #####
-jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
+jul_29_path <- './inst/extdata/pathviewR_motive_example_data.csv'
 
 
 jul_29_all_defaults <-
@@ -79,7 +79,7 @@ jul_29_all_defaults <-
 ## in one function output
 
           #####   Data import   #####
-jul_29 <- read_motive_csv('./inst//extdata/july-29_group-I_16-20.csv')
+jul_29 <- read_motive_csv('./inst//extdata/pathviewR_motive_example_data.csv')
 
           #####   Rename axes   #####
 jul_29 <- relabel_viewr_axes(jul_29,

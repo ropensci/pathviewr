@@ -66,6 +66,20 @@ corresponding function(s). E.g. if the "autodetect" feature in
 \code{max_frame_gap = "autodetect"} to the arguments supplied to this
 function.
 }
+\examples{
+library(pathviewR)
+
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                             package = 'pathviewR'))
+
+motive_full <-
+  motive_data \%>\%
+  clean_viewr(desired_percent = 50,
+              max_frame_gap = "autodetect",
+              span = 0.95)
+}
 \seealso{
 Other all in one functions: 
 \code{\link{import_and_clean_viewr}()}

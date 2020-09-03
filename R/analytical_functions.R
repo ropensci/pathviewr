@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-02 VBB
+## Last updated: 2020-09-03 VBB
 
 ################################## get_velocity ################################
 
@@ -189,6 +189,21 @@ Please check that you have entered the name of the height variable correctly.")
 #' @family mathematical functions
 #'
 #' @export
+#'
+#' @examples
+#' ## 2D case
+#' get_dist_point_line(
+#'   point = c(0, 0),
+#'   line_coord1 = c(1, 0),
+#'   line_coord2 = c(1, 5)
+#' )
+#'
+#' #' ## 3D case
+#' get_dist_point_line(
+#'   point = c(0, 0, 0),
+#'   line_coord1 = c(1, 0, 0),
+#'   line_coord2 = c(1, 5, 0)
+#' )
 
 get_dist_point_line <- function(point,
                                 line_coord1,
@@ -355,6 +370,12 @@ deg_2_rad <- function(deg) {
 #' @family mathematical functions
 #'
 #' @export
+#'
+#' @examples
+#' get_2d_angle(
+#'   0, 1,
+#'   0, 0,
+#'   1, 0)
 
 get_2d_angle <- function(x1, y1,
                          x2, y2,
@@ -403,6 +424,12 @@ get_2d_angle <- function(x1, y1,
 #' @family mathematical functions
 #'
 #' @export
+#'
+#' @examples
+#' get_3d_angle(
+#'   0, 1, 0
+#'   0, 0, 0
+#'   1, 0, 0)
 
 get_3d_angle <- function(x1, y1, z1,
                          x2, y2, z2,

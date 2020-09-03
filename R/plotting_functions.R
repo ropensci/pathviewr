@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-02 VBB
+## Last updated: 2020-09-03 VBB
 
 
 ########################### visualize_frame_gap_choice #########################
@@ -14,6 +14,9 @@
 #' @param loops How many total frame gap entries to consider
 #' @param ... Additional arguments
 #'
+#' @details The input viewr object (\code{obj_name}) should likely be an object
+#' that has passed through the \code{select_x_percent()} step.
+#'
 #' @return A plot and a tibble, each of which shows the total number of
 #'   trajectories that result from using the specified range of
 #'   \code{max_frame_gap} values.
@@ -25,6 +28,25 @@
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' motive_selected <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   get_velocity() %>%
+#'   select_x_percent(desired_percent = 50)
+#'
+#' visualize_frame_gap_choice(motive_selected, loops = 10)
 
 visualize_frame_gap_choice <- function(obj_name,
                                        loops = 20,
@@ -95,6 +117,23 @@ visualize_frame_gap_choice <- function(obj_name,
 #' @author Vikram B. Baliga
 #'
 #' @family plotting functions
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' motive_full <-
+#'   motive_data %>%
+#'   clean_viewr(desired_percent = 50,
+#'               max_frame_gap = "autodetect",
+#'               span = 0.95)
+#'
+#' plot_viewr_trajectories(motive_full, multi_plot = FALSE)
+#' plot_viewr_trajectories(motive_full, multi_plot = TRUE)
 
 plot_viewr_trajectories <- function(obj_name,
                                     plot_axes = c("length", "width"),

@@ -36,6 +36,12 @@ Everything supplied to arguments must be singular numeric values.
 The second point (x2, y2, z2) is treated as the vertex, and the angle beween
 the three points in 3D space is computed.
 }
+\examples{
+get_3d_angle(
+  0, 1, 0
+  0, 0, 0
+  1, 0, 0)
+}
 \seealso{
 Other mathematical functions: 
 \code{\link{deg_2_rad}()},

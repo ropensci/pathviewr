@@ -55,28 +55,28 @@ file an Issue on our Github page if you encounter any problems.
 \examples{
 library(pathviewR)
 
-## Import the july 29 example data included in the package
-jul_29 <-
-  read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                              package = 'pathviewR'))
 
 ## Names of variables in the resulting tibble
-names(jul_29)
+names(motive_data)
 
 ## A variety of metadata are stored as attributes. Of particular interest:
-attr(jul_29, "pathviewR_steps")
-attr(jul_29, "file_id")
-attr(jul_29, "file_mtime")
-attr(jul_29, "header")
-attr(jul_29, "Motive_IDs")
-attr(jul_29, "subject_names_full")
-attr(jul_29, "subject_names_simple")
-attr(jul_29, "jul_29_names")
-attr(jul_29, "jul_29_types_full")
-attr(jul_29, "jul_29_types_simple")
+attr(motive_data, "pathviewR_steps")
+attr(motive_data, "file_id")
+attr(motive_data, "file_mtime")
+attr(motive_data, "header")
+attr(motive_data, "Motive_IDs")
+attr(motive_data, "subject_names_full")
+attr(motive_data, "subject_names_simple")
+attr(motive_data, "motive_data_names")
+attr(motive_data, "motive_data_types_full")
+attr(motive_data, "motive_data_types_simple")
 
 ## Of course, all attributes can be viewed as a (long) list via:
-attributes(jul_29)
+attributes(motive_data)
 
 }
 \seealso{

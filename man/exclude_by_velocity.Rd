@@ -14,9 +14,9 @@ exclude_by_velocity(obj_name, vel_min = NULL, vel_max = NULL)
 that have at least one observation with velocity less than \code{vel_min}
 are removed.}
 
-\item{vel_max}{Default \code{NULL}. If a numeric is entered, trajectories that
-have at least one observation with velocity greater than \code{vel_max} are
-removed.}
+\item{vel_max}{Default \code{NULL}. If a numeric is entered, trajectories
+that have at least one observation with velocity greater than
+\code{vel_max} are removed.}
 }
 \value{
 A new viewr object that is identical to the input object but now

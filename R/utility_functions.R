@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-02 VBB
+## Last updated: 2020-09-03 VBB
 
 
 ################################# get_header_viewr #############################
@@ -25,13 +25,13 @@
 #' @examples
 #' library(pathviewR)
 #'
-#' ## Import the july 29 example data included in the package
-#' jul_29 <-
-#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#' ## Import the Motive example data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                              package = 'pathviewR'))
 #'
 #' ## Now display the Header information
-#' get_header_viewr(jul_29)
+#' get_header_viewr(motive_data)
 
 
 get_header_viewr <- function(obj_name,
@@ -86,25 +86,25 @@ get_header_viewr <- function(obj_name,
 #'
 #' library(pathviewR)
 #'
-#' ## Import the july 29 example data included in the package
-#' jul_29 <-
-#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#' ## Import the Motive example data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                              package = 'pathviewR'))
 #'
 #' ## Names of variables are labeled with _x, _y, _z, which we'd like to rename
-#' names(jul_29)
+#' names(motive_data)
 #'
 #' ## Now use relabel_viewr_axes() to rename these variables using _length,
 #' ## _width, and _height instead
-#' jul_29_relabeled <-
-#'   relabel_viewr_axes(jul_29,
+#' motive_data_relabeled <-
+#'   relabel_viewr_axes(motive_data,
 #'                      tunnel_length = "_z",
 #'                      tunnel_width = "_x",
 #'                      tunnel_height = "_y",
 #'                      real = "_w")
 #'
 #' ## See the result
-#' names(jul_29_relabeled)
+#' names(motive_data_relabeled)
 
 
 relabel_viewr_axes <- function(obj_name,
@@ -196,22 +196,21 @@ relabel_viewr_axes <- function(obj_name,
 #'
 #' @examples
 #' library(pathviewR)
-#' library(tidyverse)
 #'
-#' ## Import the july 29 example data included in the package
-#' jul_29 <-
-#'   read_motive_csv(system.file("extdata", "july-29_group-I_16-20.csv",
+#' ## Import the Motive example data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                              package = 'pathviewR'))
 #'
 #' ## First use relabel_viewr_axes() to rename these variables using _length,
 #' ## _width, and _height instead
-#' jul_29_relabeled <- relabel_viewr_axes(jul_29)
+#' motive_data_relabeled <- relabel_viewr_axes(motive_data)
 #'
 #' ## Now use gather_tunnel_data() to gather colums into tidy format
-#' jul_29_gathered <- gather_tunnel_data(jul_29_relabeled)
+#' motive_data_gathered <- gather_tunnel_data(motive_data_relabeled)
 #'
 #' ## Column names reflect the way in which data were reformatted:
-#' names(jul_29_gathered)
+#' names(motive_data_gathered)
 
 gather_tunnel_data <- function(obj_name,
                                NA_drop = TRUE,
@@ -369,7 +368,9 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' found)
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
+#'   structured as though it has been passed through those functions).
 #' @param original_scale The original scale at which data were exported. See
 #'   Details if unknown.
 #' @param desired_scale The desired scale
@@ -522,7 +523,9 @@ rename_viewr_characters <- function(obj_name,
 #' trims out anything beyond these estimates.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
+#'   structured as though it has been passed through those functions).
 #' @param lengths_min Minimum length
 #' @param lengths_max Maximum length
 #' @param widths_min Minimum width
@@ -530,6 +533,9 @@ rename_viewr_characters <- function(obj_name,
 #' @param heights_min Minimum height
 #' @param heights_max Maximum height
 #' @param ... Additional arguments passed to/from other pathviewR functions
+#'
+#' @details Anything supplied to _min or _max arguments should be single numeric
+#'   values.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
@@ -635,7 +641,9 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' width only, i.e. no rotation of height.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
+#'   structured as though it has been passed through those functions).
 #' @param all_heights_min Minimum perch height
 #' @param all_heights_max Maximum perch height
 #' @param perch1_len_min Minimum length value of perch 1
@@ -839,7 +847,9 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' landmarks (specific subjects in the data).
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
+#'   structured as though it has been passed through those functions).
 #' @param landmark_one Subject name of the first landmark
 #' @param landmark_two Subject name of the second landmark
 #' @param ... Additional arguments passed to/from other pathviewR functions
@@ -1718,7 +1728,25 @@ get_full_trajectories <- function(obj_name,
 #'
 #' @author Vikram B. Baliga
 #'
-
+#' @examples
+#' ## Load data and run section_tunnel_by()
+#' test_mat <-
+#'   read_flydra_mat(
+#'     "./inst/extdata/pathviewR_flydra_example_data.mat",
+#'     subject_name = "steve"
+#'   ) %>%
+#'   redefine_tunnel_center(length_method = "middle",
+#'                          height_method = "user-defined",
+#'                          height_zero = 1.44) %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = 1) %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   section_tunnel_by(number_of_sections = 10)
+#'
+#' ## Plot; color by section ID
+#' plot(test_mat$position_length,
+#'      test_mat$position_width,
+#'      asp = 1, col = as.factor(test_mat$section_id))
 
 section_tunnel_by <- function(obj_name,
                               axis = "position_length",
@@ -1752,7 +1780,6 @@ section_tunnel_by <- function(obj_name,
 
 ############################## exclude_by_velocity #############################
 
-## BAREBONES DRAFT OF ROXYGEN, NEEDS FURTHER DETAIL
 #' Remove trajectories entirely, based on velocity thresholds
 #'
 #' Remove trajectories from a viewr object that contain instances of velocity
@@ -1763,9 +1790,9 @@ section_tunnel_by <- function(obj_name,
 #' @param vel_min Default \code{NULL}. If a numeric is entered, trajectories
 #'   that have at least one observation with velocity less than \code{vel_min}
 #'   are removed.
-#' @param vel_max Default \code{NULL}. If a numeric is entered, trajectories that
-#'   have at least one observation with velocity greater than \code{vel_max} are
-#'   removed.
+#' @param vel_max Default \code{NULL}. If a numeric is entered, trajectories
+#'   that have at least one observation with velocity greater than
+#'   \code{vel_max} are removed.
 #'
 #' @return A new viewr object that is identical to the input object but now
 #'   excludes any trajectories that contain observations with velocity less than

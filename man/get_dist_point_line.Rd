@@ -27,6 +27,21 @@ The function accepts 2D coordinates or 3D coordinates, but note that
 the dimensions of all supplied arguments must match; all coordinates must
 be 2D or they all must be 3D.
 }
+\examples{
+## 2D case
+get_dist_point_line(
+  point = c(0, 0),
+  line_coord1 = c(1, 0),
+  line_coord2 = c(1, 5)
+)
+
+#' ## 3D case
+get_dist_point_line(
+  point = c(0, 0, 0),
+  line_coord1 = c(1, 0, 0),
+  line_coord2 = c(1, 5, 0)
+)
+}
 \seealso{
 Other mathematical functions: 
 \code{\link{deg_2_rad}()},

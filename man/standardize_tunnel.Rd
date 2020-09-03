@@ -13,7 +13,9 @@ standardize_tunnel(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
+structured as though it has been passed through those functions).}
 
 \item{landmark_one}{Subject name of the first landmark}
 

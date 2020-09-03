@@ -23,6 +23,29 @@ trajectories that result from using the specified range of
 Run separate_trajectories() with many different frame gaps to help determine
 what value to use
 }
+\details{
+The input viewr object (\code{obj_name}) should likely be an object
+that has passed through the \code{select_x_percent()} step.
+}
+\examples{
+library(pathviewR)
+
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                             package = 'pathviewR'))
+
+motive_selected <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data() \%>\%
+  trim_tunnel_outliers() \%>\%
+  rotate_tunnel() \%>\%
+  get_velocity() \%>\%
+  select_x_percent(desired_percent = 50)
+
+visualize_frame_gap_choice(motive_selected, loops = 10)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},
