@@ -366,7 +366,7 @@ deg_2_rad <- function(deg) {
 #' @param y3 y-coordinate of third point
 #'
 #' @details Everything supplied to arguments must be singular numeric values.
-#' The second point (x2, y2) is treated as the vertex, and the angle beween
+#' The second point (x2, y2) is treated as the vertex, and the angle between
 #' the three points in 2D space is computed.
 #'
 #' @return A numeric vector that provides the angular measurement in degrees.
@@ -420,7 +420,7 @@ get_2d_angle <- function(x1, y1,
 #' @param z3 z-coordinate of third point
 #'
 #' @details Everything supplied to arguments must be singular numeric values.
-#' The second point (x2, y2, z2) is treated as the vertex, and the angle beween
+#' The second point (x2, y2, z2) is treated as the vertex, and the angle between
 #' the three points in 3D space is computed.
 #'
 #' @return A numeric vector that provides the angular measurement in degrees.

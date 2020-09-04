@@ -1869,6 +1869,307 @@ exclude_by_velocity <- function(obj_name,
 }
 
 
+################################ fill_traj_gaps ################################
+
+#' Interpolate gaps within trajectories
+#'
+#' Use loess smoothing to fill in gaps of missing data within trajectories in
+#' a viewr object
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+#'   predefined (i.e. via \code{separate_trajectories()}).
+#' @param loess_degree See "degree" argument of fANCOVA::loess.as()
+#' @param loess_criterion See "criterion" argument of fANCOVA::loess.as()
+#' @param loess_family See "family" argument of fANCOVA::loess.as()
+#' @param loess_user_span See "user.span" argument of fANCOVA::loess.as()
+#' @param loess_plot See "plot" argument of fANCOVA::loess.as(). Not
+#'   recommended.
+#' @details It is strongly recommended that the input viewr object be "cleaned"
+#'   via \code{select_x_percent()} -> \code{separate_trajectories()} ->
+#'   \code{get_full_trajectories()} prior to using this function. Doing so will
+#'   ensure that only trajectories with minor gaps will be used in your
+#'   analyses. This function will then enable you to interpolate missing data in
+#'   those minor gaps.
+#'
+#'   Interpolation is handled by first fitting a series of LOESS regressions
+#'   (via \code{fANCOVA::loess.as()}). In each regression, a position axis (e.g.
+#'   \code{position_length}) is regressed against \code{frame} (\code{frame} is
+#'   x-axis). From that relationship, values of missing position data are
+#'   determined and then inserted into the original data set.
+#'
+#'   See \link[fANCOVA]{loess.as} for further details on parameters.
+#'
+#' @return A viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"} that now includes new
+#'   observations (rows) as a result of interpolation to fill in missing data. A
+#'   new column \code{gaps_filled} is added to the data to indicate original
+#'   data ("No") vs data that have been inserted to fill gaps ("Yes").
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean, isolate, and label trajectories
+#' motive_full <-
+#'   motive_data %>%
+#'   clean_viewr(desired_percent = 50,
+#'               max_frame_gap = "autodetect",
+#'               span = 0.95)
+#'
+#' ## Interpolate missing data via this function
+#' motive_filling <-
+#'  motive_full %>%
+#'  fill_traj_gaps()
+#'
+#' ## plot all trajectories (before)
+#' plot_viewr_trajectories(motive_full, multi_plot = TRUE)
+#' ## plot all trajectories(after)
+#' plot_viewr_trajectories(motive_filling, multi_plot = TRUE)
+
+fill_traj_gaps <- function(obj_name,
+                           loess_degree = 1,
+                           loess_criterion = c("aicc", "gcv"),
+                           loess_family = c("gaussian", "symmetric"),
+                           loess_user_span = NULL,
+                           loess_plot = FALSE
+){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Split the object by file_sub_traj
+  obj_splits <-
+    obj_name %>%
+    base::split(f = obj_name$file_sub_traj)
+
+  ## Re-order the list so the original order is maintained
+  obj_splits <-
+    obj_splits[unique(obj_name$file_sub_traj)]
+
+  ## Evaluate which trajectories contain gaps
+  traj_gap_indicator <- NULL
+  for (i in 1:length(obj_splits)){
+    if(
+      ## If a trajectory has gaps
+      any(diff(obj_splits[[i]]$frame) > 1)
+    ) {
+      ## Set traj_gap_indicator entry to TRUE
+      traj_gap_indicator[i] <- TRUE
+    } else {
+      ## If the trajectory has no gaps, set traj_gap_indicator to FALSE
+      traj_gap_indicator[i] <- FALSE
+    }
+  }
+
+  ## Fill gaps
+  for (i in 1:length(traj_gap_indicator)){
+
+    ## Work only with cases where gaps are found; all other trajectories
+    ## should not be touched
+    if(traj_gap_indicator[i] == TRUE){
+
+      ## Isolate the trajectory
+      gap_dat <- obj_splits[[i]] %>%
+        tibble::add_column(gaps_filled = "No")
+
+      ## Generate a sequence from min frame to max frame as though
+      ## there were no gaps
+      frame_seq <-
+        seq(from = min(gap_dat$frame),
+            to = max(gap_dat$frame),
+            by = 1)
+
+      ## Create a time sequence of the same length
+      ## Make it the same length as frame_seq so as to fill in the gap(s)
+      time_seq <-
+        seq(from = min(gap_dat$time_sec),
+            to = max(gap_dat$time_sec),
+            length.out = length(frame_seq))
+
+      ## Use fANCOVA::loess.as() to automate the loess fit span
+
+      ## position_length
+      length_fit <-
+        fANCOVA::loess.as(gap_dat$frame,
+                          gap_dat$position_length,
+                          degree = loess_degree,
+                          criterion = loess_criterion,
+                          family = loess_family,
+                          user.span = loess_user_span,
+                          plot = loess_plot)
+      length_preds <- predict(length_fit, frame_seq)
+      ## position_width
+      width_fit <-
+        fANCOVA::loess.as(gap_dat$frame,
+                          gap_dat$position_width,
+                          degree = loess_degree,
+                          criterion = loess_criterion,
+                          family = loess_family,
+                          user.span = loess_user_span,
+                          plot = loess_plot)
+      width_preds <- predict(width_fit, frame_seq)
+      ## position_height
+      height_fit <-
+        fANCOVA::loess.as(gap_dat$frame,
+                          gap_dat$position_height,
+                          degree = loess_degree,
+                          criterion = loess_criterion,
+                          family = loess_family,
+                          user.span = loess_user_span,
+                          plot = loess_plot)
+      height_preds <- predict(height_fit, frame_seq)
+
+      ## Get all the predicted data together
+      predicted_data <-
+        tibble::tibble(frame = frame_seq,
+                       time_sec = time_seq,
+                       position_length = length_preds,
+                       position_width = width_preds,
+                       position_height = height_preds,
+                       gaps_filled = "Yes") %>%
+        get_velocity()
+
+      ## join back with the original data
+      new_dat <-
+        dplyr::left_join(predicted_data, gap_dat, by = c("frame"))
+
+      ## Copy over metadata
+      ## We can likely write this better, but doing it this way for now so
+      ## I can be sure
+for (j in 1:nrow(new_dat)) {
+  if (is.na(new_dat$subject[j])) {
+    new_dat$subject[j] <-
+      base::unique(new_dat$subject)[!is.na(base::unique(new_dat$subject))]
+  }
+  if (is.na(new_dat$gaps_filled.y[j])) {
+    new_dat$gaps_filled.y[j] <- "Yes"
+  }
+  if (is.na(new_dat$traj_id[j])) {
+    new_dat$traj_id[j] <-
+      base::unique(new_dat$traj_id)[!is.na(base::unique(new_dat$traj_id))]
+  }
+  if (is.na(new_dat$file_sub_traj[j])) {
+    new_dat$file_sub_traj[j] <-
+      base::unique(new_dat$file_sub_traj)[!is.na(base::unique(new_dat$file_sub_traj))]
+  }
+  if (is.na(new_dat$traj_length[j])) {
+    new_dat$traj_length[j] <-
+      base::unique(new_dat$traj_length)[!is.na(base::unique(new_dat$traj_length))]
+  }
+  if (is.na(new_dat$start_length[j])) {
+    new_dat$start_length[j] <-
+      base::unique(new_dat$start_length)[!is.na(base::unique(new_dat$start_length))]
+  }
+  if (is.na(new_dat$end_length[j])) {
+    new_dat$end_length[j] <-
+      base::unique(new_dat$end_length)[!is.na(base::unique(new_dat$end_length))]
+  }
+  if (is.na(new_dat$length_diff[j])) {
+    new_dat$length_diff[j] <-
+      base::unique(new_dat$length_diff)[!is.na(base::unique(new_dat$length_diff))]
+  }
+  if (is.na(new_dat$start_length_sign[j])) {
+    new_dat$start_length_sign[j] <-
+      base::unique(new_dat$start_length_sign)[!is.na(base::unique(new_dat$start_length_sign))]
+  }
+  if (is.na(new_dat$end_length_sign[j])) {
+    new_dat$end_length_sign[j] <-
+      base::unique(new_dat$end_length_sign)[!is.na(base::unique(new_dat$end_length_sign))]
+  }
+  if (is.na(new_dat$direction[j])) {
+    new_dat$direction[j] <-
+      base::unique(new_dat$direction)[!is.na(base::unique(new_dat$direction))]
+  }
+}
+
+      ## Copy over predicted position and velocity data into the
+      ## original data frame
+      ## Basically overwrite any NA rows
+      for (k in 1:nrow(new_dat)) {
+        if (is.na(new_dat$position_length.y[k])) {
+          new_dat$position_length.y[k] <- new_dat$position_length.x[k]
+        }
+        if (is.na(new_dat$position_width.y[k])) {
+          new_dat$position_width.y[k] <- new_dat$position_width.x[k]
+        }
+        if (is.na(new_dat$position_height.y[k])) {
+          new_dat$position_height.y[k] <- new_dat$position_height.x[k]
+        }
+        if (is.na(new_dat$velocity.y[k])) {
+          new_dat$velocity.y[k] <- new_dat$velocity.x[k]
+        }
+        if (is.na(new_dat$length_inst_vel.y[k])) {
+          new_dat$length_inst_vel.y[k] <- new_dat$length_inst_vel.x[k]
+        }
+        if (is.na(new_dat$width_inst_vel.y[k])) {
+          new_dat$width_inst_vel.y[k] <- new_dat$width_inst_vel.x[k]
+        }
+        if (is.na(new_dat$height_inst_vel.y[k])) {
+          new_dat$height_inst_vel.y[k] <- new_dat$height_inst_vel.x[k]
+        }
+      }
+
+      ## Keep only the columns we want
+      obj_splits[[i]] <-
+        new_dat %>%
+        ## position_axis.y have the position values we want; position_axis.x
+        ## and time_sec.y can be discarded
+        dplyr::select(
+          frame, time_sec.x, subject,
+          position_length.y, position_width.y, position_height.y,
+          rotation_length, rotation_width, rotation_height, rotation_real,
+          mean_marker_error,
+          velocity.y, length_inst_vel.y, width_inst_vel.y, height_inst_vel.y,
+          traj_id, file_sub_traj, traj_length, start_length, end_length,
+          length_diff, start_length_sign, end_length_sign, direction,
+          gaps_filled.y) %>%
+        dplyr::rename(
+          time_sec = time_sec.x,
+          position_length = position_length.y,
+          position_width = position_width.y,
+          position_height = position_height.y,
+          velocity = velocity.y,
+          length_inst_vel = length_inst_vel.y,
+          width_inst_vel = width_inst_vel.y,
+          height_inst_vel = height_inst_vel.y,
+          gaps_filled = gaps_filled.y)
+
+    }
+
+    if(traj_gap_indicator[i] == FALSE){
+      ## For trajectories that do not need smoothing
+      ## Indicate this trajectory was not smoothed
+      obj_splits[[i]] <-
+        obj_splits[[i]] %>%
+        tibble::add_column(gaps_filled = "No")
+    }
+
+  }
+
+  ## Put it all back together again
+  obj_new <- dplyr::bind_rows(obj_splits)
+
+  ## Leave a note that we smoothed some trajectories
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "traj_gaps_filled")
+
+  ## Export
+  return(obj_new)
+
+}
+
+
 ############################### rm subjects by trajectory number ###############################
 
 rm_by_trajnum <- function(obj_name,
