@@ -51,6 +51,13 @@ position axes are computed and provided as additional columns.
 Velocity (both overall and per-axis) is computed for each row in the data
 (see Details)
 }
+\details{
+Instantaneous velocity is not truly "instantaneous" but rather is
+approximated as the change in distance divided by change in time from one
+observation (row) to the previous observation (row). Each component of
+velocity is computed (i.e. per axis) along with the overall velocity of
+the subject.
+}
 \seealso{
 Other mathematical functions: 
 \code{\link{deg_2_rad}()},

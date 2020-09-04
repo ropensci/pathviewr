@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-04 VBB
 
 ################################## get_velocity ################################
 
@@ -21,6 +21,12 @@
 #' @param velocity_max Should data above a certain velocity be filtered out of
 #'   the object? If so, enter a numeric. If not, keep NA.
 #' @param ... Additional arguments passed to or from other pathviewR functions.
+#'
+#' @details Instantaneous velocity is not truly "instantaneous" but rather is
+#' approximated as the change in distance divided by change in time from one
+#' observation (row) to the previous observation (row). Each component of
+#' velocity is computed (i.e. per axis) along with the overall velocity of
+#' the subject.
 #'
 #' @return If \code{add_to_viewr} is \code{TRUE}, additional columns are
 #'   appended to the input viewr object. If \code{FALSE}, a standalone tibble is
@@ -45,10 +51,10 @@ get_velocity <- function(obj_name,
                          velocity_max = NA,
                          ...) {
 
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # ## Check that it's a viewr object
+  # if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Argument checks
   if (!any(grepl(time_col,
