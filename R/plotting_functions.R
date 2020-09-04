@@ -286,6 +286,10 @@ plot_viewr_trajectories <- function(obj_name,
     }
   }
 
+  ## reset back to default
+  par(mar = c(5, 4, 4, 2))
+  par(mfrow = c(1, 1))
+
 }
 
 
