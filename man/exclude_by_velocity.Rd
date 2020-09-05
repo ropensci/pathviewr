@@ -28,6 +28,29 @@ excludes any trajectories that contain observations with velocity less than
 Remove trajectories from a viewr object that contain instances of velocity
 known to be spurious.
 }
+\examples{
+## Import and clean the example Motive data
+motive_import_and_clean <-
+  import_and_clean_viewr(
+    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+                            package = 'pathviewR'),
+    desired_percent = 50,
+    max_frame_gap = "autodetect",
+    span = 0.95
+  )
+
+## See the distribution of velocities
+hist(motive_import_and_clean$velocity)
+
+## Let's remove any trajectories that contain
+## velocity < 2
+motive_vel_filtered <-
+  motive_import_and_clean \%>\%
+  exclude_by_velocity(vel_min = 2)
+
+## See how the distribution of velocities has changed
+hist(motive_vel_filtered$velocity)
+}
 \author{
 Vikram B. Baliga
 }

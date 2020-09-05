@@ -79,6 +79,17 @@ motive_full <-
   clean_viewr(desired_percent = 50,
               max_frame_gap = "autodetect",
               span = 0.95)
+
+## Alternatively, used the import_and_clean_viewr()
+## function to combine these steps
+motive_import_and_clean <-
+  import_and_clean_viewr(
+    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+                            package = 'pathviewR'),
+    desired_percent = 50,
+    max_frame_gap = "autodetect",
+    span = 0.95
+  )
 }
 \seealso{
 Other all in one functions: 

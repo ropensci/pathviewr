@@ -35,7 +35,7 @@ get_dist_point_line(
   line_coord2 = c(1, 5)
 )
 
-#' ## 3D case
+## 3D case
 get_dist_point_line(
   point = c(0, 0, 0),
   line_coord1 = c(1, 0, 0),

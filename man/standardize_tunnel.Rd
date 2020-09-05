@@ -41,6 +41,19 @@ length and width dimensions. Height is standardized by average landmark
 height; values greater than 0 are above the landmarks and values less than
 0 are below the landmark level.
 }
+\section{Warning}{
+
+The \code{position_length} values of landmark_one MUST be less than
+the \code{position_length} values of landmark_two; otherwise,
+the rotation will apply to a mirror-image of the tunnel
+}
+
+\examples{
+## Example data that would work with this function are
+## not included in this version of pathviewR. Please
+## contact the package authors for further guidance
+## should you need it.
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

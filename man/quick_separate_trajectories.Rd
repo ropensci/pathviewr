@@ -35,6 +35,10 @@ before a new trajectory is forced to be defined. In this function, only a
 single numeric can be supplied to this parameter (unlike the case in
 \code{separate_trajectories}).
 }
+\examples{
+## This function is not recommended for general use.
+## See separate_trajectories() instead
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

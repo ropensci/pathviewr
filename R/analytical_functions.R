@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-04 VBB
+## Last updated: 2020-09-05 VBB
 
 ################################## get_velocity ################################
 
@@ -40,6 +40,31 @@
 #' @family mathematical functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "standarization" step before running get_velocity().
+#'  motive_cleaned <-
+#'    motive_data %>%
+#'    relabel_viewr_axes() %>%
+#'    gather_tunnel_data() %>%
+#'    trim_tunnel_outliers() %>%
+#'    rotate_tunnel()
+#'
+#' ## Now compute velocity and add as columns
+#'  motive_velocity_added <-
+#'    motive_cleaned %>%
+#'    get_velocity(add_to_viewr = TRUE)
+#'
+#' ## Or set add_to_viewr to FALSE for a standalone object
+#'  motive_velocity_standalone <-
+#'    motive_cleaned %>%
+#'    get_velocity(add_to_viewr = TRUE)
 
 get_velocity <- function(obj_name,
                          time_col = "time_sec",
@@ -204,7 +229,7 @@ Please check that you have entered the name of the height variable correctly.")
 #'   line_coord2 = c(1, 5)
 #' )
 #'
-#' #' ## 3D case
+#' ## 3D case
 #' get_dist_point_line(
 #'   point = c(0, 0, 0),
 #'   line_coord1 = c(1, 0, 0),

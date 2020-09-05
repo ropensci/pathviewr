@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-05 VBB
 
 
 ################################# get_header_viewr #############################
@@ -393,6 +393,29 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @author Vikram B. Baliga
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "gather" step before running rescale_tunnel_data().
+#'  motive_gathered <-
+#'    motive_data %>%
+#'    relabel_viewr_axes() %>%
+#'    gather_tunnel_data()
+#'
+#' ## Now rescale the tunnel data
+#' motive_rescaled <-
+#'   motive_gathered %>%
+#'   rescale_tunnel_data(original_scale = 0.5,
+#'                       desired_scale = 1)
+#'
+#' ## See the difference in data range e.g. for length
+#' range(motive_rescaled$position_length)
+#' range(motive_gathered$position_length)
 
 
 rescale_tunnel_data <- function(obj_name,
@@ -464,6 +487,33 @@ rescale_tunnel_data <- function(obj_name,
 #' @family data cleaning functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "gather" step before running rescale_tunnel_data().
+#'  motive_gathered <-
+#'    motive_data %>%
+#'    relabel_viewr_axes() %>%
+#'    gather_tunnel_data()
+#'
+#' ## See the subject names
+#'  unique(motive_gathered$subject)
+#'
+#' ## Now rename the subjects. We'll get rid of "device" and replace it
+#' ## with "subject"
+#' motive_renamed <-
+#'   motive_gathered %>%
+#'   rename_viewr_characters(target_column = "subject",
+#'                           pattern = "device",
+#'                           replacement = "subject")
+#'
+#' ## See the new subject names
+#' unique(motive_renamed$subject)
 
 rename_viewr_characters <- function(obj_name,
                                     target_column = "subject",
@@ -546,6 +596,29 @@ rename_viewr_characters <- function(obj_name,
 #' @family data cleaning functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "gather" step before running trim_tunnel_outliers().
+#' motive_gathered <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data()
+#'
+#' ## Now trim outliers using default values
+#' motive_trimmed <-
+#'   motive_gathered %>%
+#'   trim_tunnel_outliers(lengths_min = 0,
+#'                        lengths_max = 3,
+#'                        widths_min = -0.4,
+#'                        widths_max = 0.8,
+#'                        heights_min = -0.2,
+#'                        heights_max = 0.5)
 
 trim_tunnel_outliers <- function(obj_name,
                                  lengths_min = 0,
@@ -677,6 +750,35 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @family tunnel standardization functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "trimmed" step before running rotate_tunnel().
+#' motive_trimmed <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers()
+#'
+#' ## Now rotate the tunnel using default values
+#' motive_rotated <-
+#'   motive_trimmed %>%
+#'   rotate_tunnel()
+#'
+#' ## The following attributes store information about
+#' ## how rotation & translation was applied
+#' attr(motive_rotated, "rotation_degrees")
+#' attr(motive_rotated, "rotation_radians")
+#' attr(motive_rotated, "perch1_midpoint_original")
+#' attr(motive_rotated, "perch1_midpoint_current")
+#' attr(motive_rotated, "tunnel_centerpoint_original")
+#' attr(motive_rotated, "perch2_midpoint_original")
+#' attr(motive_rotated, "perch2_midpoint_current")
 
 rotate_tunnel <- function(obj_name,
                           all_heights_min = 0.11,
@@ -862,6 +964,11 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #'   height; values greater than 0 are above the landmarks and values less than
 #'   0 are below the landmark level.
 #'
+#' @section Warning:
+#' The \code{position_length} values of landmark_one MUST be less than
+#' the \code{position_length} values of landmark_two; otherwise,
+#' the rotation will apply to a mirror-image of the tunnel
+#'
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
 #'   been rotated according to the positions of the landmarks in the data.
@@ -872,6 +979,12 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @family tunnel standardization functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Example data that would work with this function are
+#' ## not included in this version of pathviewR. Please
+#' ## contact the package authors for further guidance
+#' ## should you need it.
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -1076,6 +1189,29 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @family tunnel standardization functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the Flydra example data included in
+#' ## the package
+#' flydra_data <-
+#'   read_flydra_mat(
+#'     system.file("extdata",
+#'                 "pathviewR_flydra_example_data.mat",
+#'                 package = 'pathviewR'),
+#'     subject_name = "birdie_wooster"
+#'   )
+#'
+#' ## Re-center the Flydra data set.
+#' ## Width will be untouched
+#' ## Length will use the "middle" definition
+#' ## And height will be user-defined to be
+#' ## zeroed at 1.44 on the original axis
+#' flydra_centered <-
+#'   flydra_data %>%
+#'   redefine_tunnel_center(length_method = "middle",
+#'                          height_method = "user-defined",
+#'                          height_zero = 1.44)
+
 
 redefine_tunnel_center <-
   function(obj_name,
@@ -1232,6 +1368,30 @@ return(obj_new)
 #' @family data cleaning functions
 #'
 #' @export
+#'
+#' @examples
+## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "trimmed" step before running rotate_tunnel().
+#' motive_rotated <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel()
+#'
+#' ## Now select the middle 50% of the tunnel
+#' motive_selected <-
+#'   motive_rotated %>%
+#'   select_x_percent(desired_percent = 50)
+#'
+#' ## Compare the ranges of lengths to see the effect
+#' range(motive_rotated$position_length)
+#' range(motive_selected$position_length)
 
 select_x_percent <- function(obj_name,
                              desired_percent = 33,
@@ -1311,6 +1471,10 @@ select_x_percent <- function(obj_name,
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+#' ## This function is not recommended for general use.
+#' ## See separate_trajectories() instead
 
 quick_separate_trajectories <- function(obj_name,
                                         max_frame_gap = 1,
@@ -1400,6 +1564,31 @@ quick_separate_trajectories <- function(obj_name,
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "select" step before running select_x_percent().
+#' motive_selected <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50)
+#'
+#' ## Now separate trajectories using autodetect
+#' motive_separated <-
+#'   motive_selected %>%
+#'   separate_trajectories(max_frame_gap = "autodetect",
+#'                         frame_rate_proportion = 0.1)
+#'
+#' ## See new column file_sub_traj for trajectory labeling
+#' names(motive_separated)
 
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
@@ -1632,6 +1821,30 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "separate" step before running select_x_percent().
+#' motive_separated <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect",
+#'                         frame_rate_proportion = 0.1)
+#'
+#' ## Now retain only the "full" trajectories that span
+#' ## across 0.95 of the range of position_length
+#' motive_full <-
+#'   motive_separated %>%
+#'   get_full_trajectories(span = 0.95)
 
 get_full_trajectories <- function(obj_name,
                                   span = 0.8,
@@ -1801,11 +2014,34 @@ section_tunnel_by <- function(obj_name,
 #' @export
 #'
 #' @author Vikram B. Baliga
+#'
+#' @examples
+#' ## Import and clean the example Motive data
+#' motive_import_and_clean <-
+#'   import_and_clean_viewr(
+#'     file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                             package = 'pathviewR'),
+#'     desired_percent = 50,
+#'     max_frame_gap = "autodetect",
+#'     span = 0.95
+#'   )
+#'
+#' ## See the distribution of velocities
+#' hist(motive_import_and_clean$velocity)
+#'
+#' ## Let's remove any trajectories that contain
+#' ## velocity < 2
+#' motive_vel_filtered <-
+#'   motive_import_and_clean %>%
+#'   exclude_by_velocity(vel_min = 2)
+#'
+#' ## See how the distribution of velocities has changed
+#' hist(motive_vel_filtered$velocity)
 
 
-exclude_by_velocity <- function(obj_name,
-                                vel_min = NULL,
-                                vel_max = NULL){
+ exclude_by_velocity <- function(obj_name,
+                                 vel_min = NULL,
+                                 vel_max = NULL){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -1813,7 +2049,7 @@ exclude_by_velocity <- function(obj_name,
   }
 
   ## Get a list of all the unique trajectories
-  unique_trajs <- unique(obj_name$file_sub_traj)
+  unique_trajs <- base::unique(obj_name$file_sub_traj)
 
   ## Remove trajectories with velocities below a threshold
   if (is.numeric(vel_min)) {
@@ -1821,13 +2057,13 @@ exclude_by_velocity <- function(obj_name,
     below_thresh <-
       obj_name %>%
       dplyr::filter(velocity < vel_min) %>%
-      select(file_sub_traj) %>%
-      unique() %>%
-      as_vector()
+      dplyr::select(file_sub_traj) %>%
+      base::unique() %>%
+      purrr::as_vector()
     ## Remove these trajectories from the original object
     obj_name <-
       obj_name %>%
-      filter(!(file_sub_traj %in% below_thresh))
+      dplyr::filter(!(file_sub_traj %in% below_thresh))
   } else {
     ## if FALSE
     obj_name <- obj_name
@@ -1846,13 +2082,13 @@ exclude_by_velocity <- function(obj_name,
     above_thresh <-
       obj_name %>%
       dplyr::filter(velocity > vel_max) %>%
-      select(file_sub_traj) %>%
-      unique() %>%
-      as_vector()
+      dplyr::select(file_sub_traj) %>%
+      base::unique() %>%
+      purrr::as_vector()
     ## Remove these trajectories from the original object
     obj_name <-
       obj_name %>%
-      filter(!(file_sub_traj %in% above_thresh))
+      dplyr::filter(!(file_sub_traj %in% above_thresh))
   } else {
     ## if FALSE
     obj_name <- obj_name
@@ -1865,7 +2101,8 @@ exclude_by_velocity <- function(obj_name,
     }
   }
 
-
+  ## Export
+  return(obj_name)
 }
 
 

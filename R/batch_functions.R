@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-05 VBB
 
 
 ################################# import_batch #################################

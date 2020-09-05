@@ -40,6 +40,29 @@ values by 0.7.
 The default arguments of \code{original_scale = 0.5} and
 \code{desired_scale = 1} apply a doubling of tunnel size isometrically.
 }
+\examples{
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                             package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "gather" step before running rescale_tunnel_data().
+ motive_gathered <-
+   motive_data \%>\%
+   relabel_viewr_axes() \%>\%
+   gather_tunnel_data()
+
+## Now rescale the tunnel data
+motive_rescaled <-
+  motive_gathered \%>\%
+  rescale_tunnel_data(original_scale = 0.5,
+                      desired_scale = 1)
+
+## See the difference in data range e.g. for length
+range(motive_rescaled$position_length)
+range(motive_gathered$position_length)
+}
 \author{
 Vikram B. Baliga
 }

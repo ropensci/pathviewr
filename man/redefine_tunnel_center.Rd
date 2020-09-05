@@ -55,6 +55,28 @@ that axis. Probably not recommended; and 4) "user-defined" lets the user
 customize where the (0, 0, 0) point in the tunnel will end up. Each
 \code{_zero} argument is subtracted from its corresponding axis' data.
 }
+\examples{
+## Import the Flydra example data included in
+## the package
+flydra_data <-
+  read_flydra_mat(
+    system.file("extdata",
+                "pathviewR_flydra_example_data.mat",
+                package = 'pathviewR'),
+    subject_name = "birdie_wooster"
+  )
+
+## Re-center the Flydra data set.
+## Width will be untouched
+## Length will use the "middle" definition
+## And height will be user-defined to be
+## zeroed at 1.44 on the original axis
+flydra_centered <-
+  flydra_data \%>\%
+  redefine_tunnel_center(length_method = "middle",
+                         height_method = "user-defined",
+                         height_zero = 1.44)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

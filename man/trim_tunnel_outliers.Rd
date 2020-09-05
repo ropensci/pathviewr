@@ -48,6 +48,29 @@ trims out anything beyond these estimates.
 Anything supplied to _min or _max arguments should be single numeric
 values.
 }
+\examples{
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "gather" step before running trim_tunnel_outliers().
+motive_gathered <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data()
+
+## Now trim outliers using default values
+motive_trimmed <-
+  motive_gathered \%>\%
+  trim_tunnel_outliers(lengths_min = 0,
+                       lengths_max = 3,
+                       widths_min = -0.4,
+                       widths_max = 0.8,
+                       heights_min = -0.2,
+                       heights_max = 0.5)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

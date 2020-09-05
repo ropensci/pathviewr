@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-05 VBB
 
 
 ################################# clean_viewr ##################################
@@ -59,6 +59,17 @@
 #'   clean_viewr(desired_percent = 50,
 #'               max_frame_gap = "autodetect",
 #'               span = 0.95)
+#'
+#' ## Alternatively, used the import_and_clean_viewr()
+#' ## function to combine these steps
+#' motive_import_and_clean <-
+#'   import_and_clean_viewr(
+#'     file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                             package = 'pathviewR'),
+#'     desired_percent = 50,
+#'     max_frame_gap = "autodetect",
+#'     span = 0.95
+#'   )
 
 clean_viewr <- function(obj_name,
                         relabel_viewr_axes = TRUE,
@@ -315,6 +326,8 @@ or by removing the extraneous argument(s)")
 #' @family all in one functions
 #'
 #' @export
+#'
+#' @inherit clean_viewr examples
 
 import_and_clean_viewr <- function(file_name,
                                    file_id = NA,
