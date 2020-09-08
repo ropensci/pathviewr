@@ -1432,7 +1432,7 @@ select_x_percent <- function(obj_name,
 
   ## Check that ROI contains data
   roi <- dim(obj_name)
-  if (roi[1] = 0) {
+  if (roi[1] == 0) {
     stop("region of interest does not contain data")
   }
 
