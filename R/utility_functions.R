@@ -1430,6 +1430,12 @@ select_x_percent <- function(obj_name,
   ## Coerce to tibble
   obj_name <- tibble::as_tibble(obj_name)
 
+  ## Check that ROI contains data
+  roi <- dim(obj_name)
+  if (roi[1] = 0) {
+    stop("region of interest does not contain data")
+  }
+
   ## Leave a note about the proportion used
   attr(obj_name,"percent_selected") <- desired_percent
   attr(obj_name,"full_tunnel_length") <- tunnel_length
