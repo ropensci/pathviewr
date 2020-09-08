@@ -540,7 +540,7 @@ rename_viewr_characters <- function(obj_name,
   obj_new <-
     obj_name %>%
     dplyr::mutate(
-      dplyr::across(target_column,
+      dplyr::across(tidyselect::all_of(target_column),
                     stringr::str_replace,
                     pattern,
                     replacement)
