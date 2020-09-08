@@ -306,7 +306,7 @@ Note that this definition does not strictly require linear movement from one end
 to the other; an animal could make several loops inside the region of interest
 within a given trajectory.  
 
-Isolating trajectories is handled via he `separate_trajectories()` function in
+Isolating trajectories is handled via the `separate_trajectories()` function in
 `pathviewR`. Note that a region of interest must be selected beforehand via
 `select_x_percent()`.  
 
