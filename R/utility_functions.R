@@ -1899,3 +1899,160 @@ rm_by_trajnum <- function(obj_name,
     dplyr::inner_join(obj_name, rm_bytraj)
 
 }
+
+
+
+###########################    insert_treatments    ############################
+#' Inserts treatment and experiment information
+#'
+#' Adds information about treatment and experimental set up to viewr objects for
+#' analysis in other pathviewR functions
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#' @param vertex_height If using a V-shaped chamber, this is the height of the
+#' vertex. This value should be negative and represents the distance between the
+#' origin (0,0,0) and the vertex.
+#' @param vertex_angle  If using a V-shaped chamber, this is the angle (in degrees)
+#' subtended by a vertical axis and the sides of the V-shaped chamber.
+#' Equivalent to half the angle of the "V". \code{vertex_angle} defaults to 45.
+#' @param pos_wall If using a box-shaped chamber, this is the distance in meters between the origin (0,0,0) and the
+#' positive wall.
+#' @param neg_wall If using a box-shaped chamber, this is the distance in meters between the origin (0,0,0) and the
+#' negative wall.
+#' @param front_wall If using a box-shaped chamber, this is the distance in meters between the origin (0,0,0) and the
+#' front wall.
+#' @param treatment The treatment name assigned to all subjects in the viewr
+#' object. Currently only able to accept a single treatment per viewr object.
+#' @param stim_param_pos The width of the sine-wave grating stimulus displayed on the positive wall of the chamber.
+#' @param stim_param_neg The width of the sine-wave grating stimulus displayed on the negative wall of the chamber.
+#' @param stim_param_front If using a box-shaped chamber, the width of the sine-wave grating displayed on the front wall.
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#' \code{pathviewR_steps} that includes \code{"treatments added"}). Depending on the chamber configuration, a tibble or data.frame with added variables for
+#' \code{vertex_height}, \code{vertex_angle}, \code{pos_wall}, \code{neg_wall}, \code{front_wall}, and
+#' \code{treatment}. This experiment information is also stored in the viewr object's metadata
+#'
+#' @details All length measurments reported in meters.
+#'
+#' @author Eric R. Press
+#'
+#' @export
+#'
+#' @examples
+#'
+
+insert_treatments <- function(obj_name,
+                              vertex_height = NULL,
+                              vertex_angle = NULL,
+                              pos_wall = NULL,
+                              neg_wall = NULL,
+                              front_wall = NULL,
+                              stim_param_pos = NULL,
+                              stim_param_neg = NULL,
+                              stim_param_front = NULL,
+                              treatment = NULL){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that get_full_trajectories has been run prior to use
+  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
+    stop("Run get_full_trajectories() prior to use")
+  }
+
+  ## NOTE: add in a check that either V-shaped OR box tunnel arguments are
+  ## supplied
+
+
+  ## Translate arguments into variables at beginning of data frame
+  ## NOTE: make sure this doesn't eff up other functions that depend on the
+  ## position of certain variables remaining constant
+  if (attr(obj_name, "import_method") == "motive"){
+    obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   vertex_height = vertex_height,
+                                   vertex_angle = deg_2_rad(vertex_angle),
+                                   treatment = treatment)
+  } else if (attr(obj_name, "import_method") == "flydra"){
+    obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   pos_wall = pos_wall,
+                                   neg_wall = neg_wall,
+                                   front_wall = front_wall,
+                                   treatment = treatment)
+  }
+
+  ## Add arguments into metadata......surewhynot
+  if (attr(obj_name, "import_method") == "motive"){
+    attr(obj_name, "vertex_height") <- vertex_height
+    attr(obj_name, "vertex_angle") <- vertex_angle
+    attr(obj_name, "treatment") <- treatment
+  } else if (attr(obj_name, "import_method") == "flydra"){
+    attr(obj_name, "pos_wall") <- pos_wall
+    attr(obj_name, "neg_wall") <- neg_wall
+    attr(obj_name, "front_wall") <- front_wall
+    attr(obj_name, "treatment") <- treatment
+  }
+
+  ## Create empty stim_param variables
+  obj_name$stim_param_pos <- vector(mode = "numeric", length = nrow(obj_name))
+  obj_name$stim_param_neg <- vector(mode = "numeric", length = nrow(obj_name))
+
+
+  ## Add stimulus parameters based on treatment name (will update with actual
+  ## values once I have them)
+  # stim_param_pos
+  for (i in 1:nrow(obj_name)){
+    if (obj_name$treatment[[i]] == "latA"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latB"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latC"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latD"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latE"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latF"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latG"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latH"){
+      obj_name$stim_param_pos[[i]] <- 0.1
+    }
+  }
+
+  # stim_param_neg (again I will update with real values)
+  for (i in 1:nrow(obj_name)){
+    if (obj_name$treatment[[i]] == "latA"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latB"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latC"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latD"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latE"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latF"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latG"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    } else if (obj_name$treatment[[i]] == "latH"){
+      obj_name$stim_param_neg[[i]] <- 0.1
+    }
+  }
+
+  ## Leave note that treatments were added
+  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+                                         "treatments_added")
+  return(obj_name)
+}
+
+
+
+
+
+
+
