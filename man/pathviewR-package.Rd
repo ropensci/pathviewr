@@ -11,6 +11,14 @@ What the package does (one paragraph).
 \details{
 Description of package TBD
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/vbaliga/pathviewR}
+  \item Report bugs at \url{https://github.com/vbaliga/pathviewR/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Vikram B. Baliga \email{vbaliga87@gmail.com} (\href{https://orcid.org/0000-0002-9367-8974}{ORCID})
 

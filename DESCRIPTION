@@ -38,3 +38,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/vbaliga/pathviewR
+BugReports: https://github.com/vbaliga/pathviewR/issues
