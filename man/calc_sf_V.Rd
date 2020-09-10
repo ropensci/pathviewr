@@ -4,21 +4,20 @@
 \alias{calc_sf_V}
 \title{Estimate spatial frequency of visual stimuli in V-shaped tunnel}
 \usage{
-calc_sf_V(
-  obj_name,
-  gnd_plane,
-  stim_param_pos,
-  stim_param_neg,
-  vertex_angle = 45,
-  simplify_output = FALSE
-)
+calc_sf_V(obj_name, simplify_output = FALSE)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{gnd_plane}{The vertical distance (in meters) between the bottom of the
-"V" and the horizontal plane through the origin (0,0,0).}
+\item{simplify_output}{If TRUE, the returned object includes minimum distance
+as well as the spatial frequencies perceived on either side of the
+tunnel. If FALSE, the returned object includes all variables internal to the
+calculation.}
+
+\item{vertex_angle}{The angle (in degrees) subtended by a vertical axis and
+the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
+\code{vertex_angle)} defaults to 45.}
 
 \item{stim_param_pos}{The length (in meters) of the visual stimulus presented
 on the positive side of the tunnel (i.e. \code{position_width >= 0}). For
@@ -27,15 +26,6 @@ example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}}
 \item{stim_param_neg}{The same convention as \code{stim_param_pos} but for
 stimuli presented on the negative side of the tunnel
 (i.e. \code{position_width < 0}).}
-
-\item{vertex_angle}{The angle (in degrees) subtended by a vertical axis and
-the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
-\code{vertex_angle)} defaults to 45.}
-
-\item{simplify_output}{If TRUE, the returned object includes minimum distance
-as well as the spatial frequencies perceived on either side of the
-tunnel. If FALSE, the returned object includes all variables internal to the
-calculation.}
 }
 \value{
 A tibble or data.frame with added variables for
@@ -44,7 +34,7 @@ angle.
 }
 \description{
 Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
-\code{calc_sf_V()} calculates how the animal perceives the visual stimuli
+\code{calc_sf_V()} calculates how the animal perceives visual stimuli
 in terms of its spatial frequency modulated by distance to the stimulus.
 }
 \details{
