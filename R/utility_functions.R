@@ -2116,7 +2116,7 @@ section_tunnel_by <- function(obj_name,
 
 #' Interpolate gaps within trajectories
 #'
-#' Use loess smoothing to fill in gaps of missing data within trajectories in
+#' Use LOESS smoothing to fill in gaps of missing data within trajectories in
 #' a viewr object
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
@@ -2477,7 +2477,7 @@ rm_by_trajnum <- function(obj_name,
 #' \code{vertex_height}, \code{vertex_angle}, \code{pos_wall}, \code{neg_wall}, \code{front_wall}, and
 #' \code{treatment}. This experiment information is also stored in the viewr object's metadata
 #'
-#' @details All length measurments reported in meters.
+#' @details All length measurements reported in meters.
 #'
 #' @author Eric R. Press
 #'

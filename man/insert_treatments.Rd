@@ -58,7 +58,7 @@ Adds information about treatment and experimental set up to viewr objects for
 analysis in other pathviewR functions
 }
 \details{
-All length measurments reported in meters.
+All length measurements reported in meters.
 }
 \examples{
 

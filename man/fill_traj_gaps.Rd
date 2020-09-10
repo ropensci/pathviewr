@@ -37,7 +37,7 @@ new column \code{gaps_filled} is added to the data to indicate original
 data ("No") vs data that have been inserted to fill gaps ("Yes").
 }
 \description{
-Use loess smoothing to fill in gaps of missing data within trajectories in
+Use LOESS smoothing to fill in gaps of missing data within trajectories in
 a viewr object
 }
 \details{
