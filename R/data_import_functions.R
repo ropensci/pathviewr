@@ -348,8 +348,9 @@ problems.",
 #'
 #' ## Import the example Flydra data included in the package
 #' flydra_data <-
-#'   read_flydra_csv(system.file("extdata", "pathviewR_flydra_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+#'                              package = 'pathviewR'),
+#'                   subject_name = "birdie_wooster")
 #'
 #' ## Names of variables in the resulting tibble
 #' names(flydra_data)

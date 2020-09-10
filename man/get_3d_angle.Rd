@@ -38,8 +38,8 @@ the three points in 3D space is computed.
 }
 \examples{
 get_3d_angle(
-  0, 1, 0
-  0, 0, 0
+  0, 1, 0,
+  0, 0, 0,
   1, 0, 0)
 }
 \seealso{

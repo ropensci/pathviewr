@@ -458,8 +458,8 @@ get_2d_angle <- function(x1, y1,
 #'
 #' @examples
 #' get_3d_angle(
-#'   0, 1, 0
-#'   0, 0, 0
+#'   0, 1, 0,
+#'   0, 0, 0,
 #'   1, 0, 0)
 
 get_3d_angle <- function(x1, y1, z1,
@@ -814,6 +814,9 @@ calc_vis_angle <- function(obj_name,
 
 
 calc_sf_V <- function(obj_name,
+                      vertex_angle,
+                      stim_param_pos,
+                      stim_param_neg,
                       simplify_output = FALSE) {
 
   ## Check that it's a viewr object
