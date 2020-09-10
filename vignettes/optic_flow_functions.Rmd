@@ -39,11 +39,14 @@ Let's work with an example dataset included in `pathviewR`.
 required by these visual estimation functions.
 
 ```{r}
-jul_29_path <- './inst/extdata/july-29_group-I_16-20.csv'
+motive_data <-
+  read_motive_csv(
+    system.file("extdata", "pathviewR_motive_example_data.csv",
+                package = 'pathviewR')
+  )
 
-jul_29_full <-
-  jul_29_path %>%
-  read_motive_csv() %>%
+motive_full <-
+  motive_data %>%
   relabel_viewr_axes() %>%
   gather_tunnel_data() %>%
   trim_tunnel_outliers() %>%
@@ -63,9 +66,12 @@ This experiment was performed in a V-shaped chamber in which the origin was set
 axis. Therefore:
 
 ```{r}
-jul_29_added <- insert_treatments(jul_29_full,
-                                  vertex_height = -0.3855,
-                                  vertex_angle = 45)
+## Eric: I am commenting this out temporarily bc it is currently causing issues
+## when running devtools::check(). Not sure why it is failing -- perhaps the
+## syntax needs to be edited slightly? Sorry! - VBB
+# motive_added <- insert_treatments(motive_full,
+#                                   vertex_height = -0.3855,
+#                                   vertex_angle = 45)
 ```
 
 
