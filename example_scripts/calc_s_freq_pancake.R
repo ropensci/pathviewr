@@ -3,7 +3,7 @@
 
 
 calc_s_freq_1 <- function(obj_name,
-                        simplify_output = FALSE){
+                          simplify_output = FALSE){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
@@ -108,18 +108,36 @@ calc_s_freq_1 <- function(obj_name,
     return(obj_name)
   }
 }
+jul_29_added <- insert_treatments(jul_29_full,
+                                  vertex_height = -0.3855,
+                                  vertex_angle = 45,
+                                  treatment = "latD"
+                                  )
+a <- calc_s_freq_1(jul_29_added,
 
-a <- calc_s_freq(t,
-                 0.3855, 0.1, 0.1)
+                   simplify_output = TRUE)
 
 b <- calc_s_freq_1(t)
+t <- calc_sf_V(t,simplify_output = TRUE)
+View(t)
+ggplot(t, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = s_freq_neg))
 
-
-ggplot(a, aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = s_freq_pos))
-
-ggplot(b, aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = s_freq_pos))
+ggplot(t, aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = s_freq_pos)) +
+  coord_fixed() +
+  geom_segment(aes(x = 0,         ## POSITIVE SIDE FIRST
+                  y = -0.3855,
+                  xend = 0.5869,
+                  yend = 0.2014)) +
+  geom_segment(aes(x = 0,         ## NEGATIVE SIDE
+                   y = -0.3855,
+                   xend = -0.5869,
+                   yend = 0.2014))
 
 View(a)
 View(b)
+
+
+t <- calc_s_freq_1(t)
+View(t)
