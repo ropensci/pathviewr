@@ -113,13 +113,12 @@ insert_treatments <- function(obj_name,
 
 
 
-
 #### testing zone
 
-t <- insert_treatments(jul_29_full,
+t <- insert_treatments(motive_data_all_defaults,
                        vertex_height = -0.3855,
                        vertex_angle = 45,
-                       treatment = "latD")
+                       treatment = "latA")
 
 View(t)
 
