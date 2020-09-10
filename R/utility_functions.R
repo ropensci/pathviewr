@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-05 VBB
 
 
 ################################# get_header_viewr #############################
@@ -393,6 +393,29 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @author Vikram B. Baliga
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "gather" step before running rescale_tunnel_data().
+#'  motive_gathered <-
+#'    motive_data %>%
+#'    relabel_viewr_axes() %>%
+#'    gather_tunnel_data()
+#'
+#' ## Now rescale the tunnel data
+#' motive_rescaled <-
+#'   motive_gathered %>%
+#'   rescale_tunnel_data(original_scale = 0.5,
+#'                       desired_scale = 1)
+#'
+#' ## See the difference in data range e.g. for length
+#' range(motive_rescaled$position_length)
+#' range(motive_gathered$position_length)
 
 
 rescale_tunnel_data <- function(obj_name,
@@ -464,6 +487,33 @@ rescale_tunnel_data <- function(obj_name,
 #' @family data cleaning functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "gather" step before running rescale_tunnel_data().
+#'  motive_gathered <-
+#'    motive_data %>%
+#'    relabel_viewr_axes() %>%
+#'    gather_tunnel_data()
+#'
+#' ## See the subject names
+#'  unique(motive_gathered$subject)
+#'
+#' ## Now rename the subjects. We'll get rid of "device" and replace it
+#' ## with "subject"
+#' motive_renamed <-
+#'   motive_gathered %>%
+#'   rename_viewr_characters(target_column = "subject",
+#'                           pattern = "device",
+#'                           replacement = "subject")
+#'
+#' ## See the new subject names
+#' unique(motive_renamed$subject)
 
 rename_viewr_characters <- function(obj_name,
                                     target_column = "subject",
@@ -490,7 +540,7 @@ rename_viewr_characters <- function(obj_name,
   obj_new <-
     obj_name %>%
     dplyr::mutate(
-      dplyr::across(target_column,
+      dplyr::across(tidyselect::all_of(target_column),
                     stringr::str_replace,
                     pattern,
                     replacement)
@@ -546,6 +596,29 @@ rename_viewr_characters <- function(obj_name,
 #' @family data cleaning functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "gather" step before running trim_tunnel_outliers().
+#' motive_gathered <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data()
+#'
+#' ## Now trim outliers using default values
+#' motive_trimmed <-
+#'   motive_gathered %>%
+#'   trim_tunnel_outliers(lengths_min = 0,
+#'                        lengths_max = 3,
+#'                        widths_min = -0.4,
+#'                        widths_max = 0.8,
+#'                        heights_min = -0.2,
+#'                        heights_max = 0.5)
 
 trim_tunnel_outliers <- function(obj_name,
                                  lengths_min = 0,
@@ -677,6 +750,35 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @family tunnel standardization functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "trimmed" step before running rotate_tunnel().
+#' motive_trimmed <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers()
+#'
+#' ## Now rotate the tunnel using default values
+#' motive_rotated <-
+#'   motive_trimmed %>%
+#'   rotate_tunnel()
+#'
+#' ## The following attributes store information about
+#' ## how rotation & translation was applied
+#' attr(motive_rotated, "rotation_degrees")
+#' attr(motive_rotated, "rotation_radians")
+#' attr(motive_rotated, "perch1_midpoint_original")
+#' attr(motive_rotated, "perch1_midpoint_current")
+#' attr(motive_rotated, "tunnel_centerpoint_original")
+#' attr(motive_rotated, "perch2_midpoint_original")
+#' attr(motive_rotated, "perch2_midpoint_current")
 
 rotate_tunnel <- function(obj_name,
                           all_heights_min = 0.11,
@@ -862,6 +964,11 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #'   height; values greater than 0 are above the landmarks and values less than
 #'   0 are below the landmark level.
 #'
+#' @section Warning:
+#' The \code{position_length} values of landmark_one MUST be less than
+#' the \code{position_length} values of landmark_two; otherwise,
+#' the rotation will apply to a mirror-image of the tunnel
+#'
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
 #'   been rotated according to the positions of the landmarks in the data.
@@ -872,6 +979,12 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @family tunnel standardization functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Example data that would work with this function are
+#' ## not included in this version of pathviewR. Please
+#' ## contact the package authors for further guidance
+#' ## should you need it.
 
 standardize_tunnel <- function(obj_name,
                                landmark_one = "perch1",
@@ -1076,6 +1189,29 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @family tunnel standardization functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the Flydra example data included in
+#' ## the package
+#' flydra_data <-
+#'   read_flydra_mat(
+#'     system.file("extdata",
+#'                 "pathviewR_flydra_example_data.mat",
+#'                 package = 'pathviewR'),
+#'     subject_name = "birdie_wooster"
+#'   )
+#'
+#' ## Re-center the Flydra data set.
+#' ## Width will be untouched
+#' ## Length will use the "middle" definition
+#' ## And height will be user-defined to be
+#' ## zeroed at 1.44 on the original axis
+#' flydra_centered <-
+#'   flydra_data %>%
+#'   redefine_tunnel_center(length_method = "middle",
+#'                          height_method = "user-defined",
+#'                          height_zero = 1.44)
+
 
 redefine_tunnel_center <-
   function(obj_name,
@@ -1232,6 +1368,30 @@ return(obj_new)
 #' @family data cleaning functions
 #'
 #' @export
+#'
+#' @examples
+## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "trimmed" step before running rotate_tunnel().
+#' motive_rotated <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel()
+#'
+#' ## Now select the middle 50% of the tunnel
+#' motive_selected <-
+#'   motive_rotated %>%
+#'   select_x_percent(desired_percent = 50)
+#'
+#' ## Compare the ranges of lengths to see the effect
+#' range(motive_rotated$position_length)
+#' range(motive_selected$position_length)
 
 select_x_percent <- function(obj_name,
                              desired_percent = 33,
@@ -1269,6 +1429,12 @@ select_x_percent <- function(obj_name,
 
   ## Coerce to tibble
   obj_name <- tibble::as_tibble(obj_name)
+
+  ## Check that ROI contains data
+  roi <- dim(obj_name)
+  if (roi[1] == 0) {
+    stop("region of interest does not contain data")
+  }
 
   ## Leave a note about the proportion used
   attr(obj_name,"percent_selected") <- desired_percent
@@ -1311,6 +1477,10 @@ select_x_percent <- function(obj_name,
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+#' ## This function is not recommended for general use.
+#' ## See separate_trajectories() instead
 
 quick_separate_trajectories <- function(obj_name,
                                         max_frame_gap = 1,
@@ -1400,6 +1570,31 @@ quick_separate_trajectories <- function(obj_name,
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "select" step before running select_x_percent().
+#' motive_selected <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50)
+#'
+#' ## Now separate trajectories using autodetect
+#' motive_separated <-
+#'   motive_selected %>%
+#'   separate_trajectories(max_frame_gap = "autodetect",
+#'                         frame_rate_proportion = 0.1)
+#'
+#' ## See new column file_sub_traj for trajectory labeling
+#' names(motive_separated)
 
 separate_trajectories <- function(obj_name,
                                   max_frame_gap = 1,
@@ -1632,6 +1827,30 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' @family functions that define or clean trajectories
 #'
 #' @export
+#'
+#' @examples
+## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "separate" step before running select_x_percent().
+#' motive_separated <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect",
+#'                         frame_rate_proportion = 0.1)
+#'
+#' ## Now retain only the "full" trajectories that span
+#' ## across 0.95 of the range of position_length
+#' motive_full <-
+#'   motive_separated %>%
+#'   get_full_trajectories(span = 0.95)
 
 get_full_trajectories <- function(obj_name,
                                   span = 0.8,
@@ -1801,11 +2020,34 @@ section_tunnel_by <- function(obj_name,
 #' @export
 #'
 #' @author Vikram B. Baliga
+#'
+#' @examples
+#' ## Import and clean the example Motive data
+#' motive_import_and_clean <-
+#'   import_and_clean_viewr(
+#'     file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                             package = 'pathviewR'),
+#'     desired_percent = 50,
+#'     max_frame_gap = "autodetect",
+#'     span = 0.95
+#'   )
+#'
+#' ## See the distribution of velocities
+#' hist(motive_import_and_clean$velocity)
+#'
+#' ## Let's remove any trajectories that contain
+#' ## velocity < 2
+#' motive_vel_filtered <-
+#'   motive_import_and_clean %>%
+#'   exclude_by_velocity(vel_min = 2)
+#'
+#' ## See how the distribution of velocities has changed
+#' hist(motive_vel_filtered$velocity)
 
 
-exclude_by_velocity <- function(obj_name,
-                                vel_min = NULL,
-                                vel_max = NULL){
+ exclude_by_velocity <- function(obj_name,
+                                 vel_min = NULL,
+                                 vel_max = NULL){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
@@ -1813,7 +2055,7 @@ exclude_by_velocity <- function(obj_name,
   }
 
   ## Get a list of all the unique trajectories
-  unique_trajs <- unique(obj_name$file_sub_traj)
+  unique_trajs <- base::unique(obj_name$file_sub_traj)
 
   ## Remove trajectories with velocities below a threshold
   if (is.numeric(vel_min)) {
@@ -1821,13 +2063,13 @@ exclude_by_velocity <- function(obj_name,
     below_thresh <-
       obj_name %>%
       dplyr::filter(velocity < vel_min) %>%
-      select(file_sub_traj) %>%
-      unique() %>%
-      as_vector()
+      dplyr::select(file_sub_traj) %>%
+      base::unique() %>%
+      purrr::as_vector()
     ## Remove these trajectories from the original object
     obj_name <-
       obj_name %>%
-      filter(!(file_sub_traj %in% below_thresh))
+      dplyr::filter(!(file_sub_traj %in% below_thresh))
   } else {
     ## if FALSE
     obj_name <- obj_name
@@ -1846,13 +2088,13 @@ exclude_by_velocity <- function(obj_name,
     above_thresh <-
       obj_name %>%
       dplyr::filter(velocity > vel_max) %>%
-      select(file_sub_traj) %>%
-      unique() %>%
-      as_vector()
+      dplyr::select(file_sub_traj) %>%
+      base::unique() %>%
+      purrr::as_vector()
     ## Remove these trajectories from the original object
     obj_name <-
       obj_name %>%
-      filter(!(file_sub_traj %in% above_thresh))
+      dplyr::filter(!(file_sub_traj %in% above_thresh))
   } else {
     ## if FALSE
     obj_name <- obj_name
@@ -1865,6 +2107,308 @@ exclude_by_velocity <- function(obj_name,
     }
   }
 
+  ## Export
+  return(obj_name)
+}
+
+
+################################ fill_traj_gaps ################################
+
+#' Interpolate gaps within trajectories
+#'
+#' Use loess smoothing to fill in gaps of missing data within trajectories in
+#' a viewr object
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+#'   predefined (i.e. via \code{separate_trajectories()}).
+#' @param loess_degree See "degree" argument of fANCOVA::loess.as()
+#' @param loess_criterion See "criterion" argument of fANCOVA::loess.as()
+#' @param loess_family See "family" argument of fANCOVA::loess.as()
+#' @param loess_user_span See "user.span" argument of fANCOVA::loess.as()
+#' @param loess_plot See "plot" argument of fANCOVA::loess.as(). Not
+#'   recommended.
+#' @details It is strongly recommended that the input viewr object be "cleaned"
+#'   via \code{select_x_percent()} -> \code{separate_trajectories()} ->
+#'   \code{get_full_trajectories()} prior to using this function. Doing so will
+#'   ensure that only trajectories with minor gaps will be used in your
+#'   analyses. This function will then enable you to interpolate missing data in
+#'   those minor gaps.
+#'
+#'   Interpolation is handled by first fitting a series of LOESS regressions
+#'   (via \code{fANCOVA::loess.as()}). In each regression, a position axis (e.g.
+#'   \code{position_length}) is regressed against \code{frame} (\code{frame} is
+#'   x-axis). From that relationship, values of missing position data are
+#'   determined and then inserted into the original data set.
+#'
+#'   See \link[fANCOVA]{loess.as} for further details on parameters.
+#'
+#' @return A viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"} that now includes new
+#'   observations (rows) as a result of interpolation to fill in missing data. A
+#'   new column \code{gaps_filled} is added to the data to indicate original
+#'   data ("No") vs data that have been inserted to fill gaps ("Yes").
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean, isolate, and label trajectories
+#' motive_full <-
+#'   motive_data %>%
+#'   clean_viewr(desired_percent = 50,
+#'               max_frame_gap = "autodetect",
+#'               span = 0.95)
+#'
+#' ## Interpolate missing data via this function
+#' motive_filling <-
+#'  motive_full %>%
+#'  fill_traj_gaps()
+#'
+#' ## plot all trajectories (before)
+#' plot_viewr_trajectories(motive_full, multi_plot = TRUE)
+#' ## plot all trajectories(after)
+#' plot_viewr_trajectories(motive_filling, multi_plot = TRUE)
+
+fill_traj_gaps <- function(obj_name,
+                           loess_degree = 1,
+                           loess_criterion = c("aicc", "gcv"),
+                           loess_family = c("gaussian", "symmetric"),
+                           loess_user_span = NULL,
+                           loess_plot = FALSE
+){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Split the object by file_sub_traj
+  obj_splits <-
+    obj_name %>%
+    base::split(f = obj_name$file_sub_traj)
+
+  ## Re-order the list so the original order is maintained
+  obj_splits <-
+    obj_splits[unique(obj_name$file_sub_traj)]
+
+  ## Evaluate which trajectories contain gaps
+  traj_gap_indicator <- NULL
+  for (i in 1:length(obj_splits)){
+    if(
+      ## If a trajectory has gaps
+      any(diff(obj_splits[[i]]$frame) > 1)
+    ) {
+      ## Set traj_gap_indicator entry to TRUE
+      traj_gap_indicator[i] <- TRUE
+    } else {
+      ## If the trajectory has no gaps, set traj_gap_indicator to FALSE
+      traj_gap_indicator[i] <- FALSE
+    }
+  }
+
+  ## Fill gaps
+  for (i in 1:length(traj_gap_indicator)){
+
+    ## Work only with cases where gaps are found; all other trajectories
+    ## should not be touched
+    if(traj_gap_indicator[i] == TRUE){
+
+      ## Isolate the trajectory
+      gap_dat <- obj_splits[[i]] %>%
+        tibble::add_column(gaps_filled = "No")
+
+      ## Generate a sequence from min frame to max frame as though
+      ## there were no gaps
+      frame_seq <-
+        seq(from = min(gap_dat$frame),
+            to = max(gap_dat$frame),
+            by = 1)
+
+      ## Create a time sequence of the same length
+      ## Make it the same length as frame_seq so as to fill in the gap(s)
+      time_seq <-
+        seq(from = min(gap_dat$time_sec),
+            to = max(gap_dat$time_sec),
+            length.out = length(frame_seq))
+
+      ## Use fANCOVA::loess.as() to automate the loess fit span
+
+      ## position_length
+      length_fit <-
+        fANCOVA::loess.as(gap_dat$frame,
+                          gap_dat$position_length,
+                          degree = loess_degree,
+                          criterion = loess_criterion,
+                          family = loess_family,
+                          user.span = loess_user_span,
+                          plot = loess_plot)
+      length_preds <- predict(length_fit, frame_seq)
+      ## position_width
+      width_fit <-
+        fANCOVA::loess.as(gap_dat$frame,
+                          gap_dat$position_width,
+                          degree = loess_degree,
+                          criterion = loess_criterion,
+                          family = loess_family,
+                          user.span = loess_user_span,
+                          plot = loess_plot)
+      width_preds <- predict(width_fit, frame_seq)
+      ## position_height
+      height_fit <-
+        fANCOVA::loess.as(gap_dat$frame,
+                          gap_dat$position_height,
+                          degree = loess_degree,
+                          criterion = loess_criterion,
+                          family = loess_family,
+                          user.span = loess_user_span,
+                          plot = loess_plot)
+      height_preds <- predict(height_fit, frame_seq)
+
+      ## Get all the predicted data together
+      predicted_data <-
+        tibble::tibble(frame = frame_seq,
+                       time_sec = time_seq,
+                       position_length = length_preds,
+                       position_width = width_preds,
+                       position_height = height_preds,
+                       gaps_filled = "Yes") %>%
+        get_velocity()
+
+      ## join back with the original data
+      new_dat <-
+        dplyr::left_join(predicted_data, gap_dat, by = c("frame"))
+
+      ## Copy over metadata
+      ## We can likely write this better, but doing it this way for now so
+      ## I can be sure
+for (j in 1:nrow(new_dat)) {
+  if (is.na(new_dat$subject[j])) {
+    new_dat$subject[j] <-
+      base::unique(new_dat$subject)[!is.na(base::unique(new_dat$subject))]
+  }
+  if (is.na(new_dat$gaps_filled.y[j])) {
+    new_dat$gaps_filled.y[j] <- "Yes"
+  }
+  if (is.na(new_dat$traj_id[j])) {
+    new_dat$traj_id[j] <-
+      base::unique(new_dat$traj_id)[!is.na(base::unique(new_dat$traj_id))]
+  }
+  if (is.na(new_dat$file_sub_traj[j])) {
+    new_dat$file_sub_traj[j] <-
+      base::unique(new_dat$file_sub_traj)[!is.na(base::unique(new_dat$file_sub_traj))]
+  }
+  if (is.na(new_dat$traj_length[j])) {
+    new_dat$traj_length[j] <-
+      base::unique(new_dat$traj_length)[!is.na(base::unique(new_dat$traj_length))]
+  }
+  if (is.na(new_dat$start_length[j])) {
+    new_dat$start_length[j] <-
+      base::unique(new_dat$start_length)[!is.na(base::unique(new_dat$start_length))]
+  }
+  if (is.na(new_dat$end_length[j])) {
+    new_dat$end_length[j] <-
+      base::unique(new_dat$end_length)[!is.na(base::unique(new_dat$end_length))]
+  }
+  if (is.na(new_dat$length_diff[j])) {
+    new_dat$length_diff[j] <-
+      base::unique(new_dat$length_diff)[!is.na(base::unique(new_dat$length_diff))]
+  }
+  if (is.na(new_dat$start_length_sign[j])) {
+    new_dat$start_length_sign[j] <-
+      base::unique(new_dat$start_length_sign)[!is.na(base::unique(new_dat$start_length_sign))]
+  }
+  if (is.na(new_dat$end_length_sign[j])) {
+    new_dat$end_length_sign[j] <-
+      base::unique(new_dat$end_length_sign)[!is.na(base::unique(new_dat$end_length_sign))]
+  }
+  if (is.na(new_dat$direction[j])) {
+    new_dat$direction[j] <-
+      base::unique(new_dat$direction)[!is.na(base::unique(new_dat$direction))]
+  }
+}
+
+      ## Copy over predicted position and velocity data into the
+      ## original data frame
+      ## Basically overwrite any NA rows
+      for (k in 1:nrow(new_dat)) {
+        if (is.na(new_dat$position_length.y[k])) {
+          new_dat$position_length.y[k] <- new_dat$position_length.x[k]
+        }
+        if (is.na(new_dat$position_width.y[k])) {
+          new_dat$position_width.y[k] <- new_dat$position_width.x[k]
+        }
+        if (is.na(new_dat$position_height.y[k])) {
+          new_dat$position_height.y[k] <- new_dat$position_height.x[k]
+        }
+        if (is.na(new_dat$velocity.y[k])) {
+          new_dat$velocity.y[k] <- new_dat$velocity.x[k]
+        }
+        if (is.na(new_dat$length_inst_vel.y[k])) {
+          new_dat$length_inst_vel.y[k] <- new_dat$length_inst_vel.x[k]
+        }
+        if (is.na(new_dat$width_inst_vel.y[k])) {
+          new_dat$width_inst_vel.y[k] <- new_dat$width_inst_vel.x[k]
+        }
+        if (is.na(new_dat$height_inst_vel.y[k])) {
+          new_dat$height_inst_vel.y[k] <- new_dat$height_inst_vel.x[k]
+        }
+      }
+
+      ## Keep only the columns we want
+      obj_splits[[i]] <-
+        new_dat %>%
+        ## position_axis.y have the position values we want; position_axis.x
+        ## and time_sec.y can be discarded
+        dplyr::select(
+          frame, time_sec.x, subject,
+          position_length.y, position_width.y, position_height.y,
+          rotation_length, rotation_width, rotation_height, rotation_real,
+          mean_marker_error,
+          velocity.y, length_inst_vel.y, width_inst_vel.y, height_inst_vel.y,
+          traj_id, file_sub_traj, traj_length, start_length, end_length,
+          length_diff, start_length_sign, end_length_sign, direction,
+          gaps_filled.y) %>%
+        dplyr::rename(
+          time_sec = time_sec.x,
+          position_length = position_length.y,
+          position_width = position_width.y,
+          position_height = position_height.y,
+          velocity = velocity.y,
+          length_inst_vel = length_inst_vel.y,
+          width_inst_vel = width_inst_vel.y,
+          height_inst_vel = height_inst_vel.y,
+          gaps_filled = gaps_filled.y)
+
+    }
+
+    if(traj_gap_indicator[i] == FALSE){
+      ## For trajectories that do not need smoothing
+      ## Indicate this trajectory was not smoothed
+      obj_splits[[i]] <-
+        obj_splits[[i]] %>%
+        tibble::add_column(gaps_filled = "No")
+    }
+
+  }
+
+  ## Put it all back together again
+  obj_new <- dplyr::bind_rows(obj_splits)
+
+  ## Leave a note that we smoothed some trajectories
+  attr(obj_new,"pathviewR_steps") <-
+    c(attr(obj_name,"pathviewR_steps"), "traj_gaps_filled")
+
+  ## Export
+  return(obj_new)
 
 }
 

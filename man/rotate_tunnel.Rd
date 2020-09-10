@@ -68,6 +68,35 @@ to rotate the data, again only in the length and width dimensions. Height
 is standardized by (approximate) perch height; values greater than 0 are
 above the perch and values less than 0 are below the perch level.
 }
+\examples{
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "trimmed" step before running rotate_tunnel().
+motive_trimmed <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data() \%>\%
+  trim_tunnel_outliers()
+
+## Now rotate the tunnel using default values
+motive_rotated <-
+  motive_trimmed \%>\%
+  rotate_tunnel()
+
+## The following attributes store information about
+## how rotation & translation was applied
+attr(motive_rotated, "rotation_degrees")
+attr(motive_rotated, "rotation_radians")
+attr(motive_rotated, "perch1_midpoint_original")
+attr(motive_rotated, "perch1_midpoint_current")
+attr(motive_rotated, "tunnel_centerpoint_original")
+attr(motive_rotated, "perch2_midpoint_original")
+attr(motive_rotated, "perch2_midpoint_current")
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

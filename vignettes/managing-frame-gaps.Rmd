@@ -34,7 +34,7 @@ library(dplyr)
 ## the package
 motive_data <-
   read_motive_csv(
-    system.file("extdata", "july-29_group-I_16-20.csv",
+    system.file("extdata", "pathviewR_motive_example_data.csv",
                 package = 'pathviewR')
   )
 ```

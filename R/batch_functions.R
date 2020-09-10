@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-05 VBB
 
 
 ################################# import_batch #################################
@@ -29,6 +29,62 @@
 #' @family batch functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Since we only have one example file of each type provided
+#' ## in pathviewR, we will simply import the same example multiple
+#' ## times to simulate batch importing. Replace the contents of
+#' ## the following list with your own list of files to be imported.
+#'
+#' ## Make a list of the same example file 5x
+#' import_list <-
+#'   c(rep(
+#'     system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                 package = 'pathviewR'),
+#'     5
+#'   ))
+#'
+#' ## Batch import
+#' motive_batch_imports <-
+#'   import_batch(import_list,
+#'                import_method = "motive",
+#'                import_messaging = TRUE)
+#'
+#' ## Batch cleaning of these imported files
+#' ## via clean_viewr_batch()
+#' motive_batch_cleaned <-
+#'   clean_viewr_batch(
+#'     motive_batch_imports,
+#'     desired_percent = 50,
+#'     max_frame_gap = "autodetect",
+#'     span = 0.95
+#'   )
+#'
+#' ## Alternatively, use import_and_clean_batch() to
+#' ## combine import with cleaning on a batch of files
+#' motive_batch_import_and_clean <-
+#'   import_and_clean_batch(
+#'     import_list,
+#'     import_method = "motive",
+#'     import_messaging = TRUE,
+#'     motive_batch_imports,
+#'     desired_percent = 50,
+#'     max_frame_gap = "autodetect",
+#'     span = 0.95
+#'   )
+#'
+#' ## Each of these lists of objects can be bound into
+#' ## one viewr object (i.e. one tibble) via
+#' ## bind_viewr_objects()
+#' motive_bound_one <-
+#'   bind_viewr_objects(motive_batch_cleaned)
+#'
+#' motive_bound_two <-
+#'   bind_viewr_objects(motive_batch_import_and_clean)
+#'
+#' ## Either route results in the same object ultimately:
+#' identical(motive_bound_one, motive_bound_two)
+
 
 import_batch <- function(file_path_list,
                          import_method = c("flydra", "motive"),
@@ -101,6 +157,8 @@ import_batch <- function(file_path_list,
 #' @family batch functions
 #'
 #' @export
+#'
+#' @inherit import_batch examples
 
 clean_viewr_batch <- function(obj_list,
                               ...) {
@@ -146,6 +204,8 @@ clean_viewr_batch <- function(obj_list,
 #' @family batch functions
 #'
 #' @export
+#'
+#' @inherit import_batch examples
 
 import_and_clean_batch <- function(file_path_list,
                                    import_method = c("flydra", "motive"),
@@ -213,6 +273,8 @@ import_and_clean_batch <- function(file_path_list,
 #' @family batch functions
 #'
 #' @export
+#'
+#' @inherit import_batch examples
 
 bind_viewr_objects <- function(obj_list) {
 

@@ -51,6 +51,38 @@ position axes are computed and provided as additional columns.
 Velocity (both overall and per-axis) is computed for each row in the data
 (see Details)
 }
+\details{
+Instantaneous velocity is not truly "instantaneous" but rather is
+approximated as the change in distance divided by change in time from one
+observation (row) to the previous observation (row). Each component of
+velocity is computed (i.e. per axis) along with the overall velocity of
+the subject.
+}
+\examples{
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                             package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "standarization" step before running get_velocity().
+ motive_cleaned <-
+   motive_data \%>\%
+   relabel_viewr_axes() \%>\%
+   gather_tunnel_data() \%>\%
+   trim_tunnel_outliers() \%>\%
+   rotate_tunnel()
+
+## Now compute velocity and add as columns
+ motive_velocity_added <-
+   motive_cleaned \%>\%
+   get_velocity(add_to_viewr = TRUE)
+
+## Or set add_to_viewr to FALSE for a standalone object
+ motive_velocity_standalone <-
+   motive_cleaned \%>\%
+   get_velocity(add_to_viewr = TRUE)
+}
 \seealso{
 Other mathematical functions: 
 \code{\link{deg_2_rad}()},

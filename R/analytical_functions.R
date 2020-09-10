@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-05 VBB
 
 ################################## get_velocity ################################
 
@@ -22,6 +22,12 @@
 #'   the object? If so, enter a numeric. If not, keep NA.
 #' @param ... Additional arguments passed to or from other pathviewR functions.
 #'
+#' @details Instantaneous velocity is not truly "instantaneous" but rather is
+#' approximated as the change in distance divided by change in time from one
+#' observation (row) to the previous observation (row). Each component of
+#' velocity is computed (i.e. per axis) along with the overall velocity of
+#' the subject.
+#'
 #' @return If \code{add_to_viewr} is \code{TRUE}, additional columns are
 #'   appended to the input viewr object. If \code{FALSE}, a standalone tibble is
 #'   created. Either way, an "instantaneous" velocity is computed as the
@@ -34,6 +40,31 @@
 #' @family mathematical functions
 #'
 #' @export
+#'
+#' @examples
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean the file. It is generally recommended to clean up to the
+#' ## "standarization" step before running get_velocity().
+#'  motive_cleaned <-
+#'    motive_data %>%
+#'    relabel_viewr_axes() %>%
+#'    gather_tunnel_data() %>%
+#'    trim_tunnel_outliers() %>%
+#'    rotate_tunnel()
+#'
+#' ## Now compute velocity and add as columns
+#'  motive_velocity_added <-
+#'    motive_cleaned %>%
+#'    get_velocity(add_to_viewr = TRUE)
+#'
+#' ## Or set add_to_viewr to FALSE for a standalone object
+#'  motive_velocity_standalone <-
+#'    motive_cleaned %>%
+#'    get_velocity(add_to_viewr = TRUE)
 
 get_velocity <- function(obj_name,
                          time_col = "time_sec",
@@ -45,10 +76,10 @@ get_velocity <- function(obj_name,
                          velocity_max = NA,
                          ...) {
 
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # ## Check that it's a viewr object
+  # if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Argument checks
   if (!any(grepl(time_col,
@@ -198,7 +229,7 @@ Please check that you have entered the name of the height variable correctly.")
 #'   line_coord2 = c(1, 5)
 #' )
 #'
-#' #' ## 3D case
+#' ## 3D case
 #' get_dist_point_line(
 #'   point = c(0, 0, 0),
 #'   line_coord1 = c(1, 0, 0),
@@ -360,7 +391,7 @@ deg_2_rad <- function(deg) {
 #' @param y3 y-coordinate of third point
 #'
 #' @details Everything supplied to arguments must be singular numeric values.
-#' The second point (x2, y2) is treated as the vertex, and the angle beween
+#' The second point (x2, y2) is treated as the vertex, and the angle between
 #' the three points in 2D space is computed.
 #'
 #' @return A numeric vector that provides the angular measurement in degrees.
@@ -414,7 +445,7 @@ get_2d_angle <- function(x1, y1,
 #' @param z3 z-coordinate of third point
 #'
 #' @details Everything supplied to arguments must be singular numeric values.
-#' The second point (x2, y2, z2) is treated as the vertex, and the angle beween
+#' The second point (x2, y2, z2) is treated as the vertex, and the angle between
 #' the three points in 3D space is computed.
 #'
 #' @return A numeric vector that provides the angular measurement in degrees.

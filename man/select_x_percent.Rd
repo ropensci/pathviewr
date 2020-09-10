@@ -23,6 +23,29 @@ the region of interest have been removed.
 \description{
 Select data in the middle X percent of the length of the tunnel
 }
+\examples{
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "trimmed" step before running rotate_tunnel().
+motive_rotated <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data() \%>\%
+  trim_tunnel_outliers() \%>\%
+  rotate_tunnel()
+
+## Now select the middle 50\% of the tunnel
+motive_selected <-
+  motive_rotated \%>\%
+  select_x_percent(desired_percent = 50)
+
+## Compare the ranges of lengths to see the effect
+range(motive_rotated$position_length)
+range(motive_selected$position_length)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

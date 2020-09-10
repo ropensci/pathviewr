@@ -65,6 +65,31 @@ trajectory count will necessarily decrease but may reach a value that
 likely represents the "best" option. The "elbow" of that plot is then used
 to find an estimate of the best max frame gap value to use.
 }
+\examples{
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "select" step before running select_x_percent().
+motive_selected <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data() \%>\%
+  trim_tunnel_outliers() \%>\%
+  rotate_tunnel() \%>\%
+  select_x_percent(desired_percent = 50)
+
+## Now separate trajectories using autodetect
+motive_separated <-
+  motive_selected \%>\%
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_rate_proportion = 0.1)
+
+## See new column file_sub_traj for trajectory labeling
+names(motive_separated)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

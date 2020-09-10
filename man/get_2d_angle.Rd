@@ -27,7 +27,7 @@ Compute an angle in 2D space
 }
 \details{
 Everything supplied to arguments must be singular numeric values.
-The second point (x2, y2) is treated as the vertex, and the angle beween
+The second point (x2, y2) is treated as the vertex, and the angle between
 the three points in 2D space is computed.
 }
 \examples{

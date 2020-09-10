@@ -40,6 +40,29 @@ strictly keep trajectories that start and end at the exact cut-offs of the
 selected region of interest. For these reasons, \code{span}s of 0.99 to 0.95
 are generally recommended.
 }
+\examples{
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "separate" step before running select_x_percent().
+motive_separated <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data() \%>\%
+  trim_tunnel_outliers() \%>\%
+  rotate_tunnel() \%>\%
+  select_x_percent(desired_percent = 50) \%>\%
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_rate_proportion = 0.1)
+
+## Now retain only the "full" trajectories that span
+## across 0.95 of the range of position_length
+motive_full <-
+  motive_separated \%>\%
+  get_full_trajectories(span = 0.95)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},

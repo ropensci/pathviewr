@@ -29,6 +29,33 @@ to the \code{pattern} and \code{replacement} supplied by the user.
 Quick utility function to use str_replace with mutate(across()) to batch-
 rename subjects via pattern detection.
 }
+\examples{
+## Import the example Motive data included in the package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                             package = 'pathviewR'))
+
+## Clean the file. It is generally recommended to clean up to the
+## "gather" step before running rescale_tunnel_data().
+ motive_gathered <-
+   motive_data \%>\%
+   relabel_viewr_axes() \%>\%
+   gather_tunnel_data()
+
+## See the subject names
+ unique(motive_gathered$subject)
+
+## Now rename the subjects. We'll get rid of "device" and replace it
+## with "subject"
+motive_renamed <-
+  motive_gathered \%>\%
+  rename_viewr_characters(target_column = "subject",
+                          pattern = "device",
+                          replacement = "subject")
+
+## See the new subject names
+unique(motive_renamed$subject)
+}
 \seealso{
 Other data cleaning functions: 
 \code{\link{gather_tunnel_data}()},
