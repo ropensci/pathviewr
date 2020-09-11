@@ -2423,7 +2423,7 @@ for (j in 1:nrow(new_dat)) {
 #'@param obj_name The input viewr object; a tibble or data.frame with attribute
 #'  \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
 #'  predefined (i.e. via \code{separate_trajectories()}).
-#'@param traj_num Minimum number of trajectories; must be numeric.
+#'@param trajnum Minimum number of trajectories; must be numeric.
 #'@param stim1 The treatment or session during which the threshold must be met.
 #'@param stim2 A second treatment or session during which the threshold must be
 #'  met.
@@ -2433,9 +2433,9 @@ for (j in 1:nrow(new_dat)) {
 #'  have not completed a certain number of trajectories during a treatment,
 #'  trial, or session. The \code{stim1} and \code{stim2} parameters allow users
 #'  to define during which treatments or sessions subjects must complete
-#'  trajectories and \code{traj_num} is the threshold number that must be
+#'  trajectories and \code{trajnum} is the threshold number that must be
 #'  reached. For example, setting \code{stim1 = "latA"}, \code{stim2 = "latB"}
-#'  and \code{traj_num = 5} will remove subjects that have fewer than 5
+#'  and \code{trajnum = 5} will remove subjects that have fewer than 5
 #'  trajectories during the \code{"latA"} treatment AND the \code{"latB"}
 #'  treatment. \code{stim1} and \code{stim2} should be levels within a column
 #'  named \code{"treatment"}.
@@ -2465,15 +2465,16 @@ for (j in 1:nrow(new_dat)) {
 #'               span = 0.95)
 #'
 #'  ## Add treatment information
-#'  motive_full$treatment <-
+#'    motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
+#'    rep("latA", 100), rep("latB", 149))
 #'
 #' ## Remove subjects by trajectory number
 #' motive_removed <-
 #' motive_full %>%
-#' rm_by_trajnum(traj_num = 5, stim1 = "latA", stim2 = "latB")
+#' rm_by_trajnum(trajnum = 10, stim1 = "latA", stim2 = "latB")
 
 rm_by_trajnum <- function(obj_name,
-                          traj_num = 5,
+                          trajnum = 5,
                           stim1,
                           stim2,
                           ...) {
@@ -2504,8 +2505,8 @@ rm_by_trajnum <- function(obj_name,
   ## get list of subjects that complete x num trajctories in BOTH treatments
   rm_bytraj <-
     rm_bytraj %>%
-    dplyr::filter(.data[[vars[[1]]]] >= traj_num &
-                    .data[[vars[[2]]]] >= traj_num) %>%
+    dplyr::filter(.data[[vars[[1]]]] >= trajnum &
+                    .data[[vars[[2]]]] >= trajnum) %>%
     dplyr::select(subject)
 
   ## join with original object to retain data
@@ -2513,9 +2514,9 @@ rm_by_trajnum <- function(obj_name,
     dplyr::inner_join(obj_name, rm_bytraj)
 
   #if is character instead of numeric:
-  if (is.character(traj_num)) {
+  if (is.character(trajnum)) {
     stop("traj_num is character.
-    Please check that you have entered the traj_num as a numeric.")
+    Please check that you have entered the trajnum as a numeric.")
   }
 
 }
