@@ -2417,8 +2417,7 @@ for (j in 1:nrow(new_dat)) {
 #'Remove subjects by trajectory number
 #'
 #'Specify a minimum number of trajectories that each subject must complete
-#'during a treatment, trial, or session. Subjects that have completed fewer
-#'trajectories than the threshold will be removed from the data set.
+#'during a treatment, trial, or session.
 #'
 #'@param obj_name The input viewr object; a tibble or data.frame with attribute
 #'  \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
@@ -2468,7 +2467,8 @@ for (j in 1:nrow(new_dat)) {
 #'    motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
 #'    rep("latA", 100), rep("latB", 149))
 #'
-#' ## Remove subjects by trajectory number
+#' ## Remove subjects by that have not completed at least 10 trajectories in
+#' both treatments
 #' motive_removed <-
 #' motive_full %>%
 #' rm_by_trajnum(trajnum = 10, stim1 = "latA", stim2 = "latB")
@@ -2484,7 +2484,12 @@ rm_by_trajnum <- function(obj_name,
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## get list of subjects that complete x num trajectories in BOTH treatments
+  ## Check that get_full_trajectories has been run prior to use
+  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
+    stop("Run get_full_trajectories() prior to use")
+  }
+
+  ## count trajectories by subject and treatment blocks
   rm_bytraj <-
     obj_name %>%
     tidyr::unite(block, "subject", "treatment", sep = "_") %>%
