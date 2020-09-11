@@ -1,7 +1,6 @@
 on:
   push:
-    paths:
-      - README.Rmd
+    branches: master
 
 name: Render README
 
@@ -25,5 +24,6 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
+          git add README.md man/figures/README-*
           git commit README.md -m 'Re-build README.Rmd' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
