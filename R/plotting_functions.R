@@ -67,7 +67,7 @@ visualize_frame_gap_choice <- function(obj_name,
   i <- 1
   while (i < loops + 1) {
     mfg[[i]] = quick_separate_trajectories(obj_name, max_frame_gap = i)
-    cts[[i]] = count(mfg[[i]], traj_id)
+    cts[[i]] = plyr::count(mfg[[i]], "traj_id")
     trajectory_count[i] = nrow(cts[[i]])
     frame_gap_allowed[i] = i
     i = i +1

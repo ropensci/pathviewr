@@ -28,10 +28,9 @@ The idea is to bin the data along a specified axis, generally
 \examples{
 ## Load data and run section_tunnel_by()
 test_mat <-
-  read_flydra_mat(
-    "./inst/extdata/pathviewR_flydra_example_data.mat",
-    subject_name = "steve"
-  ) \%>\%
+  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+                             package = 'pathviewR'),
+                  subject_name = "birdie_wooster") \%>\%
   redefine_tunnel_center(length_method = "middle",
                          height_method = "user-defined",
                          height_zero = 1.44) \%>\%
