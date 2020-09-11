@@ -2412,14 +2412,78 @@ for (j in 1:nrow(new_dat)) {
 }
 
 
-############################### rm subjects by trajectory number ###############################
+#################### rm subjects by trajectory number ##########################
+
+#'Remove subjects by trajectory number
+#'
+#'Specify a minimum number of trajectories that each subject must complete
+#'during a treatment, trial, or session. Subjects that have completed fewer
+#'trajectories than the threshold will be removed from the data set.
+#'
+#'@param obj_name The input viewr object; a tibble or data.frame with attribute
+#'  \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+#'  predefined (i.e. via \code{separate_trajectories()}).
+#'@param traj_num Minimum number of trajectories; must be numeric.
+#'@param stim1 The treatment or session during which the threshold must be met.
+#'@param stim2 A second treatment or session during which the threshold must be
+#'  met.
+#'@param ... Additional arguments passed to/from other pathviewR functions
+#'
+#'@details Depending on analysis needs, users may want to remove subjects that
+#'  have not completed a certain number of trajectories during a treatment,
+#'  trial, or session. The \code{stim1} and \code{stim2} parameters allow users
+#'  to define during which treatments or sessions subjects must complete
+#'  trajectories and \code{traj_num} is the threshold number that must be
+#'  reached. For example, setting \code{stim1 = "latA"}, \code{stim2 = "latB"}
+#'  and \code{traj_num = 5} will remove subjects that have fewer than 5
+#'  trajectories during the \code{"latA"} treatment AND the \code{"latB"}
+#'  treatment. \code{stim1} and \code{stim2} should be levels within a column
+#'  named \code{"treatment"}.
+#'
+#'@return A viewr object; a tibble or data.frame with attribute
+#'  \code{pathviewR_steps} that includes \code{"viewr"} that now has fewer
+#'  observations (rows) as a result of removal of subjects with too few
+#'  trajectories according to the \code{trajnum} parameter.
+#'
+#'@export
+#'
+#'@author Melissa S. Armstrong
+#'
+#' @examples
+#' library(pathviewR)
+#'
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                              package = 'pathviewR'))
+#'
+#' ## Clean, isolate, and label trajectories
+#' motive_full <-
+#'   motive_data %>%
+#'   clean_viewr(desired_percent = 50,
+#'               max_frame_gap = "autodetect",
+#'               span = 0.95)
+#'
+#'  ## Add treatment information
+#'  motive_full$treatment <-
+#'
+#' ## Remove subjects by trajectory number
+#' motive_removed <-
+#' motive_full %>%
+#' rm_by_trajnum(traj_num = 5, stim1 = "latA", stim2 = "latB")
 
 rm_by_trajnum <- function(obj_name,
-                          trajnum = 5,
+                          traj_num = 5,
                           stim1,
                           stim2,
-                          ...){
-  #get list of subjects that complete x num trajectories in BOTH treatments
+                          ...) {
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## get list of subjects that complete x num trajectories in BOTH treatments
   rm_bytraj <-
     obj_name %>%
     tidyr::unite(block, "subject", "treatment", sep = "_") %>%
@@ -2429,21 +2493,32 @@ rm_by_trajnum <- function(obj_name,
                     purrr::map_dbl(~ length(.$file_sub_traj))) %>%
     dplyr::select(block, n) %>%
     tidyr::separate(block, c("subject", "treatment")) %>%
-    tidyr::pivot_wider(names_from = treatment, values_from = n, values_fill = 0)
+    tidyr::pivot_wider(
+      names_from = treatment,
+      values_from = n,
+      values_fill = 0
+    )
 
   vars <- c(stim1, stim2)
 
+  ## get list of subjects that complete x num trajctories in BOTH treatments
   rm_bytraj <-
     rm_bytraj %>%
-    dplyr::filter(.data[[vars[[1]]]] >= trajnum & .data[[vars[[2]]]] >= trajnum) %>%
+    dplyr::filter(.data[[vars[[1]]]] >= traj_num &
+                    .data[[vars[[2]]]] >= traj_num) %>%
     dplyr::select(subject)
 
+  ## join with original object to retain data
   obj_name <-
     dplyr::inner_join(obj_name, rm_bytraj)
 
+  #if is character instead of numeric:
+  if (is.character(traj_num)) {
+    stop("traj_num is character.
+    Please check that you have entered the traj_num as a numeric.")
+  }
+
 }
-
-
 
 ###########################    insert_treatments    ############################
 #' Inserts treatment and experiment information
