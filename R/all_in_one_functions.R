@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-05 VBB
+## Last updated: 2020-09-11 VBB
 
 
 ################################# clean_viewr ##################################
@@ -21,7 +21,8 @@
 #' @param rename_viewr_characters default FALSE, should subjects be renamed?
 #' @param separate_trajectories default TRUE, should trajectories be defined?
 #' @param get_full_trajectories default TRUE, should only full trajectories be
-#'   retained.
+#'   retained?
+#' @param fill_traj_gaps default FALSE, should gaps in trajectories be filled?
 #' @param ... Additional arguments passed to any of the corresponding functions
 #'
 #' @details Each argument corresponds to a standalone function in
@@ -81,6 +82,7 @@ clean_viewr <- function(obj_name,
                         rename_viewr_characters = FALSE,
                         separate_trajectories = TRUE,
                         get_full_trajectories = TRUE,
+                        fill_traj_gaps = FALSE
                         ...){
 
   ## Check that any arguments supplied are valid; return a warning if not
@@ -119,11 +121,15 @@ clean_viewr <- function(obj_name,
                      "frame_gap_messaging", "frame_gap_plotting")
   ## get_full_trajectories()
   get_full_traj_args <- c("span")
+  ## fill_traj_gaps()
+  fill_traj_gaps_args <- c("loess_degree", "loess_criterion", "loess_family",
+                           "loess_user_span", "loess_plot")
 
   valid_args <- c(relabel_args, trim_args,
                   rotate_args, standardize_args, center_args,
                   velocity_args,
-                  select_args, rename_args, separate_args, get_full_traj_args
+                  select_args, rename_args, separate_args, get_full_traj_args,
+                  fill_traj_gaps_args
   )
 
   arg_names <- names(list(...))
@@ -292,6 +298,21 @@ or by removing the extraneous argument(s)")
     obj <- obj
   }
 
+  if (fill_traj_gaps == TRUE) {
+    obj <-
+      obj %>%
+      fill_traj_gaps(...)
+  } else {
+    if (any(arg_names %in% fill_traj_gaps_args)){
+      stop(
+        "At least one argument for fill_traj_gaps() was supplied,
+but fill_traj_gaps was set to FALSE.
+Please resolve by either setting fill_traj_gaps to TRUE
+or by removing the extraneous argument(s)")
+    }
+    obj <- obj
+  }
+
   ## Check for any unused arguments and message() about them
   params <- list(...)
   optionalParamNames <- valid_args
@@ -340,6 +361,7 @@ import_and_clean_viewr <- function(file_name,
                                    rename_viewr_characters = FALSE,
                                    separate_trajectories = TRUE,
                                    get_full_trajectories = TRUE,
+                                   fill_traj_gaps = FALSE
                                    ...){
 
   ## Import checks
@@ -388,11 +410,15 @@ import_and_clean_viewr <- function(file_name,
                        "frame_gap_messaging", "frame_gap_plotting")
     ## get_full_trajectories()
     get_full_traj_args <- c("span")
+    ## fill_traj_gaps()
+    fill_traj_gaps_args <- c("loess_degree", "loess_criterion", "loess_family",
+                             "loess_user_span", "loess_plot")
 
   valid_args <- c(read_args, relabel_args, trim_args,
                   rotate_args, standardize_args, center_args,
                   velocity_args,
-                  select_args, rename_args, separate_args, get_full_traj_args
+                  select_args, rename_args, separate_args, get_full_traj_args,
+                  fill_traj_gaps_args
                   )
 
   arg_names <- names(list(...))
@@ -557,6 +583,21 @@ or by removing the extraneous argument(s)")
 "At least one argument for get_full_trajectories() was supplied,
 but get_full_trajectories was set to FALSE.
 Please resolve by either setting get_full_trajectories to TRUE
+or by removing the extraneous argument(s)")
+    }
+    obj <- obj
+  }
+
+  if (fill_traj_gaps == TRUE) {
+    obj <-
+      obj %>%
+      fill_traj_gaps(...)
+  } else {
+    if (any(arg_names %in% fill_traj_gaps_args)){
+      stop(
+        "At least one argument for fill_traj_gaps() was supplied,
+but fill_traj_gaps was set to FALSE.
+Please resolve by either setting fill_traj_gaps to TRUE
 or by removing the extraneous argument(s)")
     }
     obj <- obj
