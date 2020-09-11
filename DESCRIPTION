@@ -33,7 +33,11 @@ Imports:
     stringr (>= 1.4.0),
     tibble (>= 3.0.1),
     tidyr (>= 1.1.0),
-    fANCOVA
+    fANCOVA,
+    cowplot,
+    purrr,
+    ggplot2,
+    tidyselect
 Suggests: 
     knitr,
     rmarkdown

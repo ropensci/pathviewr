@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-11 VBB
 
 
 ########################### visualize_frame_gap_choice #########################
@@ -307,59 +307,88 @@ purrplot_by_bird <- function(obj_name,
 
   #for top view (change in lateral position)
   top_view <- obj_name %>%
-    group_by(subject) %>%
-    nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_length, position_width, colour = treatment)) +
-                         geom_point(alpha = .1, show.legend = FALSE) +
-                         ylim(width_limits) +
-                         geom_hline(yintercept = 0, linetype = "dotted") +
-                         coord_fixed(ratio = 1) +
-                         theme_tufte()),
-           hist = map(data, ~ggplot(., aes(x = position_width, fill = treatment)) +
-                        geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
-                        xlim(width_limits) +
-                        geom_vline(xintercept = 0, linetype = "dotted") +
-                        coord_flip() +
-                        theme_tufte()),
-           filename = paste0(subject,"_top",".png"))
+    dplyr::group_by(subject) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(
+      paths = purrr::map(
+        data,
+        ~ ggplot2::ggplot(., aes(position_length,
+                                 position_width,
+                                 colour = treatment)) +
+          geom_point(alpha = .1, show.legend = FALSE) +
+          ylim(width_limits) +
+          geom_hline(yintercept = 0, linetype = "dotted") +
+          coord_fixed(ratio = 1) +
+          theme_tufte()
+      ),
+      hist = purrr::map(
+        data,
+        ~ ggplot2::ggplot(., aes(x = position_width,
+                                 fill = treatment)) +
+          geom_density(
+            alpha = .5,
+            position = "identity",
+            show.legend = FALSE
+          ) +
+          xlim(width_limits) +
+          geom_vline(xintercept = 0, linetype = "dotted") +
+          coord_flip() +
+          theme_tufte()
+      ),
+      filename = paste0(subject, "_top", ".png")
+    )
 
   #all of them together:
   top_all_plots <- top_view %>%
-    select(subject, paths, hist) %>%
-    gather("plot_type", "allplots", 2:3)
+    dplyr::select(subject, paths, hist) %>%
+    tidyr::gather("plot_type", "allplots", 2:3)
 
-  birdseye_view <- plot_grid(plotlist = top_all_plots[[3]])
+  birdseye_view <- cowplot::plot_grid(plotlist = top_all_plots[[3]])
 
-  ggsave(paste0(treatment,"_", "topview.png"), birdseye_view,
-         path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
+  ggplot2::ggsave(paste0(treatment, "_", "topview.png"), birdseye_view,
+                 path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
 
   #for elev view (change in height):
   elev_view <- obj_name %>%
-    group_by(subject) %>%
-    nest() %>%
-    mutate(paths = map(data, ~ggplot(., aes(position_length, position_height, colour = treatment)) +
-                         geom_point(alpha = .1, show.legend = FALSE) +
-                         ylim(height_limits) +
-                         geom_hline(yintercept = 0, linetype = "dotted") +
-                         coord_fixed(ratio = 1) +
-                         theme_tufte()),
-           hist = map(data, ~ggplot(., aes(position_height, fill = treatment)) +
-                        geom_density(alpha = .5, position = "identity", show.legend = FALSE) +
-                        xlim(height_limits) +
-                        geom_vline(xintercept = 0, linetype = "dotted") +
-                        coord_flip() +
-                        theme_tufte()),
-           filename = paste0(subject,"_elev",".png"))
+    dplyr::group_by(subject) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(
+      paths = purrr::map(
+        data,
+        ~ ggplot2::ggplot(., aes(
+          position_length, position_height, colour = treatment
+        )) +
+          geom_point(alpha = .1, show.legend = FALSE) +
+          ylim(height_limits) +
+          geom_hline(yintercept = 0, linetype = "dotted") +
+          coord_fixed(ratio = 1) +
+          theme_tufte()
+      ),
+      hist = purrr::map(
+        data,
+        ~ ggplot2::ggplot(., aes(position_height, fill = treatment)) +
+          geom_density(
+            alpha = .5,
+            position = "identity",
+            show.legend = FALSE
+          ) +
+          xlim(height_limits) +
+          geom_vline(xintercept = 0, linetype = "dotted") +
+          coord_flip() +
+          theme_tufte()
+      ),
+      filename = paste0(subject, "_elev", ".png")
+    )
 
   #all of them together:
   elev_all_plots <- elev_view %>%
-    select(subject, paths, hist) %>%
-    gather("plot_type", "allplots", 2:3)
+    dplyr::select(subject, paths, hist) %>%
+    tidyr::gather("plot_type", "allplots", 2:3)
 
-  side_view <- plot_grid(plotlist = elev_all_plots[[3]])
+  side_view <- cowplot::plot_grid(plotlist = elev_all_plots[[3]])
 
-  ggsave(paste0(treatment,"_", "elevview.png"), side_view,
-         path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
+  ggplot2::ggsave(paste0(treatment, "_", "elevview.png"), side_view,
+                  path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
 }
 
 #to save each plot separately:

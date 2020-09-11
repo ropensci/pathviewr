@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-03 VBB
+## Last updated: 2020-09-11 VBB
 
 
 ############################### read_motive_csv ################################
@@ -115,7 +115,7 @@ read_motive_csv <-
         strsplit(header[[1]], ",")[[length(header)-1]] %>%
         data.frame(stringsAsFactors = FALSE)
     ## Convert the 1-col data frame into a 2-col data frame:
-      odds <- seq_along(header$.) %% 2 == 1
+      odds <- base::seq_along(header$.) %% 2 == 1
       metadata <- header$.[odds] # odd-numbered rows are metadata
       value <- header$.[!odds] # even-numbered rows are corresponding values
       header <- data.frame(metadata, value,
@@ -458,11 +458,9 @@ read_flydra_mat <-
     attr(data, "file_id") <- file_id
     attr(data, "file_mtime") <- mtime
     attr(data, "frame_rate") <- frame_rate
-    ## We will opt to store the original matlab file as an attribute since
-    ## it very likely contains things we may need later. Hard to say what
-    ## exactly right now; this is motivated by spidey-sense...
-    ## It also doubles the object size -- not very ideal. Fix this soon!
-    attr(data, "flydra_mat") <- mat_read
+    ## Re-enable the following line in the future if you would like to store
+    ## the original matlab file as an attribute:
+    # attr(data, "flydra_mat") <- mat_read
     attr(data, "header") <- attr(mat_read, "header")
     attr(data, "import_method") <- "flydra"
 
@@ -518,7 +516,7 @@ read_flydra_mat <-
 #' ## Create a dummy data frame with simulated (nonsense) data
 #' df <- data.frame(frame = seq(1, 100, by = 1),
 #'                  time_sec = seq(0, by = 0.01, length.out = 100),
-#'                  subject = "bob",
+#'                  subject = "birdie_sanders",
 #'                  z = rnorm(100),
 #'                  x = rnorm(100),
 #'                  y = rnorm(100))

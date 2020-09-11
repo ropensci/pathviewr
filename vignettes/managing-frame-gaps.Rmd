@@ -6,6 +6,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Managing frame gaps with pathviewR}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteDepends{tidyverse}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -20,7 +21,7 @@ knitr::opts_chunk$set(
 
 `pathviewR` defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via `select_x_percent()` in addition to all the previous steps of the data import and cleaning pipeline as described in VIGNETTE XXX (LINK). 
 
-We'll start with loading `pathviewR` and importing our data.
+We'll start with loading `pathviewR` and `tidyverse` and importing our data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewR installed:
@@ -28,8 +29,9 @@ We'll start with loading `pathviewR` and importing our data.
 # devtools::install_github("vbaliga/pathviewR")
 
 library(pathviewR)
+library(tidyverse)
 
-## Import the july 29 example data included in 
+## Import the example Motive data included in 
 ## the package
 motive_data <-
   read_motive_csv(

@@ -72,7 +72,7 @@ pathviewR functions.
 ## Create a dummy data frame with simulated (nonsense) data
 df <- data.frame(frame = seq(1, 100, by = 1),
                  time_sec = seq(0, by = 0.01, length.out = 100),
-                 subject = "bob",
+                 subject = "birdie_sanders",
                  z = rnorm(100),
                  x = rnorm(100),
                  y = rnorm(100))

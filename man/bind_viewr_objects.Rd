@@ -25,12 +25,12 @@ Combine a list of multiple viewr objects into a single viewr object
 ## times to simulate batch importing. Replace the contents of
 ## the following list with your own list of files to be imported.
 
-## Make a list of the same example file 5x
+## Make a list of the same example file 3x
 import_list <-
   c(rep(
     system.file("extdata", "pathviewR_motive_example_data.csv",
                 package = 'pathviewR'),
-    5
+    3
   ))
 
 ## Batch import
