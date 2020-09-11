@@ -82,7 +82,7 @@ clean_viewr <- function(obj_name,
                         rename_viewr_characters = FALSE,
                         separate_trajectories = TRUE,
                         get_full_trajectories = TRUE,
-                        fill_traj_gaps = FALSE
+                        fill_traj_gaps = FALSE,
                         ...){
 
   ## Check that any arguments supplied are valid; return a warning if not
@@ -361,7 +361,7 @@ import_and_clean_viewr <- function(file_name,
                                    rename_viewr_characters = FALSE,
                                    separate_trajectories = TRUE,
                                    get_full_trajectories = TRUE,
-                                   fill_traj_gaps = FALSE
+                                   fill_traj_gaps = FALSE,
                                    ...){
 
   ## Import checks
