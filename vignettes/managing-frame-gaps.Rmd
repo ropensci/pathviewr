@@ -28,7 +28,6 @@ We'll start with loading `pathviewR` and importing our data.
 # devtools::install_github("vbaliga/pathviewR")
 
 library(pathviewR)
-library(dplyr)
 
 ## Import the july 29 example data included in 
 ## the package
