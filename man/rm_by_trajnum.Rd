@@ -28,8 +28,7 @@ trajectories according to the \code{trajnum} parameter.
 }
 \description{
 Specify a minimum number of trajectories that each subject must complete
-during a treatment, trial, or session. Subjects that have completed fewer
-trajectories than the threshold will be removed from the data set.
+during a treatment, trial, or session.
 }
 \details{
 Depending on analysis needs, users may want to remove subjects that
@@ -62,7 +61,8 @@ motive_full <-
    motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
    rep("latA", 100), rep("latB", 149))
 
-## Remove subjects by trajectory number
+## Remove subjects by that have not completed at least 10 trajectories in
+both treatments
 motive_removed <-
 motive_full \%>\%
 rm_by_trajnum(trajnum = 10, stim1 = "latA", stim2 = "latB")
