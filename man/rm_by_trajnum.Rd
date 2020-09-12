@@ -62,7 +62,7 @@ motive_full <-
    rep("latA", 100), rep("latB", 149))
 
 ## Remove subjects by that have not completed at least 10 trajectories in
-both treatments
+## both treatments
 motive_removed <-
 motive_full \%>\%
 rm_by_trajnum(trajnum = 10, stim1 = "latA", stim2 = "latB")

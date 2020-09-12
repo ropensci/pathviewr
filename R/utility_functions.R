@@ -2125,8 +2125,7 @@ section_tunnel_by <- function(obj_name,
 #' @param loess_criterion See "criterion" argument of fANCOVA::loess.as()
 #' @param loess_family See "family" argument of fANCOVA::loess.as()
 #' @param loess_user_span See "user.span" argument of fANCOVA::loess.as()
-#' @param loess_plot See "plot" argument of fANCOVA::loess.as(). Not
-#'   recommended.
+#'
 #' @details It is strongly recommended that the input viewr object be "cleaned"
 #'   via \code{select_x_percent()} -> \code{separate_trajectories()} ->
 #'   \code{get_full_trajectories()} prior to using this function. Doing so will
@@ -2467,7 +2466,7 @@ for (j in 1:nrow(new_dat)) {
 #'    rep("latA", 100), rep("latB", 149))
 #'
 #' ## Remove subjects by that have not completed at least 10 trajectories in
-#' both treatments
+#' ## both treatments
 #' motive_removed <-
 #' motive_full %>%
 #' rm_by_trajnum(trajnum = 10, stim1 = "latA", stim2 = "latB")

@@ -24,9 +24,6 @@ predefined (i.e. via \code{separate_trajectories()}).}
 \item{loess_family}{See "family" argument of fANCOVA::loess.as()}
 
 \item{loess_user_span}{See "user.span" argument of fANCOVA::loess.as()}
-
-\item{loess_plot}{See "plot" argument of fANCOVA::loess.as(). Not
-recommended.}
 }
 \value{
 A viewr object; a tibble or data.frame with attribute
