@@ -2181,8 +2181,7 @@ fill_traj_gaps <- function(obj_name,
                            loess_degree = 1,
                            loess_criterion = c("aicc", "gcv"),
                            loess_family = c("gaussian", "symmetric"),
-                           loess_user_span = NULL,
-                           loess_plot = FALSE
+                           loess_user_span = NULL
 ){
 
   ## Check that it's a viewr object
@@ -2249,7 +2248,7 @@ fill_traj_gaps <- function(obj_name,
                           criterion = loess_criterion,
                           family = loess_family,
                           user.span = loess_user_span,
-                          plot = loess_plot)
+                          plot = FALSE)
       length_preds <- predict(length_fit, frame_seq)
       ## position_width
       width_fit <-
@@ -2259,7 +2258,7 @@ fill_traj_gaps <- function(obj_name,
                           criterion = loess_criterion,
                           family = loess_family,
                           user.span = loess_user_span,
-                          plot = loess_plot)
+                          plot = FALSE)
       width_preds <- predict(width_fit, frame_seq)
       ## position_height
       height_fit <-
@@ -2269,7 +2268,7 @@ fill_traj_gaps <- function(obj_name,
                           criterion = loess_criterion,
                           family = loess_family,
                           user.span = loess_user_span,
-                          plot = loess_plot)
+                          plot = FALSE)
       height_preds <- predict(height_fit, frame_seq)
 
       ## Get all the predicted data together

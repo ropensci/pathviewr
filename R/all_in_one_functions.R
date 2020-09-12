@@ -123,7 +123,7 @@ clean_viewr <- function(obj_name,
   get_full_traj_args <- c("span")
   ## fill_traj_gaps()
   fill_traj_gaps_args <- c("loess_degree", "loess_criterion", "loess_family",
-                           "loess_user_span", "loess_plot")
+                           "loess_user_span")
 
   valid_args <- c(relabel_args, trim_args,
                   rotate_args, standardize_args, center_args,
@@ -305,8 +305,7 @@ or by removing the extraneous argument(s)")
       fill_traj_gaps(loess_degree = params$loess_degree,
                      loess_criterion = params$loess_criterion,
                      loess_family = params$loess_family,
-                     loess_user_span = params$loess_user_span,
-                     loess_plot = params$loess_user_plot)
+                     loess_user_span = params$loess_user_span)
   } else {
     if (any(arg_names %in% fill_traj_gaps_args)){
       stop(

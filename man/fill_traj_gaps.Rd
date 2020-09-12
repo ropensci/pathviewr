@@ -9,8 +9,7 @@ fill_traj_gaps(
   loess_degree = 1,
   loess_criterion = c("aicc", "gcv"),
   loess_family = c("gaussian", "symmetric"),
-  loess_user_span = NULL,
-  loess_plot = FALSE
+  loess_user_span = NULL
 )
 }
 \arguments{
