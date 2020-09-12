@@ -15,6 +15,7 @@ clean_viewr(
   rename_viewr_characters = FALSE,
   separate_trajectories = TRUE,
   get_full_trajectories = TRUE,
+  fill_traj_gaps = FALSE,
   ...
 )
 }
@@ -41,7 +42,9 @@ selected?}
 \item{separate_trajectories}{default TRUE, should trajectories be defined?}
 
 \item{get_full_trajectories}{default TRUE, should only full trajectories be
-retained.}
+retained?}
+
+\item{fill_traj_gaps}{default FALSE, should gaps in trajectories be filled?}
 
 \item{...}{Additional arguments passed to any of the corresponding functions}
 }

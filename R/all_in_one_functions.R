@@ -299,9 +299,14 @@ or by removing the extraneous argument(s)")
   }
 
   if (fill_traj_gaps == TRUE) {
+    params <- list(...)
     obj <-
       obj %>%
-      fill_traj_gaps(...)
+      fill_traj_gaps(loess_degree = params$loess_degree,
+                     loess_criterion = params$loess_criterion,
+                     loess_family = params$loess_family,
+                     loess_user_span = params$loess_user_span,
+                     loess_plot = params$loess_user_plot)
   } else {
     if (any(arg_names %in% fill_traj_gaps_args)){
       stop(
@@ -589,9 +594,14 @@ or by removing the extraneous argument(s)")
   }
 
   if (fill_traj_gaps == TRUE) {
+    params <- list(...)
     obj <-
       obj %>%
-      fill_traj_gaps(...)
+      fill_traj_gaps(loess_degree = params$loess_degree,
+                     loess_criterion = params$loess_criterion,
+                     loess_family = params$loess_family,
+                     loess_user_span = params$loess_user_span,
+                     loess_plot = params$loess_user_plot)
   } else {
     if (any(arg_names %in% fill_traj_gaps_args)){
       stop(
