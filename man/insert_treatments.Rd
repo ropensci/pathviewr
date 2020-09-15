@@ -22,36 +22,42 @@ insert_treatments(
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
 \item{vertex_height}{If using a V-shaped chamber, this is the height of the
-vertex. This value should be negative and represents the distance between the
-origin (0,0,0) and the vertex.}
+vertex. This value should be negative and represents the distance between
+the origin (0,0,0) and the vertex.}
 
-\item{vertex_angle}{If using a V-shaped chamber, this is the angle (in degrees)
-subtended by a vertical axis and the sides of the V-shaped chamber.
-Equivalent to half the angle of the "V". \code{vertex_angle} defaults to 45.}
+\item{vertex_angle}{If using a V-shaped chamber, this is the angle (in
+degrees) subtended by a vertical axis and the sides of the V-shaped
+chamber. Equivalent to half the angle of the "V". \code{vertex_angle}
+defaults to 45.}
 
-\item{pos_wall}{If using a box-shaped chamber, this is the distance in meters between the origin (0,0,0) and the
-positive wall.}
+\item{pos_wall}{If using a box-shaped chamber, this is the distance in meters
+between the origin (0,0,0) and the positive wall.}
 
-\item{neg_wall}{If using a box-shaped chamber, this is the distance in meters between the origin (0,0,0) and the
-negative wall.}
+\item{neg_wall}{If using a box-shaped chamber, this is the distance in meters
+between the origin (0,0,0) and the negative wall.}
 
-\item{front_wall}{If using a box-shaped chamber, this is the distance in meters between the origin (0,0,0) and the
-front wall.}
+\item{front_wall}{If using a box-shaped chamber, this is the distance in
+meters between the origin (0,0,0) and the front wall.}
 
-\item{stim_param_pos}{The width of the sine-wave grating stimulus displayed on the positive wall of the chamber.}
+\item{stim_param_pos}{The width of the visual stimulus cycle displayed
+on the positive wall of the chamber.}
 
-\item{stim_param_neg}{The width of the sine-wave grating stimulus displayed on the negative wall of the chamber.}
+\item{stim_param_neg}{The width of the visual stimulus cycle displayed
+on the negative wall of the chamber.}
 
-\item{stim_param_front}{If using a box-shaped chamber, the width of the sine-wave grating displayed on the front wall.}
+\item{stim_param_front}{If using a box-shaped chamber, the width of the
+visual stimulus cycle on the front wall.}
 
-\item{treatment}{The treatment name assigned to all subjects in the viewr
+\item{treatment}{The name of the treatment assigned to all rows of the viewr
 object. Currently only able to accept a single treatment per viewr object.}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"treatments added"}). Depending on the chamber configuration, a tibble or data.frame with added variables for
-\code{vertex_height}, \code{vertex_angle}, \code{pos_wall}, \code{neg_wall}, \code{front_wall}, and
-\code{treatment}. This experiment information is also stored in the viewr object's metadata
+\code{pathviewR_steps} that includes \code{"treatments added"}). Depending
+on the chamber configuration, it also includes columns for
+\code{vertex_height}, \code{vertex_angle}, \code{pos_wall},
+\code{neg_wall}, \code{front_wall}, and \code{treatment}. This experiment
+information is also stored in the viewr object's metadata
 }
 \description{
 Adds information about treatment and experimental set up to viewr objects for
@@ -61,8 +67,35 @@ analysis in other pathviewR functions
 All length measurements reported in meters.
 }
 \examples{
+ ## Import sample data from package
+motive_data_path <- './inst/extdata/pathviewR_motive_example_data.csv'
+
+## Clean data up to and including get_full_trajectories()
+motive_data_full <-
+ motive_data_path \%>\%
+ read_motive_csv() \%>\%
+ relabel_viewr_axes() \%>\%
+ gather_tunnel_data() \%>\%
+ trim_tunnel_outliers() \%>\%
+ rotate_tunnel() \%>\%
+ get_velocity() \%>\%
+ select_x_percent(desired_percent = 50) \%>\%
+ separate_trajectories(max_frame_gap = "autodetect") \%>\%
+ get_full_trajectories(span = 0.95)
+
+## Now add information about the experimental configuration. In this example, a V-shaped chamber
+in which the vertex is 90˚ and 0.40m below the origin. The visual stimuli on the lateral
+walls both have a cycle of 0.1m and the treatment is labeled "latA"
+motive_data_V <-
+ motive_data_full \%>\%
+ insert_treatments(vertex_height = -0.40,
+                   vertex_angle = 45,
+                   stim_param_pos = 0.1,
+                   stim_param_neg = 0.1,
+                   treatment = "latA")
 
 }
 \author{
 Eric R. Press
 }
+\concept{utility functions}
