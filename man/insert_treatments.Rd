@@ -87,7 +87,7 @@ motive_data_full <-
  get_full_trajectories(span = 0.95)
 
 ## Now add information about the experimental configuration. In this example,
-## a V-shaped chamber in which the vertex is 90˚ and lies 0.40m below the
+## a V-shaped chamber in which the vertex is 90Ëš and lies 0.40m below the
 ## origin. The visual stimuli on the lateral walls both have a cycle of 0.1m
 ## and the treatment is labeled "latA"
 motive_data_V <-
