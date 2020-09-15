@@ -34,10 +34,10 @@ Imports:
     tibble (>= 3.0.1),
     tidyr (>= 1.1.0),
     fANCOVA,
-    cowplot,
-    purrr,
-    ggplot2,
-    tidyselect
+    purrr (>= 0.3.4),
+    ggplot2 (>= 3.3.0),
+    tidyselect (>= 1.1.0), 
+    cowplot
 Suggests: 
     knitr,
     rmarkdown
