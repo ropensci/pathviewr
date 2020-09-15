@@ -8,17 +8,21 @@ calc_vis_angle_V(obj_name, simplify_output = FALSE)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewR_steps} that includes \code{"viewr"} and
+\code{treatments_added}.}
 
-\item{simplify_output}{If TRUE, the returned object includes the minimum distance between the subject
-and the lateral walls as well as the visual angles (in degrees) to those points on
-the walls. If FALSE, the returned object includes all variables internal
-to the calculation.}
+\item{simplify_output}{If TRUE, the returned object includes the minimum
+distance between the subject and the lateral walls as well as the visual
+angles (in degrees) to those points on the walls. If FALSE, the returned
+object includes all variables internal to the calculation.}
 }
 \value{
-A tibble or data.frame with added variables for \code{height_2_vertex}, \code{height_2_screen}, \code{width_2_screen_pos},
-\code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg}, \code{vis_angle_pos_rad}, \code{vis_angle_neg_rad},
-\code{vis_angle_pos_deg}, \code{vis_angle_neg_deg}
+A tibble or data.frame with added variables for
+\code{height_2_vertex}, \code{height_2_screen}, \code{width_2_screen_pos},
+\code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
+\code{bound_pos}, \code{bound_neg}, \code{vis_angle_pos_rad},
+\code{vis_angle_neg_rad}, \code{vis_angle_pos_deg},
+\code{vis_angle_neg_deg}
 }
 \description{
 Based on rigid body, i.e animal head positions in a V-shaped tunnel,
@@ -28,8 +32,8 @@ visual stimuli.
 \details{
 \code{cal_vis_angle_V} assumes the subject's gaze is fixed at the
 point on the either side of the tunnel that minimizes the distance to
-visual stimuli and therefore maximizes visual angles. All legth measurements
-reported in meters.
+visual stimuli and therefore maximizes visual angles. All length
+measurements are reported in meters.
 }
 \examples{
 
