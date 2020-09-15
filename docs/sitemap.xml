@@ -1,144 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//index.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//index.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/as_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/as_viewr.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/bind_viewr_objects.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/bind_viewr_objects.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/calc_sf_V.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/calc_sf_V.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/calc_sf_box.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/calc_sf_box.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/calc_vis_angle_V.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/calc_vis_angle_V.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/calc_vis_angle_box.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/calc_vis_angle_box.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/clean_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/clean_viewr.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/clean_viewr_batch.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/clean_viewr_batch.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/deg_2_rad.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/deg_2_rad.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/exclude_by_velocity.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/exclude_by_velocity.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/fill_traj_gaps.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/fill_traj_gaps.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/find_curve_elbow.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/find_curve_elbow.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/gather_tunnel_data.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/gather_tunnel_data.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_2d_angle.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_2d_angle.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_3d_angle.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_3d_angle.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_3d_cross_prod.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_3d_cross_prod.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_dist_point_line.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_dist_point_line.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_full_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_full_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_header_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_header_viewr.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/get_velocity.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/get_velocity.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/import_and_clean_batch.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/import_and_clean_batch.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/import_and_clean_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/import_and_clean_viewr.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/import_batch.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/import_batch.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/insert_treatments.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/insert_treatments.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/pathviewR-package.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/pathviewR-package.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/pipe.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/plot_viewr_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/plot_viewr_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/quick_separate_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/quick_separate_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/rad_2_deg.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/rad_2_deg.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/read_flydra_mat.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/read_flydra_mat.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/read_motive_csv.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/read_motive_csv.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/redefine_tunnel_center.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/redefine_tunnel_center.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/relabel_viewr_axes.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/relabel_viewr_axes.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/rename_viewr_characters.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/rename_viewr_characters.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/rescale_tunnel_data.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/rescale_tunnel_data.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/rm_by_trajnum.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/rm_by_trajnum.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/rotate_tunnel.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/rotate_tunnel.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/section_tunnel_by.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/section_tunnel_by.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/select_x_percent.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/select_x_percent.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/separate_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/separate_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/standardize_tunnel.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/standardize_tunnel.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/trim_tunnel_outliers.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/trim_tunnel_outliers.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//reference/visualize_frame_gap_choice.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//reference/visualize_frame_gap_choice.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//articles/data-import-cleaning.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//articles/data-import-cleaning.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//articles/managing-frame-gaps.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//articles/managing-frame-gaps.html</loc>
   </url>
   <url>
-    <loc>https://flightlab.github.io/MultiPanelPlotsWithR//articles/optic_flow_functions.html</loc>
+    <loc>https://vbaliga.github.io/pathviewR//articles/optic_flow_functions.html</loc>
   </url>
 </urlset>
