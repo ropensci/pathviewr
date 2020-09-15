@@ -86,18 +86,12 @@ motive_data_full <-
  separate_trajectories(max_frame_gap = "autodetect") \%>\%
  get_full_trajectories(span = 0.95)
 
-## Now add information about the experimental configuration. In this example, a V-shaped chamber
-<<<<<<< HEAD
-## in which the vertex is 90˚ and lies 0.40m below the origin. The visual stimuli on the lateral
-## walls both have a cycle of 0.1m and the treatment is labeled "latA"
-## motive_data_V <-
-## motive_data_full \%>\%
-=======
-in which the vertex is 90Ëš and lies 0.40m below the origin. The visual stimuli on the lateral
-walls both have a cycle of 0.1m and the treatment is labeled "latA"
+## Now add information about the experimental configuration. In this example,
+## a V-shaped chamber in which the vertex is 90˚ and lies 0.40m below the
+## origin. The visual stimuli on the lateral walls both have a cycle of 0.1m
+## and the treatment is labeled "latA"
 motive_data_V <-
 motive_data_full \%>\%
->>>>>>> 3eb0ce9e6fa844a8f44d4c8b4676dc8f7fe65ae2
 insert_treatments(vertex_height = -0.40,
                    vertex_angle = 45,
                    stim_param_pos = 0.1,
@@ -105,8 +99,9 @@ insert_treatments(vertex_height = -0.40,
                    treatment = "latA")
 
 ## For an experiment using the box-shaped configuration where the origin lies
-## 0.5m away from the front and lateral walls and the treatment is labeled "latB"
-## motive_data_box \%>\%
+## 0.5m away from the front and lateral walls and the treatment is labeled
+## "latB".
+motive_data_box \%>\%
 insert_treatments(pos_wall = 0.5,
                   neg_wall = 0.5,
                   front_wall = 0.5,
