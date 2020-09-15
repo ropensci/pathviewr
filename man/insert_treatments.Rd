@@ -74,7 +74,7 @@ All length measurements reported in meters.
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
 
-## Clean data up to and including get_full_trajectories()
+  ## Clean data up to and including get_full_trajectories()
 motive_data_full <-
  motive_data \%>\%
  relabel_viewr_axes() \%>\%
@@ -101,11 +101,11 @@ insert_treatments(vertex_height = -0.40,
 ## For an experiment using the box-shaped configuration where the origin lies
 ## 0.5m away from the front and lateral walls and the treatment is labeled
 ## "latB".
-motive_data_box \%>\%
-insert_treatments(pos_wall = 0.5,
-                  neg_wall = 0.5,
-                  front_wall = 0.5,
-                  treatment = "latB")
+#motive_data_box \%>\%
+#insert_treatments(pos_wall = 0.5,
+#                  neg_wall = 0.5,
+#                  front_wall = 0.5,
+#                  treatment = "latB")
 }
 \author{
 Eric R. Press
