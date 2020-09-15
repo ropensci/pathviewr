@@ -1,12 +1,11 @@
 Package: pathviewR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Wrangle, Analyze, and Visualize Animal Movement Data
+Version: 0.9.0.9000
 Authors@R: 
     c(person(given = "Melissa S.", 
              family = "Armstrong",
              role = "aut",
-             email = "FILLME@EMAIL.DOMAIN",
-             comment = c(ORCID = "XXXX-XXXX-XXXX-XXXX")), 
+             email = "melissa.armstrong@gmail.com"), 
       person(given = "Vikram B.",
              family = "Baliga", 
              role = c("aut", "cre"),
@@ -18,7 +17,7 @@ Authors@R:
              email = "epress12@gmail.com",
              comment = c(ORCID = "0000-0002-1944-3755"))
       )
-Description: What the package does (one paragraph).
+Description: This package offers tools to import, clean, and visualize animal movement data from Optitrack's Motive, from Flydra, or from another source. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use animal position to estimate perception of visual stimuli. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

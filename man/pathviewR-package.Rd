@@ -4,9 +4,9 @@
 \name{pathviewR-package}
 \alias{pathviewR}
 \alias{pathviewR-package}
-\title{pathviewR: What the Package Does (One Line, Title Case)}
+\title{pathviewR: Wrangle, Analyze, and Visualize Animal Movement Data}
 \description{
-What the package does (one paragraph).
+This package offers tools to import, clean, and visualize animal movement data from Optitrack's Motive, from Flydra, or from another source. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use animal position to estimate perception of visual stimuli.
 }
 \details{
 Description of package TBD
@@ -24,7 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Melissa S. Armstrong \email{FILLME@EMAIL.DOMAIN} (\href{https://orcid.org/XXXX-XXXX-XXXX-XXXX}{ORCID})
+  \item Melissa S. Armstrong \email{melissa.armstrong@gmail.com}
   \item Eric R. Press \email{epress12@gmail.com} (\href{https://orcid.org/0000-0002-1944-3755}{ORCID})
 }
 
