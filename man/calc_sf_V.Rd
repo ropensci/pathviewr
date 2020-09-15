@@ -29,7 +29,7 @@ stimuli presented on the negative side of the tunnel
 }
 \value{
 A tibble or data.frame with added variables for
-\code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1˚ of visual
+\code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg of visual
 angle.
 }
 \description{
