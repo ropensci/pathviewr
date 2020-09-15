@@ -24,7 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Melissa S. Armstrong \email{melissa.armstrong@gmail.com}
+  \item Melissa S. Armstrong \email{melissa.armstrong@gmail.com} (\href{https://orcid.org/0000-0002-3059-0094}{ORCID})
   \item Eric R. Press \email{epress12@gmail.com} (\href{https://orcid.org/0000-0002-1944-3755}{ORCID})
 }
 
