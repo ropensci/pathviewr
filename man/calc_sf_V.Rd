@@ -39,7 +39,7 @@ A tibble or data.frame with added variables for
 angle.
 }
 \description{
-Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
+Based on rigid body, i.e animal head positions in a V-shaped tunnel,
 \code{calc_sf_V()} calculates how the animal perceives visual stimuli
 in terms of its spatial frequency modulated by distance to the stimulus.
 }
@@ -53,8 +53,7 @@ thereby minimizes spatial frequencies.
 }
 \seealso{
 Other optic flow functions: 
-\code{\link{calc_sf_box}()},
-\code{\link{calc_vis_angle}()}
+\code{\link{calc_sf_box}()}
 }
 \author{
 Eric R. Press

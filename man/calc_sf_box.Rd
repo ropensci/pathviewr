@@ -31,8 +31,7 @@ thereby minimizes spatial frequencies.
 }
 \seealso{
 Other optic flow functions: 
-\code{\link{calc_sf_V}()},
-\code{\link{calc_vis_angle}()}
+\code{\link{calc_sf_V}()}
 }
 \author{
 Eric R. Press

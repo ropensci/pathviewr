@@ -12,7 +12,14 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewR/actions)
 <!-- badges: end -->
 
-The goal of pathviewR is to …
+This package offers tools to import, clean, and visualize animal
+movement data from Optitrack’s Motive, from Flydra, or from another
+source. We provide functions to remove artifacts, standardize tunnel
+position and tunnel axes, select a region of interest, isolate specific
+trajectories, fill gaps in trajectory data, and calculate 3D and
+per-axis velocity. For experiments of visual guidance, we also provide
+functions that use animal position to estimate perception of visual
+stimuli.
 
 ## Installation
 

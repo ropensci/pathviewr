@@ -617,76 +617,67 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 }
 
 
-#########################        calc_vis_angle       ##########################
+#########################        calc_vis_angle_V       ########################
 
-#' Estimate visual angles in a V shaped tunnel
+#' Estimate visual angles in a V-shaped tunnel
 #'
 #' Based on rigid body, i.e animal head positions in a V-shaped tunnel,
-#' \code{calc_vis_angle()} calculates the visual angles created by lateral
+#' \code{calc_vis_angle_V()} calculates the visual angles created by lateral
 #' visual stimuli.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param vertex_angle The angle (in degrees) subtended by a vertical axis and
-#' the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
-#' \code{vertex_angle)} defaults to 45.
-#' @param gnd_plane The vertical distance (in meters) between the bottom of the
-#' "V" and the horizontal plane through the origin (0,0,0).
-#' @param stim_param_pos The length (in meters) of the visual stimulus presented
-#' on the positive side of the tunnel (i.e. \code{position_width >= 0}). For
-#' example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}
-#' @param stim_param_neg The same convention as \code{stim_param_pos} but for
-#' stimuli presented on the negative side of the tunnel
-#' (i.e. \code{position_width < 0}).
-#' @param simplify_output If TRUE, the returned object includes minimum distance
-#' as well as the visual angles (in degrees) to either side of the
-#' tunnel. If FALSE, the returned object includes all variables internal to the
-#' calculation.
+#'   \code{pathviewR_steps} that includes \code{"viewr"} and
+#'   \code{treatments_added}.
+#' @param simplify_output If TRUE, the returned object includes the minimum
+#'   distance between the subject and the lateral walls as well as the visual
+#'   angles (in degrees) to those points on the walls. If FALSE, the returned
+#'   object includes all variables internal to the calculation.
 #'
-#' @details \code{cal_vis_angle} assumes fixed gaze at the point on the
-#' either side of the tunnel that minimizes the distance to visual stimuli and
-#' thereby maximizes visual angles.
+#' @details \code{cal_vis_angle_V} assumes the subject's gaze is fixed at the
+#'   point on the either side of the tunnel that minimizes the distance to
+#'   visual stimuli and therefore maximizes visual angles. All length
+#'   measurements are reported in meters.
 #'
 #' @return A tibble or data.frame with added variables for
-#' \code{vis_angle_pos_deg} and \code{vis_angle_neg_deg} reported in degrees.
+#'   \code{height_2_vertex}, \code{height_2_screen}, \code{width_2_screen_pos},
+#'   \code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
+#'   \code{bound_pos}, \code{bound_neg}, \code{vis_angle_pos_rad},
+#'   \code{vis_angle_neg_rad}, \code{vis_angle_pos_deg},
+#'   \code{vis_angle_neg_deg}
 #'
 #' @author Eric R. Press
 #'
-#' @family optic flow functions
+#' @family visual perception functions
 #'
 #' @examples
 #'
 #' @export
 
-
-## Assuming gaze is fixed at the point on each screen such that the axis of gaze
-## is orthogonal to the plane of each screen. This function minimizes the
-## distance to the screen closer to the bird and therefore maximizes the visual
-## angle calculated for the closer screen.
-
-calc_vis_angle <- function(obj_name,
-                           gnd_plane,
-                           stim_param_pos,
-                           stim_param_neg,
-                           vertex_angle = 45,
-                           simplify_output = FALSE){
+calc_vis_angle_V <- function(obj_name,
+                             simplify_output = FALSE){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
+  ## Check that insert_treatments() has been run
+  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+    stop("Please run insert_treatments() prior to use")
+  }
+
   ## Translate vertex_angle from degrees to radians for trig functions
-  vertex_angle <- deg_2_rad(vertex_angle)
+  obj_name$vertex_angle <- deg_2_rad(obj_name$vertex_angle)
 
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
 
   ## Introduce variables for height_2_vertex and height_2_screen
-
-  obj_name$height_2_vertex <- gnd_plane + obj_name$position_height
-  obj_name$height_2_screen <- obj_name$height_2_vertex -
-    (abs(obj_name$position_width) / tan(vertex_angle))
+  obj_name$height_2_vertex <-
+    abs(obj_name$vertex_height) + obj_name$position_height
+  obj_name$height_2_screen <-
+    obj_name$height_2_vertex -
+    (abs(obj_name$position_width) / tan(obj_name$vertex_angle))
 
 
   ## Introduce variables for width_2_screen on positive and negative sides
@@ -695,35 +686,36 @@ calc_vis_angle <- function(obj_name,
   ## either screen.
   obj_name$width_2_screen_pos <-
     ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
-           obj_name$height_2_screen * tan(vertex_angle), # TRUE
-           (obj_name$height_2_screen * tan(vertex_angle)) +
+           obj_name$height_2_screen * tan(obj_name$vertex_angle), # TRUE
+           (obj_name$height_2_screen * tan(obj_name$vertex_angle)) +
              (2 * abs(obj_name$position_width))) # FALSE
 
   obj_name$width_2_screen_neg <-
     ifelse(obj_name$position_width < 0, # if in negative side of tunnel
-           obj_name$height_2_screen * tan(vertex_angle), # TRUE
-           (obj_name$height_2_screen * tan(vertex_angle)) +
+           obj_name$height_2_screen * tan(obj_name$vertex_angle), # TRUE
+           (obj_name$height_2_screen * tan(obj_name$vertex_angle)) +
              (2 * abs(obj_name$position_width))) # FALSE
 
   ## Introduce variable min_dist on positive and negative sides of the
   ## tunnel. min_dist refers to the minimum distance between the bird and either
   ## screen (axis of gaze is orthogonal to plane of each screen)
   obj_name$min_dist_pos <-
-    obj_name$width_2_screen_pos * sin((pi/2) - vertex_angle)
+    obj_name$width_2_screen_pos * sin((pi/2) - obj_name$vertex_angle)
   # min_dist to positive screen
-
   obj_name$min_dist_neg <-
-    obj_name$width_2_screen_neg * sin((pi/2) - vertex_angle)
+    obj_name$width_2_screen_neg * sin((pi/2) - obj_name$vertex_angle)
   # min_dist to negative screen
 
 
-  ## When the bird is outside the boundaries created by orthogonal planes to
-  ## each screen, erroneous visual angles are calculated.
+  ## When the subject is outside the boundaries created by orthogonal planes to
+  ## each wall, erroneous visual angles are calculated.
   ## Therefore we must adjust min_dist values according to position_width
 
-  ## create variable holding the boundary values for each observation
-  obj_name$bound_pos <- obj_name$height_2_vertex * tan(pi/2 - vertex_angle)
-  obj_name$bound_neg <- obj_name$height_2_vertex * -tan(pi/2 - vertex_angle)
+  ## Create variable holding the boundary values for each observation
+  obj_name$bound_pos <-
+    obj_name$height_2_vertex * tan(pi/2 - obj_name$vertex_angle)
+  obj_name$bound_neg <-
+    obj_name$height_2_vertex * -tan(pi/2 - obj_name$vertex_angle)
 
 
   obj_name$min_dist_pos <- # overwrite min_dist_pos
@@ -747,15 +739,15 @@ calc_vis_angle <- function(obj_name,
 
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
+  obj_name$vis_angle_pos_rad <-
+    2*atan(obj_name$stim_param_pos/(2*obj_name$min_dist_pos)) # radians
+  obj_name$vis_angle_neg_rad <-
+    2*atan(obj_name$stim_param_neg/(2*obj_name$min_dist_neg)) # radians
 
-  obj_name$vis_angle_pos_rad <- 2*atan(stim_param_pos/(2*obj_name$min_dist_pos))
-    # radians
-  obj_name$vis_angle_neg_rad <- 2*atan(stim_param_neg/(2*obj_name$min_dist_neg))
-    # radians
   obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
   obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
 
-  ## create simple data frame by adding min_dist and visual angles in degrees
+  ## simplify = TRUE output
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
   obj_simplify$min_dist_neg <- obj_name$min_dist_neg
   obj_simplify$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad)
@@ -770,13 +762,72 @@ calc_vis_angle <- function(obj_name,
 }
 
 
+#########################        calc_vis_angle_box       ##########################
+
+#' Estimate visual angles in a box-shaped tunnel
+#'
+#' Based on rigid body, i.e animal head positions in a b-shaped tunnel,
+#' \code{calc_vis_angle_box()} calculates the visual angles created by lateral
+#' visual stimuli.
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"} and
+#'   \code{treatments_added}.
+#'
+#' @details \code{cal_vis_angle_box} assumes fixed gaze at the point on the
+#'   either side of the tunnel that minimizes the distance to visual stimuli and
+#'   thereby maximizes visual angles. All length measurements reported in
+#'   meters.
+#'
+#' @return A tibble or data.frame with added variables for \code{min_dist_pos},
+#'   \code{min_dist_neg}, \code{vis_angle_pos_rad}, \code{vis_angle_neg_rad},
+#'   \code{vis_angle_pos_deg}, and \code{vis_angle_neg_deg}.
+#'
+#' @author Eric R. Press
+#'
+#' @family visual perception functions
+#'
+#' @examples
+#'
+#' @export
+
+
+calc_vis_angle_box <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that insert_treatments() has been run
+  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+    stop("Please run insert_treatments() prior to use")
+  }
+
+  ## Calculate minimum distance to each screen
+  obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
+  obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
+
+
+  ## Calculate visual angles (radians and degrees) using distance to
+  ## positive and negative screens. Add these variables into the dataframe.
+  obj_name$vis_angle_pos_rad <-
+    2*atan(obj_name$stim_param_pos / (2*obj_name$min_dist_pos)) # radians
+  obj_name$vis_angle_neg_rad <-
+    2*atan(obj_name$stim_param_neg / (2*obj_name$min_dist_neg)) # radians
+
+  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
+  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
+
+  return(obj_name)
+}
 
 
 ###############################    calc_sf_V     ###############################
 
 #' Estimate spatial frequency of visual stimuli in V-shaped tunnel
 #'
-#' Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
+#' Based on rigid body, i.e animal head positions in a V-shaped tunnel,
 #' \code{calc_sf_V()} calculates how the animal perceives visual stimuli
 #' in terms of its spatial frequency modulated by distance to the stimulus.
 #'
