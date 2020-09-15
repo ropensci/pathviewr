@@ -295,6 +295,8 @@ plot_viewr_trajectories <- function(obj_name,
 
 ####################### plot by subject and treatment ##########################
 ## Generate plots of all trajectories, per subject, per treatment
+## to do: make color by treatment an option
+## remove saving options?
 
   plot_by_subject <- function(obj_name,
                               plot_name,
