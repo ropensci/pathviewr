@@ -4,20 +4,17 @@
 \alias{calc_vis_angle_box}
 \title{Estimate visual angles in a box-shaped tunnel}
 \usage{
-calc_vis_angle_box(obj_name, simplify_output = FALSE)
+calc_vis_angle_box(obj_name)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
-
-\item{simplify_output}{If TRUE, the returned object includes minimum distance
-to lateral walls as well as the visual angles (in degrees) to those points on
-the walls. If FALSE, the returned object includes all variables internal
-to the calculation.}
+\code{pathviewR_steps} that includes \code{"viewr"} and
+\code{treatments_added}.}
 }
 \value{
-A tibble or data.frame with added variables for
-\code{vis_angle_pos_deg} and \code{vis_angle_neg_deg} reported in degrees.
+A tibble or data.frame with added variables for \code{min_dist_pos},
+\code{min_dist_neg}, \code{vis_angle_pos_rad}, \code{vis_angle_neg_rad},
+\code{vis_angle_pos_deg}, and \code{vis_angle_neg_deg}.
 }
 \description{
 Based on rigid body, i.e animal head positions in a b-shaped tunnel,
@@ -27,14 +24,15 @@ visual stimuli.
 \details{
 \code{cal_vis_angle_box} assumes fixed gaze at the point on the
 either side of the tunnel that minimizes the distance to visual stimuli and
-thereby maximizes visual angles.
-All legth measurements reported in meters.
+thereby maximizes visual angles. All length measurements reported in
+meters.
 }
 \examples{
 
 }
 \seealso{
 Other visual perception functions: 
+\code{\link{calc_sf_V}()},
 \code{\link{calc_vis_angle_V}()}
 }
 \author{

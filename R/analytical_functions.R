@@ -857,7 +857,7 @@ calc_vis_angle_box <- function(obj_name){
 #'
 #' @author Eric R. Press
 #'
-#' @family optic flow functions
+#' @family visual perception functions
 #'
 #' @examples
 #'
@@ -865,9 +865,6 @@ calc_vis_angle_box <- function(obj_name){
 
 
 calc_sf_V <- function(obj_name,
-                      vertex_angle,
-                      stim_param_pos,
-                      stim_param_neg,
                       simplify_output = FALSE) {
 
   ## Check that it's a viewr object

@@ -29,10 +29,6 @@ thereby minimizes spatial frequencies.
 \examples{
 
 }
-\seealso{
-Other optic flow functions: 
-\code{\link{calc_sf_V}()}
-}
 \author{
 Eric R. Press
 }

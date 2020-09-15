@@ -4,17 +4,16 @@
 \alias{calc_sf_V}
 \title{Estimate spatial frequency of visual stimuli in V-shaped tunnel}
 \usage{
-calc_sf_V(
-  obj_name,
-  vertex_angle,
-  stim_param_pos,
-  stim_param_neg,
-  simplify_output = FALSE
-)
+calc_sf_V(obj_name, simplify_output = FALSE)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
+
+\item{simplify_output}{If TRUE, the returned object includes minimum distance
+as well as the spatial frequencies perceived on either side of the
+tunnel. If FALSE, the returned object includes all variables internal to the
+calculation.}
 
 \item{vertex_angle}{The angle (in degrees) subtended by a vertical axis and
 the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
@@ -27,11 +26,6 @@ example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}}
 \item{stim_param_neg}{The same convention as \code{stim_param_pos} but for
 stimuli presented on the negative side of the tunnel
 (i.e. \code{position_width < 0}).}
-
-\item{simplify_output}{If TRUE, the returned object includes minimum distance
-as well as the spatial frequencies perceived on either side of the
-tunnel. If FALSE, the returned object includes all variables internal to the
-calculation.}
 }
 \value{
 A tibble or data.frame with added variables for
@@ -39,7 +33,7 @@ A tibble or data.frame with added variables for
 angle.
 }
 \description{
-Based on rigid body, i.e animal head positions in a "V" shaped tunnel,
+Based on rigid body, i.e animal head positions in a V-shaped tunnel,
 \code{calc_sf_V()} calculates how the animal perceives visual stimuli
 in terms of its spatial frequency modulated by distance to the stimulus.
 }
@@ -52,10 +46,11 @@ thereby minimizes spatial frequencies.
 
 }
 \seealso{
-Other optic flow functions: 
-\code{\link{calc_sf_box}()}
+Other visual perception functions: 
+\code{\link{calc_vis_angle_V}()},
+\code{\link{calc_vis_angle_box}()}
 }
 \author{
 Eric R. Press
 }
-\concept{optic flow functions}
+\concept{visual perception functions}
