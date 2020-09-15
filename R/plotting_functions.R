@@ -293,17 +293,32 @@ plot_viewr_trajectories <- function(obj_name,
 }
 
 
-############################### plot by bird ###############################
-## Generate plots of each individual--hoping to loop to auto go through all birds in each treatment...
+####################### plot by subject and treatment ##########################
+## Generate plots of all trajectories, per subject, per treatment
 
-purrplot_by_bird <- function(obj_name,
-                             treatment,
-                             ...){
+  plot_by_subject <- function(obj_name,
+                              plot_name,
+                              save_location,
+                              ...) {
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
   #set axes limits based on data
-  height_limits <- c(max(abs(range(obj_name$position_height)))*-1,
-                     max(abs(range(obj_name$position_height))))
-  width_limits <- c(max(abs(range(obj_name$position_width)))*-1,
-                    max(abs(range(obj_name$position_width))))
+  height_limits <- c(max(abs(range(
+    obj_name$position_height
+  ))) * -1,
+  max(abs(range(
+    obj_name$position_height
+  ))))
+  width_limits <- c(max(abs(range(
+    obj_name$position_width
+  ))) * -1,
+  max(abs(range(
+    obj_name$position_width
+  ))))
 
   #for top view (change in lateral position)
   top_view <- obj_name %>%
@@ -312,9 +327,11 @@ purrplot_by_bird <- function(obj_name,
     dplyr::mutate(
       paths = purrr::map(
         data,
-        ~ ggplot2::ggplot(., aes(position_length,
-                                 position_width,
-                                 colour = treatment)) +
+        ~ ggplot2::ggplot(., aes(
+          position_length,
+          position_width,
+          colour = treatment
+        )) +
           geom_point(alpha = .1, show.legend = FALSE) +
           ylim(width_limits) +
           geom_hline(yintercept = 0, linetype = "dotted") +
@@ -345,8 +362,8 @@ purrplot_by_bird <- function(obj_name,
 
   birdseye_view <- cowplot::plot_grid(plotlist = top_all_plots[[3]])
 
-  ggplot2::ggsave(paste0(treatment, "_", "topview.png"), birdseye_view,
-                 path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
+  ggplot2::ggsave(paste0(plot_treatment, "_", "topview.png"), birdseye_view,
+                   path = save_location)
 
   #for elev view (change in height):
   elev_view <- obj_name %>%
@@ -387,11 +404,7 @@ purrplot_by_bird <- function(obj_name,
 
   side_view <- cowplot::plot_grid(plotlist = elev_all_plots[[3]])
 
-  ggplot2::ggsave(paste0(treatment, "_", "elevview.png"), side_view,
-                  path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
-}
+  ggplot2::ggsave(paste0(plot_name, "_", "elevview.png"), side_view,
+                   path = save_location)
 
-#to save each plot separately:
-#AB_top %>%
-#  select(filename, paths) %>%
-#  pwalk(ggsave, path = "C:/Users/Melis/Documents/GoogleDrive/Altshuler/thesis/ZFVG/R plots/bybird")
+}
