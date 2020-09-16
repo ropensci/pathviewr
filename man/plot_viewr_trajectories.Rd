@@ -50,6 +50,7 @@ plot_viewr_trajectories(motive_full, multi_plot = TRUE)
 }
 \seealso{
 Other plotting functions: 
+\code{\link{plot_by_subject}()},
 \code{\link{visualize_frame_gap_choice}()}
 }
 \author{
