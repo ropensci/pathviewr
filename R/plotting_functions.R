@@ -386,8 +386,7 @@ plot_by_subject <- function(obj_name,
             geom_point(alpha = .1, show.legend = FALSE) +
             ylim(width_limits) +
             geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1) +
-            theme_tufte()
+            coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
@@ -399,8 +398,7 @@ plot_by_subject <- function(obj_name,
             ) +
             xlim(width_limits) +
             geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip() +
-            theme_tufte()
+            coord_flip()
         )
       )
 
@@ -434,8 +432,7 @@ plot_by_subject <- function(obj_name,
             geom_point(alpha = .1, show.legend = FALSE) +
             ylim(height_limits) +
             geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1) +
-            theme_tufte()
+            coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
@@ -447,8 +444,7 @@ plot_by_subject <- function(obj_name,
             ) +
             xlim(height_limits) +
             geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip() +
-            theme_tufte()
+            coord_flip()
         )
       )
 
@@ -486,8 +482,7 @@ plot_by_subject <- function(obj_name,
             geom_point(alpha = .1, show.legend = FALSE) +
             ylim(width_limits) +
             geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1) +
-            theme_tufte()
+            coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
@@ -500,8 +495,7 @@ plot_by_subject <- function(obj_name,
             ) +
             xlim(width_limits) +
             geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip() +
-            theme_tufte()
+            coord_flip()
         )
       )
 
@@ -535,8 +529,7 @@ plot_by_subject <- function(obj_name,
             geom_point(alpha = .1, show.legend = FALSE) +
             ylim(height_limits) +
             geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1) +
-            theme_tufte()
+            coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
@@ -548,8 +541,7 @@ plot_by_subject <- function(obj_name,
             ) +
             xlim(height_limits) +
             geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip() +
-            theme_tufte()
+            coord_flip()
         )
       )
 
