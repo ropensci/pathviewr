@@ -137,7 +137,14 @@ during a treatment, trial, or session." />
 during a treatment, trial, or session.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rm_by_trajnum</span>(<span class='kw'>obj_name</span>, trajnum = <span class='fl'>5</span>, <span class='kw'>stim1</span>, <span class='kw'>stim2</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rm_by_trajnum</span>(
+  <span class='kw'>obj_name</span>,
+  trajnum = <span class='fl'>5</span>,
+  mirrored = <span class='fl'>FALSE</span>,
+  <span class='kw'>treatment1</span>,
+  <span class='kw'>treatment2</span>,
+  <span class='kw'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,17 +160,25 @@ predefined (i.e. via <code><a href='separate_trajectories.html'>separate_traject
       <td><p>Minimum number of trajectories; must be numeric.</p></td>
     </tr>
     <tr>
-      <th>stim1</th>
-      <td><p>The treatment or session during which the threshold must be met.</p></td>
+      <th>mirrored</th>
+      <td><p>Does the data have mirrored treatments? If so, arguments
+<code>treatment1</code> and <code>treatment2</code> must also be provided, indicating
+the names of two mirrored treatments, both of which must meet the trajectory
+threshold specified in <code>trajnum</code>. Default is FALSE.</p></td>
     </tr>
     <tr>
-      <th>stim2</th>
-      <td><p>A second treatment or session during which the threshold must be
-met.</p></td>
+      <th>treatment1</th>
+      <td><p>The first treatment or session during which the threshold
+must be met.</p></td>
+    </tr>
+    <tr>
+      <th>treatment2</th>
+      <td><p>A second treatment or session during which the threshold
+must be met.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to/from other pathviewR functions</p></td>
+      <td><p>Additional arguments passed to/from other pathviewR functions.</p></td>
     </tr>
     </table>
 
@@ -177,13 +192,16 @@ trajectories according to the <code>trajnum</code> parameter.</p>
 
     <p>Depending on analysis needs, users may want to remove subjects that
 have not completed a certain number of trajectories during a treatment,
-trial, or session. The <code>stim1</code> and <code>stim2</code> parameters allow users
-to define during which treatments or sessions subjects must complete
-trajectories and <code>trajnum</code> is the threshold number that must be
-reached. For example, setting <code>stim1 = "latA"</code>, <code>stim2 = "latB"</code>
-and <code>trajnum = 5</code> will remove subjects that have fewer than 5
-trajectories during the <code>"latA"</code> treatment AND the <code>"latB"</code>
-treatment. <code>stim1</code> and <code>stim2</code> should be levels within a column
+trial, or session. If <code>mirrored = FALSE</code>, no treatment information is
+necessary and subjects will be removed based on total number of trajectories
+as specified in <code>trajnum</code>. If <code>mirrored = TRUE</code>, the
+<code>treatment1</code> and <code>treatment2</code> parameters will allow users to
+define during which treatments or sessions subjects must reach threshold as
+specified in the <code>trajnum</code> argument. For example, if <code>mirrored =
+ TRUE</code>, setting <code>treatment1 = "latA"</code>, <code>treatment2 = "latB"</code> and
+<code>trajnum = 5</code> will remove subjects that have fewer than 5 trajectories
+during the <code>"latA"</code> treatment AND the <code>"latB"</code> treatment.
+<code>treatment1</code> and <code>treatment2</code> should be levels within a column
 named <code>"treatment"</code>.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -195,7 +213,7 @@ named <code>"treatment"</code>.</p>
 <span class='co'>## Import the example Motive data included in the package</span>
 <span class='kw'>motive_data</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                             package = <span class='st'>'pathviewR'</span>))
+                              package = <span class='st'>'pathviewR'</span>))
 
 <span class='co'>## Clean, isolate, and label trajectories</span>
 <span class='kw'>motive_full</span> <span class='op'>&lt;-</span>
@@ -204,15 +222,27 @@ named <code>"treatment"</code>.</p>
               max_frame_gap = <span class='st'>"autodetect"</span>,
               span = <span class='fl'>0.95</span>)
 </div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
- <span class='co'>## Add treatment information</span>
-   <span class='kw'>motive_full</span><span class='op'>$</span><span class='kw'>treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>100</span>),
-   <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>149</span>))
+<span class='co'>##Remove subjects that have no completed at least 10 trajectories:</span>
+<span class='kw'>motive_rm_unmirrored</span> <span class='op'>&lt;-</span>
+  <span class='kw'>motive_full</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rm_by_trajnum</span>(trajnum = <span class='fl'>150</span>)
+</div><div class='output co'>#&gt; <span class='message'>Joining, by = "subject"</span></div><div class='input'>
+<span class='co'>## Add treatment information</span>
+<span class='kw'>motive_full</span><span class='op'>$</span><span class='kw'>treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>149</span>))
 
 <span class='co'>## Remove subjects by that have not completed at least 10 trajectories in</span>
 <span class='co'>## both treatments</span>
-<span class='kw'>motive_removed</span> <span class='op'>&lt;-</span>
-<span class='kw'>motive_full</span> <span class='op'>%&gt;%</span>
-<span class='fu'>rm_by_trajnum</span>(trajnum = <span class='fl'>10</span>, stim1 = <span class='st'>"latA"</span>, stim2 = <span class='st'>"latB"</span>)
+<span class='kw'>motive_rm_mirrored</span> <span class='op'>&lt;-</span>
+  <span class='kw'>motive_full</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rm_by_trajnum</span>(
+    trajnum = <span class='fl'>10</span>,
+    mirrored = <span class='fl'>TRUE</span>,
+    treatment1 = <span class='st'>"latA"</span>,
+    treatment2 = <span class='st'>"latB"</span>
+  )
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "subject"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
