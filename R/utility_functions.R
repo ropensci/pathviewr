@@ -2498,16 +2498,6 @@ rm_by_trajnum <- function(obj_name,
                           treatment2,
                           ...) {
 
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Check that get_full_trajectories has been run prior to use
-  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
-    stop("Run get_full_trajectories() prior to use")
-  }
-
   #no treatment:
   if (mirrored == FALSE){
     rm_bytraj <-
