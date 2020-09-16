@@ -18,7 +18,14 @@ Authors@R:
              email = "epress12@gmail.com",
              comment = c(ORCID = "0000-0002-1944-3755"))
       )
-Description: This package offers tools to import, clean, and visualize animal movement data from Optitrack's Motive, from Flydra, or from another source. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use animal position to estimate perception of visual stimuli. 
+Description: This package offers tools to import, clean, and visualize 
+    animal movement data from Optitrack's Motive, from Flydra, or from 
+    another source. We provide functions to remove artifacts, standardize
+    tunnel position and tunnel axes, select a region of interest, isolate 
+    specific trajectories, fill gaps in trajectory data, and calculate 3D
+    and per-axis velocity. For experiments of visual guidance, we also 
+    provide functions that use animal position to estimate perception of
+    visual stimuli. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
