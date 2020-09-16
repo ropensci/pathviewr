@@ -36,6 +36,7 @@ treatment in both the trajectory plots and the density plots.
 }
 \examples{
 library(pathviewR)
+library(tidyverse)
 
 ## Import the example Motive data included in the package
 motive_data <-
