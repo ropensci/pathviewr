@@ -1027,12 +1027,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 Please use relabel_viewr_axes() to rename variables as necessary.")
   }
 
-
-  ## ADD CHECK THAT perch1position length < perch2 position_length; otherwise,
-  ## the rotation will apply to a mirror-image of the tunnel
-
   ## Tunnels are standardized via information from perch positions. We think
-  ## that the most reasonable esimate for perches' positions are their median
+  ## that the most reasonable estimate for perches' positions are their median
   ## values. So the next few blocks of code will determine the median positions
   ## of each perch and then estimate the centerpoint of the tunnel to be between
   ## the two perches (i.e. mean of each set of perch positions).
@@ -1051,6 +1047,34 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
                      med_width = median(position_width),
                      med_height = median(position_height)) %>%
     as.data.frame()
+
+  ## Check that perch1_position_length < perch2_position_length; otherwise,
+  ## the rotation will apply to a mirror-image of the tunnel
+  if (landmark1_med_pos$med_length > landmark2_med_pos$med_length) {
+    ## switch the identities of the landmarks
+    rename2 <- landmark_one
+    landmark_one <- landmark_two
+    landmark_two <- rename2
+
+    ## recompute above metrics
+    landmark1_med_pos <- obj_name %>%
+      dplyr::filter(subject == landmark_one) %>%
+      dplyr::summarise(
+        med_length = median(position_length),
+        med_width = median(position_width),
+        med_height = median(position_height)
+      ) %>%
+      as.data.frame()
+
+    landmark2_med_pos <- obj_name %>%
+      dplyr::filter(subject == landmark_two) %>%
+      dplyr::summarise(
+        med_length = median(position_length),
+        med_width = median(position_width),
+        med_height = median(position_height)
+      ) %>%
+      as.data.frame()
+  }
 
   ## Now approximate the centerpoint of the tunnel
   tunnel_centerpoint <-

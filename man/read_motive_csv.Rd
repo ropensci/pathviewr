@@ -66,7 +66,6 @@ names(motive_data)
 ## A variety of metadata are stored as attributes. Of particular interest:
 attr(motive_data, "pathviewR_steps")
 attr(motive_data, "file_id")
-attr(motive_data, "file_mtime")
 attr(motive_data, "header")
 attr(motive_data, "Motive_IDs")
 attr(motive_data, "subject_names_full")
