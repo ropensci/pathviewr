@@ -43,6 +43,7 @@ motive_batch_imports <-
 ## via clean_viewr_batch()
 motive_batch_cleaned <-
   clean_viewr_batch(
+    file_announce = TRUE,
     motive_batch_imports,
     desired_percent = 50,
     max_frame_gap = "autodetect",

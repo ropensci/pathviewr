@@ -235,11 +235,12 @@ and/or refer to the corresponding cleaning functions themselves.</p>
 <span class='co'>## via clean_viewr_batch()</span>
 <span class='no'>motive_batch_cleaned</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='clean_viewr_batch.html'>clean_viewr_batch</a></span>(
+    <span class='kw'>file_announce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='no'>motive_batch_imports</span>,
     <span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>,
     <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
     <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.95</span>
-  )</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+  )</div><div class='output co'>#&gt; <span class='message'>File 1 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 2 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 3 has been cleaned successfully.</span></div><div class='input'>
 <span class='co'>## Alternatively, use import_and_clean_batch() to</span>
 <span class='co'>## combine import with cleaning on a batch of files</span>
 <span class='no'>motive_batch_import_and_clean</span> <span class='kw'>&lt;-</span>
@@ -251,7 +252,7 @@ and/or refer to the corresponding cleaning functions themselves.</p>
     <span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>,
     <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
     <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.95</span>
-  )</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+  )</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='input'>
 <span class='co'>## Each of these lists of objects can be bound into</span>
 <span class='co'>## one viewr object (i.e. one tibble) via</span>
 <span class='co'>## bind_viewr_objects()</span>

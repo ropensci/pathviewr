@@ -54,6 +54,7 @@
 #' ## via clean_viewr_batch()
 #' motive_batch_cleaned <-
 #'   clean_viewr_batch(
+#'     file_announce = TRUE,
 #'     motive_batch_imports,
 #'     desired_percent = 50,
 #'     max_frame_gap = "autodetect",
@@ -139,6 +140,9 @@ import_batch <- function(file_path_list,
 #'
 #' @param obj_list A list of viewr objects (i.e. a list of tibbles that each
 #'   have attribute \code{pathviewR_steps} that includes \code{"viewr"})
+#' @param file_announce Should the function report each time a file is
+#'   processed? Default FALSE; if TRUE, a message will appear in the console
+#'   each time a file has been cleaned successfully.
 #' @param ... Arguments to be passed in that specify how this function should
 #'   clean files.
 #'
@@ -161,13 +165,24 @@ import_batch <- function(file_path_list,
 #' @inherit import_batch examples
 
 clean_viewr_batch <- function(obj_list,
+                              file_announce = FALSE,
                               ...) {
 
   if (!"list" %in% class(obj_list)){
     stop("obj_list must be a list of file locations")
   }
 
-  cleaned_list <- lapply(obj_list, FUN = clean_viewr, ...)
+  cleaned_list <- NULL
+  for (i in seq_len(length(obj_list))){
+    cleaned_list[[i]] <-
+      obj_list[[i]] %>%
+      clean_viewr()
+    if (file_announce == TRUE){
+      message("File ",i," has been cleaned successfully.")
+    }
+    }
+
+  #cleaned_list <- lapply(obj_list, FUN = clean_viewr, ...)
 
   ## Export
   return(cleaned_list)

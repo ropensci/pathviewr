@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove subjects by trajectory number — rm_by_trajnum • pathviewR</title>
+<title>Plot trajectories and density plots of position by subject — plot_by_subject • pathviewR</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Remove subjects by trajectory number — rm_by_trajnum" />
-<meta property="og:description" content="Specify a minimum number of trajectories that each subject must complete
-during a treatment, trial, or session." />
+<meta property="og:title" content="Plot trajectories and density plots of position by subject — plot_by_subject" />
+<meta property="og:description" content="Plots all trajectories and generates density plots of position by subject
+from elevation and bird's eye views." />
 
 
 
@@ -127,54 +127,31 @@ during a treatment, trial, or session." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove subjects by trajectory number</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewR/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
-    <div class="hidden name"><code>rm_by_trajnum.Rd</code></div>
+    <h1>Plot trajectories and density plots of position by subject</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewR/blob/master/R/plotting_functions.R'><code>R/plotting_functions.R</code></a></small>
+    <div class="hidden name"><code>plot_by_subject.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Specify a minimum number of trajectories that each subject must complete
-during a treatment, trial, or session.</p>
+    <p>Plots all trajectories and generates density plots of position by subject
+from elevation and bird's eye views.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rm_by_trajnum</span>(
-  <span class='no'>obj_name</span>,
-  <span class='kw'>trajnum</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>mirrored</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>treatment1</span>,
-  <span class='no'>treatment2</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plot_by_subject</span>(<span class='no'>obj_name</span>, <span class='kw'>col_by_treat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj_name</th>
-      <td><p>The input viewr object; a tibble or data.frame with attribute
-<code>pathviewR_steps</code> that includes <code>"viewr"</code>. Trajectories must be
-predefined (i.e. via <code><a href='separate_trajectories.html'>separate_trajectories()</a></code>).</p></td>
+      <td><p>A viewr object (a tibble or data.frame with attribute
+<code>pathviewR_steps</code> that includes <code>"viewr"</code>) that has been passed
+through <code><a href='separate_trajectories.html'>separate_trajectories()</a></code> or <code><a href='get_full_trajectories.html'>get_full_trajectories()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>trajnum</th>
-      <td><p>Minimum number of trajectories; must be numeric.</p></td>
-    </tr>
-    <tr>
-      <th>mirrored</th>
-      <td><p>Does the data have mirrored treatments? If so, arguments
-<code>treatment1</code> and <code>treatment2</code> must also be provided, indicating
-the names of two mirrored treatments, both of which must meet the trajectory
-threshold specified in <code>trajnum</code>. Default is FALSE.</p></td>
-    </tr>
-    <tr>
-      <th>treatment1</th>
-      <td><p>The first treatment or session during which the threshold
-must be met.</p></td>
-    </tr>
-    <tr>
-      <th>treatment2</th>
-      <td><p>A second treatment or session during which the threshold
-must be met.</p></td>
+      <th>col_by_treat</th>
+      <td><p>If multiple treatments or sessions, color data per
+treatment or session. Treatments must be levels in a column named <code>treatment</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -184,32 +161,35 @@ must be met.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A viewr object; a tibble or data.frame with attribute
-<code>pathviewR_steps</code> that includes <code>"viewr"</code> that now has fewer
-observations (rows) as a result of removal of subjects with too few
-trajectories according to the <code>trajnum</code> parameter.</p>
+    <p>A "bird's eye view" plot and an "elevation view" plot.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Depending on analysis needs, users may want to remove subjects that
-have not completed a certain number of trajectories during a treatment,
-trial, or session. If <code>mirrored = FALSE</code>, no treatment information is
-necessary and subjects will be removed based on total number of trajectories
-as specified in <code>trajnum</code>. If <code>mirrored = TRUE</code>, the
-<code>treatment1</code> and <code>treatment2</code> parameters will allow users to
-define during which treatments or sessions subjects must reach threshold as
-specified in the <code>trajnum</code> argument. For example, if <code>mirrored =
- TRUE</code>, setting <code>treatment1 = "latA"</code>, <code>treatment2 = "latB"</code> and
-<code>trajnum = 5</code> will remove subjects that have fewer than 5 trajectories
-during the <code>"latA"</code> treatment AND the <code>"latB"</code> treatment.
-<code>treatment1</code> and <code>treatment2</code> should be levels within a column
-named <code>"treatment"</code>.</p>
+    <p>The input viewr object should have passed through
+<code><a href='separate_trajectories.html'>separate_trajectories()</a></code> or <code><a href='get_full_trajectories.html'>get_full_trajectories()</a></code>.
+Optionally, treatments should have been added as levels in a column named
+<code>treatment</code>. Two plots will be produced, one from a "bird's eye view"
+of width against length and one from an "elevation view" of height against
+length. All trajectories will be plotted on a per subject basis as well as
+density plots of width or height depending on the view. If
+<code>col_by_treat = TRUE</code>, data will be plotted by color according to
+treatment in both the trajectory plots and the density plots.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other plotting functions: 
+<code><a href='plot_viewr_trajectories.html'>plot_viewr_trajectories</a>()</code>,
+<code><a href='visualize_frame_gap_choice.html'>visualize_frame_gap_choice</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Melissa S. Armstrong</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pathviewR</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyverse</span>)</div><div class='output co'>#&gt; <span class='message'>── <span style='font-weight: bold;'>Attaching packages</span><span> ─────────────── tidyverse 1.3.0.</span><span style='color: #BB0000;'>9000</span><span> ──</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>ggplot2</span><span> 3.3.1     </span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>purrr  </span><span> 0.3.4</span>
+#&gt; <span class='message'></span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>tibble </span><span> 3.0.1     </span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>dplyr  </span><span> 1.0.0</span>
+#&gt; <span class='message'></span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>tidyr  </span><span> 1.1.0     </span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>stringr</span><span> 1.4.0</span>
+#&gt; <span class='message'></span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>readr  </span><span> 1.3.1     </span><span style='color: #00BB00;'>✓</span><span> </span><span style='color: #0000BB;'>forcats</span><span> 0.5.0</span></div><div class='output co'>#&gt; <span class='message'>── </span><span style='font-weight: bold;'>Conflicts</span><span> ─────────────────────── tidyverse_conflicts() ──</span>
+#&gt; <span class='message'></span><span style='color: #BB0000;'>x</span><span> </span><span style='color: #0000BB;'>dplyr</span><span>::</span><span style='color: #00BB00;'>filter()</span><span> masks </span><span style='color: #0000BB;'>stats</span><span>::filter()</span>
+#&gt; <span class='message'></span><span style='color: #BB0000;'>x</span><span> </span><span style='color: #0000BB;'>dplyr</span><span>::</span><span style='color: #00BB00;'>lag()</span><span>    masks </span><span style='color: #0000BB;'>stats</span><span>::lag()</span></div><div class='input'>
 <span class='co'>## Import the example Motive data included in the package</span>
 <span class='no'>motive_data</span> <span class='kw'>&lt;-</span>
   <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
@@ -221,26 +201,18 @@ named <code>"treatment"</code>.</p>
   <span class='fu'><a href='clean_viewr.html'>clean_viewr</a></span>(<span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>,
               <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
               <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.95</span>)</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
-<span class='co'>##Remove subjects that have no completed at least 10 trajectories:</span>
-<span class='no'>motive_rm_unmirrored</span> <span class='kw'>&lt;-</span>
-  <span class='no'>motive_full</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>rm_by_trajnum</span>(<span class='kw'>trajnum</span> <span class='kw'>=</span> <span class='fl'>150</span>)</div><div class='output co'>#&gt; <span class='message'>Joining, by = "subject"</span></div><div class='input'>
+<span class='co'>## Plot all trajectories by subject</span>
+<span class='no'>motive_full</span> <span class='kw'>%&gt;%</span>
+<span class='fu'>plot_by_subject</span>()</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_by_subject-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; [[2]]</div><div class='img'><img src='plot_by_subject-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'>
 <span class='co'>## Add treatment information</span>
-<span class='no'>motive_full</span>$<span class='no'>treatment</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>),
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>100</span>),
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>),
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>149</span>))
+<span class='no'>motive_full</span>$<span class='no'>treatment</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>149</span>))
 
-<span class='co'>## Remove subjects by that have not completed at least 10 trajectories in</span>
-<span class='co'>## both treatments</span>
-<span class='no'>motive_rm_mirrored</span> <span class='kw'>&lt;-</span>
-  <span class='no'>motive_full</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>rm_by_trajnum</span>(
-    <span class='kw'>trajnum</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-    <span class='kw'>mirrored</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>treatment1</span> <span class='kw'>=</span> <span class='st'>"latA"</span>,
-    <span class='kw'>treatment2</span> <span class='kw'>=</span> <span class='st'>"latB"</span>
-  )</div><div class='output co'>#&gt; <span class='message'>Joining, by = "subject"</span></div></pre>
+<span class='co'>## Plot all trajectories by subject, color by treatment</span>
+<span class='no'>motive_full</span> <span class='kw'>%&gt;%</span>
+<span class='fu'>plot_by_subject</span>(<span class='kw'>col_by_treat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_by_subject-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; [[2]]</div><div class='img'><img src='plot_by_subject-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
