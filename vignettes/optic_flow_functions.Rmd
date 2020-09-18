@@ -39,7 +39,7 @@ Let's work with an example dataset included in `pathviewR`.
 `pathviewR`'s importing and cleaning pipeline produces variables and attributes 
 required by these visual estimation functions.
 
-```{r}
+```{r motive_full}
 motive_data <-
   read_motive_csv(
     system.file("extdata", "pathviewR_motive_example_data.csv",
@@ -66,7 +66,7 @@ This experiment was performed in a V-shaped chamber in which the origin was set
 0.3855m above the vertex. The lateral walls were angled at ±45˚from the vertical 
 axis. Therefore:
 
-```{r}
+```{r insert_treatments}
 ## Eric: I am commenting this out temporarily bc it is currently causing issues
 ## when running devtools::check(). Not sure why it is failing -- perhaps the
 ## syntax needs to be edited slightly? Sorry! - VBB
