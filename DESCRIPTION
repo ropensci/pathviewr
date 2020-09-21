@@ -48,7 +48,8 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    covr
 VignetteBuilder: knitr
 URL: https://github.com/vbaliga/pathviewR
 BugReports: https://github.com/vbaliga/pathviewR/issues

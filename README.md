@@ -12,6 +12,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewR/actions)
 [![Travis build
 status](https://travis-ci.org/vbaliga/pathviewR.svg?branch=master)](https://travis-ci.org/vbaliga/pathviewR)
+[![Codecov test
+coverage](https://codecov.io/gh/vbaliga/pathviewR/branch/master/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewR?branch=master)
 <!-- badges: end -->
 
 `pathviewR` offers tools to import, clean, and visualize animal movement

@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R build status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewR/actions)
 [![Travis build status](https://travis-ci.org/vbaliga/pathviewR.svg?branch=master)](https://travis-ci.org/vbaliga/pathviewR)
+[![Codecov test coverage](https://codecov.io/gh/vbaliga/pathviewR/branch/master/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewR?branch=master)
 <!-- badges: end -->
 
 `pathviewR` offers tools to import, clean, and visualize animal movement data
