@@ -2633,7 +2633,7 @@ insert_treatments <- function(obj_name,
   }
 
   ## Check that only V-shaped OR box-shaped arguments are supplied. Most common
-  ## mistake will be supplying vertex_height AND pos_wall.
+  ## mistake could be users supplying for example: vertex_height AND pos_wall.
   if(is.numeric(vertex_height) & is.numeric(pos_wall)){
     stop("V-shaped and box-shaped arguments supplied.")
   }
