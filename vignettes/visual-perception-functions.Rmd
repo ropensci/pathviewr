@@ -118,7 +118,7 @@ motive_V_angles
 To check whether the calculations were performed correctly, visualize the results.
 
 ### **Spatial frequency**
-```{r}
+```{r motive_V_sf_pos, fig.height=7, fig.width=7}
 ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = sf_pos), shape=1, size=3) +
   coord_fixed() +
@@ -137,7 +137,7 @@ We can see that as the position of the subject is closer to the right (positive)
 
 
 A different pattern is found by visualizing the spatial frequencies observed from the left (negative) wall. 
-```{r}
+```{r motive_V_sf_neg, fig.height=7, fig.width=7}
 ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = sf_neg), shape=1, size=3) +
   coord_fixed() +
@@ -155,7 +155,7 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 
 
 ### **Visual angles**
-```{r}
+```{r motive_V_angles_pos, fig.height=7, fig.width=7}
 ggplot(motive_V_angles, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = vis_angle_pos_deg), shape=1, size=3) +
   coord_fixed() +
@@ -173,7 +173,7 @@ By displaying the visual angles (in degrees) created by the stimulus on the posi
 
 
 Now displaying visual angles perceived on the negative wall. 
-```{r}
+```{r motive_V_angles_neg, fig.height=7, fig.width=7}
 ggplot(motive_V_angles, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = vis_angle_neg_deg), shape=1, size=3) +
   coord_fixed() +
