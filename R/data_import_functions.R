@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-11 VBB
+## Last updated: 2020-09-17 VBB
 
 
 ############################### read_motive_csv ################################
@@ -63,7 +63,6 @@
 #' ## A variety of metadata are stored as attributes. Of particular interest:
 #' attr(motive_data, "pathviewR_steps")
 #' attr(motive_data, "file_id")
-#' attr(motive_data, "file_mtime")
 #' attr(motive_data, "header")
 #' attr(motive_data, "Motive_IDs")
 #' attr(motive_data, "subject_names_full")
@@ -80,13 +79,12 @@ read_motive_csv <-
   function(file_name,
            file_id = NA,
            simplify_marker_naming = TRUE,
-           ...){
+           ...) {
+
 
     ## Import checks
       if (missing(file_name))
         stop("A file_name is required")
-      # if (!file.exists(file_name))
-      #   stop(paste0("File ", file_name, " not found!"))
 
     ## Open connection to file for reading in text mode
       file_con <- file(file_name, "r")
@@ -105,25 +103,26 @@ read_motive_csv <-
       data_names <- c()
 
     ## Read in header; usually just line 1 but grepl() makes this flexbile
-      while(!grepl(",Type", (l <- readLines(file_con, 1)))){
+      while (!grepl(",Type", (l <- readLines(file_con, 1)))) {
         header <- c(header, l)
       }
-    ## Split the character vector and make a data.frame of it
+      ## Split the character vector and make a data.frame of it
       header <-
         ## Chopping out the last entry of header via `length(header)-1` because
         ## the final line is (usually) empty. Revise here if we see errors!!!
-        strsplit(header[[1]], ",")[[length(header)-1]] %>%
+        strsplit(header[[1]], ",")[[length(header) - 1]] %>%
         data.frame(stringsAsFactors = FALSE)
-    ## Convert the 1-col data frame into a 2-col data frame:
+      ## Convert the 1-col data frame into a 2-col data frame:
       odds <- base::seq_along(header$.) %% 2 == 1
       metadata <- header$.[odds] # odd-numbered rows are metadata
-      value <- header$.[!odds] # even-numbered rows are corresponding values
+      value <-
+        header$.[!odds] # even-numbered rows are corresponding values
       header <- data.frame(metadata, value,
                            stringsAsFactors = FALSE)
 
     ## Warn about Motive version
-    if (!value[1] == "1.23"){
-      warning(
+      if (!value[1] == "1.23") {
+        warning(
         "This function was written to read CSVs exported using Motive's
 Format Version 1.23 and is not guaranteed to work with those from other
 versions. Please file an Issue on our Github page if you encounter any
@@ -145,15 +144,15 @@ problems.",
   ## was encountered and our software is not designed to handle these
   ## cases.
 
-    ## Rigid body & marker names (line 4)
-      while(!grepl(",ID", (l <- readLines(file_con, 1)))){
+      ## Rigid body & marker names (line 4)
+      while (!grepl(",ID", (l <- readLines(file_con, 1)))) {
         names_line <- c(names_line, l)
       }
-    ## Save the line itself for use later
+      ## Save the line itself for use later
       names_vec <- strsplit(names_line[1], ",")[[1]]
-    ## Make a list of the unique rigid bodies and markers
+      ## Make a list of the unique rigid bodies and markers
       names <- base::unique(names_vec[-c(1, 2)])
-    ## The ID line (typically line 5) is stored in `l` currently
+      ## The ID line (typically line 5) is stored in `l` currently
       id_line <- l
       id_vec <- strsplit(id_line[1], ",")[[1]]
       ids <- id_vec[-c(1, 2)]
@@ -170,28 +169,32 @@ problems.",
     ## ids_types_names. I'm sure this can be re-written to avoid a
     ## for() loop, but I'm keeping it like this for now because it
     ## makes sense to me.
-      for (i in 1:nrow(ids_types_names)){
+      for (i in seq_len(nrow(ids_types_names))) {
         ## If i-th entry of $type_vec is "Marker"
-        base::ifelse(ids_types_names$type_vec[i] == "Marker",
-        ## Then place the marker name in $simplify
-                     ids_types_names$simplify[i] <- stringr::str_split(
-                       ids_types_names$names_vec[i], ":")[[1]][2], # 2nd half
-        ## Otherwise, copy the contents of $names_vec
-                     ids_types_names$simplify[i] <-
-                       ids_types_names$names_vec[i]
-                     )
+        base::ifelse(
+          ids_types_names$type_vec[i] == "Marker",
+          ## Then place the marker name in $simplify
+          ids_types_names$simplify[i] <-
+            stringr::str_split(ids_types_names$names_vec[i], ":")[[1]][2],
+          # 2nd half
+          ## Otherwise, copy the contents of $names_vec
+          ids_types_names$simplify[i] <-
+            ids_types_names$names_vec[i]
+        )
       }
 
-    ## Similarly, use the subject ID in subjects column
-      for (i in 1:nrow(ids_types_names)){
+      ## Similarly, use the subject ID in subjects column
+      for (i in seq_len(nrow(ids_types_names))) {
         ## If i-th entry of $type_vec is not a "Rigid Body
-        base::ifelse(ids_types_names$type_vec[i] != "Rigid Body",
-        ## Then place the marker name in $subjects
-                     ids_types_names$subjects[i] <- stringr::str_split(
-                       ids_types_names$names_vec[i], ":")[[1]][1], # 1st half
-        ## Otherwise, copy the contents of $names_vec
-                     ids_types_names$subjects[i] <-
-                       ids_types_names$names_vec[i]
+        base::ifelse(
+          ids_types_names$type_vec[i] != "Rigid Body",
+          ## Then place the marker name in $subjects
+          ids_types_names$subjects[i] <-
+            stringr::str_split(ids_types_names$names_vec[i], ":")[[1]][1],
+          # 1st half
+          ## Otherwise, copy the contents of $names_vec
+          ids_types_names$subjects[i] <-
+            ids_types_names$names_vec[i]
         )
       }
 
@@ -207,13 +210,14 @@ problems.",
     ## Often arises when final column is "Marker Quality" in line 6 with
     ## nothing in line 7
     if (length(data_names_part_two) == length(data_names_part_one) - 1) {
-      data_names_part_two <- c(data_names_part_two, "") # add blank character
+      data_names_part_two <-
+        c(data_names_part_two, "") # add blank character
     } else {
       data_names_part_two <- data_names_part_two # keep the same
     }
 
     ## Handle choice of simplify_marker_naming = TRUE or FALSE
-    if (simplify_marker_naming == TRUE){
+    if (simplify_marker_naming == TRUE) {
       marker_id_line <- ids_types_names$simplify
     } else {
       marker_id_line <- names_vec
@@ -227,7 +231,7 @@ problems.",
     ## it in the next step
 
     ## Stitch it together
-    for (i in 1:nrow(data_names_frame)) {
+    for (i in seq_len(nrow(data_names_frame))) {
       data_names[[i]] <- paste0(data_names_frame[i, 1],
                                 "_",
                                 data_names_frame[i, 2],
@@ -298,7 +302,7 @@ problems.",
     attr(data, "frame_rate") <- header$value[5] %>% as.numeric()
     attr(data, "header") <- header
     attr(data, "Motive_IDs") <- ids
-    attr(data, "subject_names_full") <- names_vec[-c(1,2)]
+    attr(data, "subject_names_full") <- names_vec[-c(1, 2)]
     attr(data, "subject_names_simple") <- names
     attr(data, "data_names") <- data_names
     attr(data, "data_types_full") <- types
@@ -368,8 +372,6 @@ read_flydra_mat <-
     ## Import checks
     if (missing(mat_file))
       stop("A mat_file is required")
-    # if (!file.exists(mat_file))
-    #   stop(paste0("File ", mat_file, " not found!"))
 
     ## For now, we will assume that only one subject (one individual
     ## hummingbird) is present in the data. Since these subject names were not
@@ -410,9 +412,6 @@ read_flydra_mat <-
     kalm_distinct <-
       dplyr::distinct(kalm_tib, NAME = kalman.frame, .keep_all = TRUE)
 
-    ## First get the dimensions of the data
-    data_length <- length(mat_read$kalman.y)
-
     ## Now extract all the frames
     framez <- kalm_distinct$kalman.frame
     frame_tib <- tibble::tibble(frame = framez)
@@ -424,18 +423,20 @@ read_flydra_mat <-
     frame_first <- min(framez)
     frame_last <- max(framez)
     frame_seq <- seq(from = frame_first, to = frame_last, by = 1)
-    time_interval <- 1/frame_rate
+    time_interval <- 1 / frame_rate
     ## We'll set time to start at 0 and then increase by time_interval until
     ## it hits the same vector length as length(frame_seq)
-    time_seq <- seq(from = 0, by = time_interval,
+    time_seq <- seq(from = 0,
+                    by = time_interval,
                     length.out = length(frame_seq))
     ## Now combine
     frame_time_seqs <- tibble::tibble(frame = frame_seq,
                                       time  = time_seq)
     ## Need to join it back to frame_tib in case frame ordering shifts
     ## or is duplicated within the data
-    joined_frame_time_seq <- dplyr::left_join(frame_tib, frame_time_seqs,
-                                              by = "frame")
+    joined_frame_time_seq <-
+      dplyr::left_join(frame_tib, frame_time_seqs,
+                       by = "frame")
 
     ## Now put the data together
     data <-
@@ -547,7 +548,7 @@ as_viewr <- function(obj_name,
                      rotation_length_col,
                      rotation_width_col,
                      rotation_height_col
-                     ){
+                     ) {
 
   ## Check that obj_name is a tibble or data.frame
   if (!tibble::is_tibble(obj_name))
@@ -568,12 +569,12 @@ as_viewr <- function(obj_name,
   data <- tibble::tibble(data)
 
   ## Optional arguments, depending on data
-  if (include_rotation == TRUE){
-    data$rotation_real   <- obj_name[,rotation_real_col]
-    data$rotation_length <- obj_name[,rotation_length_col]
-    data$rotation_width  <- obj_name[,rotation_width_col]
-    data$rotation_height <- obj_name[,rotation_height_col]
-    }
+  if (include_rotation == TRUE) {
+    data$rotation_real   <- obj_name[, rotation_real_col]
+    data$rotation_length <- obj_name[, rotation_length_col]
+    data$rotation_width  <- obj_name[, rotation_width_col]
+    data$rotation_height <- obj_name[, rotation_height_col]
+  }
 
   ## Add metadata as attributes()
   attr(data, "pathviewR_steps") <-

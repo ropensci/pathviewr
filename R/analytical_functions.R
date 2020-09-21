@@ -845,7 +845,7 @@ calc_vis_angle_box <- function(obj_name){
 #' thereby minimizes spatial frequencies.
 #'
 #' @return A tibble or data.frame with added variables for
-#' \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1˚ of visual
+#' \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg of visual
 #' angle.
 #'
 #' @author Eric R. Press
@@ -939,11 +939,11 @@ calc_sf_V <- function(obj_name,
       # return minimum distance to negative screen
 
 
-  ## Calculate distance along plane of screen equal to 1˚ of visual angle.
+  ## Calculate distance along plane of screen equal to 1deg of visual angle.
   deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
   deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
 
-  ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
+  ## Calculate spatial frequency as number of cycles of stimulus per 1deg of
   ## visual angle.
   obj_name$sf_pos <- deg_dist_pos / obj_name$stim_param_pos
   obj_name$sf_neg <- deg_dist_neg / obj_name$stim_param_neg
@@ -986,9 +986,9 @@ calc_sf_V <- function(obj_name,
 #' thereby minimizes spatial frequencies.
 #'
 #' @return A tibble or data.frame with added variables \code{min_dist_pos} and
-#' \code{min_dist_neg} describing the minimum distance to the tunnel walls as
-#' well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1˚ of
-#' visual angle.
+#'   \code{min_dist_neg} describing the minimum distance to the tunnel walls as
+#'   well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg
+#'   of visual angle.
 #'
 #' @author Eric R. Press
 #'
@@ -1013,11 +1013,11 @@ calc_sf_box <- function(obj_name){
   obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
   obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
 
-  ## Calculate distance along plane of the wall equal to 1˚ of visual angle.
+  ## Calculate distance along plane of the wall equal to 1deg of visual angle.
   deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
   deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
 
-  ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
+  ## Calculate spatial frequency as number of cycles of stimulus per 1deg of
   ## visual angle.
   obj_name$s_freq_pos <- deg_dist_pos / obj_name$stim_param_pos
   obj_name$s_freq_neg <- deg_dist_neg / obj_name$stim_param_neg

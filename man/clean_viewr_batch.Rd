@@ -4,11 +4,15 @@
 \alias{clean_viewr_batch}
 \title{Batch clean viewr files}
 \usage{
-clean_viewr_batch(obj_list, ...)
+clean_viewr_batch(obj_list, file_announce = FALSE, ...)
 }
 \arguments{
 \item{obj_list}{A list of viewr objects (i.e. a list of tibbles that each
 have attribute \code{pathviewR_steps} that includes \code{"viewr"})}
+
+\item{file_announce}{Should the function report each time a file is
+processed? Default FALSE; if TRUE, a message will appear in the console
+each time a file has been cleaned successfully.}
 
 \item{...}{Arguments to be passed in that specify how this function should
 clean files.}
@@ -53,6 +57,7 @@ motive_batch_imports <-
 ## via clean_viewr_batch()
 motive_batch_cleaned <-
   clean_viewr_batch(
+    file_announce = TRUE,
     motive_batch_imports,
     desired_percent = 50,
     max_frame_gap = "autodetect",

@@ -10,7 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -61,7 +61,7 @@ plot(motive_cleaned$position_length,
 ### Inspecting the data
 We've cleaned up our data and are ready to link individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default `max_frame_gap = 1` will not allow any frame gaps--movement must be continuous.
 
-```{r max_frame_gap = 1}
+```{r max_frame_gap_1}
 motive_mfg1 <- 
   motive_cleaned %>% 
   separate_trajectories(
@@ -79,7 +79,7 @@ length(unique(motive_mfg1$file_sub_traj))
 
 Plotting each trajectory reveals that perhaps some trajectories that should be continuous have been split into two or more separate trajectories because of a dropped frame or two. This data may require relaxing the stringent no-frame-gaps requirement in order to link data points that should go together into a single trajectory. Let's try setting `max_frame_gap = 5`.
 
-```{r max_frame_gap = 5}
+```{r max_frame_gap_5}
 motive_mfg5 <- 
   motive_cleaned %>% 
   separate_trajectories(
@@ -134,7 +134,7 @@ The output of `visualize_frame_gap_choice()` is a tibble and plot of the number 
 
 Setting `max_frame_gap = "autodetect"` rather than a numeric value uses the "elbow" of the plots from `visualize_frame_gap_choice()` to guesstimate the best value(s) for `max_frame_gap`. In addition to automatically selecting the `max_frame_gap` depending on the data, "autodetect" does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the `max_frame_gap` can go is defined as a proportion of the capture frame rate and set by the `frame_rate_proportion` argument, which defaults to .10.
 
-```{r max_frame_gap = "autodetect"}
+```{r max_frame_gap_auto}
 motive_auto <- 
   motive_cleaned %>% 
   separate_trajectories(

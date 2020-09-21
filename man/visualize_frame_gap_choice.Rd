@@ -61,6 +61,7 @@ Other data cleaning functions:
 \code{\link{trim_tunnel_outliers}()}
 
 Other plotting functions: 
+\code{\link{plot_by_subject}()},
 \code{\link{plot_viewr_trajectories}()}
 
 Other functions that define or clean trajectories: 

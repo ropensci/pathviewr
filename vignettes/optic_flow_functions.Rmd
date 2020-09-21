@@ -1,0 +1,102 @@
+---
+title: "Estimating visual perceptions from tracking data"
+author: "Eric R. Press" 
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Estimating visual perceptions from tracking data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteDepends{tidyverse}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`pathviewR` includes functions that estimate visual perceptions based on the 
+distance between the subject/observer and visual stimuli on the walls of the 
+experimental chamber.
+
+## Loading packages
+We'll need to start by loading `pathviewR` as well as `tidyverse` for
+visualization purposes
+
+```{r setup}
+library(pathviewR)
+library(tidyverse)
+```
+
+
+## Data preparation
+Data objects must be prepared via the `pathviewR` [import and clean]() 
+pipeline prior to their use in these functions.
+
+Let's work with an example dataset included in `pathviewR`. 
+`july-29_group-I_16-20.csv` is a .csv file exported from Motive.  
+`pathviewR`'s importing and cleaning pipeline produces variables and attributes 
+required by these visual estimation functions.
+
+```{r motive_full}
+motive_data <-
+  read_motive_csv(
+    system.file("extdata", "pathviewR_motive_example_data.csv",
+                package = 'pathviewR')
+  )
+
+motive_full <-
+  motive_data %>%
+  relabel_viewr_axes() %>%
+  gather_tunnel_data() %>%
+  trim_tunnel_outliers() %>%
+  rotate_tunnel() %>%
+  get_velocity() %>%
+  select_x_percent(desired_percent = 75) %>%
+  ## skip rename_viewr_characters(), which defaults to FALSE anyway
+  separate_trajectories(max_frame_gap = "autodetect",
+                        frame_gap_messaging = TRUE) %>%
+  get_full_trajectories(span = 0.95)
+```
+
+Finally, information about the experiment needs to be included using
+`insert_treatments()` to properly calculate estimates.
+This experiment was performed in a V-shaped chamber in which the origin was set 
+0.3855m above the vertex. The lateral walls were angled at ±45˚from the vertical 
+axis. Therefore:
+
+```{r insert_treatments}
+## Eric: I am commenting this out temporarily bc it is currently causing issues
+## when running devtools::check(). Not sure why it is failing -- perhaps the
+## syntax needs to be edited slightly? Sorry! - VBB
+# motive_added <- insert_treatments(motive_full,
+#                                   vertex_height = -0.3855,
+#                                   vertex_angle = 45)
+```
+
+
+
+
+### V-shaped vs rectangular tunnel
+
+## Data visualization (position only)
+
+
+
+## Estimating visual perceptions 
+### calc_vis_angle
+### cal_s_freq
+### visualizing calculations
+
+## Future steps...
+### orientation 
+### optic flow estimation
+
+
+
+ 
+
+
+
+

@@ -1,0 +1,31 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+r:
+  # - oldrel # removing this for now
+  - release
+  - devel
+cache: packages
+
+r_packages:
+  - R.matlab
+  - data.table
+  - tidyverse
+  - magrittr
+  - dplyr
+  - stringr
+  - tibble
+  - tidyr
+  - fANCOVA
+  - purrr
+  - ggplot2
+  - tidyselect
+  - cowplot
+  - knitr
+  - rmarkdown
+
+r_check_args: "--no-build-vignettes --no-manual --as-cran"
+
+warnings_are_errors: false
+# change the above to true once warnings are dealt with

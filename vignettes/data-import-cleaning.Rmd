@@ -19,13 +19,21 @@ knitr::opts_chunk$set(
 
 ## Data import via `pathviewR`
 
-Our `read_` functions presently support `.csv` files exported from 
-[Optitrack's Motive](https://optitrack.com/products/motive/) software 
-as well as `.mat` files exported from 
-[Flydra](https://github.com/strawlab/flydra).
+Data can be imported via one of three ways:  
 
-Should you have data from other sources, please see the function `as_viewr()`
-and the ACCOMPANYING VIGNETTE (LINK!).
+- `read_motive_csv()` imports data from `.csv` files exported by 
+[Optitrack's Motive](https://optitrack.com/products/motive/) software  
+
+- `read_flydra_mat()` imports data from  `.mat` files exported from 
+[Flydra](https://github.com/strawlab/flydra)  
+
+- `as_viewr()` can be used to handle data from other sources  
+
+We will showcase examples from each of these methods in this section.
+
+Please feel free to reach out to the `pathviewR` authors should you have trouble
+with any of our data import options. We are happy to work with you to design
+custom `read_` functions for filetypes we have not encountered ourselves. 
 
 We'll start by loading `pathviewR` and `tidyverse`.
 
@@ -95,6 +103,42 @@ flydra_data <-
 ## metadata as attributes
 flydra_data
 ```
+
+### Data from other sources
+
+Data from another format can be converted to a `viewr` object via
+`pathviewR::as_viewr()`. Although this function does not handle data import
+per se, it allows data that you may already have imported into R as a `tibble`
+or `data.frame` to then be reformatted for use with `pathviewR` functions.
+
+We'll run through a quick example with simulated data:
+
+```{r as_viewr}
+## Create a dummy data frame with simulated (nonsense) data
+df <-
+  data.frame(
+    frame = seq(1, 100, by = 1),
+    time_sec = seq(0, by = 0.01, length.out = 100),
+    subject = "birdie_sanders",
+    z = rnorm(100),
+    x = rnorm(100),
+    y = rnorm(100)
+  )
+
+## Use as_viewr() to convert it into a viewr object
+test <-
+  as_viewr(
+    df,
+    frame_rate = 100,
+    frame_col = 1,
+    time_col = 2,
+    subject_col = 3,
+    position_length_col = 5,
+    position_width_col = 6,
+    position_height_col = 4
+  )
+```
+
 
 ## Data cleaning
 Data exported via either Motive or Flydra are not typically "tidy". Functions in

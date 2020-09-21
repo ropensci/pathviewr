@@ -13,8 +13,8 @@ calc_sf_box(obj_name)
 \value{
 A tibble or data.frame with added variables \code{min_dist_pos} and
 \code{min_dist_neg} describing the minimum distance to the tunnel walls as
-well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1˚ of
-visual angle.
+well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg
+of visual angle.
 }
 \description{
 Based on rigid body, i.e animal head positions in a box shaped tunnel,

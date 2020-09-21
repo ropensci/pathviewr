@@ -10,16 +10,19 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R build
 status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewR/actions)
+[![Travis build
+status](https://travis-ci.org/vbaliga/pathviewR.svg?branch=master)](https://travis-ci.org/vbaliga/pathviewR)
 <!-- badges: end -->
 
-This package offers tools to import, clean, and visualize animal
-movement data from Optitrack’s Motive, from Flydra, or from another
-source. We provide functions to remove artifacts, standardize tunnel
-position and tunnel axes, select a region of interest, isolate specific
-trajectories, fill gaps in trajectory data, and calculate 3D and
-per-axis velocity. For experiments of visual guidance, we also provide
-functions that use animal position to estimate perception of visual
-stimuli.
+`pathviewR` offers tools to import, clean, and visualize animal movement
+data from [Optitrack’s Motive](https://optitrack.com/products/motive/),
+the Straw Lab’s [Flydra](https://github.com/strawlab/flydra), or from
+other sources. We provide functions to remove artifacts, standardize
+tunnel position and tunnel axes, select a region of interest, isolate
+specific trajectories, fill gaps in trajectory data, and calculate 3D
+and per-axis velocity. For experiments of visual guidance, we also
+provide functions that use animal position to estimate perception of
+visual stimuli.
 
 ## Installation
 

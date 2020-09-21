@@ -1,5 +1,5 @@
 ## Part of the pathviewR package
-## Last updated: 2020-09-11 VBB
+## Last updated: 2020-09-16 VBB & MSA
 
 
 ########################### visualize_frame_gap_choice #########################
@@ -292,17 +292,69 @@ plot_viewr_trajectories <- function(obj_name,
 
 }
 
+####################### plot_by_subject ##########################
 
-####################### plot by subject and treatment ##########################
-## Generate plots of all trajectories, per subject, per treatment
+#' Plot trajectories and density plots of position by subject
+#'
+#' Plots all trajectories and generates density plots of position by subject
+#' from elevation and bird's eye views.
+#'
+#' @param obj_name A viewr object (a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+#'   through \code{separate_trajectories()} or \code{get_full_trajectories()}.
+#' @param col_by_treat If multiple treatments or sessions, color data per
+#'   treatment or session. Treatments must be levels in a column named \code{treatment}.
+#' @param ... Additional arguments passed to/from other pathviewR functions.
+#'
+#' @details  The input viewr object should have passed through
+#'   \code{separate_trajectories()} or \code{get_full_trajectories()}.
+#'   Optionally, treatments should have been added as levels in a column named
+#'   \code{treatment}. Two plots will be produced, one from a "bird's eye view"
+#'   of width against length and one from an "elevation view" of height against
+#'   length. All trajectories will be plotted on a per subject basis as well as
+#'   density plots of width or height depending on the view. If
+#'   \code{col_by_treat = TRUE}, data will be plotted by color according to
+#'   treatment in both the trajectory plots and the density plots.
+#'
+#' @return A "bird's eye view" plot and an "elevation view" plot.
+#'
+#' @export
+#' @author Melissa S. Armstrong
+#' @family plotting functions
+#' @examples
+#' library(pathviewR)
+#' library(tidyverse)
+#'
+#' ## Import the example Motive data included in the package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#'
+#' ## Clean, isolate, and label trajectories
+#' motive_full <-
+#'   motive_data %>%
+#'   clean_viewr(desired_percent = 50,
+#'               max_frame_gap = "autodetect",
+#'               span = 0.95)
+#'
+#' ## Plot all trajectories by subject
+#' motive_full %>%
+#' plot_by_subject()
+#'
+#' ## Add treatment information
+#' motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
+#'                            rep("latA", 100), rep("latB", 149))
+#'
+#' ## Plot all trajectories by subject, color by treatment
+#' motive_full %>%
+#' plot_by_subject(col_by_treat = TRUE)
 
-  plot_by_subject <- function(obj_name,
-                              plot_name,
-                              save_location,
-                              ...) {
+plot_by_subject <- function(obj_name,
+                            col_by_treat = FALSE,
+                            ...) {
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -320,91 +372,196 @@ plot_viewr_trajectories <- function(obj_name,
     obj_name$position_width
   ))))
 
-  #for top view (change in lateral position)
-  top_view <- obj_name %>%
-    dplyr::group_by(subject) %>%
-    tidyr::nest() %>%
-    dplyr::mutate(
-      paths = purrr::map(
-        data,
-        ~ ggplot2::ggplot(., aes(
-          position_length,
-          position_width,
-          colour = treatment
-        )) +
-          geom_point(alpha = .1, show.legend = FALSE) +
-          ylim(width_limits) +
-          geom_hline(yintercept = 0, linetype = "dotted") +
-          coord_fixed(ratio = 1) +
-          theme_tufte()
-      ),
-      hist = purrr::map(
-        data,
-        ~ ggplot2::ggplot(., aes(x = position_width,
-                                 fill = treatment)) +
-          geom_density(
-            alpha = .5,
-            position = "identity",
-            show.legend = FALSE
-          ) +
-          xlim(width_limits) +
-          geom_vline(xintercept = 0, linetype = "dotted") +
-          coord_flip() +
-          theme_tufte()
-      ),
-      filename = paste0(subject, "_top", ".png")
+  if (col_by_treat == FALSE) {
+    #for top view
+    top_view <- obj_name %>%
+      dplyr::group_by(subject) %>%
+      tidyr::nest() %>%
+      dplyr::mutate(
+        paths = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(
+            position_length,
+            position_width
+          )) +
+            geom_point(alpha = .1, show.legend = FALSE) +
+            ylim(width_limits) +
+            geom_hline(yintercept = 0, linetype = "dotted") +
+            coord_fixed(ratio = 1)
+        ),
+        hist = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(x = position_width)) +
+            geom_density(
+              alpha = .5,
+              position = "identity",
+              show.legend = FALSE
+            ) +
+            xlim(width_limits) +
+            geom_vline(xintercept = 0, linetype = "dotted") +
+            coord_flip()
+        )
+      )
+
+    #all of them together:
+    top_all_plots <- top_view %>%
+      dplyr::select(subject, paths, hist) %>%
+      tidyr::gather("plot_type", "allplots", 2:3)
+
+    p1 <- NULL
+    cowA <- cowplot::plot_grid(p1, labels = "")
+    cowB <- cowplot::plot_grid(
+      plotlist = top_all_plots[[3]],
+      labels = top_all_plots$subject,
+      label_size = 8,
+      label_y = 1.1
     )
 
-  #all of them together:
-  top_all_plots <- top_view %>%
-    dplyr::select(subject, paths, hist) %>%
-    tidyr::gather("plot_type", "allplots", 2:3)
+    birdseye_view <-
+      cowplot::plot_grid(cowA, cowB, ncol = 1, rel_heights = c(0.05, 1))
 
-  birdseye_view <- cowplot::plot_grid(plotlist = top_all_plots[[3]])
+    #for elev view
+    elev_view <- obj_name %>%
+      dplyr::group_by(subject) %>%
+      tidyr::nest() %>%
+      dplyr::mutate(
+        paths = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(
+            position_length, position_height
+          )) +
+            geom_point(alpha = .1, show.legend = FALSE) +
+            ylim(height_limits) +
+            geom_hline(yintercept = 0, linetype = "dotted") +
+            coord_fixed(ratio = 1)
+        ),
+        hist = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(position_height)) +
+            geom_density(
+              alpha = .5,
+              position = "identity",
+              show.legend = FALSE
+            ) +
+            xlim(height_limits) +
+            geom_vline(xintercept = 0, linetype = "dotted") +
+            coord_flip()
+        )
+      )
 
-  ggplot2::ggsave(paste0(plot_treatment, "_", "topview.png"), birdseye_view,
-                   path = save_location)
+    #all of them together:
+    elev_all_plots <- elev_view %>%
+      dplyr::select(subject, paths, hist) %>%
+      tidyr::gather("plot_type", "allplots", 2:3)
 
-  #for elev view (change in height):
-  elev_view <- obj_name %>%
-    dplyr::group_by(subject) %>%
-    tidyr::nest() %>%
-    dplyr::mutate(
-      paths = purrr::map(
-        data,
-        ~ ggplot2::ggplot(., aes(
-          position_length, position_height, colour = treatment
-        )) +
-          geom_point(alpha = .1, show.legend = FALSE) +
-          ylim(height_limits) +
-          geom_hline(yintercept = 0, linetype = "dotted") +
-          coord_fixed(ratio = 1) +
-          theme_tufte()
-      ),
-      hist = purrr::map(
-        data,
-        ~ ggplot2::ggplot(., aes(position_height, fill = treatment)) +
-          geom_density(
-            alpha = .5,
-            position = "identity",
-            show.legend = FALSE
-          ) +
-          xlim(height_limits) +
-          geom_vline(xintercept = 0, linetype = "dotted") +
-          coord_flip() +
-          theme_tufte()
-      ),
-      filename = paste0(subject, "_elev", ".png")
+    cowC <- cowplot::plot_grid(
+      plotlist = elev_all_plots[[3]],
+      labels = elev_all_plots$subject,
+      label_size = 8,
+      label_y = 1.1
     )
 
-  #all of them together:
-  elev_all_plots <- elev_view %>%
-    dplyr::select(subject, paths, hist) %>%
-    tidyr::gather("plot_type", "allplots", 2:3)
+    side_view <-
+      cowplot::plot_grid(cowA, cowC, ncol = 1, rel_heights = c(0.05, 1))
 
-  side_view <- cowplot::plot_grid(plotlist = elev_all_plots[[3]])
+    return(list(birdseye_view, side_view))
+  }
 
-  ggplot2::ggsave(paste0(plot_name, "_", "elevview.png"), side_view,
-                   path = save_location)
+  if (col_by_treat == TRUE) {
+    #for top view (change in lateral position)
+    top_view <- obj_name %>%
+      dplyr::group_by(subject) %>%
+      tidyr::nest() %>%
+      dplyr::mutate(
+        paths = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(
+            position_length,
+            position_width,
+            colour = treatment
+          )) +
+            geom_point(alpha = .1, show.legend = FALSE) +
+            ylim(width_limits) +
+            geom_hline(yintercept = 0, linetype = "dotted") +
+            coord_fixed(ratio = 1)
+        ),
+        hist = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(x = position_width,
+                                   fill = treatment)) +
+            geom_density(
+              alpha = .5,
+              position = "identity",
+              show.legend = FALSE
+            ) +
+            xlim(width_limits) +
+            geom_vline(xintercept = 0, linetype = "dotted") +
+            coord_flip()
+        )
+      )
+
+    #all of them together:
+    top_all_plots <- top_view %>%
+      dplyr::select(subject, paths, hist) %>%
+      tidyr::gather("plot_type", "allplots", 2:3)
+
+    p1 <- NULL
+    cowA <- cowplot::plot_grid(p1, labels = "")
+    cowB <- cowplot::plot_grid(
+      plotlist = top_all_plots[[3]],
+      labels = top_all_plots$subject,
+      label_size = 8,
+      label_y = 1.1
+    )
+
+    birdseye_view <-
+      cowplot::plot_grid(cowA, cowB, ncol = 1, rel_heights = c(0.05, 1))
+
+    #for elev view (change in height):
+    elev_view <- obj_name %>%
+      dplyr::group_by(subject) %>%
+      tidyr::nest() %>%
+      dplyr::mutate(
+        paths = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(
+            position_length, position_height, colour = treatment
+          )) +
+            geom_point(alpha = .1, show.legend = FALSE) +
+            ylim(height_limits) +
+            geom_hline(yintercept = 0, linetype = "dotted") +
+            coord_fixed(ratio = 1)
+        ),
+        hist = purrr::map(
+          data,
+          ~ ggplot2::ggplot(., aes(position_height, fill = treatment)) +
+            geom_density(
+              alpha = .5,
+              position = "identity",
+              show.legend = FALSE
+            ) +
+            xlim(height_limits) +
+            geom_vline(xintercept = 0, linetype = "dotted") +
+            coord_flip()
+        )
+      )
+
+    #all of them together:
+    elev_all_plots <- elev_view %>%
+      dplyr::select(subject, paths, hist) %>%
+      tidyr::gather("plot_type", "allplots", 2:3)
+
+    cowC <- cowplot::plot_grid(
+      plotlist = elev_all_plots[[3]],
+      labels = elev_all_plots$subject,
+      label_size = 8,
+      label_y = 1.1
+    )
+
+    side_view <-
+      cowplot::plot_grid(cowA, cowC, ncol = 1, rel_heights = c(0.05, 1))
+
+    return(list(birdseye_view, side_view))
+  }
 
 }

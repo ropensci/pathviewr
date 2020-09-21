@@ -4,7 +4,14 @@
 \alias{rm_by_trajnum}
 \title{Remove subjects by trajectory number}
 \usage{
-rm_by_trajnum(obj_name, trajnum = 5, stim1, stim2, ...)
+rm_by_trajnum(
+  obj_name,
+  trajnum = 5,
+  mirrored = FALSE,
+  treatment1,
+  treatment2,
+  ...
+)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -13,12 +20,18 @@ predefined (i.e. via \code{separate_trajectories()}).}
 
 \item{trajnum}{Minimum number of trajectories; must be numeric.}
 
-\item{stim1}{The treatment or session during which the threshold must be met.}
+\item{mirrored}{Does the data have mirrored treatments? If so, arguments
+\code{treatment1} and \code{treatment2} must also be provided, indicating
+the names of two mirrored treatments, both of which must meet the trajectory
+threshold specified in \code{trajnum}. Default is FALSE.}
 
-\item{stim2}{A second treatment or session during which the threshold must be
-met.}
+\item{treatment1}{The first treatment or session during which the threshold
+must be met.}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{treatment2}{A second treatment or session during which the threshold
+must be met.}
+
+\item{...}{Additional arguments passed to/from other pathviewR functions.}
 }
 \value{
 A viewr object; a tibble or data.frame with attribute
@@ -33,13 +46,16 @@ during a treatment, trial, or session.
 \details{
 Depending on analysis needs, users may want to remove subjects that
 have not completed a certain number of trajectories during a treatment,
-trial, or session. The \code{stim1} and \code{stim2} parameters allow users
-to define during which treatments or sessions subjects must complete
-trajectories and \code{trajnum} is the threshold number that must be
-reached. For example, setting \code{stim1 = "latA"}, \code{stim2 = "latB"}
-and \code{trajnum = 5} will remove subjects that have fewer than 5
-trajectories during the \code{"latA"} treatment AND the \code{"latB"}
-treatment. \code{stim1} and \code{stim2} should be levels within a column
+trial, or session. If \code{mirrored = FALSE}, no treatment information is
+necessary and subjects will be removed based on total number of trajectories
+as specified in \code{trajnum}. If \code{mirrored = TRUE}, the
+\code{treatment1} and \code{treatment2} parameters will allow users to
+define during which treatments or sessions subjects must reach threshold as
+specified in the \code{trajnum} argument. For example, if \code{mirrored =
+ TRUE}, setting \code{treatment1 = "latA"}, \code{treatment2 = "latB"} and
+\code{trajnum = 5} will remove subjects that have fewer than 5 trajectories
+during the \code{"latA"} treatment AND the \code{"latB"} treatment.
+\code{treatment1} and \code{treatment2} should be levels within a column
 named \code{"treatment"}.
 }
 \examples{
@@ -48,7 +64,7 @@ library(pathviewR)
 ## Import the example Motive data included in the package
 motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+                              package = 'pathviewR'))
 
 ## Clean, isolate, and label trajectories
 motive_full <-
@@ -57,15 +73,27 @@ motive_full <-
               max_frame_gap = "autodetect",
               span = 0.95)
 
- ## Add treatment information
-   motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
-   rep("latA", 100), rep("latB", 149))
+##Remove subjects that have no completed at least 10 trajectories:
+motive_rm_unmirrored <-
+  motive_full \%>\%
+  rm_by_trajnum(trajnum = 150)
+
+## Add treatment information
+motive_full$treatment <- c(rep("latA", 100),
+                           rep("latB", 100),
+                           rep("latA", 100),
+                           rep("latB", 149))
 
 ## Remove subjects by that have not completed at least 10 trajectories in
 ## both treatments
-motive_removed <-
-motive_full \%>\%
-rm_by_trajnum(trajnum = 10, stim1 = "latA", stim2 = "latB")
+motive_rm_mirrored <-
+  motive_full \%>\%
+  rm_by_trajnum(
+    trajnum = 10,
+    mirrored = TRUE,
+    treatment1 = "latA",
+    treatment2 = "latB"
+  )
 }
 \author{
 Melissa S. Armstrong
