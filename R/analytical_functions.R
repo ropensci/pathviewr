@@ -621,7 +621,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 
 #' Estimate visual angles in a V-shaped tunnel
 #'
-#' Based on rigid body, i.e animal head positions in a V-shaped tunnel,
+#' Based on animal head positions in a V-shaped tunnel tunnel,
 #' \code{calc_vis_angle_V()} calculates the visual angles created by lateral
 #' visual stimuli.
 #'
@@ -649,8 +649,6 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'
 #' @family visual perception functions
 #'
-#' @examples
-#'
 #' @export
 
 calc_vis_angle_V <- function(obj_name,
@@ -665,9 +663,6 @@ calc_vis_angle_V <- function(obj_name,
   if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
     stop("Please run insert_treatments() prior to use")
   }
-
-  ## Translate vertex_angle from degrees to radians for trig functions
-  obj_name$vertex_angle <- deg_2_rad(obj_name$vertex_angle)
 
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
@@ -766,7 +761,7 @@ calc_vis_angle_V <- function(obj_name,
 
 #' Estimate visual angles in a box-shaped tunnel
 #'
-#' Based on rigid body, i.e animal head positions in a b-shaped tunnel,
+#' Based on  animal head positions in a rectangular tunnel i.e. box,
 #' \code{calc_vis_angle_box()} calculates the visual angles created by lateral
 #' visual stimuli.
 #'
@@ -786,8 +781,6 @@ calc_vis_angle_V <- function(obj_name,
 #' @author Eric R. Press
 #'
 #' @family visual perception functions
-#'
-#' @examples
 #'
 #' @export
 
@@ -827,9 +820,9 @@ calc_vis_angle_box <- function(obj_name){
 
 #' Estimate spatial frequency of visual stimuli in V-shaped tunnel
 #'
-#' Based on rigid body, i.e animal head positions in a V-shaped tunnel,
-#' \code{calc_sf_V()} calculates how the animal perceives visual stimuli
-#' in terms of its spatial frequency modulated by distance to the stimulus.
+#' Based on animal head positions in a V-shaped tunnel,
+#' \code{calc_sf_V()} calculates how the animal perceives the spatial frequency
+#' of lateral visual stimuli as modulated by distance to the stimulus.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #' \code{pathviewR_steps} that includes \code{"viewr"}
@@ -858,8 +851,6 @@ calc_vis_angle_box <- function(obj_name){
 #' @author Eric R. Press
 #'
 #' @family visual perception functions
-#'
-#' @examples
 #'
 #' @export
 
@@ -983,9 +974,9 @@ calc_sf_V <- function(obj_name,
 
 #' Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box
 #'
-#' Based on rigid body, i.e animal head positions in a box shaped tunnel,
-#' \code{calc_sf_box()} calculates how the animal perceives the visual stimuli
-#' in terms of its spatial frequency modulated by distance to the stimulus.
+#' Based on animal head positions in a rectangular tunnel i.e. box,
+#' \code{calc_sf_box()} calculates how the animal perceives the spatial
+#' frequency of lateral visual stimuli as modulated by distance to the stimulus.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
@@ -1001,9 +992,7 @@ calc_sf_V <- function(obj_name,
 #'
 #' @author Eric R. Press
 #'
-#' @family optic flow functions
-#'
-#' @examples
+#' @family visual perception functions
 #'
 #' @export
 
