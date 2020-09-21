@@ -60,9 +60,6 @@
       <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewR</a>
     </li>
     <li>
-      <a href="../articles/optic_flow_functions.html">Estimating visual perceptions from tracking data</a>
-    </li>
-    <li>
       <a href="../articles/visual-perception-functions.html">Estimating visual perceptions from tracking data</a>
     </li>
   </ul>
@@ -259,7 +256,7 @@
                    <span class="kw">y</span> <span class="kw">=</span> -<span class="fl">0.3855</span>,
                    <span class="kw">xend</span> <span class="kw">=</span> -<span class="fl">0.5869</span>,
                    <span class="kw">yend</span> <span class="kw">=</span> <span class="fl">0.2014</span>))</pre></body></html></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/motive_V_sf_pos-1.png" width="672"></p>
 <p>We can see that as the position of the subject is closer to the right (positive) wall, the perception of that stimulus is with smaller spatial frequency.</p>
 <p>A different pattern is found by visualizing the spatial frequencies observed from the left (negative) wall.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">motive_V_sf</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">position_width</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">position_height</span>)) +
@@ -273,7 +270,7 @@
                    <span class="kw">y</span> <span class="kw">=</span> -<span class="fl">0.3855</span>,
                    <span class="kw">xend</span> <span class="kw">=</span> -<span class="fl">0.5869</span>,
                    <span class="kw">yend</span> <span class="kw">=</span> <span class="fl">0.2014</span>))</pre></body></html></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/motive_V_sf_neg-1.png" width="672"></p>
 </div>
 <div id="visual-angles" class="section level3">
 <h3 class="hasAnchor">
@@ -290,7 +287,7 @@
                    <span class="kw">y</span> <span class="kw">=</span> -<span class="fl">0.3855</span>,
                    <span class="kw">xend</span> <span class="kw">=</span> -<span class="fl">0.5869</span>,
                    <span class="kw">yend</span> <span class="kw">=</span> <span class="fl">0.2014</span>))</pre></body></html></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/motive_V_angles_pos-1.png" width="672"></p>
 <p>By displaying the visual angles (in degrees) created by the stimulus on the positive wall, we can see that the subject perceives larger visual angles the closer it gets to the positive wall.</p>
 <p>Now displaying visual angles perceived on the negative wall.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="no">motive_V_angles</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">position_width</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">position_height</span>)) +
@@ -304,7 +301,7 @@
                    <span class="kw">y</span> <span class="kw">=</span> -<span class="fl">0.3855</span>,
                    <span class="kw">xend</span> <span class="kw">=</span> -<span class="fl">0.5869</span>,
                    <span class="kw">yend</span> <span class="kw">=</span> <span class="fl">0.2014</span>))</pre></body></html></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/motive_V_angles_neg-1.png" width="672"></p>
 <p>This shows that the subject perceives larger visual angles the closer it gets to the negative wall.</p>
 </div>
 </div>

@@ -4,9 +4,8 @@ pkgdown_sha: aeb1cfb080f566b32da6613b6e12c13eb743daff
 articles:
   data-import-cleaning: data-import-cleaning.html
   managing-frame-gaps: managing-frame-gaps.html
-  optic_flow_functions: optic_flow_functions.html
   visual-perception-functions: visual-perception-functions.html
-last_built: 2020-09-21T16:55Z
+last_built: 2020-09-21T17:20Z
 urls:
   reference: https://vbaliga.github.io/pathviewR//reference
   article: https://vbaliga.github.io/pathviewR//articles
