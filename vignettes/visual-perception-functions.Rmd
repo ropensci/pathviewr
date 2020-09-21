@@ -117,7 +117,7 @@ motive_V_angles
 ## Visualizing visual perception calculations
 To check whether the calculations were performed correctly, visualize the results.
 
-###**Spatial frequency**
+### **Spatial frequency**
 ```{r}
 ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = sf_pos), shape=1, size=3) +
@@ -154,7 +154,7 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 
 
 
-###**Visual angles**
+### **Visual angles**
 ```{r}
 ggplot(motive_V_angles, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = vis_angle_pos_deg), shape=1, size=3) +
