@@ -17,7 +17,7 @@ A tibble or data.frame with added variables for \code{min_dist_pos},
 \code{vis_angle_pos_deg}, and \code{vis_angle_neg_deg}.
 }
 \description{
-Based on rigid body, i.e animal head positions in a b-shaped tunnel,
+Based on  animal head positions in a rectangular tunnel i.e. box,
 \code{calc_vis_angle_box()} calculates the visual angles created by lateral
 visual stimuli.
 }
@@ -27,12 +27,10 @@ either side of the tunnel that minimizes the distance to visual stimuli and
 thereby maximizes visual angles. All length measurements reported in
 meters.
 }
-\examples{
-
-}
 \seealso{
 Other visual perception functions: 
 \code{\link{calc_sf_V}()},
+\code{\link{calc_sf_box}()},
 \code{\link{calc_vis_angle_V}()}
 }
 \author{

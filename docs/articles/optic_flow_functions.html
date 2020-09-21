@@ -62,6 +62,9 @@
     <li>
       <a href="../articles/optic_flow_functions.html">Estimating visual perceptions from tracking data</a>
     </li>
+    <li>
+      <a href="../articles/visual-perception-functions.html">Estimating visual perceptions from tracking data</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -88,7 +91,7 @@
       <h1 data-toc-skip>Estimating visual perceptions from tracking data</h1>
                         <h4 class="author">Eric R. Press</h4>
             
-            <h4 class="date">2020-09-18</h4>
+            <h4 class="date">2020-09-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/optic_flow_functions.Rmd"><code>vignettes/optic_flow_functions.Rmd</code></a></small>
       <div class="hidden name"><code>optic_flow_functions.Rmd</code></div>
@@ -104,12 +107,12 @@
 <p>We’ll need to start by loading <code>pathviewR</code> as well as <code>tidyverse</code> for visualization purposes</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pathviewR</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
-<span class="co">#&gt; ── Attaching packages ─────────────── tidyverse 1.3.0.9000 ──</span>
+<span class="co">#&gt; ── Attaching packages ──────────────── tidyverse 1.3.0.9000 ──</span>
 <span class="co">#&gt; ✓ ggplot2 3.3.1     ✓ purrr   0.3.4</span>
 <span class="co">#&gt; ✓ tibble  3.0.1     ✓ dplyr   1.0.0</span>
 <span class="co">#&gt; ✓ tidyr   1.1.0     ✓ stringr 1.4.0</span>
 <span class="co">#&gt; ✓ readr   1.3.1     ✓ forcats 0.5.0</span>
-<span class="co">#&gt; ── Conflicts ─────────────────────── tidyverse_conflicts() ──</span>
+<span class="co">#&gt; ── Conflicts ──────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; x dplyr::filter() masks stats::filter()</span>
 <span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></pre></body></html></div>
 </div>
