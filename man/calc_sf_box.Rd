@@ -17,19 +17,22 @@ well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg
 of visual angle.
 }
 \description{
-Based on rigid body, i.e animal head positions in a box shaped tunnel,
-\code{calc_sf_box()} calculates how the animal perceives the visual stimuli
-in terms of its spatial frequency modulated by distance to the stimulus.
+Based on animal head positions in a rectangular tunnel i.e. box,
+\code{calc_sf_box()} calculates how the animal perceives the spatial
+frequency of lateral visual stimuli as modulated by distance to the stimulus.
 }
 \details{
 \code{calc_sf_box} assumes fixed gaze at the point on the
 either side of the tunnel that minimizes the distance to visual stimuli and
 thereby minimizes spatial frequencies.
 }
-\examples{
-
+\seealso{
+Other visual perception functions: 
+\code{\link{calc_sf_V}()},
+\code{\link{calc_vis_angle_V}()},
+\code{\link{calc_vis_angle_box}()}
 }
 \author{
 Eric R. Press
 }
-\concept{optic flow functions}
+\concept{visual perception functions}

@@ -33,20 +33,18 @@ A tibble or data.frame with added variables for
 angle.
 }
 \description{
-Based on rigid body, i.e animal head positions in a V-shaped tunnel,
-\code{calc_sf_V()} calculates how the animal perceives visual stimuli
-in terms of its spatial frequency modulated by distance to the stimulus.
+Based on animal head positions in a V-shaped tunnel,
+\code{calc_sf_V()} calculates how the animal perceives the spatial frequency
+of lateral visual stimuli as modulated by distance to the stimulus.
 }
 \details{
 \code{cal_sf_V} assumes fixed gaze at the point on the
 either side of the tunnel that minimizes the distance to visual stimuli and
 thereby minimizes spatial frequencies.
 }
-\examples{
-
-}
 \seealso{
 Other visual perception functions: 
+\code{\link{calc_sf_box}()},
 \code{\link{calc_vis_angle_V}()},
 \code{\link{calc_vis_angle_box}()}
 }
