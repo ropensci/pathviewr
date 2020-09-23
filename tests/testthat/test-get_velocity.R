@@ -1,6 +1,5 @@
 ## Tests of get_velocity() are in this file
 
-## Test get_velocity()
 test_that("get_velocity() fails when non-numerics are supplied", {
   expect_error(get_velocity("steve"))
   expect_error(get_velocity(c("a", "b", "c")))
@@ -40,4 +39,13 @@ test_that("get_velocity() returns the correct value", {
    get_velocity(motive_cleaned, add_to_viewr = TRUE)[5, 14]$width_inst_vel,
    -0.387,
    tolerance = 1e-3)
+})
+
+test_that("get_velocity() fails when velocity_min is non-numeric", {
+  expect_error(
+    get_velocity(motive_cleaned, add_to_viewr = TRUE, velocity_min = "bob"))
+})
+test_that("get_velocity() fails when velocity_max is non-numeric", {
+  expect_error(
+    get_velocity(motive_cleaned, add_to_viewr = TRUE, velocity_min = "bob"))
 })

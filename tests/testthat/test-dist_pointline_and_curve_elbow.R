@@ -9,6 +9,18 @@ test_that("get_dist_point_line() fails when a mix of 2D and 3D coords are
       line_coord1 = c(0, 0, 0),
       line_coord2 = c(1, 1, 1)
     ))
+  expect_error(
+    get_dist_point_line(
+      point = c(0, 0, 1),
+      line_coord1 = c(0, 0),
+      line_coord2 = c(1, 1, 1)
+    ))
+  expect_error(
+    get_dist_point_line(
+      point = c(0, 0, 1),
+      line_coord1 = c(0, 0, 0),
+      line_coord2 = c(1, 1)
+    ))
 })
 
 test_that("get_dist_point_line() returns the correct value, 2D case", {
@@ -40,9 +52,17 @@ test_that("find_curve_elbow() fails when non-numerics are supplied", {
 ## Set up data frame
 df <- data.frame(x = seq(1:10),
                  y = 1/seq(1:10))
+df2 <- data.frame(x = seq(1:10),
+                  y = 1/seq(1:10),
+                  z = rnorm(10))
 
 test_that("find_curve_elbow() returns the correct value", {
   expect_equal(
-    find_curve_elbow(df, plot_curve = TRUE),
+    find_curve_elbow(df, plot_curve = FALSE),
     3)
+})
+
+test_that("find_curve_elbow() fails when data.frames with more than 2 cols are
+          supplied", {
+  expect_error(find_curve_elbow(df2, plot_curve = FALSE))
 })
