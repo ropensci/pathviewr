@@ -67,5 +67,3 @@ GPL (>= 3) + file LICENSE
 
 Note to self: You'll still need to render `README.Rmd` regularly, to keep
 `README.md` up-to-date. Do this via `devtools::build_readme()`
-
-Let's see if the github action works.
