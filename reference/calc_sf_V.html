@@ -139,7 +139,13 @@ of lateral visual stimuli as modulated by distance to the stimulus." />
 of lateral visual stimuli as modulated by distance to the stimulus.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calc_sf_V</span>(<span class='kw'>obj_name</span>, simplify_output = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>calc_sf_V</span>(
+  <span class='kw'>obj_name</span>,
+  <span class='kw'>vertex_angle</span>,
+  <span class='kw'>stim_param_pos</span>,
+  <span class='kw'>stim_param_neg</span>,
+  simplify_output = <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,13 +154,6 @@ of lateral visual stimuli as modulated by distance to the stimulus.</p>
       <th>obj_name</th>
       <td><p>The input viewr object; a tibble or data.frame with attribute
 <code>pathviewR_steps</code> that includes <code>"viewr"</code></p></td>
-    </tr>
-    <tr>
-      <th>simplify_output</th>
-      <td><p>If TRUE, the returned object includes minimum distance
-as well as the spatial frequencies perceived on either side of the
-tunnel. If FALSE, the returned object includes all variables internal to the
-calculation.</p></td>
     </tr>
     <tr>
       <th>vertex_angle</th>
@@ -173,6 +172,13 @@ example, a sinusoidal grating 10cm wide is <code>stim_param_pos = 0.1</code></p>
       <td><p>The same convention as <code>stim_param_pos</code> but for
 stimuli presented on the negative side of the tunnel
 (i.e. <code>position_width &lt; 0</code>).</p></td>
+    </tr>
+    <tr>
+      <th>simplify_output</th>
+      <td><p>If TRUE, the returned object includes minimum distance
+as well as the spatial frequencies perceived on either side of the
+tunnel. If FALSE, the returned object includes all variables internal to the
+calculation.</p></td>
     </tr>
     </table>
 
