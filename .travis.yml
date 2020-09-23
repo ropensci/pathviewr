@@ -31,4 +31,4 @@ warnings_are_errors: false
 # change the above to true once warnings are dealt with
 
 after_success:
-    - Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::codecov()'
