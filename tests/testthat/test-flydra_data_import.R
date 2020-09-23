@@ -1,4 +1,4 @@
-## Tests of read_flydra_data()
+## Tests of read_flydra_mat()
 
 ## Pre-import tests
 test_that(
