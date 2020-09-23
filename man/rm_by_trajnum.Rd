@@ -73,7 +73,7 @@ motive_full <-
               max_frame_gap = "autodetect",
               span = 0.95)
 
-##Remove subjects that have no completed at least 10 trajectories:
+##Remove subjects that have not completed at least 150 trajectories:
 motive_rm_unmirrored <-
   motive_full \%>\%
   rm_by_trajnum(trajnum = 150)
