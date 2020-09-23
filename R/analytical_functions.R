@@ -485,51 +485,6 @@ get_3d_angle <- function(x1, y1, z1,
 }
 
 
-################################## xyzplaneangles ##############################
-## Originally written by Christina Harvey; not currently exported but may be
-## incorporated into the package in the future.
-## Computes angles between two planes in 3D space
-
-xyzplaneangles <- function(x1,y1,z1,x2,y2,z2,x3,y3,z3, #plane 1
-                           x4,y4,z4,x5,y5,z5,x6,y6,z6){ #plane 2
-  #x1_std,y1_std,z1_std,x2_std,y2_std,z2_std,x3_std,y3_std,z3_std){
-
-  ## Originally written by Christina Harvey
-
-  #This computes the angle betweeon two planes composed of three points each
-  #--- Vectors of Plane 1 - create vector from two 3D pts
-  i1 = x2-x1
-  j1 = y2-y1
-  k1 = z2-z1
-  i2 = x2-x3
-  j2 = y2-y3
-  k2 = z2-z3
-  #--- Vectors of Plane 2 - create vector from two 3D pts
-  i3 = x5-x4
-  j3 = y5-y4
-  k3 = z5-z4
-  i4 = x5-x6
-  j4 = y5-y6
-  k4 = z5-z6
-  #--- Orthogonal Vector of Plane 1 - Cross Product of the vectors on the plane
-  i5 = j1*k2-k1*j2
-  j5 = k1*i2-i1*k2
-  k5 = i1*j2-j1*i2
-  #--- Orthogonal Vector of Plane 2 - Cross Product of the vectors on the plane
-  i6 = j3*k4-k3*j4
-  j6 = k3*i4-i3*k4
-  k6 = i3*j4-j3*i4
-  #--- Dot Product of Orthogonal Vectors
-  dotprod = ((i5*i6)+(j5*j6)+(k5*k6))
-  len1    = sqrt(i5^2+j5^2+k5^2)
-  len2    = sqrt(i6^2+j6^2+k6^2)
-  interior = dotprod/(len1*len2)
-  theta   = acos(interior)*(180/pi)
-
-  return(theta)
-}
-
-
 ################################# find_curve_elbow #############################
 
 #' Find the "elbow" of a curve.
