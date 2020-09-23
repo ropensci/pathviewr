@@ -222,7 +222,7 @@ named <code>"treatment"</code>.</p>
               max_frame_gap = <span class='st'>"autodetect"</span>,
               span = <span class='fl'>0.95</span>)
 </div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
-<span class='co'>##Remove subjects that have no completed at least 10 trajectories:</span>
+<span class='co'>##Remove subjects that have not completed at least 150 trajectories:</span>
 <span class='kw'>motive_rm_unmirrored</span> <span class='op'>&lt;-</span>
   <span class='kw'>motive_full</span> <span class='op'>%&gt;%</span>
   <span class='fu'>rm_by_trajnum</span>(trajnum = <span class='fl'>150</span>)
