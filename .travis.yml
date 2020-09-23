@@ -27,8 +27,9 @@ r_packages:
 
 r_check_args: "--no-build-vignettes --no-manual --as-cran"
 
-warnings_are_errors: false
-# change the above to true once warnings are dealt with
+warnings_are_errors: true
+# change the above to true if there are no warnings
+# or set to false if minor warnings should be ignored (for now)
 
 after_success:
   - Rscript -e 'covr::codecov()'

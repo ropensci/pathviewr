@@ -811,6 +811,9 @@ calc_vis_angle_box <- function(obj_name){
 
 
 calc_sf_V <- function(obj_name,
+                      vertex_angle,
+                      stim_param_pos,
+                      stim_param_neg,
                       simplify_output = FALSE) {
 
   ## Check that it's a viewr object
