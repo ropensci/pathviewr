@@ -29,3 +29,13 @@ test_that("vectors are empty before looping", {
   expect_equal(trajectory_count[[6]], 0)
   expect_equal(frame_gap_allowed[[4]], 0)
 })
+
+#test tibble output
+test_that("visualize_frame_gap_choice() tibble output is OK", {
+  expect_equal(visualize_frame_gap_choice(motive_selected,
+                                          loops = 10)[[1]]$trajectory_count[[5]],
+               13)
+  expect_equal(visualize_frame_gap_choice(motive_selected,
+                                          loops = 10)[[1]]$frame_gap_allowed[[8]],
+               8)
+})
