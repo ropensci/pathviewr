@@ -137,7 +137,7 @@ original data file imported via pathviewR's read_ functions." />
 original data file imported via <code>pathviewR</code>'s <code>read_</code> functions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_header_viewr</span>(<span class='no'>obj_name</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>get_header_viewr</span><span class='op'>(</span><span class='va'>obj_name</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,15 +164,16 @@ is found and no or more than one partial match is found.</p>
     <p>Vikram B. Baliga</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pathviewR</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/vbaliga/pathviewR'>pathviewR</a></span><span class='op'>)</span>
 
 <span class='co'>## Import the Motive example data included in the package</span>
-<span class='no'>motive_data</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                             <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pathviewR'</span>))
+<span class='va'>motive_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                             package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## Now display the Header information</span>
-<span class='fu'>get_header_viewr</span>(<span class='no'>motive_data</span>)</div><div class='output co'>#&gt;                 metadata                      value
+<span class='fu'>get_header_viewr</span><span class='op'>(</span><span class='va'>motive_data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                 metadata                      value
 #&gt; 1         Format Version                       1.23
 #&gt; 2              Take Name  sept-18_mixed-group_16-30
 #&gt; 3             Take Notes                           
@@ -199,7 +200,7 @@ is found and no or more than one partial match is found.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

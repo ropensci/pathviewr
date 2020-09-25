@@ -135,14 +135,14 @@
     <p>Separate rows of data into separately labeled trajectories.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>separate_trajectories</span>(
-  <span class='no'>obj_name</span>,
-  <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>frame_rate_proportion</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>frame_gap_messaging</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>frame_gap_plotting</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>separate_trajectories</span><span class='op'>(</span>
+  <span class='va'>obj_name</span>,
+  max_frame_gap <span class='op'>=</span> <span class='fl'>1</span>,
+  frame_rate_proportion <span class='op'>=</span> <span class='fl'>0.1</span>,
+  frame_gap_messaging <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  frame_gap_plotting <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -231,27 +231,29 @@ to find an estimate of the best max frame gap value to use.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Import the example Motive data included in the package</span>
-<span class='no'>motive_data</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                              <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pathviewR'</span>))
+<span class='va'>motive_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## Clean the file. It is generally recommended to clean up to the</span>
 <span class='co'>## "select" step before running select_x_percent().</span>
-<span class='no'>motive_selected</span> <span class='kw'>&lt;-</span>
-  <span class='no'>motive_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span>(<span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='va'>motive_selected</span> <span class='op'>&lt;-</span>
+  <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
 
 <span class='co'>## Now separate trajectories using autodetect</span>
-<span class='no'>motive_separated</span> <span class='kw'>&lt;-</span>
-  <span class='no'>motive_selected</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>separate_trajectories</span>(<span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
-                        <span class='kw'>frame_rate_proportion</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+<span class='va'>motive_separated</span> <span class='op'>&lt;-</span>
+  <span class='va'>motive_selected</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>separate_trajectories</span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
+                        frame_rate_proportion <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
 <span class='co'>## See new column file_sub_traj for trajectory labeling</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>motive_separated</span>)</div><div class='output co'>#&gt;  [1] "frame"             "time_sec"          "subject"          
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>motive_separated</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "frame"             "time_sec"          "subject"          
 #&gt;  [4] "position_length"   "position_width"    "position_height"  
 #&gt;  [7] "rotation_length"   "rotation_width"    "rotation_height"  
 #&gt; [10] "rotation_real"     "mean_marker_error" "traj_id"          
@@ -271,7 +273,7 @@ to find an estimate of the best max frame gap value to use.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

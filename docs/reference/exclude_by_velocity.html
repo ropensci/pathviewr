@@ -137,7 +137,7 @@ known to be spurious." />
 known to be spurious.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>exclude_by_velocity</span>(<span class='no'>obj_name</span>, <span class='kw'>vel_min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vel_max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>exclude_by_velocity</span><span class='op'>(</span><span class='va'>obj_name</span>, vel_min <span class='op'>=</span> <span class='cn'>NULL</span>, vel_max <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,24 +173,27 @@ excludes any trajectories that contain observations with velocity less than
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Import and clean the example Motive data</span>
-<span class='no'>motive_import_and_clean</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='import_and_clean_viewr.html'>import_and_clean_viewr</a></span>(
-    <span class='kw'>file_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                            <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pathviewR'</span>),
-    <span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-    <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
-    <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.95</span>
-  )</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+<span class='va'>motive_import_and_clean</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='import_and_clean_viewr.html'>import_and_clean_viewr</a></span><span class='op'>(</span>
+    file_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                            package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+    desired_percent <span class='op'>=</span> <span class='fl'>50</span>,
+    max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
+    span <span class='op'>=</span> <span class='fl'>0.95</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
 <span class='co'>## See the distribution of velocities</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>motive_import_and_clean</span>$<span class='no'>velocity</span>)</div><div class='img'><img src='exclude_by_velocity-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>motive_import_and_clean</span><span class='op'>$</span><span class='va'>velocity</span><span class='op'>)</span>
+</div><div class='img'><img src='exclude_by_velocity-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Let's remove any trajectories that contain</span>
 <span class='co'>## velocity &lt; 2</span>
-<span class='no'>motive_vel_filtered</span> <span class='kw'>&lt;-</span>
-  <span class='no'>motive_import_and_clean</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>exclude_by_velocity</span>(<span class='kw'>vel_min</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='va'>motive_vel_filtered</span> <span class='op'>&lt;-</span>
+  <span class='va'>motive_import_and_clean</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>exclude_by_velocity</span><span class='op'>(</span>vel_min <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
 <span class='co'>## See how the distribution of velocities has changed</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>motive_vel_filtered</span>$<span class='no'>velocity</span>)</div><div class='img'><img src='exclude_by_velocity-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>motive_vel_filtered</span><span class='op'>$</span><span class='va'>velocity</span><span class='op'>)</span>
+</div><div class='img'><img src='exclude_by_velocity-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -206,7 +209,7 @@ excludes any trajectories that contain observations with velocity less than
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -137,7 +137,7 @@ up through get full trajectories, as desired) via clean_viewr()" />
 up through get full trajectories, as desired) via clean_viewr()</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clean_viewr_batch</span>(<span class='no'>obj_list</span>, <span class='kw'>file_announce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>clean_viewr_batch</span><span class='op'>(</span><span class='va'>obj_list</span>, file_announce <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,51 +188,55 @@ and/or refer to the corresponding cleaning functions themselves.</p>
 <span class='co'>## the following list with your own list of files to be imported.</span>
 
 <span class='co'>## Make a list of the same example file 3x</span>
-<span class='no'>import_list</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pathviewR'</span>),
+<span class='va'>import_list</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
     <span class='fl'>3</span>
-  ))
+  <span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## Batch import</span>
-<span class='no'>motive_batch_imports</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='import_batch.html'>import_batch</a></span>(<span class='no'>import_list</span>,
-               <span class='kw'>import_method</span> <span class='kw'>=</span> <span class='st'>"motive"</span>,
-               <span class='kw'>import_messaging</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='input'>
+<span class='va'>motive_batch_imports</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='import_batch.html'>import_batch</a></span><span class='op'>(</span><span class='va'>import_list</span>,
+               import_method <span class='op'>=</span> <span class='st'>"motive"</span>,
+               import_messaging <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='input'>
 <span class='co'>## Batch cleaning of these imported files</span>
 <span class='co'>## via clean_viewr_batch()</span>
-<span class='no'>motive_batch_cleaned</span> <span class='kw'>&lt;-</span>
-  <span class='fu'>clean_viewr_batch</span>(
-    <span class='kw'>file_announce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='no'>motive_batch_imports</span>,
-    <span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-    <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
-    <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.95</span>
-  )</div><div class='output co'>#&gt; <span class='message'>File 1 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 2 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 3 has been cleaned successfully.</span></div><div class='input'>
+<span class='va'>motive_batch_cleaned</span> <span class='op'>&lt;-</span>
+  <span class='fu'>clean_viewr_batch</span><span class='op'>(</span>
+    file_announce <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    <span class='va'>motive_batch_imports</span>,
+    desired_percent <span class='op'>=</span> <span class='fl'>50</span>,
+    max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
+    span <span class='op'>=</span> <span class='fl'>0.95</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>File 1 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 2 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 3 has been cleaned successfully.</span></div><div class='input'>
 <span class='co'>## Alternatively, use import_and_clean_batch() to</span>
 <span class='co'>## combine import with cleaning on a batch of files</span>
-<span class='no'>motive_batch_import_and_clean</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='import_and_clean_batch.html'>import_and_clean_batch</a></span>(
-    <span class='no'>import_list</span>,
-    <span class='kw'>import_method</span> <span class='kw'>=</span> <span class='st'>"motive"</span>,
-    <span class='kw'>import_messaging</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='no'>motive_batch_imports</span>,
-    <span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-    <span class='kw'>max_frame_gap</span> <span class='kw'>=</span> <span class='st'>"autodetect"</span>,
-    <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.95</span>
-  )</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='input'>
+<span class='va'>motive_batch_import_and_clean</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='import_and_clean_batch.html'>import_and_clean_batch</a></span><span class='op'>(</span>
+    <span class='va'>import_list</span>,
+    import_method <span class='op'>=</span> <span class='st'>"motive"</span>,
+    import_messaging <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    <span class='va'>motive_batch_imports</span>,
+    desired_percent <span class='op'>=</span> <span class='fl'>50</span>,
+    max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
+    span <span class='op'>=</span> <span class='fl'>0.95</span>
+  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='input'>
 <span class='co'>## Each of these lists of objects can be bound into</span>
 <span class='co'>## one viewr object (i.e. one tibble) via</span>
 <span class='co'>## bind_viewr_objects()</span>
-<span class='no'>motive_bound_one</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='bind_viewr_objects.html'>bind_viewr_objects</a></span>(<span class='no'>motive_batch_cleaned</span>)
+<span class='va'>motive_bound_one</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='bind_viewr_objects.html'>bind_viewr_objects</a></span><span class='op'>(</span><span class='va'>motive_batch_cleaned</span><span class='op'>)</span>
 
-<span class='no'>motive_bound_two</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='bind_viewr_objects.html'>bind_viewr_objects</a></span>(<span class='no'>motive_batch_import_and_clean</span>)
+<span class='va'>motive_bound_two</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='bind_viewr_objects.html'>bind_viewr_objects</a></span><span class='op'>(</span><span class='va'>motive_batch_import_and_clean</span><span class='op'>)</span>
 
 <span class='co'>## Either route results in the same object ultimately:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>motive_bound_one</span>, <span class='no'>motive_bound_two</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>motive_bound_one</span>, <span class='va'>motive_bound_two</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -248,7 +252,7 @@ and/or refer to the corresponding cleaning functions themselves.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
