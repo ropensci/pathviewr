@@ -14,31 +14,23 @@ motive_full <-
               max_frame_gap = "autodetect",
               span = 0.95)
 
-## Plot all trajectories by subject
-motive_full %>%
-  plot_by_subject()
-
 #test axes limits
+height_limits <- c(max(abs(range(
+  motive_full$position_height
+))) * -1,
+max(abs(range(
+  motive_full$position_height
+))))
+width_limits <- c(max(abs(range(
+  motive_full$position_width
+))) * -1,
+max(abs(range(
+  motive_full$position_width
+))))
+
 test_that("axes are set correctly", {
-  height_limits <- c(max(abs(range(
-    motive_full$position_height
-  ))) * -1,
-  max(abs(range(
-    motive_full$position_height
-  ))))
   expect_equal(height_limits, c(-0.243158,0.243158))
 })
-
-# cannot figure out why this doesn't work!!:
-# test_that("axes are set correctly", {
-#   width_limits <- c(max(abs(range(
-#     motive_full$position_width
-#   ))) * -1,
-#   max(abs(range(
-#     motive_full$position_width
-#   ))))
-#   expect_equal(width_limits, c(-0.3782167,0.3782167))
-# })
 
 # if (col_by_treat == FALSE)
   #for top view
