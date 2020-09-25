@@ -15,12 +15,6 @@ motive_full <-
               span = 0.95)
 
 #test axes limits
-height_limits <- c(max(abs(range(
-  motive_full$position_height
-))) * -1,
-max(abs(range(
-  motive_full$position_height
-))))
 width_limits <- c(max(abs(range(
   motive_full$position_width
 ))) * -1,
@@ -28,8 +22,13 @@ max(abs(range(
   motive_full$position_width
 ))))
 
-test_that("axes are set correctly", {
-  expect_equal(height_limits, c(-0.243158,0.243158))
+test_that("base functions set axes correctly", {
+  expect_equal(max(abs(range(
+    motive_full$position_height
+  ))) * -1, -0.243158)
+  expect_equal(max(abs(range(
+    motive_full$position_width
+  ))), width_limits[[2]])
 })
 
 # if (col_by_treat == FALSE)
