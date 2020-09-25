@@ -32,58 +32,58 @@ test_that("base functions set axes correctly", {
 })
 
 # if (col_by_treat == FALSE)
-  #for top view
-  top_view <- motive_full %>%
-    dplyr::group_by(subject) %>%
-    tidyr::nest() %>%
-    dplyr::mutate(
-      paths = purrr::map(
-        data,
-        ~ ggplot2::ggplot(., aes(
-          position_length,
-          position_width
-        )) +
-          geom_point(alpha = .1, show.legend = FALSE) +
-          ylim(width_limits) +
-          geom_hline(yintercept = 0, linetype = "dotted") +
-          coord_fixed(ratio = 1)
-      ),
-      hist = purrr::map(
-        data,
-        ~ ggplot2::ggplot(., aes(x = position_width)) +
-          geom_density(
-            alpha = .5,
-            position = "identity",
-            show.legend = FALSE
-          ) +
-          xlim(width_limits) +
-          geom_vline(xintercept = 0, linetype = "dotted") +
-          coord_flip()
-      )
+#for top view
+top_view <- motive_full %>%
+  dplyr::group_by(subject) %>%
+  tidyr::nest() %>%
+  dplyr::mutate(
+    paths = purrr::map(
+      data,
+      ~ ggplot2::ggplot(., aes(
+        position_length,
+        position_width
+      )) +
+        geom_point(alpha = .1, show.legend = FALSE) +
+        ylim(width_limits) +
+        geom_hline(yintercept = 0, linetype = "dotted") +
+        coord_fixed(ratio = 1)
+    ),
+    hist = purrr::map(
+      data,
+      ~ ggplot2::ggplot(., aes(x = position_width)) +
+        geom_density(
+          alpha = .5,
+          position = "identity",
+          show.legend = FALSE
+        ) +
+        xlim(width_limits) +
+        geom_vline(xintercept = 0, linetype = "dotted") +
+        coord_flip()
     )
-  #all of them together:
-  top_all_plots <- top_view %>%
-    dplyr::select(subject, paths, hist) %>%
-    tidyr::gather("plot_type", "allplots", 2:3)
+  )
+#all of them together:
+top_all_plots <- top_view %>%
+  dplyr::select(subject, paths, hist) %>%
+  tidyr::gather("plot_type", "allplots", 2:3)
 
-  #test top views
-  test_that("top views created correctly via purrr::map", {
-    expect_equal(top_view[[3]][[1]][["data"]][["position_width"]][[2]],-.1163564)
-    expect_equal(environment(top_view[[4]][[3]][["facet"]][["super"]])[["args"]], NULL)
-  })
+#test top views
+test_that("top views created correctly via purrr::map", {
+  expect_equal(top_view[[3]][[1]][["data"]][["position_width"]][[2]],-.1163564)
+  expect_equal(environment(top_view[[4]][[3]][["facet"]][["super"]])[["args"]], NULL)
+})
 
-  test_that("top views wrangled correctly via tidyverse", {
-    expect_match(top_all_plots$plot_type[[1]], "paths")
-    expect_match(top_all_plots$subject[[5]], "device03")
-    expect_match(top_all_plots[[3]][[4]][["labels"]][["x"]], "position_width")
-  })
+test_that("top views wrangled correctly via tidyverse", {
+  expect_match(top_all_plots$plot_type[[1]], "paths")
+  expect_match(top_all_plots$subject[[5]], "device03")
+  expect_match(top_all_plots[[3]][[4]][["labels"]][["x"]], "position_width")
+})
 
-  # ## Add treatment information
-  # motive_full$treatment <- c(rep("latA", 100),
-  #                            rep("latB", 100),
-  #                            rep("latA", 100),
-  #                            rep("latB", 149))
-  #
-  # ## Plot all trajectories by subject, color by treatment
-  # motive_full %>%
-  #   plot_by_subject(col_by_treat = TRUE)
+# ## Add treatment information
+# motive_full$treatment <- c(rep("latA", 100),
+#                            rep("latB", 100),
+#                            rep("latA", 100),
+#                            rep("latB", 149))
+#
+# ## Plot all trajectories by subject, color by treatment
+# motive_full %>%
+#   plot_by_subject(col_by_treat = TRUE)
