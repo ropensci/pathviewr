@@ -1,4 +1,5 @@
 # Tests of visualize_frame_gap_choice()
+context("visualize frame gap choice")
 
 ## Import the example Motive data included in the package
 motive_data <-
@@ -38,4 +39,11 @@ test_that("visualize_frame_gap_choice() tibble output is OK", {
   expect_equal(visualize_frame_gap_choice(motive_selected,
                                           loops = 10)[[1]]$frame_gap_allowed[[8]],
                8)
+})
+
+#test plot output w/vdiffr
+#use addins to open shiny app to validate plots
+test_that("visualize_frame_gap_choice() plot output is OK", {
+  vdiffr::expect_doppelganger("mfg plot", visualize_frame_gap_choice(motive_selected,
+                                                 loops = 10)[[2]])
 })
