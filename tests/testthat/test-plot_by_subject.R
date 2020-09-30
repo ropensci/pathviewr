@@ -14,7 +14,13 @@ motive_full <-
               max_frame_gap = "autodetect",
               span = 0.95)
 
-#test axes limits
+#set axes limits based on data
+height_limits <- c(max(abs(range(
+  motive_full$position_height
+))) * -1,
+max(abs(range(
+  motive_full$position_height
+))))
 width_limits <- c(max(abs(range(
   motive_full$position_width
 ))) * -1,
@@ -22,6 +28,7 @@ max(abs(range(
   motive_full$position_width
 ))))
 
+#test axes limits
 test_that("base functions set axes correctly", {
   expect_equal(max(abs(range(
     motive_full$position_height
@@ -88,8 +95,55 @@ test_that("top views wrangled correctly via tidyverse", {
 # })
 
 ## Add treatment information
-# motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
-#                            rep("latA", 100), rep("latB", 149))
+motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
+                           rep("latA", 100), rep("latB", 149))
+
+#if (col_by_treat == TRUE)
+  #for elev view (change in height):
+  elev_view <- motive_full %>%
+    dplyr::group_by(subject) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(
+      paths = purrr::map(
+        data,
+        ~ ggplot2::ggplot(., aes(
+          position_length, position_height, colour = treatment
+        )) +
+          geom_point(alpha = .1, show.legend = FALSE) +
+          ylim(height_limits) +
+          geom_hline(yintercept = 0, linetype = "dotted") +
+          coord_fixed(ratio = 1)
+      ),
+      hist = purrr::map(
+        data,
+        ~ ggplot2::ggplot(., aes(position_height, fill = treatment)) +
+          geom_density(
+            alpha = .5,
+            position = "identity",
+            show.legend = FALSE
+          ) +
+          xlim(height_limits) +
+          geom_vline(xintercept = 0, linetype = "dotted") +
+          coord_flip()
+      )
+    )
+
+  #all of them together:
+  elev_all_plots <- elev_view %>%
+    dplyr::select(subject, paths, hist) %>%
+    tidyr::gather("plot_type", "allplots", 2:3)
+
+  #test elev views
+  test_that("elev views created correctly via purrr::map", {
+    expect_equal(elev_view[[3]][[1]][["data"]][["position_width"]][[98]],-0.09991182)
+    expect_equal(environment(elev_view[[4]][[3]][["facet"]][["super"]])[["args"]], NULL)
+  })
+
+  test_that("elev views wrangled correctly via tidyverse", {
+    expect_match(elev_all_plots$plot_type[[3]], "paths")
+    expect_match(elev_all_plots$subject[[4]], "device02")
+    expect_match(elev_all_plots[[3]][[4]][["labels"]][["x"]], "position_height")
+  })
 
 #test plot output w/vdiffr
 #use addins to open shiny app to validate plots
