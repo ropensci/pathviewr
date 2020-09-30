@@ -15,8 +15,6 @@ motive_selected <-
   get_velocity() %>%
   select_x_percent(desired_percent = 50)
 
-visualize_frame_gap_choice(motive_selected, loops = 10)
-
 # make a bunch of empty vectors to dump info
 mfg <- vector("list", 10)
 cts <- vector("list", 10)
