@@ -80,26 +80,22 @@ test_that("top views wrangled correctly via tidyverse", {
 
 #test plot output w/vdiffr
 #use addins to open shiny app to validate plots
-test_that("plot_by_subject() default plot output is OK", {
-  vdiffr::expect_doppelganger("plot by subject default 1",
-                              plot_by_subject(motive_full)[[1]])
-  vdiffr::expect_doppelganger("plot by subject default 2",
-                              plot_by_subject(motive_full)[[2]])
-})
+# test_that("plot_by_subject() default plot output is OK", {
+#   vdiffr::expect_doppelganger("plot by subject default 1",
+#                               plot_by_subject(motive_full)[[1]])
+#   vdiffr::expect_doppelganger("plot by subject default 2",
+#                               plot_by_subject(motive_full)[[2]])
+# })
 
 ## Add treatment information
-motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
-                           rep("latA", 100), rep("latB", 149))
-
-## Plot all trajectories by subject, color by treatment
-motive_full %>%
-  plot_by_subject(col_by_treat = TRUE)
+# motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
+#                            rep("latA", 100), rep("latB", 149))
 
 #test plot output w/vdiffr
 #use addins to open shiny app to validate plots
-test_that("plot_by_subject() col_by_treat plot output is OK", {
-  vdiffr::expect_doppelganger("plot by subject colbytreat 1",
-                              plot_by_subject(motive_full, col_by_treat = TRUE)[[1]])
-  vdiffr::expect_doppelganger("plot by subject colbytreat 2",
-                              plot_by_subject(motive_full, col_by_treat = TRUE)[[2]])
-})
+# test_that("plot_by_subject() col_by_treat plot output is OK", {
+#   vdiffr::expect_doppelganger("plot by subject colbytreat 1",
+#                               plot_by_subject(motive_full, col_by_treat = TRUE)[[1]])
+#   vdiffr::expect_doppelganger("plot by subject colbytreat 2",
+#                               plot_by_subject(motive_full, col_by_treat = TRUE)[[2]])
+# })
