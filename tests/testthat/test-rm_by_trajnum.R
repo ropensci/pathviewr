@@ -1,9 +1,9 @@
 # Tests of rm_by_trajnum()
 
 # pre-import tests
-test_that("rm_by_trajnum() fails when non-numerics are supplied", {
-  expect_error(rm_by_trajnum("steve"))
-  expect_error(rm_by_trajnum(c("a", "b", "c")))
+test_that("rm_by_trajnum() fails when data are missing or nonsense trajnum", {
+  expect_error(rm_by_trajnum(trajnum = "steve"))
+  expect_error(rm_by_trajnum())
 })
 
 # Import the example Motive data included in the package
