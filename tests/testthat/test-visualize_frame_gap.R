@@ -41,7 +41,10 @@ test_that("visualize_frame_gap_choice() tibble output is OK", {
 
 #test plot output w/vdiffr
 #use addins to open shiny app to validate plots
-# test_that("visualize_frame_gap_choice() plot output is OK", {
-#   vdiffr::expect_doppelganger("mfg plot", visualize_frame_gap_choice(motive_selected,
-#                                                  loops = 10)[[2]])
-# })
+ test_that("visualize_frame_gap_choice() plot output is OK", {
+   skip_on_cran()
+   skip_on_travis()
+   skip_on_appveyor()
+   vdiffr::expect_doppelganger("mfg plot", visualize_frame_gap_choice(motive_selected,
+                                                  loops = 10)[[2]])
+ })
