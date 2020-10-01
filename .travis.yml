@@ -2,17 +2,13 @@
 
 language: R
 sudo: false
-
-matrix:
-  include:
-  - r: devel
-  - r: release
-    env: USE_VDIFFR=true
-    r_github_packages: lionel-/vdiffr
+r:
+  # - oldrel # removing this for now
+  - release
+  - devel
 cache: packages
 
 r_packages:
-  - devtools
   - R.matlab
   - data.table
   - tidyverse
@@ -28,6 +24,9 @@ r_packages:
   - cowplot
   - knitr
   - rmarkdown
+
+# Install manually from github:
+r_github_packages: lionel-/vdiffr
 
 r_check_args: "--no-build-vignettes --no-manual --as-cran"
 
