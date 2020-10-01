@@ -5,7 +5,7 @@ context("plot viewr trajectories")
 test_that("plot_viewr_trajectories() fails when data are missing or nonsense args", {
   expect_error(plot_viewr_trajectories(multi_plot = "steve"))
   expect_error(plot_viewr_trajectories(plot_axes = 1))
-  expect_error(plot_viewr_trajectories(obj_name = NULL))
+  expect_error(plot_viewr_trajectories(obj_name = "jobin"))
   expect_error(plot_viewr_trajectories())
 })
 
