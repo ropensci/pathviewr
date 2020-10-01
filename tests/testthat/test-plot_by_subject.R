@@ -91,6 +91,7 @@ test_that("plot_by_subject() default plot output is OK", {
   skip_on_cran()
   skip_on_travis()
   skip_on_appveyor()
+  skip_on_gh_actions
   vdiffr::expect_doppelganger("plot by subject default 1",
                               plot_by_subject(motive_full)[[1]])
   vdiffr::expect_doppelganger("plot by subject default 2",
@@ -154,6 +155,7 @@ test_that("plot_by_subject() col_by_treat plot output is OK", {
   skip_on_cran()
   skip_on_travis()
   skip_on_appveyor()
+  skip_on_gh_actions
   vdiffr::expect_doppelganger("plot by subject colbytreat 1",
                               plot_by_subject(motive_full, col_by_treat = TRUE)[[1]])
   vdiffr::expect_doppelganger("plot by subject colbytreat 2",

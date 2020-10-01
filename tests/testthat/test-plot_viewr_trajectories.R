@@ -22,8 +22,6 @@ motive_full <-
 
 #pre plot data wrangle
 obj_name_trajs <- unique(motive_full$file_sub_traj)
-## For multi-plotting, find out what the square root of the total number
-## of trajectories is. This will be used to set par(mfrow()).
 sqrt_traj_count <- ceiling(sqrt(length(obj_name_trajs)))
 
 test_that("wrangle for plots OK", {
@@ -54,6 +52,7 @@ test_that("plot_viewr_trajectories() plot output is OK", {
   skip_on_cran()
   skip_on_travis()
   skip_on_appveyor()
+  skip_on_gh_actions
   vdiffr::expect_doppelganger("multi plot default",
                       plot_viewr_trajectories(motive_full,
                                               plot_axes = c("length", "width"),
