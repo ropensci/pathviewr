@@ -1,6 +1,14 @@
 #Tests of plot_viewr_trajectories()
 context("plot viewr trajectories")
 
+## test of object input
+test_that("plot_viewr_trajectories() fails when data are missing or nonsense args", {
+  expect_error(plot_viewr_trajectories(multi_plot = "steve"))
+  expect_error(plot_viewr_trajectories(plot_axes = 1))
+  expect_error(plot_viewr_trajectories(obj_name = NULL))
+  expect_error(plot_viewr_trajectories())
+})
+
 ## Import the example Motive data included in the package
 motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
