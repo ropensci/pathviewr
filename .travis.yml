@@ -25,6 +25,9 @@ r_packages:
   - knitr
   - rmarkdown
 
+# Install manually from github:
+-r_github_packages: lionel-/vdiffr
+
 r_check_args: "--no-build-vignettes --no-manual --as-cran"
 
 warnings_are_errors: true
