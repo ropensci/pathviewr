@@ -47,5 +47,24 @@ test_that("get_velocity() fails when velocity_min is non-numeric", {
 })
 test_that("get_velocity() fails when velocity_max is non-numeric", {
   expect_error(
-    get_velocity(motive_cleaned, add_to_viewr = TRUE, velocity_min = "bob"))
+    get_velocity(motive_cleaned, add_to_viewr = TRUE, velocity_max = "bob"))
+})
+
+
+test_that("get_velocity() fails when colums are missing", {
+   expect_error(get_velocity(
+      motive_cleaned[, 1:3],
+      add_to_viewr = TRUE,
+      velocity_min = "bob"
+   ))
+   expect_error(get_velocity(
+      motive_cleaned[, 1:4],
+      add_to_viewr = TRUE,
+      velocity_min = "bob"
+   ))
+   expect_error(get_velocity(
+      motive_cleaned[, 1:5],
+      add_to_viewr = TRUE,
+      velocity_min = "bob"
+   ))
 })
