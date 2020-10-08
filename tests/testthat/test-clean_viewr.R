@@ -4,6 +4,27 @@ motive_test_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
 
+test_that("a message is made even if inputs are good",
+          {
+            expect_message(
+              motive_import_and_clean <-
+                import_and_clean_viewr(
+                  file_name =
+                    system.file("extdata", "pathviewR_motive_example_data.csv",
+                                package = 'pathviewR'),
+                  desired_percent = 50,
+                  max_frame_gap = "autodetect",
+                  span = 0.95,
+                  fill_traj_gaps = TRUE,
+                  loess_degree = 1,
+                  loess_criterion = c("aicc", "gcv"),
+                  loess_family = c("gaussian", "symmetric"),
+                  loess_user_span = NULL
+                )
+            )
+          })
+
+
 #### clean_viewr ####
 ## Pre-import tests
 test_that("clean_viewr() fails when no file is supplied",
@@ -80,7 +101,9 @@ test_that("clean_viewr() fails when rename_viewr_characters has args but is FALS
               clean_viewr(
                 motive_test_data,
                 rename_viewr_characters = FALSE,
-                target_column = "subject"
+                target_column = "subject",
+                pattern,
+                replacement = ""
               )
             )
           })
@@ -115,7 +138,21 @@ test_that("clean_viewr() fails when fill_traj_gaps has args but is FALSE",
               )
             )
           })
+test_that("clean_viewr() fails when standardization option is nonsense",
+          {
+            expect_error(clean_viewr(motive_test_data,
+                                     standardization_option = "help_pls"))
+          })
 
+## Test that unused params also fail successfully
+test_that("clean_viewr() reports when unused params are given",
+          {
+            expect_message(clean_viewr(
+              motive_test_data,
+              stuff = "stuff",
+              dog = "chewie"
+            ))
+          })
 
 #### Import and clean viwer ####
 ## Pre-import tests
@@ -205,7 +242,9 @@ test_that("import_and_clean_viewr() fails when rename_viewr_characters has args 
                 system.file("extdata", "pathviewR_motive_example_data.csv",
                             package = 'pathviewR'),
                 rename_viewr_characters = FALSE,
-                target_column = "subject"
+                target_column = "subject",
+                pattern,
+                replacement = ""
               )
             )
           })
@@ -242,4 +281,23 @@ test_that("import_and_clean_viewr() fails when fill_traj_gaps has args but is FA
                 loess_family = c("gaussian", "symmetric")
               )
             )
+          })
+## Test that unused params also fail successfully
+test_that("import_and_clean_viewr() reports when unused params are given",
+          {
+            expect_message(import_and_clean_viewr(
+              system.file("extdata", "pathviewR_motive_example_data.csv",
+                          package = 'pathviewR'),
+              stuff = "stuff",
+              dog = "chewie"
+            ))
+          })
+## Test that standardization option is correctly enforced
+test_that("import_and_clean_viewr() fails  when standardization option is nonsense",
+          {
+            expect_error(import_and_clean_viewr(
+              system.file("extdata", "pathviewR_motive_example_data.csv",
+                          package = 'pathviewR'),
+              standardization_option = "chewie"
+            ))
           })
