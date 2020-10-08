@@ -245,7 +245,7 @@ import_and_clean_batch <- function(file_path_list,
       obj_list[[i]] <- read_flydra_mat(
         mat_file = file_path_list[i],
         subject_name = subject_name[i],
-        frame_rate = 100)
+        frame_rate = frame_rate)
       if (import_messaging == TRUE)
         message("File ", i, " imported.")
     }
