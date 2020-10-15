@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "pathviewR",
   "description": "This package offers tools to import, clean, and visualize \n    animal movement data from Optitrack's Motive, from Flydra, or from \n    another source. We provide functions to remove artifacts, standardize\n    tunnel position and tunnel axes, select a region of interest, isolate \n    specific trajectories, fill gaps in trajectory data, and calculate 3D\n    and per-axis velocity. For experiments of visual guidance, we also \n    provide functions that use animal position to estimate perception of\n    visual stimuli. ",
@@ -281,7 +284,7 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "9351.345KB",
+  "fileSize": "9362.26KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }
