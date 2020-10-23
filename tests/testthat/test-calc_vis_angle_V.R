@@ -40,10 +40,12 @@ test_that("calc_vis_angle_V() adds variables appropriately",{
  # width_2_screen handles pos and neg position_widths correctly
   expect_equal(motive_vis_angle_full$width_2_screen_neg[220:230],
                c(0.2524517,0.2590141,0.2647242,0.2683496,0.4708539,
-                 0.4710674,0.4718399,0.4710872,0.4719066,0.4726183,0.4737730)
+                 0.4710674,0.4718399,0.4710872,0.4719066,0.4726183,0.4737730),
+               tolerance = 1e-5
                 )
  # correct visual angle calculations
   expect_equal(motive_vis_angle_full$vis_angle_pos_deg[61:64],
-               c(9.916060,9.977103,10.041513,27.247943)
+               c(9.916060,9.977103,10.041513,27.247943),
+               tolerance = 1e-5
                 )
 })

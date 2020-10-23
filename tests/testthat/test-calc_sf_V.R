@@ -37,13 +37,15 @@ test_that("calc_sf_V() adds variables appropriately",{
 test_that("calc_sf_V makes correct calculations based on position_width",{
   # width_2_screen handles pos and neg position_widths
   expect_equal(motive_sf_full$width_2_screen_neg[220:230],
-                           c(0.2524517,0.2590141,0.2647242,0.2683496,0.4708539,
-                             0.4710674,0.4718399,0.4710872,0.4719066,0.4726183,
-                             0.4737730)
+               c(0.2524517,0.2590141,0.2647242,0.2683496,0.4708539,
+                 0.4710674,0.4718399,0.4710872,0.4719066,0.4726183,
+                 0.4737730),
+               tolerance = 1e-5
               )
   # correct spatial frequency calculations
   expect_equal(motive_sf_full$sf_pos[61:64],
-                           c(0.20120975,0.19997251,0.19868329,0.07201874)
+               c(0.20120975,0.19997251,0.19868329,0.07201874),
+               tolerance = 1e-5
               )
 })
 
