@@ -20,10 +20,19 @@ flydra_data <-
 ############# unfinished
 flydra_full <-
   flydra_data %>%
-  trim_tunnel_outliers() %>%
-  redefine_tunnel_center() %>%
-############# unfinished
+  clean_viewr(
+    relabel_viewr_axes = FALSE,
+    gather_tunnel_data = FALSE,
+    standardization_option = "redefine_tunnel_center",
+    select_x_percent = FALSE,
+    rename_viewr_characters = FALSE,
+    separate_trajectories = TRUE,
+    max_frame_gap = "autodetect",
+    get_full_trajectories = TRUE,
+    span = 0.5
+  )
 
+############# unfinished
 
 
 ## Run insert_treatments() on each
