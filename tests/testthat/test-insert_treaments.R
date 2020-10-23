@@ -13,7 +13,6 @@ flydra_data <-
                 package = 'pathviewR'),
     subject_name = "birdie_wooster")
 
-############# unfinished
 flydra_full <-
   flydra_data %>%
   clean_viewr(
@@ -31,7 +30,6 @@ flydra_full <-
     get_full_trajectories = TRUE
   )
 
-############# unfinished
 
 
 ## Run insert_treatments() on each
@@ -53,23 +51,26 @@ flydra_test <-
                     stim_param_front = 0.2,
                     treatment = "latB")
 
-## Test output object
+## Test output objects
 test_that("insert_treatments() adds variables appropriately", {
   ## Inserted variables at beginning of df
   expect_equal(names(motive_test)[1:5],
                c("vertex_height", "vertex_angle", "stim_param_pos",
                  "stim_param_neg", "treatment"))
-
-  ## output object is of correct dimensions
+  expect_equal(names(flydra_test)[1:7],
+               c("pos_wall", "neg_wall", "front_wall", "stim_param_pos",
+                 "stim_param_neg", "stim_param_front", "treatment"))
+  ## output objects are of correct dimensions
   expect_equal(dim(motive_test), c(449, 29))
+  expect_equal(dim(flydra_test), c(133, 22))
 })
 
 ## Test error message for incorrect argument combination
 test_that("incorrect argument combination triggers error message", {
   expect_error(insert_treatments(motive_full,
                                  vertex_height = 45,
-                                 pos_wall = 0.5),
-               "V-shaped and box-shaped arguments supplied.")
+                                 pos_wall = 0.5)
+               )
 })
 
 
