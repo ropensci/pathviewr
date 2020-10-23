@@ -1,7 +1,3 @@
-## Tests for insert_treatments()
-context("insert_treatments()")
-
-
 ## Import the motive and flydra example datasets
 motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",

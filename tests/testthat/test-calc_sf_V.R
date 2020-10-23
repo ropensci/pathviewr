@@ -1,7 +1,3 @@
-## Tests for calc_sf_V
-context("calc_sf_V")
-
-
 ## Import and prepare the motive and flydra example datasets
 motive_data <- # import
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
