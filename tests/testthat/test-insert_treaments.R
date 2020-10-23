@@ -19,13 +19,16 @@ flydra_full <-
   clean_viewr(
     relabel_viewr_axes = FALSE,
     gather_tunnel_data = FALSE,
+    trim_tunnel_outliers = FALSE,
     standardization_option = "redefine_tunnel_center",
-    select_x_percent = FALSE,
+    length_method = "middle",
+    height_method = "user-defined",
+    height_zero = 1.44,
+    get_velocity = FALSE,
+    select_x_percent = TRUE,
     rename_viewr_characters = FALSE,
     separate_trajectories = TRUE,
-    max_frame_gap = "autodetect",
-    get_full_trajectories = TRUE,
-    span = 0.5
+    get_full_trajectories = TRUE
   )
 
 ############# unfinished
