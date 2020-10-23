@@ -15,9 +15,6 @@ This package offers tools to import, clean, and visualize
     provide functions that use animal position to estimate perception of
     visual stimuli.
 }
-\details{
-Description of package TBD
-}
 \seealso{
 Useful links:
 \itemize{
