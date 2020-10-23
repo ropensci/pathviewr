@@ -1,5 +1,4 @@
 #Tests of plot_by_subject()
-context("plot by subject")
 library(tidyverse)
 
 ## Import the example Motive data included in the package

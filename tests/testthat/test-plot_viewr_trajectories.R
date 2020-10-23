@@ -1,5 +1,4 @@
 #Tests of plot_viewr_trajectories()
-context("plot viewr trajectories")
 
 ## test of object input
 test_that("plot_viewr_trajectories() fails when data are missing or nonsense args",

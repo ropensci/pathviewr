@@ -1,5 +1,4 @@
 # Tests of visualize_frame_gap_choice()
-context("visualize frame gap choice")
 
 ## Import the example Motive data included in the package
 motive_data <-
