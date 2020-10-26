@@ -337,9 +337,9 @@ get_3d_cross_prod <- function(v1,
 rad_2_deg <- function(rad) {
 
   ## Check that it's a numeric
-  if (!any(class(rad) == "numeric")) {
-    stop("Input angle must be a numeric")
-  }
+  #if (!any(class(rad) == "numeric")) {
+  #  stop("Input angle must be a numeric")
+  #}
 
   return((rad * 180) / (pi))
 
@@ -370,9 +370,9 @@ rad_2_deg <- function(rad) {
 deg_2_rad <- function(deg) {
 
   ## Check that it's a numeric
-  if (!any(class(deg) == "numeric")) {
-    stop("Input angle must be a numeric")
-  }
+  #if (!any(class(deg) == "numeric")) {
+  #  stop("Input angle must be a numeric")
+  #}
 
   return((deg * pi) / (180))
 
@@ -764,8 +764,10 @@ calc_vis_angle_box <- function(obj_name){
   obj_name$vis_angle_neg_rad <-
     2*atan(obj_name$stim_param_neg / (2*obj_name$min_dist_neg)) # radians
 
-  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
-  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
+  obj_name$vis_angle_pos_deg <-
+    rad_2_deg(as.numeric(obj_name$vis_angle_pos_rad)) # degrees
+  obj_name$vis_angle_neg_deg <-
+    rad_2_deg(as.numeric(obj_name$vis_angle_neg_rad)) # degrees
 
   return(obj_name)
 }
