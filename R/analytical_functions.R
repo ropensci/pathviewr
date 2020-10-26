@@ -753,9 +753,17 @@ calc_vis_angle_box <- function(obj_name){
   }
 
   ## Calculate minimum distance to each screen
-  obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
-  obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
+  obj_name$min_dist_pos <-
+    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
+           obj_name$pos_wall - obj_name$position_width, # TRUE
+           obj_name$pos_wall + abs(obj_name$position_width) # FALSE
+           )
 
+  obj_name$min_dist_neg <-
+    ifelse(obj_name$position_width <= 0, # if in negative side of tunnel
+           abs(obj_name$neg_wall) - abs(obj_name$position_width), # TRUE
+           abs(obj_name$neg_wall - obj_name$position_width) # FALSE
+           )
 
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
@@ -970,8 +978,17 @@ calc_sf_box <- function(obj_name){
   }
 
   ## Calculate minimum distance to each screen
-  obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
-  obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
+  obj_name$min_dist_pos <-
+    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
+           obj_name$pos_wall - obj_name$position_width, # TRUE
+           obj_name$pos_wall + abs(obj_name$position_width) # FALSE
+          )
+
+  obj_name$min_dist_neg <-
+    ifelse(obj_name$position_width <= 0, # if in negative side of tunnel
+           abs(obj_name$neg_wall) - abs(obj_name$position_width), # TRUE
+           abs(obj_name$neg_wall - obj_name$position_width) # FALSE
+          )
 
   ## Calculate distance along plane of the wall equal to 1deg of visual angle.
   deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
