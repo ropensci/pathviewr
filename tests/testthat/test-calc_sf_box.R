@@ -49,7 +49,11 @@ test_that("calc_sf_box() adds variables appropriately",{
 # Test calculations
 test_that("calc_sf_box makes correct calculations based on position_width",{
   # min_dist handles pos and neg position_widths
-  expect_equal(flydra_sf$min_dist_neg[48:52],
+   expect_equal(flydra_sf$min_dist_pos[48:52],
+               c(0.3548123,0.3370267,0.4597915,0.4611327,0.4618872),
+               tolerance = 1e-5
+  )
+   expect_equal(flydra_sf$min_dist_neg[48:52],
                c(0.3548123,0.3370267,0.4597915,0.4611327,0.4618872),
                tolerance = 1e-5
   )
