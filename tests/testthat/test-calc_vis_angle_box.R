@@ -33,38 +33,38 @@ flydra_test <- # prep for calculations
 
 flydra_vis_angle <-
   flydra_test %>%
-  calc_vis_angle_box() ## error to be fixed
-## error arises from storage mode of obj_name$vis_angle_pos_rad being incompatible
-## with the function rad_2_deg. the error produces says obj_name$vis_angle_pos_rad
-## must be numeric bt instead it is numeric with a storage mode of "Csingle"
+  calc_vis_angle_box()
 
 ## Test output data frame
 test_that("calc_vis_angle_V() adds variables appropriately",{
   # output has correct variable names
-  expect_equal(names(motive_vis_angle_full[c(30:41)]),
-               c("height_2_vertex" , "height_2_screen", "width_2_screen_pos",
-                 "width_2_screen_neg", "min_dist_pos", "min_dist_neg", "bound_pos"
-                 ,"bound_neg", "vis_angle_pos_rad", "vis_angle_neg_rad",
-                 "vis_angle_pos_deg", "vis_angle_neg_deg")
+  expect_equal(names(flydra_vis_angle)[23:28],
+               c("min_dist_pos", "min_dist_neg", "vis_angle_pos_rad",
+                 "vis_angle_neg_rad", "vis_angle_pos_deg", "vis_angle_neg_deg")
   )
   # output has correct dimensions
-  expect_equal(dim(motive_vis_angle_full), c(449,41))
+  expect_equal(dim(flydra_vis_angle), c(133, 28))
 })
 
 # Test calculations
-test_that("calc_vis_angle_box makes correct calculations based on
-            position_width", {
-              # calc_vis_angle_box handles pos and neg position_widths correctly
-              expect_equal(flydra_vis_angle$width_2_screen_neg[220:230],
-                           c(0.2524517,0.2590141,0.2647242,0.2683496,0.4708539,
-                             0.4710674,0.4718399,0.4710872,0.4719066,0.4726183,0.4737730),
-                           tolerance = 1e-4
-              )
-              # correct visual angle calculations
-              expect_equal(flydra_vis_angle$vis_angle_pos_deg[61:64],
-                           c(9.916060,9.977103,10.041513,27.247943),
-                           tolerance = 1e-4
-              )
-            })
-
+test_that("calc_vis_angle_box makes correct calculations based on position_width", {
+              # min_dist accomodates positive and negative position_widths
+  expect_equal(flydra_vis_angle$min_dist_pos[37:42],
+                c(0.5481748,0.5317715,0.5143868,0.4972302,0.4798652,0.4626722),
+                  tolerance = 1e-5
+                )
+  expect_equal(flydra_vis_angle$min_dist_neg[37:42],
+                c(0.4518252,0.4682285,0.4856132,0.4972302,0.4798652,0.4626722),
+                  tolerance = 1e-5
+                )
+              # correct visual angles result
+  expect_equal(flydra_vis_angle$vis_angle_pos_deg[37:42],
+                c(10.42326,10.74293,11.10377,11.48438,11.89704,12.33579),
+                  tolerance = 1e-5
+                )
+  expect_equal(flydra_vis_angle$vis_angle_neg_deg[37:42],
+               c(12.62957,12.19052,11.75721,11.48438,11.89704,12.33579),
+               tolerance = 1e-5
+  )
+})
 
