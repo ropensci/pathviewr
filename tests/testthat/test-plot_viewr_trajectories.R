@@ -54,16 +54,87 @@ test_that("plot info (axes, titles, etc.) is correct", {
 
 ## Test that plotting works?
 pdf(file = NULL)
-plot_viewr_trajectories(motive_full, multi_plot = FALSE)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("length", "width"),
+                        multi_plot = FALSE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("length", "height"),
+                        multi_plot = FALSE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("width", "length"),
+                        multi_plot = FALSE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("width", "height"),
+                        multi_plot = FALSE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("height", "length"),
+                        multi_plot = FALSE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("height", "width"),
+                        multi_plot = FALSE)
 dev.off()
 
 pdf(file = NULL)
-plot_viewr_trajectories(motive_full, multi_plot = TRUE)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("length", "width"),
+                        multi_plot = TRUE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("length", "height"),
+                        multi_plot = TRUE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("width", "length"),
+                        multi_plot = TRUE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("width", "height"),
+                        multi_plot = TRUE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("height", "length"),
+                        multi_plot = TRUE)
+dev.off()
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full,
+                        plot_axes = c("height", "width"),
+                        multi_plot = TRUE)
 dev.off()
 
 ## Test arguments to plot_viewr_trajectories()
 test_that("plot_viewr_trajectories() fails when nonsense is supplied",{
-  expect_error(plot_viewr_trajectories(motive_full, multi_plot = jobin))
+  expect_error(plot_viewr_trajectories(motive_full,
+                                       plot_axes = c("length", "width"),
+                                       multi_plot = jobin))
+  expect_error(plot_viewr_trajectories(motive_full,
+                                       plot_axes = c("length", "height"),
+                                       multi_plot = jobin))
+  expect_error(plot_viewr_trajectories(motive_full,
+                                       plot_axes = c("width", "length"),
+                                       multi_plot = jobin))
+  expect_error(plot_viewr_trajectories(motive_full,
+                                       plot_axes = c("width", "height"),
+                                       multi_plot = jobin))
+  expect_error(plot_viewr_trajectories(motive_full,
+                                       plot_axes = c("height", "length"),
+                                       multi_plot = jobin))
+  expect_error(plot_viewr_trajectories(motive_full,
+                                       plot_axes = c("height", "width"),
+                                       multi_plot = jobin))
 })
 
 # # test plot output w/vdiffr
