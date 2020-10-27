@@ -345,7 +345,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
       "data_names", "data_types_full", "data_types_simple" ,
       "d1", "d2", "import_method")
 
-  for (i in 1:length(attributes_list)){
+  for (i in seq_len(length(attributes_list))){
     attr(gathered_data, attributes_list[i]) <-
       attr(obj_name, attributes_list[i])
   }
@@ -1672,7 +1672,7 @@ separate_trajectories <- function(obj_name,
   ## down the rows)
   maxFGs_by_subject <- NULL
   allFGs_by_subject <- NULL
-  for (i in 1:length(splitz)){
+  for (i in seq_len(length(splitz))){
     maxFGs_by_subject[i] <- max(diff(splitz[[i]]$frame))
     allFGs_by_subject[[i]] <- diff(splitz[[i]]$frame)
   }
@@ -1739,7 +1739,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
     sploot <- list()
     mufasa <- NULL
     ## For each subject's tibble, run through the process of finding the elbow
-    for (i in 1:length(subject_tibbles)){
+    for (i in seq_len(length(subject_tibbles))){
       ## Make a bunch of empty vectors to dump info
       mfg <- NULL ## All must be NULL so they can be re-written with each loop
       cts <- NULL
@@ -1749,12 +1749,12 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       ## Loop through max frame gap values
       j <- 1
       while (j < max_frame_gap_allowed + 1) {
-        mfg[[j]] = quick_separate_trajectories(subject_tibbles[[i]],
+        mfg[[j]] <- quick_separate_trajectories(subject_tibbles[[i]],
                                                max_frame_gap = j)
-        cts[[j]] = dplyr::count(mfg[[j]], traj_id)
-        trajectory_count[j] = nrow(cts[[j]])
-        frame_gap_allowed[j] = j
-        j = j +1
+        cts[[j]] <- dplyr::count(mfg[[j]], traj_id)
+        trajectory_count[j] <- nrow(cts[[j]])
+        frame_gap_allowed[j] <- j
+        j <- j +1
       }
 
       ## Collect the info on max frame gaps allowed vs. trajectory counts
@@ -2223,7 +2223,7 @@ fill_traj_gaps <- function(obj_name,
 
   ## Evaluate which trajectories contain gaps
   traj_gap_indicator <- NULL
-  for (i in 1:length(obj_splits)){
+  for (i in seq_len(length(obj_splits))){
     if(
       ## If a trajectory has gaps
       any(diff(obj_splits[[i]]$frame) > 1)
@@ -2237,7 +2237,7 @@ fill_traj_gaps <- function(obj_name,
   }
 
   ## Fill gaps
-  for (i in 1:length(traj_gap_indicator)){
+  for (i in seq_len(length(traj_gap_indicator))){
 
     ## Work only with cases where gaps are found; all other trajectories
     ## should not be touched
@@ -2311,7 +2311,7 @@ fill_traj_gaps <- function(obj_name,
       ## Copy over metadata
       ## We can likely write this better, but doing it this way for now so
       ## I can be sure
-for (j in 1:nrow(new_dat)) {
+for (j in seq_len(nrow(new_dat))) {
   if (is.na(new_dat$subject[j])) {
     new_dat$subject[j] <-
       base::unique(new_dat$subject)[!is.na(base::unique(new_dat$subject))]
@@ -2325,42 +2325,50 @@ for (j in 1:nrow(new_dat)) {
   }
   if (is.na(new_dat$file_sub_traj[j])) {
     new_dat$file_sub_traj[j] <-
-      base::unique(new_dat$file_sub_traj)[!is.na(base::unique(new_dat$file_sub_traj))]
+      base::unique(new_dat$file_sub_traj)[!is.na(base::unique(
+        new_dat$file_sub_traj))]
   }
   if (is.na(new_dat$traj_length[j])) {
     new_dat$traj_length[j] <-
-      base::unique(new_dat$traj_length)[!is.na(base::unique(new_dat$traj_length))]
+      base::unique(new_dat$traj_length)[!is.na(base::unique(
+        new_dat$traj_length))]
   }
   if (is.na(new_dat$start_length[j])) {
     new_dat$start_length[j] <-
-      base::unique(new_dat$start_length)[!is.na(base::unique(new_dat$start_length))]
+      base::unique(new_dat$start_length)[!is.na(base::unique(
+        new_dat$start_length))]
   }
   if (is.na(new_dat$end_length[j])) {
     new_dat$end_length[j] <-
-      base::unique(new_dat$end_length)[!is.na(base::unique(new_dat$end_length))]
+      base::unique(new_dat$end_length)[!is.na(base::unique(
+        new_dat$end_length))]
   }
   if (is.na(new_dat$length_diff[j])) {
     new_dat$length_diff[j] <-
-      base::unique(new_dat$length_diff)[!is.na(base::unique(new_dat$length_diff))]
+      base::unique(new_dat$length_diff)[!is.na(base::unique(
+        new_dat$length_diff))]
   }
   if (is.na(new_dat$start_length_sign[j])) {
     new_dat$start_length_sign[j] <-
-      base::unique(new_dat$start_length_sign)[!is.na(base::unique(new_dat$start_length_sign))]
+      base::unique(new_dat$start_length_sign)[!is.na(base::unique(
+        new_dat$start_length_sign))]
   }
   if (is.na(new_dat$end_length_sign[j])) {
     new_dat$end_length_sign[j] <-
-      base::unique(new_dat$end_length_sign)[!is.na(base::unique(new_dat$end_length_sign))]
+      base::unique(new_dat$end_length_sign)[!is.na(base::unique(
+        new_dat$end_length_sign))]
   }
   if (is.na(new_dat$direction[j])) {
     new_dat$direction[j] <-
-      base::unique(new_dat$direction)[!is.na(base::unique(new_dat$direction))]
+      base::unique(new_dat$direction)[!is.na(base::unique(
+        new_dat$direction))]
   }
 }
 
       ## Copy over predicted position and velocity data into the
       ## original data frame
       ## Basically overwrite any NA rows
-      for (k in 1:nrow(new_dat)) {
+      for (k in seq_len(nrow(new_dat))) {
         if (is.na(new_dat$position_length.y[k])) {
           new_dat$position_length.y[k] <- new_dat$position_length.x[k]
         }

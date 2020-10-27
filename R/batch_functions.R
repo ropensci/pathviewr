@@ -106,7 +106,7 @@ import_batch <- function(file_path_list,
   obj_list <- NULL
 
   if (imp_meth == "flydra"){
-    for (i in 1:length(file_path_list)){
+    for (i in seq_len(length(file_path_list))){
       obj_list[[i]] <- read_flydra_mat(
         mat_file = file_path_list[i],
         subject_name = subject_name[i],
@@ -117,7 +117,7 @@ import_batch <- function(file_path_list,
   }
 
   if (imp_meth == "motive"){
-    for (i in 1:length(file_path_list)){
+    for (i in seq_len(length(file_path_list))){
       obj_list[[i]] <- read_motive_csv(
         file_name = file_path_list[i],
         simplify_marker_naming = simplify_marker_naming)
@@ -131,7 +131,7 @@ import_batch <- function(file_path_list,
 }
 
 
-################################# clean_viewr_batch #############################
+################################# clean_viewr_batch ############################
 
 #' Batch clean viewr files
 #'
@@ -241,7 +241,7 @@ import_and_clean_batch <- function(file_path_list,
   obj_list <- NULL
 
   if (imp_meth == "flydra"){
-    for (i in 1:length(file_path_list)){
+    for (i in seq_len(length(file_path_list))){
       obj_list[[i]] <- read_flydra_mat(
         mat_file = file_path_list[i],
         subject_name = subject_name[i],
@@ -252,7 +252,7 @@ import_and_clean_batch <- function(file_path_list,
   }
 
   if (imp_meth == "motive"){
-    for (i in 1:length(file_path_list)){
+    for (i in seq_len(length(file_path_list))){
       obj_list[[i]] <- read_motive_csv(
         file_name = file_path_list[i],
         simplify_marker_naming = simplify_marker_naming)

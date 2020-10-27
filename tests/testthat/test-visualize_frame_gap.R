@@ -30,22 +30,25 @@ test_that("vectors are empty before looping", {
 
 #test tibble output
 test_that("visualize_frame_gap_choice() tibble output is OK", {
-  expect_equal(visualize_frame_gap_choice(motive_selected,
-                                          loops = 10)[[1]]$trajectory_count[[5]],
+  expect_equal(
+    visualize_frame_gap_choice(motive_selected,
+                               loops = 10)[[1]]$trajectory_count[[5]],
                13)
-  expect_equal(visualize_frame_gap_choice(motive_selected,
-                                          loops = 10)[[1]]$frame_gap_allowed[[8]],
+  expect_equal(
+    visualize_frame_gap_choice(motive_selected,
+                               loops = 10)[[1]]$frame_gap_allowed[[8]],
                8)
 })
 
 #test plot output w/vdiffr
 
-#use addins to open shiny app to validate plots
- test_that("visualize_frame_gap_choice() plot output is OK", {
-   skip_on_cran()
-   skip_on_travis()
-   skip_on_appveyor()
-   skip_on_gh_actions
-   vdiffr::expect_doppelganger("mfg plot", visualize_frame_gap_choice(motive_selected,
-                                       loops = 10)[[2]])
- })
+# #use addins to open shiny app to validate plots
+#  test_that("visualize_frame_gap_choice() plot output is OK", {
+#    skip_on_cran()
+#    skip_on_travis()
+#    skip_on_appveyor()
+#    skip_on_gh_actions
+#    vdiffr::expect_doppelganger("mfg plot",
+#                                visualize_frame_gap_choice(motive_selected,
+#                                                           loops = 10)[[2]])
+#  })

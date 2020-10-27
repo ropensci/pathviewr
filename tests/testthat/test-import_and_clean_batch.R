@@ -113,7 +113,8 @@ test_that("import_and_clean_batch() fails when input is nonsense",
                                                 import_method = "magic"))
             expect_error(import_and_clean_batch(motive_test_data))
           })
-test_that("import_and_clean_batch() gives messages when import_messaging is true",
+test_that(
+  "import_and_clean_batch() gives messages when import_messaging is true",
           {
             expect_message(import_and_clean_batch(
               import_list,

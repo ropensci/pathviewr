@@ -1,5 +1,5 @@
 library(testthat)
 library(pathviewR)
-library(vdiffr)
+#library(vdiffr)
 
 test_check("pathviewR")

@@ -44,8 +44,7 @@ Imports:
     purrr (>= 0.3.4),
     ggplot2 (>= 3.3.0),
     tidyselect (>= 1.1.0),
-    cowplot,
-    vdiffr
+    cowplot
 Suggests: 
     knitr,
     rmarkdown,

@@ -284,7 +284,7 @@ get_dist_point_line <- function(point,
 }
 
 
-################################ get_3d_cross_prod ##############################
+################################ get_3d_cross_prod #############################
 
 #' Compute the cross product of two 3D vectors
 #'
@@ -313,7 +313,7 @@ get_3d_cross_prod <- function(v1,
   return(v3)
 }
 
-#################################### rad_2_deg ###################################
+#################################### rad_2_deg #################################
 
 #' Convert radians to degrees
 #'
@@ -346,7 +346,7 @@ rad_2_deg <- function(rad) {
 }
 
 
-#################################### deg_2_rad ###################################
+#################################### deg_2_rad #################################
 
 #' Convert degrees to radians
 #'
@@ -712,7 +712,7 @@ calc_vis_angle_V <- function(obj_name,
 }
 
 
-#########################        calc_vis_angle_box       ##########################
+#########################        calc_vis_angle_box       ######################
 
 #' Estimate visual angles in a box-shaped tunnel
 #'

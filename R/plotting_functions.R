@@ -66,11 +66,11 @@ visualize_frame_gap_choice <- function(obj_name,
   # loop through user defined number of max frame gap values
   i <- 1
   while (i < loops + 1) {
-    mfg[[i]] = quick_separate_trajectories(obj_name, max_frame_gap = i)
-    cts[[i]] = dplyr::count(mfg[[i]], traj_id)
-    trajectory_count[i] = nrow(cts[[i]])
-    frame_gap_allowed[i] = i
-    i = i +1
+    mfg[[i]] <- quick_separate_trajectories(obj_name, max_frame_gap = i)
+    cts[[i]] <- dplyr::count(mfg[[i]], traj_id)
+    trajectory_count[i] <- nrow(cts[[i]])
+    frame_gap_allowed[i] <- i
+    i <- i +1
   }
 
   ## Collect the info on max frame gaps allowed vs. trajectory counts
@@ -151,7 +151,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
-      for (i in 1:length(obj_name_trajs)){
+      for (i in seq_len(length(obj_name_trajs))){
         tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_length,
              tmp$position_width,
@@ -173,7 +173,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
-      for (i in 1:length(obj_name_trajs)){
+      for (i in seq_len(length(obj_name_trajs))){
         tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_length,
              tmp$position_height,
@@ -198,7 +198,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
-      for (i in 1:length(obj_name_trajs)){
+      for (i in seq_len(length(obj_name_trajs))){
         tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_width,
              tmp$position_length,
@@ -220,7 +220,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
-      for (i in 1:length(obj_name_trajs)){
+      for (i in seq_len(length(obj_name_trajs))){
         tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_width,
              tmp$position_height,
@@ -245,7 +245,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
-      for (i in 1:length(obj_name_trajs)){
+      for (i in seq_len(length(obj_name_trajs))){
         tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_height,
              tmp$position_length,
@@ -267,7 +267,7 @@ plot_viewr_trajectories <- function(obj_name,
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
-      for (i in 1:length(obj_name_trajs)){
+      for (i in seq_len(length(obj_name_trajs))){
         tmp <- obj_name %>% dplyr::filter(file_sub_traj == obj_name_trajs[i])
         plot(tmp$position_height,
              tmp$position_width,
@@ -303,7 +303,8 @@ plot_viewr_trajectories <- function(obj_name,
 #'   \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
 #'   through \code{separate_trajectories()} or \code{get_full_trajectories()}.
 #' @param col_by_treat If multiple treatments or sessions, color data per
-#'   treatment or session. Treatments must be levels in a column named \code{treatment}.
+#'   treatment or session. Treatments must be levels in a column named
+#'   \code{treatment}.
 #' @param ... Additional arguments passed to/from other pathviewR functions.
 #'
 #' @details  The input viewr object should have passed through
