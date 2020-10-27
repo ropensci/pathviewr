@@ -987,7 +987,7 @@ calc_sf_box <- function(obj_name){
   obj_name$min_dist_neg <-
     ifelse(obj_name$position_width <= 0, # if in negative side of tunnel
            abs(obj_name$neg_wall) - abs(obj_name$position_width), # TRUE
-           abs(obj_name$neg_wall - obj_name$position_width) # FALSE
+           abs(obj_name$neg_wall + obj_name$position_width) # FALSE
           )
 
   ## Calculate distance along plane of the wall equal to 1deg of visual angle.
@@ -996,8 +996,8 @@ calc_sf_box <- function(obj_name){
 
   ## Calculate spatial frequency as number of cycles of stimulus per 1deg of
   ## visual angle.
-  obj_name$s_freq_pos <- deg_dist_pos / obj_name$stim_param_pos
-  obj_name$s_freq_neg <- deg_dist_neg / obj_name$stim_param_neg
+  obj_name$sf_pos <- deg_dist_pos / obj_name$stim_param_pos
+  obj_name$sf_neg <- deg_dist_neg / obj_name$stim_param_neg
 
   ## Leave note that spatial frequencies were calculated on dataset
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),

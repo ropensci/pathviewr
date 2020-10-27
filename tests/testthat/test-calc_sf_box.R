@@ -39,7 +39,7 @@ flydra_sf <-
 test_that("calc_sf_box() adds variables appropriately",{
   # output has correct variable names
   expect_equal(names(flydra_sf[c(23:26)]),
-               c("min_dist_pos", "min_dist_neg", "s_freq_pos", "s_freq_neg")
+               c("min_dist_pos", "min_dist_neg", "sf_pos", "sf_neg")
               )
   # output has correct dimensions
   expect_equal(dim(flydra_sf), c(133,26))
@@ -54,12 +54,16 @@ test_that("calc_sf_box makes correct calculations based on position_width",{
                tolerance = 1e-5
   )
    expect_equal(flydra_sf$min_dist_neg[48:52],
-               c(0.3548123,0.3370267,0.4597915,0.4611327,0.4618872),
+               c(0.6451877,0.6629733,0.5402085,0.5388673,0.5381128),
                tolerance = 1e-5
   )
   # correct spatial frequency calculations
-  expect_equal(flydra_sf$s_freq_pos[48:52],
+  expect_equal(flydra_sf$sf_pos[48:52],
                c(0.1238654,0.1176565,0.1605138,0.1609820,0.1612454),
+               tolerance = 1e-5
+  )
+  expect_equal(flydra_sf$sf_neg[48:52],
+               c(0.2252359,0.2314448,0.1885875,0.1881193,0.1878559),
                tolerance = 1e-5
   )
 })
