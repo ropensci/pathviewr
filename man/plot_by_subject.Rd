@@ -12,7 +12,8 @@ plot_by_subject(obj_name, col_by_treat = FALSE, ...)
 through \code{separate_trajectories()} or \code{get_full_trajectories()}.}
 
 \item{col_by_treat}{If multiple treatments or sessions, color data per
-treatment or session. Treatments must be levels in a column named \code{treatment}.}
+treatment or session. Treatments must be levels in a column named
+\code{treatment}.}
 
 \item{...}{Additional arguments passed to/from other pathviewR functions.}
 }

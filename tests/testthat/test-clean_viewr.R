@@ -95,7 +95,8 @@ test_that("clean_viewr() fails when select_x_percent has args but is FALSE",
               desired_percent = 33
             ))
           })
-test_that("clean_viewr() fails when rename_viewr_characters has args but is FALSE",
+test_that(
+  "clean_viewr() fails when rename_viewr_characters has args but is FALSE",
           {
             expect_error(
               clean_viewr(
@@ -107,7 +108,8 @@ test_that("clean_viewr() fails when rename_viewr_characters has args but is FALS
               )
             )
           })
-test_that("clean_viewr() fails when separate_trajectories has args but is FALSE",
+test_that(
+  "clean_viewr() fails when separate_trajectories has args but is FALSE",
           {
             expect_error(
               clean_viewr(
@@ -118,7 +120,8 @@ test_that("clean_viewr() fails when separate_trajectories has args but is FALSE"
               )
             )
           })
-test_that("clean_viewr() fails when get_full_trajectories has args but is FALSE",
+test_that(
+  "clean_viewr() fails when get_full_trajectories has args but is FALSE",
           {
             expect_error(clean_viewr(
               motive_test_data,
@@ -164,14 +167,17 @@ test_that("import_and_clean_viewr() fails when a false file is supplied",
           {
             expect_error(import_and_clean_viewr(file_name = "nope.csv"))
           })
-test_that("import_and_clean_viewr() fails when unrecognized arguments are supplied",
+test_that(
+  "import_and_clean_viewr() fails when unrecognized arguments are supplied",
           {
             expect_error(import_and_clean_viewr(steve = "steve"))
           })
 
 
 ## Test that true/false checks fail successfully
-test_that("import_and_clean_viewr() fails when relabel_viewr_axes has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when relabel_viewr_axes
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -185,7 +191,9 @@ test_that("import_and_clean_viewr() fails when relabel_viewr_axes has args but i
               )
             )
           })
-test_that("import_and_clean_viewr() fails when gather_tunnel_data has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when gather_tunnel_data
+  has args but is FALSE",
           {
             expect_error(import_and_clean_viewr(
               system.file("extdata", "pathviewR_motive_example_data.csv",
@@ -194,7 +202,9 @@ test_that("import_and_clean_viewr() fails when gather_tunnel_data has args but i
               NA_drop = TRUE
             ))
           })
-test_that("import_and_clean_viewr() fails when trim_tunnel_outliers has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when trim_tunnel_outliers
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -210,7 +220,9 @@ test_that("import_and_clean_viewr() fails when trim_tunnel_outliers has args but
               )
             )
           })
-test_that("import_and_clean_viewr() fails when get_velocity has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when get_velocity
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -224,7 +236,9 @@ test_that("import_and_clean_viewr() fails when get_velocity has args but is FALS
               )
             )
           })
-test_that("import_and_clean_viewr() fails when select_x_percent has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when select_x_percent
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -235,7 +249,9 @@ test_that("import_and_clean_viewr() fails when select_x_percent has args but is 
               )
             )
           })
-test_that("import_and_clean_viewr() fails when rename_viewr_characters has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when rename_viewr_characters
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -248,7 +264,9 @@ test_that("import_and_clean_viewr() fails when rename_viewr_characters has args 
               )
             )
           })
-test_that("import_and_clean_viewr() fails when separate_trajectories has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when separate_trajectories
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -260,7 +278,9 @@ test_that("import_and_clean_viewr() fails when separate_trajectories has args bu
               )
             )
           })
-test_that("import_and_clean_viewr() fails when get_full_trajectories has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when get_full_trajectories
+  has args but is FALSE",
           {
             expect_error(import_and_clean_viewr(
               system.file("extdata", "pathviewR_motive_example_data.csv",
@@ -269,7 +289,9 @@ test_that("import_and_clean_viewr() fails when get_full_trajectories has args bu
               span = 0.8
             ))
           })
-test_that("import_and_clean_viewr() fails when fill_traj_gaps has args but is FALSE",
+test_that(
+  "import_and_clean_viewr() fails when fill_traj_gaps
+  has args but is FALSE",
           {
             expect_error(
               import_and_clean_viewr(
@@ -293,7 +315,8 @@ test_that("import_and_clean_viewr() reports when unused params are given",
             ))
           })
 ## Test that standardization option is correctly enforced
-test_that("import_and_clean_viewr() fails  when standardization option is nonsense",
+test_that(
+  "import_and_clean_viewr() fails when standardization option is nonsense",
           {
             expect_error(import_and_clean_viewr(
               system.file("extdata", "pathviewR_motive_example_data.csv",

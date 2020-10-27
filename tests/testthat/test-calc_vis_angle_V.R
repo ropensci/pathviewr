@@ -26,8 +26,9 @@ test_that("calc_vis_angle_V() adds variables appropriately",{
   # output has correct variable names
   expect_equal(names(motive_vis_angle_full[c(30:41)]),
                c("height_2_vertex" , "height_2_screen", "width_2_screen_pos",
-                 "width_2_screen_neg", "min_dist_pos", "min_dist_neg", "bound_pos"
-                 ,"bound_neg", "vis_angle_pos_rad", "vis_angle_neg_rad",
+                 "width_2_screen_neg", "min_dist_pos", "min_dist_neg",
+                 "bound_pos" ,"bound_neg",
+                 "vis_angle_pos_rad", "vis_angle_neg_rad",
                  "vis_angle_pos_deg", "vis_angle_neg_deg")
                 )
   # output has correct dimensions

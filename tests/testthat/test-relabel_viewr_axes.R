@@ -12,7 +12,8 @@ motive_data <-
                               package = 'pathviewR'))
 
 ## Test that attributes are read properly
-test_that("relabel_viewr_axes() fails when character vectors are not supplied", {
+test_that(
+  "relabel_viewr_axes() fails when character vectors are not supplied", {
   expect_error(relabel_viewr_axes(motive_data, tunnel_length = 5))
   expect_error(relabel_viewr_axes(motive_data, tunnel_width =  5))
   expect_error(relabel_viewr_axes(motive_data, tunnel_height = 5))

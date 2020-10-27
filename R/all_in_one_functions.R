@@ -146,8 +146,11 @@ clean_viewr <- function(obj_name,
                     "redefine_tunnel_center",
                     "none")
   if (!all(standardization_option %in% valid_stands)) {
-    stop("standardization_option must be one of the following:
-\"rotate_tunnel\", \"standardize_tunnel\", \"redefine_tunnel_center\", or \"none\"")
+    stop(
+      "standardization_option must be one of the following:
+\"rotate_tunnel\", \"standardize_tunnel\",
+\"redefine_tunnel_center\", or \"none\""
+    )
   }
 
   ## Start the pipeline
@@ -448,8 +451,11 @@ import_and_clean_viewr <- function(file_name,
   if (!all(standardization_option %in% valid_stands)) {
 
 
-    stop("standardization_option must be one of the following:
-\"rotate_tunnel\", \"standardize_tunnel\", \"redefine_tunnel_center\", or \"none\"")
+    stop(
+      "standardization_option must be one of the following:
+\"rotate_tunnel\", \"standardize_tunnel\",
+\"redefine_tunnel_center\", or \"none\""
+    )
   }
 
   ## Start the pipeline

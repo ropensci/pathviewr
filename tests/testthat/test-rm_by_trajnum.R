@@ -11,7 +11,8 @@ motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
 
-#Clean the file. Recommended to use full pathviewR pipeline before rm_by_trajnum()
+#Clean the file.
+#Recommended to use full pathviewR pipeline before rm_by_trajnum()
 motive_full <-
   motive_data %>%
   clean_viewr(desired_percent = 50,
@@ -30,7 +31,8 @@ test_that("rm_by_trajnum() counts trajectories correctly", {
 })
 
 test_that("rm_by_trajnum() removes subjects w/n < trajnum", {
-  expect_equal(unique(rm_by_trajnum(motive_full, trajnum = 150)$subject), "device02")
+  expect_equal(unique(rm_by_trajnum(motive_full, trajnum = 150)$subject),
+               "device02")
 })
 
 # Add treatment information

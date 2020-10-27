@@ -47,7 +47,8 @@ test_that("calc_vis_angle_V() adds variables appropriately",{
 })
 
 # Test calculations
-test_that("calc_vis_angle_box makes correct calculations based on position_width", {
+test_that(
+  "calc_vis_angle_box makes correct calculations based on position_width", {
               # min_dist accomodates positive and negative position_widths
   expect_equal(flydra_vis_angle$min_dist_pos[37:42],
                 c(0.5481748,0.5317715,0.5143868,0.4972302,0.4798652,0.4626722),

@@ -100,7 +100,7 @@ motive_V_sf
 `simplify_output = TRUE` returns an object containing the 4 new variables `min_dist_pos`, `mind_dist_neg`, `sf_pos`, `sf_neg`.
 
 ## Calculating visual angles
-To calculate an estimation of the visual angles percieved by the subject, we will use `calc_vis_angle_V` and not `calc_vis_angle_box` because the data was collected in a V-shaped tunnel.
+To calculate an estimation of the visual angles perceived by the subject, we will use `calc_vis_angle_V` and not `calc_vis_angle_box` because the data was collected in a V-shaped tunnel.
 
 ```{r}
 motive_V_angles <- 
