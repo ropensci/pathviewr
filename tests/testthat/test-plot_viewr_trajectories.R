@@ -51,6 +51,16 @@ test_that("plot info (axes, titles, etc.) is correct", {
   expect_equal(min(motive_full$position_length), -0.6605554)
 })
 
+## Test that plotting works?
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full, multi_plot = FALSE)
+dev.off()
+
+pdf(file = NULL)
+plot_viewr_trajectories(motive_full, multi_plot = TRUE)
+dev.off()
+
+
 # # test plot output w/vdiffr
 # multi_plotdefault <-
 #   plot_viewr_trajectories(motive_full,
