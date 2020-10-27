@@ -7,6 +7,7 @@ test_that(
             expect_error(plot_viewr_trajectories(multi_plot = "steve"))
             expect_error(plot_viewr_trajectories(plot_axes = 1))
             expect_error(plot_viewr_trajectories(obj_name = "jobin"))
+            expect_error(plot_viewr_trajectories(rnorm(100)))
             expect_error(plot_viewr_trajectories())
           })
 
@@ -60,6 +61,10 @@ pdf(file = NULL)
 plot_viewr_trajectories(motive_full, multi_plot = TRUE)
 dev.off()
 
+## Test arguments to plot_viewr_trajectories()
+test_that("plot_viewr_trajectories() fails when nonsense is supplied",{
+  expect_error(plot_viewr_trajectories(motive_full, multi_plot = jobin))
+})
 
 # # test plot output w/vdiffr
 # multi_plotdefault <-
