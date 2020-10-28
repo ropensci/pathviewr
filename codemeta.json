@@ -272,7 +272,7 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "9389.371KB",
+  "fileSize": "9396.895KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }

@@ -177,9 +177,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 # flipping between the graphs you can see a subtle shift in the distribution of
 # angles.
 
-<<<<<<< HEAD
       ## In response to VBB comments:
-=======
     #### _VBB_suggestions_2 #####
     ## These plots are awesome! Easy to make sense of them.
     ##
@@ -259,7 +257,6 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
 
       #### ERP response  ####
       ## I like the idea of visualizing the tunnel walls with this plot!
->>>>>>> c7afa7a710e62689d22b9ef8d2c6f12614317457
       ## gnd_plane = 0.5 is only an estimate of the true distance between
       ## the height of the perches and the vertex. It's definitely worth
       ## measuring the tunnel again to make it's accurate. I can do that

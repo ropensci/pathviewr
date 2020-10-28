@@ -166,11 +166,7 @@ flydra_box_sf
 `simplify_output = TRUE` returns an object containing the 4 new variables `min_dist_pos`, `mind_dist_neg`, `sf_pos`, `sf_neg`. Note for `calc_sf_box`, there is no need for a simplify_output argument. 
 
 ## Calculating visual angles
-<<<<<<< HEAD
-To calculate an estimation of the visual angles percieved by the subject, we will use `calc_vis_angle_V` and not `calc_vis_angle_box`.
-=======
 To calculate an estimation of the visual angles perceived by the subject, we will use `calc_vis_angle_V` and not `calc_vis_angle_box` because the data was collected in a V-shaped tunnel.
->>>>>>> 3bcc644d385ae21f7191c1a99df8796cc410e687
 
 ```{r}
 motive_V_angle <- 
