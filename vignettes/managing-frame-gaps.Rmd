@@ -18,9 +18,11 @@ knitr::opts_chunk$set(
 ```
 
 ## Defining trajectories with `pathviewR`
-
-`pathviewR` defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via `select_x_percent()` in addition to all the previous steps of the data import and cleaning pipeline as described in VIGNETTE XXX (LINK). 
-
+`pathviewR` defines trajectories as continuous movement from one side of a
+region of interest to the other. Before trajectories can be defined, the region
+of interest must be selected via `select_x_percent()` in addition to all the
+previous steps of the data import and cleaning pipeline as described in VIGNETTE
+XXX (LINK).
 We'll start with loading `pathviewR` and `tidyverse` and importing our data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
@@ -40,7 +42,13 @@ motive_data <-
   )
 ```
 
-We'll quickly run through the cleanup pipeline using one of `pathviewR`'s all-in-one cleaning functions as described in VIGNETTE XXX (LINK). Since trajectories are defined in the `separate_trajectories()` function, we'll stop the all-in-one there by setting it and every step after it to `FALSE` so we can take a closer look at how trajectories are defined. Since all steps are set to `TRUE` by default, we don't actually need to list them in the function, just those we want to switch to `FALSE` or those that require additional arguments.
+We'll quickly run through the cleanup pipeline using one of `pathviewR`'s
+all-in-one cleaning functions as described in VIGNETTE XXX (LINK). Since
+trajectories are defined in the `separate_trajectories()` function, we'll stop
+the all-in-one there by setting it and every step after it to `FALSE` so we can
+take a closer look at how trajectories are defined. Since all steps are set to
+`TRUE` by default, we don't actually need to list them in the function, just
+those we want to switch to `FALSE` or those that require additional arguments.
 
 ```{r cleanup data}
 motive_cleaned <-
@@ -58,8 +66,12 @@ plot(motive_cleaned$position_length,
      asp = 1)
 ```
 
-### Inspecting the data
-We've cleaned up our data and are ready to link individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default `max_frame_gap = 1` will not allow any frame gaps--movement must be continuous.
+### Inspecting the data We've cleaned up our data and are ready to link
+individual data points into continuous trajectories. Deciding exactly how to
+define a trajectory will depend largely on the quality of data collected and the
+resolution required to answer a given question about the data. If the data is
+fairly continuous and high resolution is required, the default `max_frame_gap =
+1` will not allow any frame gaps--movement must be continuous.
 
 ```{r max_frame_gap_1}
 motive_mfg1 <- 
@@ -77,7 +89,11 @@ plot(motive_mfg1$position_length,
 length(unique(motive_mfg1$file_sub_traj))
 ```
 
-Plotting each trajectory reveals that perhaps some trajectories that should be continuous have been split into two or more separate trajectories because of a dropped frame or two. This data may require relaxing the stringent no-frame-gaps requirement in order to link data points that should go together into a single trajectory. Let's try setting `max_frame_gap = 5`.
+Plotting each trajectory reveals that perhaps some trajectories that should be
+continuous have been split into two or more separate trajectories because of a
+dropped frame or two. This data may require relaxing the stringent no-frame-gaps
+requirement in order to link data points that should go together into a single
+trajectory. Let's try setting `max_frame_gap = 5`.
 
 ```{r max_frame_gap_5}
 motive_mfg5 <- 
@@ -95,7 +111,14 @@ plot(motive_mfg5$position_length,
 length(unique(motive_mfg5$file_sub_traj))
 ```
 
-By increasing the allowable frame gap, more chunks of data have been linked into trajectories and so our trajectory count has dropped from 335 to 224. Because it is hard to see all the trajectories piled up on top of each other, let's go ahead and run this through `get_full_trajectories()` to clean out bits of data that do not span our region of interest. To inspect each trajectory individually, we can then use the `plot_viewr_trajectories()` function to take a closer look at the quality of each trajectory. This can be computationally expensive depending on your data set.
+By increasing the allowable frame gap, more chunks of data have been linked into
+trajectories and so our trajectory count has dropped from 335 to 224. Because it
+is hard to see all the trajectories piled up on top of each other, let's go
+ahead and run this through `get_full_trajectories()` to clean out bits of data
+that do not span our region of interest. To inspect each trajectory
+individually, we can then use the `plot_viewr_trajectories()` function to take a
+closer look at the quality of each trajectory. This can be computationally
+expensive depending on your data set.
 
 ```{r get_full_trajectories}
 motive_mfg5_full <- 
@@ -118,8 +141,12 @@ plot_viewr_trajectories(motive_mfg5_full,
                         multi_plot = TRUE)
 ```
 
-### Visualize frame gap choice
-`pathviewR` has several tools to help users decide what frame gap allowances may be appropriate depending on their data and resolution needs. `visualize_frame_gap_choice()` runs the `separate_trajectories()` function over the same data set as many times as the user would like via the `loop` argument, each time with a different `max_frame_gap` allowance. 
+### Visualize frame gap choice `pathviewR` has several tools to help users
+decide what frame gap allowances may be appropriate depending on their data and
+resolution needs. `visualize_frame_gap_choice()` runs the
+`separate_trajectories()` function over the same data set as many times as the
+user would like via the `loop` argument, each time with a different
+`max_frame_gap` allowance.
 
 ```{r visualize_frame_gap_choice}
 motive_cleaned %>% 
@@ -128,11 +155,23 @@ motive_cleaned %>%
   )
 ```
 
-The output of `visualize_frame_gap_choice()` is a tibble and plot of the number of trajectories after running `separate_trajectories()` with `max_frame_gap = 1`, `max_frame_gap = 2`, `max_frame_gap = 3`, etc. We can see that as the frame gap allowance increases, more bits of data are being linked into continuous trajectories and thus the total number of trajectories decreases. The vertical line on the plot indicates the "elbow" of the plot or the point at which counts of trajectories appear to stabilize and increases in the `max_frame_gap` allowance no longer effect the trajectory count very much.
-
+The output of `visualize_frame_gap_choice()` is a tibble and plot of the number
+of trajectories after running `separate_trajectories()` with `max_frame_gap =
+1`, `max_frame_gap = 2`, `max_frame_gap = 3`, etc. We can see that as the frame
+gap allowance increases, more bits of data are being linked into continuous
+trajectories and thus the total number of trajectories decreases. The vertical
+line on the plot indicates the "elbow" of the plot or the point at which counts
+of trajectories appear to stabilize and increases in the `max_frame_gap`
+allowance no longer effect the trajectory count very much.
 ### Autodetect
-
-Setting `max_frame_gap = "autodetect"` rather than a numeric value uses the "elbow" of the plots from `visualize_frame_gap_choice()` to guesstimate the best value(s) for `max_frame_gap`. In addition to automatically selecting the `max_frame_gap` depending on the data, "autodetect" does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the `max_frame_gap` can go is defined as a proportion of the capture frame rate and set by the `frame_rate_proportion` argument, which defaults to .10.
+Setting `max_frame_gap = "autodetect"` rather than a numeric value uses the
+"elbow" of the plots from `visualize_frame_gap_choice()` to guesstimate the best
+value(s) for `max_frame_gap`. In addition to automatically selecting the
+`max_frame_gap` depending on the data, "autodetect" does so on a per subject
+basis rather than applying the same allowable frame gap to all data in the data
+set. The cap on how high the `max_frame_gap` can go is defined as a proportion
+of the capture frame rate and set by the `frame_rate_proportion` argument, which
+defaults to .10.
 
 ```{r max_frame_gap_auto}
 motive_auto <- 
@@ -148,4 +187,7 @@ motive_auto <-
 length(unique(motive_auto$file_sub_traj))
 ```
 
-Our sample data has 3 subjects so with `frame_gap_messaging = TRUE`, the `max_frame_gap` for each subject will be reported (the default is `FALSE`). `frame_gap_plotting = TRUE` will display the elbow plots for each subject, but also defaults to `FALSE`.
+Our sample data has 3 subjects so with `frame_gap_messaging = TRUE`, the
+`max_frame_gap` for each subject will be reported (the default is `FALSE`).
+`frame_gap_plotting = TRUE` will display the elbow plots for each subject, but
+also defaults to `FALSE`.
