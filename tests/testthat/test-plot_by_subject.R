@@ -1,6 +1,15 @@
 #Tests of plot_by_subject()
 library(tidyverse)
 
+## test of object input
+test_that(
+  "plot_by_subject() fails when data are missing or nonsense args",
+  {
+    expect_error(plot_by_subject(obj_name = "steve"))
+    expect_error(plot_by_subject(col_by_treat = 1))
+    expect_error(plot_by_subject())
+  })
+
 ## Import the example Motive data included in the package
 motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
@@ -87,8 +96,8 @@ test_that("top views wrangled correctly via tidyverse", {
 })
 
 #test plot output w/vdiffr
-plot_by_subject_default1 <- plot_by_subject(motive_full)[[1]]
-plot_by_subject_default2 <- plot_by_subject(motive_full)[[2]]
+#plot_by_subject_default1 <- plot_by_subject(motive_full)[[1]]
+#plot_by_subject_default2 <- plot_by_subject(motive_full)[[2]]
 #use addins to open shiny app to validate plots
 # test_that("plot_by_subject() default plot output is OK", {
 #   skip_on_cran()
@@ -153,6 +162,18 @@ motive_full$treatment <- c(rep("latA", 100), rep("latB", 100),
     expect_match(elev_all_plots$plot_type[[3]], "paths")
     expect_match(elev_all_plots$subject[[4]], "device02")
     expect_match(elev_all_plots[[3]][[4]][["labels"]][["x"]], "position_height")
+  })
+
+  ## Test that plotting works?
+  pdf(file = NULL)
+  plot_by_subject(motive_full,
+                          col_by_treat = TRUE)
+  dev.off()
+
+  ## Test arguments to plot_by_subject()
+  test_that("plot_by_subject() fails when nonsense is supplied",{
+    expect_error(plot_by_subject(motive_full,
+                                         col_by_treat = jobin))
   })
 
 # #test plot output w/vdiffr
