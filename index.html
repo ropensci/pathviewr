@@ -96,7 +96,7 @@
 <a href="#pathviewr" class="anchor"></a>pathviewR</h1></div>
 <!-- badges: start -->
 
-<p><code>pathviewR</code> offers tools to import, clean, and visualize animal movement data from <a href="https://optitrack.com/products/motive/">Optitrack’s Motive</a>, the Straw Lab’s <a href="https://github.com/strawlab/flydra">Flydra</a>, or from other sources. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use animal position to estimate perception of visual stimuli.</p>
+<p><code>pathviewR</code> offers tools to import, clean, and visualize animal movement data from <a href="https://optitrack.com/products/motive/">Optitrack’s Motive</a>, the <a href="https://github.com/strawlab/flydra">Straw Lab’s Flydra</a>, or from other sources. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use animal position to estimate perception of visual stimuli.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -111,14 +111,10 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>Data import and cleaning via <code>pathviewR</code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co">## If you do not already have pathviewR installed:</span>
-<span class="co"># install.packages("devtools")</span>
-<span class="co"># devtools::install_github("vbaliga/pathviewR")</span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
 </pre></div>
-<p>We will import and clean a sample data set from <code>.csv</code> files exported by <a href="https://optitrack.com/products/motive/">Optitrack’s Motive</a> software. For examples of how to import and clean other types of data, see the data import and cleaning vignette. <br><span class="math display"><em>l</em><em>i</em><em>n</em><em>k</em><em>t</em><em>o</em><em>v</em><em>i</em><em>g</em><em>n</em><em>e</em><em>t</em><em>t</em><em>e</em></span><br></p>
+<p>We will import and clean a sample data set from <code>.csv</code> files exported by <a href="https://optitrack.com/products/motive/">Optitrack’s Motive</a> software. For examples of how to import and clean other types of data, <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">see the data import and cleaning vignette</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co">## Import the Motive example data included in </span>
 <span class="co">## the package</span>
@@ -129,7 +125,7 @@
                 package = <span class="st">'pathviewR'</span>)
   )
 </pre></div>
-<p>Several functions to clean and wrangle data are available, and we have a suggested pipeline for how these steps should be handled. For this example, we will use one of two “all-in-one” functions: <code><a href="reference/clean_viewr.html">clean_viewr()</a></code>. See the data import and cleaning vignette for the full pipeline and the other “all-in-one” function.<br><span class="math display"><em>l</em><em>i</em><em>n</em><em>k</em><em>t</em><em>o</em><em>v</em><em>i</em><em>g</em><em>n</em><em>e</em><em>t</em><em>t</em><em>e</em></span><br></p>
+<p>Several functions to clean and wrangle data are available, and we have a suggested pipeline for how these steps should be handled. For this example, we will use one of two “all-in-one” functions: <code><a href="reference/clean_viewr.html">clean_viewr()</a></code>. <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">See the Data Import and Cleaning vignette</a> for the full pipeline and the other “all-in-one” function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="kw">motive_allinone</span> <span class="op">&lt;-</span>
   <span class="kw">motive_data</span> <span class="op">%&gt;%</span>
@@ -149,13 +145,20 @@
 <span class="co">#&gt; autodetect is an experimental feature -- please report issues.</span>
 
 <span class="co">## Quick plot</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">motive_allinone</span><span class="op">$</span><span class="kw">position_length</span>,
-     <span class="kw">motive_allinone</span><span class="op">$</span><span class="kw">position_width</span>,
-     asp = <span class="fl">1</span>, col = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw">motive_allinone</span><span class="op">$</span><span class="kw">file_sub_traj</span>))
+<span class="co">## Colors correspond to unique trajectories (file_sub_traj)</span>
+<span class="kw">motive_allinone</span> <span class="op">%&gt;%</span>
+  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x = <span class="kw">position_length</span>, y = <span class="kw">position_width</span>, 
+             fill = <span class="kw">file_sub_traj</span>)) <span class="op">+</span>
+  <span class="fu">geom_point</span>(pch = <span class="fl">21</span>) <span class="op">+</span>
+  <span class="fu">coord_fixed</span>() <span class="op">+</span>
+  <span class="fu">theme_classic</span>() <span class="op">+</span>
+  <span class="fu">theme</span>(
+    legend.position = <span class="st">"none"</span>
+  )
 </pre></div>
 <p><img src="reference/figures/README-all-in-one-1.png" width="100%"></p>
-<p>An important aspect of how <code>pathviewR</code> defines trajectories is by managing gaps in the data. See the Managing Frame Gaps vignette for more information on trajectory definition and frame gaps. <br><span class="math display"><em>l</em><em>i</em><em>n</em><em>k</em><em>t</em><em>o</em><em>v</em><em>i</em><em>g</em><em>n</em><em>e</em><em>t</em><em>t</em><em>e</em></span><br></p>
-<p>Now that the data is cleaned, <code>pathviewR</code> includes functions that estimate visual perceptions based on the distance between the subject/observer and visual stimuli on the walls of the experimental tunnel. For a complete description of these functions, see the Visual Perception Functions vignette. <br><span class="math display"><em>l</em><em>i</em><em>n</em><em>k</em><em>t</em><em>o</em><em>v</em><em>i</em><em>g</em><em>n</em><em>e</em><em>t</em><em>t</em><em>e</em></span><br></p>
+<p>An important aspect of how <code>pathviewR</code> defines trajectories is by managing gaps in the data. <a href="https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html">See the Managing Frame Gaps vignette</a> for more information on trajectory definition and frame gaps.</p>
+<p>Now that the data is cleaned, <code>pathviewR</code> includes functions that estimate visual perceptions based on the distance between the subject/observer and visual stimuli on the walls of the experimental tunnel. For a complete description of these functions, <a href="https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html">see the Visual Perception Functions vignette</a>.</p>
 <p>Now that our objects have been cleaned, we will use <code><a href="reference/insert_treatments.html">insert_treatments()</a></code> to add information about the experiments that are necessary for calculating visual perceptions.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">motive_V</span> <span class="op">&lt;-</span> 
@@ -180,11 +183,10 @@
   <span class="kw">motive_V</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/calc_vis_angle_V.html">calc_vis_angle_V</a></span>(simplify_output=<span class="fl">FALSE</span>)
 </pre></div>
-<p>Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please see the Visual Perception Functions for more examples of visualizing calculations. <br><span class="math display"><em>l</em><em>i</em><em>n</em><em>k</em><em>t</em><em>o</em><em>v</em><em>i</em><em>g</em><em>n</em><em>e</em><em>t</em><em>t</em><em>e</em></span><br></p>
+<p>Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please <a href="https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html">see the Visual Perception Functions vignette</a> for more examples of visualizing calculations.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="fu">ggplot</span>(<span class="kw">motive_V_sf</span>, <span class="fu">aes</span>(x = <span class="kw">position_width</span>, y = <span class="kw">position_height</span>)) <span class="op">+</span>
   <span class="fu">geom_point</span>(<span class="fu">aes</span>(color = <span class="kw">sf_pos</span>), shape=<span class="fl">1</span>, size=<span class="fl">3</span>) <span class="op">+</span>
-  <span class="fu">coord_fixed</span>() <span class="op">+</span>
   <span class="fu">geom_segment</span>(<span class="fu">aes</span>(x = <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
                   y = <span class="op">-</span><span class="fl">0.3855</span>,
                   xend = <span class="fl">0.5869</span>,
@@ -192,7 +194,12 @@
   <span class="fu">geom_segment</span>(<span class="fu">aes</span>(x = <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
                    y = <span class="op">-</span><span class="fl">0.3855</span>,
                    xend = <span class="op">-</span><span class="fl">0.5869</span>,
-                   yend = <span class="fl">0.2014</span>))
+                   yend = <span class="fl">0.2014</span>)) <span class="op">+</span>
+  <span class="fu">coord_fixed</span>() <span class="op">+</span>
+  <span class="fu">theme_classic</span>() <span class="op">+</span>
+  <span class="fu">theme</span>(
+    legend.position = <span class="st">"none"</span>
+  )
 </pre></div>
 <p><img src="reference/figures/README-motive_V_sf_pos-1.png" width="100%"></p>
 </div>
@@ -206,7 +213,6 @@
 <a href="#license" class="anchor"></a>License</h2>
 <p>GPL (&gt;= 3) + file LICENSE</p>
 <p>🐢</p>
-<p>Note to self: You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. Do this via <code><a href="https://devtools.r-lib.org//reference/build_rmd.html">devtools::build_readme()</a></code></p>
 </div>
 </div>
   </div>

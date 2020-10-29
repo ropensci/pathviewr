@@ -102,7 +102,7 @@
 <div id="loading-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-packages" class="anchor"></a>Loading packages</h2>
-<p>We’ll need to start by loading <code>pathviewR</code> as well as <code>tidyverse</code> for visualizating the data.</p>
+<p>We’ll need to start by loading <code>pathviewR</code> as well as <code>tidyverse</code> for visualizing the data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
@@ -280,13 +280,12 @@
 <span class="co">#&gt;  8      0.5      0.5        0.5            0.1            0.2              0.2</span>
 <span class="co">#&gt;  9      0.5      0.5        0.5            0.1            0.2              0.2</span>
 <span class="co">#&gt; 10      0.5      0.5        0.5            0.1            0.2              0.2</span>
-<span class="co">#&gt; # … with 123 more rows, and 20 more variables: treatment &lt;chr&gt;,</span>
-<span class="co">#&gt; #   frame[,1] &lt;int&gt;, time_sec &lt;dbl&gt;, subject &lt;chr&gt;, position_length[,1] &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   position_width[,1] &lt;dbl&gt;, position_height[,1] &lt;dbl&gt;, traj_id &lt;int&gt;,</span>
-<span class="co">#&gt; #   file_sub_traj &lt;chr&gt;, traj_length &lt;int&gt;, start_length &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   end_length &lt;dbl&gt;, length_diff &lt;dbl&gt;, start_length_sign &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   end_length_sign &lt;dbl&gt;, direction &lt;chr&gt;, min_dist_pos[,1] &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   min_dist_neg[,1] &lt;dbl&gt;, sf_pos[,1] &lt;dbl&gt;, sf_neg[,1] &lt;dbl&gt;</span>
+<span class="co">#&gt; # … with 123 more rows, and 20 more variables: treatment &lt;chr&gt;, frame &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   time_sec &lt;dbl&gt;, subject &lt;chr&gt;, position_length &lt;dbl&gt;, position_width &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   position_height &lt;dbl&gt;, traj_id &lt;int&gt;, file_sub_traj &lt;chr&gt;,</span>
+<span class="co">#&gt; #   traj_length &lt;int&gt;, start_length &lt;dbl&gt;, end_length &lt;dbl&gt;, length_diff &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   start_length_sign &lt;dbl&gt;, end_length_sign &lt;dbl&gt;, direction &lt;chr&gt;,</span>
+<span class="co">#&gt; #   min_dist_pos &lt;dbl&gt;, min_dist_neg &lt;dbl&gt;, sf_pos &lt;dbl&gt;, sf_neg &lt;dbl&gt;</span>
 </pre></div>
 <p><code>simplify_output = TRUE</code> returns an object containing the 4 new variables <code>min_dist_pos</code>, <code>mind_dist_neg</code>, <code>sf_pos</code>, <code>sf_neg</code>. Note for <code>calc_sf_box</code>, there is no need for a simplify_output argument.</p>
 </div>
@@ -418,7 +417,7 @@
                    yend = <span class="fl">0.2014</span>))
 </pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_V_angle_pos-1.png" width="672"></p>
-<p>By displaying the visual angles (in degrees) created by the stimulus on the positive wall, we can see that the subject perceives larger visual angles the closer it gts to the positive wall.</p>
+<p>By displaying the visual angles (in degrees) created by the stimulus on the positive wall, we can see that the subject perceives larger visual angles the closer it gets to the positive wall.</p>
 <p>Now displaying visual angles perceived on the negative wall.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="fu">ggplot</span>(<span class="kw">motive_V_angle</span>, <span class="fu">aes</span>(x = <span class="kw">position_width</span>, y = <span class="kw">position_height</span>)) <span class="op">+</span>
