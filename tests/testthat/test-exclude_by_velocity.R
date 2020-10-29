@@ -21,6 +21,10 @@ motive_vel_filtered <-
   motive_import_and_clean %>%
   exclude_by_velocity(vel_min = 2)
 
+motive_vel_filtered2 <-
+  motive_import_and_clean %>%
+  exclude_by_velocity(vel_max = 5)
+
 test_that("exclude_by_velocity() fails when nonsense is supplied", {
   expect_error(exclude_by_velocity("steve"))
   expect_error(exclude_by_velocity(c("a", "b", "c")))

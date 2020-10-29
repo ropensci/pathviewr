@@ -27,6 +27,9 @@ test_that("redefine_tunnel_center() fails when nonsense is supplied", {
   expect_error(redefine_tunnel_center(c("a", "b", "c")))
   expect_error(redefine_tunnel_center())
   expect_error(redefine_tunnel_center(data.frame(rnorm(100))))
+  expect_error(redefine_tunnel_center(flydra_data[,-4]))
+  expect_error(redefine_tunnel_center(flydra_data[,-5]))
+  expect_error(redefine_tunnel_center(flydra_data[,-6]))
   expect_error(redefine_tunnel_center(flydra_data,
                                       length_method = 5))
   expect_error(redefine_tunnel_center(flydra_data,
@@ -34,14 +37,31 @@ test_that("redefine_tunnel_center() fails when nonsense is supplied", {
   expect_error(redefine_tunnel_center(flydra_data,
                                       width_method = 5))
   expect_error(redefine_tunnel_center(flydra_data,
+                                      length_method = "user_defined"))
+  expect_error(redefine_tunnel_center(flydra_data,
+                                      width_method = "user_defined"))
+  expect_error(redefine_tunnel_center(flydra_data,
+                                      height_method = "user_defined"))
+  expect_error(redefine_tunnel_center(flydra_data,
                                       length_method = "user_defined",
                                       length_zero = "a"))
+  expect_error(redefine_tunnel_center(flydra_data,
+                                      length_method = "user_defined",
+                                      length_zero = NA))
   expect_error(redefine_tunnel_center(flydra_data,
                                       width_method = "user_defined",
                                       width_zero = "a"))
   expect_error(redefine_tunnel_center(flydra_data,
+                                      width_method = "user_defined",
+                                      width_zero = NA))
+  expect_error(redefine_tunnel_center(flydra_data,
                                       height_method = "user_defined",
                                       height_zero = "a"))
+  expect_error(redefine_tunnel_center(flydra_data,
+                                      height_method = "user_defined",
+                                      height_zero = NA))
+  expect_error(redefine_tunnel_center(flydra_data,
+                                      height_method = "user_defined"))
 })
 
 test_that("redefine_tunnel_center() produces correct output", {
