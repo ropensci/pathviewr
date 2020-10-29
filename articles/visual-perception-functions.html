@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
       </span>
     </div>
 
@@ -111,8 +111,8 @@
 <div id="data-preparation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h2>
-<p>Data objects must be prepared via the <code>pathviewR</code> <a href="">import and clean</a> pipeline prior to their use in these functions. For a detailed description of these functions, please see the linked vignette.</p>
-<p>Let’s work with a few example datasets included in <code>pathviewR</code>. <code>pathviewR_motive_example_data.csv</code> is a .csv file exported from Motive. <code>pathviewR_flydra_example_data.mat</code> is a .mat file exported from Flydra. <code>pathviewR</code> contains an all-in-one cleaning function <code>clean_viewr</code> for more coarse-grained data cleaning tasks. We will use this function in the examples below.</p>
+<p>Data objects must be prepared as desribed in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a> pipeline prior to their use in these functions. For a detailed description of these functions, please see the linked vignette.</p>
+<p>Let’s work with a few example datasets included in <code>pathviewR</code>. <code>pathviewR_motive_example_data.csv</code> is a .csv file exported from <code>Motive</code>. <code>pathviewR_flydra_example_data.mat</code> is a .mat file exported from <code>Flydra</code>. <code>pathviewR</code> contains an all-in-one cleaning function <code>clean_viewr</code> for more coarse-grained data cleaning tasks. We will use this function in the examples below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co">## motive data set</span>
 <span class="kw">motive_data</span> <span class="op">&lt;-</span> <span class="co"># import</span>
@@ -141,9 +141,10 @@
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co">## flydra data set</span>
 <span class="kw">flydra_data</span> <span class="op">&lt;-</span> <span class="co"># import</span>
-  <span class="fu"><a href="../reference/read_flydra_mat.html">read_flydra_mat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pathviewR_flydra_example_data.mat"</span>,
-                              package = <span class="st">'pathviewR'</span>),
-                  subject_name = <span class="st">"birdie_wooster"</span>)
+  <span class="fu"><a href="../reference/read_flydra_mat.html">read_flydra_mat</a></span>(
+    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pathviewR_flydra_example_data.mat"</span>,
+                package = <span class="st">'pathviewR'</span>),
+    subject_name = <span class="st">"birdie_wooster"</span>)
 
 <span class="kw">flydra_full</span> <span class="op">&lt;-</span> <span class="co"># clean</span>
   <span class="kw">flydra_data</span> <span class="op">%&gt;%</span>
@@ -170,7 +171,7 @@
 <div id="motive-example" class="section level4">
 <h4 class="hasAnchor">
 <a href="#motive-example" class="anchor"></a>Motive example</h4>
-<p>The data within <code>motive_full</code> were collected from birds flying through a V-shaped tunnel in which the origin (0,0,0) was set to the height of the perches that sit 0.3855m above the height of the vertex. The lateral walls were angled ±45˚ from the vertical axis. The visual stimulus on the positive side of the tunnel (where <code>position_width</code> values &gt; 0) were horizontal sine wave gratings with a cycle length of 0.1m on the screen. The visual stimulus on the negative side of the tunnel (where <code>position_width</code> values &lt; 0) were vertical sine wave gratings with a cycle length of 0.2m on the screen.</p>
+<p>The data within <code>motive_full</code> were collected from birds flying through a V-shaped tunnel in which the origin <code>(0,0,0)</code> was set to the height of the perches that sit 0.3855m above the height of the vertex. The lateral walls were angled ±45˚ from the vertical axis. The visual stimulus on the positive side of the tunnel (where <code>position_width</code> values &gt; 0) were horizontal sine wave gratings with a cycle length of 0.1m on the screen. The visual stimulus on the negative side of the tunnel (where <code>position_width</code> values &lt; 0) were vertical sine wave gratings with a cycle length of 0.2m on the screen.</p>
 <p>Therefore we will use the following code:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="kw">motive_V</span> <span class="op">&lt;-</span> 
@@ -331,7 +332,7 @@
   <span class="kw">flydra_box</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/calc_vis_angle_box.html">calc_vis_angle_box</a></span>()
 </pre></div>
-<p><code>simplify_output=TRUE</code> returns an object containing the 4 new variables min_dist_pos, min_dist_neg, vis_angle_pos_deg, and vis_angle_neg_deg.</p>
+<p><code>simplify_output=TRUE</code> returns an object containing the 4 new variables <code>min_dist_pos</code>, <code>min_dist_neg</code>, <code>vis_angle_pos_deg</code>, and <code>vis_angle_neg_deg</code>.</p>
 </div>
 <div id="visualizing-the-calculations" class="section level2">
 <h2 class="hasAnchor">
