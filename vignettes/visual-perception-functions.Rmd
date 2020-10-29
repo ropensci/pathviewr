@@ -31,13 +31,13 @@ library(tidyverse)
 
 
 ## Data preparation
-Data objects must be prepared via the `pathviewR` [import and clean]() 
+Data objects must be prepared as desribed in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) 
 pipeline prior to their use in these functions. For a detailed description of 
 these functions, please see the linked vignette. 
 
 Let's work with a few example datasets included in `pathviewR`. 
-`pathviewR_motive_example_data.csv` is a .csv file exported from Motive. 
-`pathviewR_flydra_example_data.mat` is a .mat file exported from Flydra.
+`pathviewR_motive_example_data.csv` is a .csv file exported from `Motive`. 
+`pathviewR_flydra_example_data.mat` is a .mat file exported from `Flydra`.
 `pathviewR` contains an all-in-one cleaning function `clean_viewr` for more 
 coarse-grained data cleaning tasks. We will use this function in the examples 
 below. 
@@ -70,9 +70,10 @@ motive_full <-
 ```{r}
 ## flydra data set
 flydra_data <- # import
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                              package = 'pathviewR'),
-                  subject_name = "birdie_wooster")
+  read_flydra_mat(
+    system.file("extdata", "pathviewR_flydra_example_data.mat",
+                package = 'pathviewR'),
+    subject_name = "birdie_wooster")
 
 flydra_full <- # clean
   flydra_data %>%
@@ -98,13 +99,13 @@ information about the experiments that are necessary for calculating visual
 perceptions.  
 
 #### Motive example
-The data within `motive_full` were collected from birds flying through a 
-V-shaped tunnel in which the origin (0,0,0) was set to the height of the perches
-that sit 0.3855m above the height of the vertex. The lateral walls were angled
-±45˚ from the vertical axis. The visual stimulus on the positive side of the
-tunnel (where `position_width` values > 0) were horizontal sine wave gratings 
-with a cycle length of 0.1m on the screen. The visual stimulus on the 
-negative side of the tunnel (where `position_width` values < 0) were vertical 
+The data within `motive_full` were collected from birds flying through a
+V-shaped tunnel in which the origin `(0,0,0)` was set to the height of the
+perches that sit 0.3855m above the height of the vertex. The lateral walls were
+angled ±45˚ from the vertical axis. The visual stimulus on the positive side of
+the tunnel (where `position_width` values > 0) were horizontal sine wave
+gratings with a cycle length of 0.1m on the screen. The visual stimulus on the
+negative side of the tunnel (where `position_width` values < 0) were vertical
 sine wave gratings with a cycle length of 0.2m on the screen.
 
 Therefore we will use the following code:
@@ -128,7 +129,8 @@ motive_V
 #### Flydra example
 The data within `flydra_full` were collected from birds flying in a rectangular
 tunnel i.e. a box where the positive, negative, and front walls were 0.5m from
-the origin. The visual stimuli were the same as in the motive example, though now with a stimulus on the front wall of 0.2m cycle length.
+the origin. The visual stimuli were the same as in the motive example, though
+now with a stimulus on the front wall of 0.2m cycle length.
 
 ```{r}
 flydra_box <- # prep for calculations
@@ -163,10 +165,14 @@ flydra_box_sf <-
   calc_sf_box()
 flydra_box_sf
 ```
-`simplify_output = TRUE` returns an object containing the 4 new variables `min_dist_pos`, `mind_dist_neg`, `sf_pos`, `sf_neg`. Note for `calc_sf_box`, there is no need for a simplify_output argument. 
+`simplify_output = TRUE` returns an object containing the 4 new variables
+`min_dist_pos`, `mind_dist_neg`, `sf_pos`, `sf_neg`. Note for `calc_sf_box`,
+there is no need for a simplify_output argument.
 
 ## Calculating visual angles
-To calculate an estimation of the visual angles perceived by the subject, we will use `calc_vis_angle_V` and not `calc_vis_angle_box` because the data was collected in a V-shaped tunnel.
+To calculate an estimation of the visual angles perceived by the subject, we
+will use `calc_vis_angle_V` and not `calc_vis_angle_box` because the data was
+collected in a V-shaped tunnel.
 
 ```{r}
 motive_V_angle <- 
@@ -181,7 +187,8 @@ flydra_box_angle <-
   flydra_box %>% 
   calc_vis_angle_box()
 ```
-`simplify_output=TRUE` returns an object containing the 4 new variables min_dist_pos, min_dist_neg, vis_angle_pos_deg, and vis_angle_neg_deg.
+`simplify_output=TRUE` returns an object containing the 4 new variables
+`min_dist_pos`, `min_dist_neg`, `vis_angle_pos_deg`, and `vis_angle_neg_deg`.
 
 
 ## Visualizing the calculations
@@ -324,17 +331,6 @@ ggplot(flydra_box_angle, aes(x = position_width, y = position_length)) +
 
 
 
-
-
-
 ## Future steps...
 ### Orientation 
 ### Optic flow estimation
-
-
-
- 
-
-
-
-

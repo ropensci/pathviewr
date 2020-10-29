@@ -3,7 +3,7 @@
 language: R
 sudo: false
 r:
-  # - oldrel # removing this for now
+  - oldrel # see if this works
   - release
   - devel
 cache: packages
@@ -25,14 +25,11 @@ r_packages:
   - knitr
   - rmarkdown
 
-# Install manually from github:
-#r_github_packages: lionel-/vdiffr
-
 r_check_args: "--no-build-vignettes --no-manual --as-cran"
 
 warnings_are_errors: true
 # change the above to true if there are no warnings
-# or set to false if minor warnings should be ignored (for now)
+# or set to false if minor warnings should be ignored (temporarily)
 
 after_success:
   - Rscript -e 'covr::codecov()'

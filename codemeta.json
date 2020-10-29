@@ -5,12 +5,12 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "pathviewR",
-  "description": "This package offers tools to import, clean, and visualize \n    animal movement data from Optitrack's Motive, from Flydra, or from \n    another source. We provide functions to remove artifacts, standardize\n    tunnel position and tunnel axes, select a region of interest, isolate \n    specific trajectories, fill gaps in trajectory data, and calculate 3D\n    and per-axis velocity. For experiments of visual guidance, we also \n    provide functions that use animal position to estimate perception of\n    visual stimuli. ",
+  "description": "Tools to import, clean, and visualize \n    animal movement data from Optitrack's Motive, from Flydra, or from \n    another source. We provide functions to remove artifacts, standardize\n    tunnel position and tunnel axes, select a region of interest, isolate \n    specific trajectories, fill gaps in trajectory data, and calculate 3D\n    and per-axis velocity. For experiments of visual guidance, we also \n    provide functions that use animal position to estimate perception of\n    visual stimuli. ",
   "name": "pathviewR: Wrangle, Analyze, and Visualize Animal Movement Data",
   "codeRepository": "https://github.com/vbaliga/pathviewR",
   "issueTracker": "https://github.com/vbaliga/pathviewR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.9.0.9000",
+  "version": "0.9.1.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -107,7 +107,7 @@
       "@type": "SoftwareApplication",
       "identifier": "R.matlab",
       "name": "R.matlab",
-      "version": ">= 3.6.2",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -272,7 +272,7 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "7882.055KB",
+  "fileSize": "8955.333KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }

@@ -1,6 +1,6 @@
 Package: pathviewR
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
-Version: 0.9.0.9000
+Version: 0.9.1.9000
 Authors@R: 
     c(person(given = "Melissa S.", 
              family = "Armstrong",
@@ -18,7 +18,7 @@ Authors@R:
              email = "epress12@gmail.com",
              comment = c(ORCID = "0000-0002-1944-3755"))
       )
-Description: This package offers tools to import, clean, and visualize 
+Description: Tools to import, clean, and visualize 
     animal movement data from Optitrack's Motive, from Flydra, or from 
     another source. We provide functions to remove artifacts, standardize
     tunnel position and tunnel axes, select a region of interest, isolate 
@@ -32,7 +32,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9000
 Imports: 
-    R.matlab (>= 3.6.2),
+    R.matlab (>= 3.0.0),
     data.table (>= 1.12.8),
     tidyverse (>= 1.3.0),
     magrittr (>= 1.5),

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
 <h2 class="hasAnchor">
 <a href="#defining-trajectories-with-pathviewr" class="anchor"></a>Defining trajectories with <code>pathviewR</code>
 </h2>
-<p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in VIGNETTE XXX (LINK). We’ll start with loading <code>pathviewR</code> and <code>tidyverse</code> and importing our data.</p>
+<p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a>. We’ll start with loading <code>pathviewR</code> and <code>tidyverse</code> and importing our data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co">## If you do not already have pathviewR installed:</span>
 <span class="co"># install.packages("devtools")</span>
@@ -111,7 +111,7 @@
     <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewR_motive_example_data.csv"</span>,
                 package <span class="op">=</span> <span class="st">'pathviewR'</span><span class="op">)</span>
   <span class="op">)</span></pre></div>
-<p>We’ll quickly run through the cleanup pipeline using one of <code>pathviewR</code>’s all-in-one cleaning functions as described in VIGNETTE XXX (LINK). Since trajectories are defined in the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function, we’ll stop the all-in-one there by setting it and every step after it to <code>FALSE</code> so we can take a closer look at how trajectories are defined. Since all steps are set to <code>TRUE</code> by default, we don’t actually need to list them in the function, just those we want to switch to <code>FALSE</code> or those that require additional arguments.</p>
+<p>We’ll quickly run through the cleanup pipeline using one of <code>pathviewR</code>’s all-in-one cleaning functions as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a>. Since trajectories are defined in the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function, we’ll stop the all-in-one there by setting it and every step after it to <code>FALSE</code> so we can take a closer look at how trajectories are defined. Since all steps are set to <code>TRUE</code> by default, we don’t actually need to list them in the function, just those we want to switch to <code>FALSE</code> or those that require additional arguments.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="va">motive_cleaned</span> <span class="op">&lt;-</span>
   <span class="va">motive_data</span> <span class="op">%&gt;%</span>
@@ -228,7 +228,12 @@
 #&gt; 
 #&gt; [[2]]
 #&gt; NULL</code></pre>
-<p>The output of <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> is a tibble and plot of the number of trajectories after running <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> with <code>max_frame_gap = 1</code>, <code>max_frame_gap = 2</code>, <code>max_frame_gap = 3</code>, etc. We can see that as the frame gap allowance increases, more bits of data are being linked into continuous trajectories and thus the total number of trajectories decreases. The vertical line on the plot indicates the “elbow” of the plot or the point at which counts of trajectories appear to stabilize and increases in the <code>max_frame_gap</code> allowance no longer effect the trajectory count very much. ### Autodetect Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>. In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, “autodetect” does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to .10.</p>
+<p>The output of <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> is a tibble and plot of the number of trajectories after running <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> with <code>max_frame_gap = 1</code>, <code>max_frame_gap = 2</code>, <code>max_frame_gap = 3</code>, etc. We can see that as the frame gap allowance increases, more bits of data are being linked into continuous trajectories and thus the total number of trajectories decreases. The vertical line on the plot indicates the “elbow” of the plot or the point at which counts of trajectories appear to stabilize and increases in the <code>max_frame_gap</code> allowance no longer effect the trajectory count very much.</p>
+</div>
+<div id="autodetect" class="section level3">
+<h3 class="hasAnchor">
+<a href="#autodetect" class="anchor"></a>Autodetect</h3>
+<p>Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>. In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, “autodetect” does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to <code>.10</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">motive_auto</span> <span class="op">&lt;-</span> 
   <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 

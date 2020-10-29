@@ -6,7 +6,7 @@
 \alias{pathviewR-package}
 \title{pathviewR: Wrangle, Analyze, and Visualize Animal Movement Data}
 \description{
-This package offers tools to import, clean, and visualize 
+Tools to import, clean, and visualize 
     animal movement data from Optitrack's Motive, from Flydra, or from 
     another source. We provide functions to remove artifacts, standardize
     tunnel position and tunnel axes, select a region of interest, isolate 
