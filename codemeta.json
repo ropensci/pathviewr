@@ -105,6 +105,12 @@
   "softwareRequirements": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 4.0.0"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "R.matlab",
       "name": "R.matlab",
       "version": ">= 3.0.0",
@@ -272,7 +278,7 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "8955.333KB",
+  "fileSize": "8955.512KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }
