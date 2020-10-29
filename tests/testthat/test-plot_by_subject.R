@@ -155,7 +155,8 @@ elev_all_plots <- elev_view %>%
 
 #test elev views
 test_that("elev views created correctly via purrr::map", {
-  expect_equal(elev_view[[3]][[1]][["data"]][["position_width"]][[98]],-0.09991182)
+  expect_equal(
+    elev_view[[3]][[1]][["data"]][["position_width"]][[98]],-0.09991182)
   expect_equal(environment(elev_view[[4]][[3]][["facet"]][["super"]])[["args"]],
                NULL)
 })

@@ -4,6 +4,75 @@ motive_test_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
 
+## Import the example Flydra data included in the package
+flydra_data <-
+  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+                              package = 'pathviewR'),
+                  subject_name = "birdie_wooster")
+
+## run it through
+motive_cleaned_renamed <-
+  clean_viewr(
+    motive_test_data,
+    rename_viewr_characters = TRUE,
+    target_column = "subject",
+    pattern = "device",
+    replacement = ""
+  )
+
+motive_cleaned_filled <-
+  clean_viewr(
+    motive_test_data,
+    fill_traj_gaps = TRUE,
+    loess_degree = 1,
+    loess_criterion = c("aicc", "gcv"),
+    loess_family = c("gaussian", "symmetric"),
+    loess_user_span = NULL
+  )
+
+flydra_redefined_cleaned <-
+  clean_viewr(
+    flydra_data,
+    relabel_viewr_axes = FALSE,
+    gather_tunnel_data = FALSE,
+    trim_tunnel_outliers = FALSE,
+    standardization_option = "redefine_tunnel_center",
+    length_method = "median",
+    desired_percent = 0.5,
+    max_frame_gap = 1,
+    span = 0.9
+  )
+
+motive_import_and_clean <-
+  import_and_clean_viewr(
+    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+                            package = 'pathviewR'),
+    desired_percent = 50,
+    max_frame_gap = "autodetect",
+    span = 0.95
+  )
+
+motive_import_and_clean2 <-
+  import_and_clean_viewr(
+    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+                            package = 'pathviewR'),
+    fill_traj_gaps = TRUE,
+    loess_degree = 1,
+    loess_criterion = c("aicc", "gcv"),
+    loess_family = c("gaussian", "symmetric"),
+    loess_user_span = NULL
+  )
+
+motive_import_and_clean3 <-
+  import_and_clean_viewr(
+    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
+                            package = 'pathviewR'),
+    rename_viewr_characters = TRUE,
+    target_column = "subject",
+    pattern = "device",
+    replacement = ""
+  )
+
 test_that("a message is made even if inputs are good",
           {
             expect_message(
@@ -103,7 +172,7 @@ test_that(
                 motive_test_data,
                 rename_viewr_characters = FALSE,
                 target_column = "subject",
-                pattern,
+                pattern = "device",
                 replacement = ""
               )
             )

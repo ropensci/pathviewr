@@ -30,6 +30,15 @@ motive_data <-
    motive_cleaned %>%
    get_velocity(add_to_viewr = TRUE)
 
+## versions with filtering
+ motive_velocity_minfilt <-
+    motive_cleaned %>%
+    get_velocity(velocity_min = 1)
+
+motive_velocity_maxfilt <-
+    motive_cleaned %>%
+    get_velocity(velocity_max = 3)
+
 
 test_that("get_velocity() returns the correct value", {
  expect_equal(
@@ -39,6 +48,16 @@ test_that("get_velocity() returns the correct value", {
    get_velocity(motive_cleaned, add_to_viewr = TRUE)[5, 14]$width_inst_vel,
    -0.387,
    tolerance = 1e-3)
+})
+
+test_that("get_velocity() filtering works", {
+   expect_equal(
+      get_velocity(motive_cleaned, velocity_min = 1)[1, 15]$height_inst_vel,
+      0.3357, tol = 1e-3)
+   expect_equal(
+      get_velocity(motive_cleaned, velocity_max = 3)[5, 14]$width_inst_vel,
+      -0.3873968,
+      tolerance = 1e-3)
 })
 
 test_that("get_velocity() fails when velocity_min is non-numeric", {
@@ -51,7 +70,7 @@ test_that("get_velocity() fails when velocity_max is non-numeric", {
 })
 
 
-test_that("get_velocity() fails when colums are missing", {
+test_that("get_velocity() fails when columns are missing", {
    expect_error(get_velocity(
       motive_cleaned[, 1:3],
       add_to_viewr = TRUE,

@@ -82,7 +82,7 @@
       <h1 data-toc-skip>Managing frame gaps with pathviewR</h1>
                         <h4 class="author">Melissa S. Armstrong</h4>
             
-            <h4 class="date">2020-10-26</h4>
+            <h4 class="date">2020-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/managing-frame-gaps.Rmd"><code>vignettes/managing-frame-gaps.Rmd</code></a></small>
       <div class="hidden name"><code>managing-frame-gaps.Rmd</code></div>
@@ -95,8 +95,7 @@
 <h2 class="hasAnchor">
 <a href="#defining-trajectories-with-pathviewr" class="anchor"></a>Defining trajectories with <code>pathviewR</code>
 </h2>
-<p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in VIGNETTE XXX (LINK).</p>
-<p>We’ll start with loading <code>pathviewR</code> and <code>tidyverse</code> and importing our data.</p>
+<p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in VIGNETTE XXX (LINK). We’ll start with loading <code>pathviewR</code> and <code>tidyverse</code> and importing our data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co">## If you do not already have pathviewR installed:</span>
 <span class="co"># install.packages("devtools")</span>
@@ -128,10 +127,10 @@
      <span class="va">motive_cleaned</span><span class="op">$</span><span class="va">position_width</span>,
      asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/cleanup%20data-1.png" width="700"></p>
-<div id="inspecting-the-data" class="section level3">
+<div id="inspecting-the-data-weve-cleaned-up-our-data-and-are-ready-to-link" class="section level3">
 <h3 class="hasAnchor">
-<a href="#inspecting-the-data" class="anchor"></a>Inspecting the data</h3>
-<p>We’ve cleaned up our data and are ready to link individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
+<a href="#inspecting-the-data-weve-cleaned-up-our-data-and-are-ready-to-link" class="anchor"></a>Inspecting the data We’ve cleaned up our data and are ready to link</h3>
+<p>individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">motive_mfg1</span> <span class="op">&lt;-</span> 
   <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
@@ -192,10 +191,10 @@
                         multi_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/get_full_trajectories-2.png" width="700"></p>
 </div>
-<div id="visualize-frame-gap-choice" class="section level3">
+<div id="visualize-frame-gap-choice-pathviewr-has-several-tools-to-help-users" class="section level3">
 <h3 class="hasAnchor">
-<a href="#visualize-frame-gap-choice" class="anchor"></a>Visualize frame gap choice</h3>
-<p><code>pathviewR</code> has several tools to help users decide what frame gap allowances may be appropriate depending on their data and resolution needs. <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> runs the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function over the same data set as many times as the user would like via the <code>loop</code> argument, each time with a different <code>max_frame_gap</code> allowance.</p>
+<a href="#visualize-frame-gap-choice-pathviewr-has-several-tools-to-help-users" class="anchor"></a>Visualize frame gap choice <code>pathviewR</code> has several tools to help users</h3>
+<p>decide what frame gap allowances may be appropriate depending on their data and resolution needs. <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> runs the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function over the same data set as many times as the user would like via the <code>loop</code> argument, each time with a different <code>max_frame_gap</code> allowance.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice</a></span><span class="op">(</span>
@@ -229,12 +228,7 @@
 #&gt; 
 #&gt; [[2]]
 #&gt; NULL</code></pre>
-<p>The output of <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> is a tibble and plot of the number of trajectories after running <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> with <code>max_frame_gap = 1</code>, <code>max_frame_gap = 2</code>, <code>max_frame_gap = 3</code>, etc. We can see that as the frame gap allowance increases, more bits of data are being linked into continuous trajectories and thus the total number of trajectories decreases. The vertical line on the plot indicates the “elbow” of the plot or the point at which counts of trajectories appear to stabilize and increases in the <code>max_frame_gap</code> allowance no longer effect the trajectory count very much.</p>
-</div>
-<div id="autodetect" class="section level3">
-<h3 class="hasAnchor">
-<a href="#autodetect" class="anchor"></a>Autodetect</h3>
-<p>Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>. In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, “autodetect” does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to .10.</p>
+<p>The output of <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> is a tibble and plot of the number of trajectories after running <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> with <code>max_frame_gap = 1</code>, <code>max_frame_gap = 2</code>, <code>max_frame_gap = 3</code>, etc. We can see that as the frame gap allowance increases, more bits of data are being linked into continuous trajectories and thus the total number of trajectories decreases. The vertical line on the plot indicates the “elbow” of the plot or the point at which counts of trajectories appear to stabilize and increases in the <code>max_frame_gap</code> allowance no longer effect the trajectory count very much. ### Autodetect Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>. In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, “autodetect” does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to .10.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">motive_auto</span> <span class="op">&lt;-</span> 
   <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 

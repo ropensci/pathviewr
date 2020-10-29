@@ -22,7 +22,7 @@ experimental tunnel.
 
 ## Loading packages
 We'll need to start by loading `pathviewR` as well as `tidyverse` for
-visualizating the data.
+visualizing the data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewR)
@@ -274,7 +274,7 @@ ggplot(motive_V_angle, aes(x = position_width, y = position_height)) +
 
 By displaying the visual angles (in degrees) created by the stimulus on the
 positive wall, we can see that the subject perceives larger visual angles the
-closer it gts to the positive wall.
+closer it gets to the positive wall.
 
 
 Now displaying visual angles perceived on the negative wall. 

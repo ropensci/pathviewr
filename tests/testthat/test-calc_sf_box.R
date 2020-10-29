@@ -35,6 +35,14 @@ flydra_sf <-
   flydra_test %>%
   calc_sf_box()
 
+test_that("calc_sf_box() fails when nonsense is supplied", {
+  expect_error(calc_sf_box("steve"))
+  expect_error(calc_sf_box(c("a", "b", "c")))
+  expect_error(calc_sf_box())
+  expect_error(calc_sf_box(flydra_full)) ## no insert treatments
+  expect_error(calc_sf_box(data.frame(rnorm(100))))
+})
+
 ## Test output data frame
 test_that("calc_sf_box() adds variables appropriately",{
   # output has correct variable names

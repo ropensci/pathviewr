@@ -18,7 +18,7 @@ coverage](https://codecov.io/gh/vbaliga/pathviewR/graph/badge.svg)](https://code
 
 `pathviewR` offers tools to import, clean, and visualize animal movement
 data from [Optitrack’s Motive](https://optitrack.com/products/motive/),
-the Straw Lab’s [Flydra](https://github.com/strawlab/flydra), or from
+the [Straw Lab’s Flydra](https://github.com/strawlab/flydra), or from
 other sources. We provide functions to remove artifacts, standardize
 tunnel position and tunnel axes, select a region of interest, isolate
 specific trajectories, fill gaps in trajectory data, and calculate 3D
@@ -40,18 +40,15 @@ devtools::install_github("vbaliga/pathviewR")
 Data import and cleaning via `pathviewR`
 
 ``` r
-## If you do not already have pathviewR installed:
-# install.packages("devtools")
-# devtools::install_github("vbaliga/pathviewR")
-
 library(pathviewR)
 library(tidyverse)
 ```
 
 We will import and clean a sample data set from `.csv` files exported by
 [Optitrack’s Motive](https://optitrack.com/products/motive/) software.
-For examples of how to import and clean other types of data, see the
-data import and cleaning vignette. \[link to vignette\]
+For examples of how to import and clean other types of data, [see the
+data import and cleaning
+vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
 
 ``` r
 ## Import the Motive example data included in 
@@ -67,8 +64,9 @@ motive_data <-
 Several functions to clean and wrangle data are available, and we have a
 suggested pipeline for how these steps should be handled. For this
 example, we will use one of two “all-in-one” functions: `clean_viewr()`.
-See the data import and cleaning vignette for the full pipeline and the
-other “all-in-one” function.\[link to vignette\]
+[See the Data Import and Cleaning
+vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html)
+for the full pipeline and the other “all-in-one” function.
 
 ``` r
 motive_allinone <-
@@ -89,23 +87,31 @@ motive_allinone <-
 #> autodetect is an experimental feature -- please report issues.
 
 ## Quick plot
-plot(motive_allinone$position_length,
-     motive_allinone$position_width,
-     asp = 1, col = as.factor(motive_allinone$file_sub_traj))
+## Colors correspond to unique trajectories (file_sub_traj)
+motive_allinone %>%
+  ggplot(aes(x = position_length, y = position_width, 
+             fill = file_sub_traj)) +
+  geom_point(pch = 21) +
+  coord_fixed() +
+  theme_classic() +
+  theme(
+    legend.position = "none"
+  )
 ```
 
 <img src="man/figures/README-all-in-one-1.png" width="100%" />
 
 An important aspect of how `pathviewR` defines trajectories is by
-managing gaps in the data. See the Managing Frame Gaps vignette for more
-information on trajectory definition and frame gaps. \[link to
-vignette\]
+managing gaps in the data. [See the Managing Frame Gaps
+vignette](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
+for more information on trajectory definition and frame gaps.
 
 Now that the data is cleaned, `pathviewR` includes functions that
 estimate visual perceptions based on the distance between the
 subject/observer and visual stimuli on the walls of the experimental
-tunnel. For a complete description of these functions, see the Visual
-Perception Functions vignette. \[link to vignette\]
+tunnel. For a complete description of these functions, [see the Visual
+Perception Functions
+vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
 
 Now that our objects have been cleaned, we will use
 `insert_treatments()` to add information about the experiments that are
@@ -147,13 +153,13 @@ motive_V_angle <-
 
 Visualizing the calculations provides an more intuitive understanding of
 how these visual perceptions change as the subject moves throughout the
-tunnel. Please see the Visual Perception Functions for more examples of
-visualizing calculations. \[link to vignette\]
+tunnel. Please [see the Visual Perception Functions
+vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html)
+for more examples of visualizing calculations.
 
 ``` r
 ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
   geom_point(aes(color = sf_pos), shape=1, size=3) +
-  coord_fixed() +
   geom_segment(aes(x = 0,         # dimensions of the positive wall
                   y = -0.3855,
                   xend = 0.5869,
@@ -161,7 +167,12 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
   geom_segment(aes(x = 0,         # dimensions of the negative wall
                    y = -0.3855,
                    xend = -0.5869,
-                   yend = 0.2014))
+                   yend = 0.2014)) +
+  coord_fixed() +
+  theme_classic() +
+  theme(
+    legend.position = "none"
+  )
 ```
 
 <img src="man/figures/README-motive_V_sf_pos-1.png" width="100%" />
@@ -175,6 +186,3 @@ TBD
 GPL (\>= 3) + file LICENSE
 
 🐢
-
-Note to self: You’ll still need to render `README.Rmd` regularly, to
-keep `README.md` up-to-date. Do this via `devtools::build_readme()`

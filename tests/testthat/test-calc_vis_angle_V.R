@@ -20,6 +20,14 @@ motive_vis_angle_full <- # run calc_vis_angle_V()
   motive_test %>%
   calc_vis_angle_V(simplify=FALSE)
 
+test_that("calc_vis_angle_V() fails when nonsense is supplied", {
+  expect_error(calc_vis_angle_V("steve"))
+  expect_error(calc_vis_angle_V(c("a", "b", "c")))
+  expect_error(calc_vis_angle_V())
+  expect_error(calc_vis_angle_V(motive_full)) ## no insert treatments
+  expect_error(calc_vis_angle_V(data.frame(rnorm(100))))
+})
+
 
 ## Test output data frame
 test_that("calc_vis_angle_V() adds variables appropriately",{

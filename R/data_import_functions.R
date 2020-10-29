@@ -442,12 +442,12 @@ read_flydra_mat <-
     data <-
       tibble::tibble(
         ## Using kalman frame instead of observed frame
-        frame = frame_tib$frame,
-        time_sec = joined_frame_time_seq$time,
+        frame = as.numeric(frame_tib$frame),
+        time_sec = as.numeric(joined_frame_time_seq$time),
         subject = subject_name,
-        position_length = kalm_distinct$kalman.x,
-        position_width  = kalm_distinct$kalman.y,
-        position_height = kalm_distinct$kalman.z
+        position_length = as.numeric(kalm_distinct$kalman.x),
+        position_width  = as.numeric(kalm_distinct$kalman.y),
+        position_height = as.numeric(kalm_distinct$kalman.z)
       )
 
     ## Add metadata as attributes()

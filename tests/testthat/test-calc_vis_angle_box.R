@@ -35,6 +35,15 @@ flydra_vis_angle <-
   flydra_test %>%
   calc_vis_angle_box()
 
+
+test_that("calc_vis_angle_box() fails when nonsense is supplied", {
+  expect_error(calc_vis_angle_box("steve"))
+  expect_error(calc_vis_angle_box(c("a", "b", "c")))
+  expect_error(calc_vis_angle_box())
+  expect_error(calc_vis_angle_box(flydra_full)) ## no insert treatments
+  expect_error(calc_vis_angle_box(data.frame(rnorm(100))))
+})
+
 ## Test output data frame
 test_that("calc_vis_angle_V() adds variables appropriately",{
   # output has correct variable names

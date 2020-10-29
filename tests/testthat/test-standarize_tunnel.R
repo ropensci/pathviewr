@@ -27,6 +27,11 @@ motive_rotated <-
   standardize_tunnel(landmark_one = "device02",
                      landmark_two = "device03")
 
+motive_rotated2 <-
+  motive_trimmed %>%
+  standardize_tunnel(landmark_one = "device03",
+                     landmark_two = "device02")
+
 ## Test input
 test_that("standardize_tunnel() handles arguments properly",{
   expect_error(standardize_tunnel(motive_trimmed[,-4]))

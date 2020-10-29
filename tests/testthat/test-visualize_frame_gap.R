@@ -1,7 +1,8 @@
 # Tests of visualize_frame_gap_choice()
 
 ## test of object input
-test_that("visualize_frame_gap_choice() fails when data are missing or nonsense args",
+test_that(
+  "visualize_frame_gap_choice() fails when data are missing or nonsense args",
           {
             expect_error(visualize_frame_gap_choice(obj_name = "steve"))
             expect_error(visualize_frame_gap_choice(loops = TRUE))
@@ -39,11 +40,13 @@ test_that("vectors are empty before looping", {
 
 #test tibble output
 test_that("visualize_frame_gap_choice() tibble output is OK", {
-  expect_equal(visualize_frame_gap_choice(motive_selected,
-                                          loops = 10)[[1]]$trajectory_count[[5]],
+  expect_equal(
+    visualize_frame_gap_choice(motive_selected,
+                               loops = 10)[[1]]$trajectory_count[[5]],
                13)
-  expect_equal(visualize_frame_gap_choice(motive_selected,
-                                          loops = 10)[[1]]$frame_gap_allowed[[8]],
+  expect_equal(
+    visualize_frame_gap_choice(motive_selected,
+                               loops = 10)[[1]]$frame_gap_allowed[[8]],
                8)
 })
 
