@@ -4,14 +4,8 @@
 \alias{rm_by_trajnum}
 \title{Remove subjects by trajectory number}
 \usage{
-rm_by_trajnum(
-  obj_name,
-  trajnum = 5,
-  mirrored = FALSE,
-  treatment1,
-  treatment2,
-  ...
-)
+rm_by_trajnum(obj_name, trajnum = 5, mirrored = FALSE, treatment1,
+  treatment2, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute

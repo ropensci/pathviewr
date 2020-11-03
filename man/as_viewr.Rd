@@ -4,21 +4,10 @@
 \alias{as_viewr}
 \title{Convert data from another format into a viewr object}
 \usage{
-as_viewr(
-  obj_name,
-  frame_rate = 100,
-  frame_col,
-  time_col,
-  subject_col,
-  position_length_col,
-  position_width_col,
-  position_height_col,
-  include_rotation = FALSE,
-  rotation_real_col,
-  rotation_length_col,
-  rotation_width_col,
-  rotation_height_col
-)
+as_viewr(obj_name, frame_rate = 100, frame_col, time_col, subject_col,
+  position_length_col, position_width_col, position_height_col,
+  include_rotation = FALSE, rotation_real_col, rotation_length_col,
+  rotation_width_col, rotation_height_col)
 }
 \arguments{
 \item{obj_name}{A tibble or data frame containing movement trajectories}
@@ -91,11 +80,10 @@ test <-
   )
 }
 \seealso{
-Other data import functions: 
-\code{\link{import_and_clean_batch}()},
-\code{\link{import_batch}()},
-\code{\link{read_flydra_mat}()},
-\code{\link{read_motive_csv}()}
+Other data import functions: \code{\link{import_and_clean_batch}},
+  \code{\link{import_batch}},
+  \code{\link{read_flydra_mat}},
+  \code{\link{read_motive_csv}}
 }
 \author{
 Vikram B. Baliga

@@ -33,7 +33,7 @@ library(magrittr)
 
 
 ## Data preparation
-Data objects must be prepared as desribed in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) 
+Data objects must be prepared as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) 
 pipeline prior to their use in these functions. For a detailed description of 
 these functions, please see the linked vignette. 
 

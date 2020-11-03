@@ -31,7 +31,7 @@ Optionally, treatments should have been added as levels in a column named
 \code{treatment}. Two plots will be produced, one from a "bird's eye view"
 of width against length and one from an "elevation view" of height against
 length. All trajectories will be plotted on a per subject basis as well as
-density plots of width or height depending on the view. If
+density plots of width or height depending on the view.
 \code{col_by_treat = TRUE}, data will be plotted by color according to
 treatment in both the trajectory plots and the density plots.
 }
@@ -65,9 +65,8 @@ motive_full \%>\%
 plot_by_subject(col_by_treat = TRUE)
 }
 \seealso{
-Other plotting functions: 
-\code{\link{plot_viewr_trajectories}()},
-\code{\link{visualize_frame_gap_choice}()}
+Other plotting functions: \code{\link{plot_viewr_trajectories}},
+  \code{\link{visualize_frame_gap_choice}}
 }
 \author{
 Melissa S. Armstrong

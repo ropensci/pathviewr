@@ -4,16 +4,9 @@
 \alias{trim_tunnel_outliers}
 \title{Trim out artifacts and other outliers from the extremes of the tunnel}
 \usage{
-trim_tunnel_outliers(
-  obj_name,
-  lengths_min = 0,
-  lengths_max = 3,
-  widths_min = -0.4,
-  widths_max = 0.8,
-  heights_min = -0.2,
-  heights_max = 0.5,
-  ...
-)
+trim_tunnel_outliers(obj_name, lengths_min = 0, lengths_max = 3,
+  widths_min = -0.4, widths_max = 0.8, heights_min = -0.2,
+  heights_max = 0.5, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -72,18 +65,17 @@ motive_trimmed <-
                        heights_max = 0.5)
 }
 \seealso{
-Other data cleaning functions: 
-\code{\link{gather_tunnel_data}()},
-\code{\link{get_full_trajectories}()},
-\code{\link{quick_separate_trajectories}()},
-\code{\link{redefine_tunnel_center}()},
-\code{\link{relabel_viewr_axes}()},
-\code{\link{rename_viewr_characters}()},
-\code{\link{rotate_tunnel}()},
-\code{\link{select_x_percent}()},
-\code{\link{separate_trajectories}()},
-\code{\link{standardize_tunnel}()},
-\code{\link{visualize_frame_gap_choice}()}
+Other data cleaning functions: \code{\link{gather_tunnel_data}},
+  \code{\link{get_full_trajectories}},
+  \code{\link{quick_separate_trajectories}},
+  \code{\link{redefine_tunnel_center}},
+  \code{\link{relabel_viewr_axes}},
+  \code{\link{rename_viewr_characters}},
+  \code{\link{rotate_tunnel}},
+  \code{\link{select_x_percent}},
+  \code{\link{separate_trajectories}},
+  \code{\link{standardize_tunnel}},
+  \code{\link{visualize_frame_gap_choice}}
 }
 \author{
 Vikram B. Baliga

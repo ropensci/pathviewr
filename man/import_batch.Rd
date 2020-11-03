@@ -4,16 +4,9 @@
 \alias{import_batch}
 \title{Batch import of files for either Motive or Flydra (but not a mix of both)}
 \usage{
-import_batch(
-  file_path_list,
-  import_method = c("flydra", "motive"),
-  file_id = NA,
-  subject_name = NULL,
-  frame_rate = NULL,
-  simplify_marker_naming = TRUE,
-  import_messaging = FALSE,
-  ...
-)
+import_batch(file_path_list, import_method = c("flydra", "motive"),
+  file_id = NA, subject_name = NULL, frame_rate = NULL,
+  simplify_marker_naming = TRUE, import_messaging = FALSE, ...)
 }
 \arguments{
 \item{file_path_list}{A list of file paths}
@@ -102,16 +95,14 @@ motive_bound_two <-
 identical(motive_bound_one, motive_bound_two)
 }
 \seealso{
-Other data import functions: 
-\code{\link{as_viewr}()},
-\code{\link{import_and_clean_batch}()},
-\code{\link{read_flydra_mat}()},
-\code{\link{read_motive_csv}()}
+Other data import functions: \code{\link{as_viewr}},
+  \code{\link{import_and_clean_batch}},
+  \code{\link{read_flydra_mat}},
+  \code{\link{read_motive_csv}}
 
-Other batch functions: 
-\code{\link{bind_viewr_objects}()},
-\code{\link{clean_viewr_batch}()},
-\code{\link{import_and_clean_batch}()}
+Other batch functions: \code{\link{bind_viewr_objects}},
+  \code{\link{clean_viewr_batch}},
+  \code{\link{import_and_clean_batch}}
 }
 \author{
 Vikram B. Baliga

@@ -4,7 +4,8 @@
 \alias{read_flydra_mat}
 \title{Import data from a MAT file exported from Flydra software}
 \usage{
-read_flydra_mat(mat_file, file_id = NA, subject_name, frame_rate = 100, ...)
+read_flydra_mat(mat_file, file_id = NA, subject_name, frame_rate = 100,
+  ...)
 }
 \arguments{
 \item{mat_file}{A file (or path to file) in .mat format, exported from Flydra}
@@ -49,11 +50,9 @@ attr(flydra_data, "pathviewR_steps")
 \seealso{
 \code{\link{read_motive_csv}} for importing Motive data
 
-Other data import functions: 
-\code{\link{as_viewr}()},
-\code{\link{import_and_clean_batch}()},
-\code{\link{import_batch}()},
-\code{\link{read_motive_csv}()}
+Other data import functions: \code{\link{as_viewr}},
+  \code{\link{import_and_clean_batch}},
+  \code{\link{import_batch}}, \code{\link{read_motive_csv}}
 }
 \author{
 Vikram B. Baliga

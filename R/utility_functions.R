@@ -1593,6 +1593,8 @@ quick_separate_trajectories <- function(obj_name,
 #' @family data cleaning functions
 #' @family functions that define or clean trajectories
 #'
+#' @importFrom graphics plot
+#'
 #' @export
 #'
 #' @examples

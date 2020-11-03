@@ -4,7 +4,8 @@
 \alias{find_curve_elbow}
 \title{Find the "elbow" of a curve.}
 \usage{
-find_curve_elbow(data_frame, export_type = "row_num", plot_curve = FALSE)
+find_curve_elbow(data_frame, export_type = "row_num",
+  plot_curve = FALSE)
 }
 \arguments{
 \item{data_frame}{A two-column data frame (numeric entries only)}
@@ -37,14 +38,11 @@ plot(df)
 find_curve_elbow(df, plot_curve = TRUE)
 }
 \seealso{
-Other mathematical functions: 
-\code{\link{deg_2_rad}()},
-\code{\link{get_2d_angle}()},
-\code{\link{get_3d_angle}()},
-\code{\link{get_3d_cross_prod}()},
-\code{\link{get_dist_point_line}()},
-\code{\link{get_velocity}()},
-\code{\link{rad_2_deg}()}
+Other mathematical functions: \code{\link{deg_2_rad}},
+  \code{\link{get_2d_angle}}, \code{\link{get_3d_angle}},
+  \code{\link{get_3d_cross_prod}},
+  \code{\link{get_dist_point_line}},
+  \code{\link{get_velocity}}, \code{\link{rad_2_deg}}
 }
 \author{
 Vikram B. Baliga

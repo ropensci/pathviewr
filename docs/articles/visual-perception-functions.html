@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <h1 data-toc-skip>Estimating visual perceptions from tracking data</h1>
                         <h4 class="author">Eric R. Press</h4>
             
-            <h4 class="date">2020-10-28</h4>
+            <h4 class="date">2020-11-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/visual-perception-functions.Rmd"><code>vignettes/visual-perception-functions.Rmd</code></a></small>
       <div class="hidden name"><code>visual-perception-functions.Rmd</code></div>
@@ -95,15 +95,16 @@
 <div id="loading-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-packages" class="anchor"></a>Loading packages</h2>
-<p>We’ll need to start by loading <code>pathviewR</code> as well as <code>tidyverse</code> for visualizing the data.</p>
+<p>We’ll need to start by loading <code>pathviewR</code> as well as a couple <code>tidyverse</code> packages for visualizing the data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span></pre></div>
 </div>
 <div id="data-preparation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h2>
-<p>Data objects must be prepared as desribed in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a> pipeline prior to their use in these functions. For a detailed description of these functions, please see the linked vignette.</p>
+<p>Data objects must be prepared as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a> pipeline prior to their use in these functions. For a detailed description of these functions, please see the linked vignette.</p>
 <p>Let’s work with a few example datasets included in <code>pathviewR</code>. <code>pathviewR_motive_example_data.csv</code> is a .csv file exported from <code>Motive</code>. <code>pathviewR_flydra_example_data.mat</code> is a .mat file exported from <code>Flydra</code>. <code>pathviewR</code> contains an all-in-one cleaning function <code>clean_viewr</code> for more coarse-grained data cleaning tasks. We will use this function in the examples below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co">## motive data set</span>
@@ -326,54 +327,54 @@
 <a href="#spatial-frequency" class="anchor"></a>Spatial frequency</h3>
 <p><strong>Motive</strong></p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                   xend <span class="op">=</span> <span class="fl">0.5869</span>,
                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_V_sf_pos-1.png" width="672"> We can see that as the position of the subject is closer to the right (positive) wall, the perception of that stimulus is with smaller spatial frequency.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_neg</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_neg</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                   xend <span class="op">=</span> <span class="fl">0.5869</span>,
                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_V_sf_neg-1.png" width="672"> A different pattern is found by visualizing the spatial frequencies observed from the left (negative) wall.</p>
 <p><strong>Flydra</strong></p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">flydra_box_sf</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">flydra_box_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_box_sf_pos-1.png" width="672"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">flydra_box_sf</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sf_neg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">flydra_box_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sf_neg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></pre></div>
@@ -384,14 +385,14 @@
 <a href="#visual-angles" class="anchor"></a>Visual angles</h3>
 <p><strong>Motive</strong></p>
 <div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">motive_V_angle</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_pos_deg</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_angle</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_pos_deg</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                   xend <span class="op">=</span> <span class="fl">0.5869</span>,
                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></pre></div>
@@ -399,41 +400,41 @@
 <p>By displaying the visual angles (in degrees) created by the stimulus on the positive wall, we can see that the subject perceives larger visual angles the closer it gets to the positive wall.</p>
 <p>Now displaying visual angles perceived on the negative wall.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">motive_V_angle</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_neg_deg</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_angle</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_neg_deg</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                   xend <span class="op">=</span> <span class="fl">0.5869</span>,
                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_V_angle_neg-1.png" width="672"> This shows that the subject perceives larger visual angles the closer it gets to the negative wall.</p>
 <p><strong>Flydra</strong></p>
 <div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">flydra_box_angle</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">vis_angle_pos_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">flydra_box_angle</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">vis_angle_pos_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_box_angle_pos-1.png" width="672"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">flydra_box_angle</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="va">vis_angle_neg_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">flydra_box_angle</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">vis_angle_neg_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,        <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_segment</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0.5</span>,         <span class="co"># positive wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">0.5</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></pre></div>

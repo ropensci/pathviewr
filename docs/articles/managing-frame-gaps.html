@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <h1 data-toc-skip>Managing frame gaps with pathviewR</h1>
                         <h4 class="author">Melissa S. Armstrong</h4>
             
-            <h4 class="date">2020-10-28</h4>
+            <h4 class="date">2020-11-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/managing-frame-gaps.Rmd"><code>vignettes/managing-frame-gaps.Rmd</code></a></small>
       <div class="hidden name"><code>managing-frame-gaps.Rmd</code></div>
@@ -95,14 +95,15 @@
 <h2 class="hasAnchor">
 <a href="#defining-trajectories-with-pathviewr" class="anchor"></a>Defining trajectories with <code>pathviewR</code>
 </h2>
-<p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a>. We’ll start with loading <code>pathviewR</code> and <code>tidyverse</code> and importing our data.</p>
+<p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a>. We’ll start with loading <code>pathviewR</code> and a few packages from the <code>tidyverse</code> and importing our data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co">## If you do not already have pathviewR installed:</span>
 <span class="co"># install.packages("devtools")</span>
 <span class="co"># devtools::install_github("vbaliga/pathviewR")</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
 
 <span class="co">## Import the example Motive data included in </span>
 <span class="co">## the package</span>

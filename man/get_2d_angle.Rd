@@ -37,14 +37,12 @@ get_2d_angle(
   1, 0)
 }
 \seealso{
-Other mathematical functions: 
-\code{\link{deg_2_rad}()},
-\code{\link{find_curve_elbow}()},
-\code{\link{get_3d_angle}()},
-\code{\link{get_3d_cross_prod}()},
-\code{\link{get_dist_point_line}()},
-\code{\link{get_velocity}()},
-\code{\link{rad_2_deg}()}
+Other mathematical functions: \code{\link{deg_2_rad}},
+  \code{\link{find_curve_elbow}},
+  \code{\link{get_3d_angle}},
+  \code{\link{get_3d_cross_prod}},
+  \code{\link{get_dist_point_line}},
+  \code{\link{get_velocity}}, \code{\link{rad_2_deg}}
 }
 \author{
 Vikram B. Baliga

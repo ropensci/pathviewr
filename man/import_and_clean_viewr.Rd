@@ -4,21 +4,13 @@
 \alias{import_and_clean_viewr}
 \title{Import + clean_viewr()}
 \usage{
-import_and_clean_viewr(
-  file_name,
-  file_id = NA,
-  relabel_viewr_axes = TRUE,
-  gather_tunnel_data = TRUE,
+import_and_clean_viewr(file_name, file_id = NA,
+  relabel_viewr_axes = TRUE, gather_tunnel_data = TRUE,
   trim_tunnel_outliers = TRUE,
-  standardization_option = "rotate_tunnel",
-  get_velocity = TRUE,
-  select_x_percent = TRUE,
-  rename_viewr_characters = FALSE,
-  separate_trajectories = TRUE,
-  get_full_trajectories = TRUE,
-  fill_traj_gaps = FALSE,
-  ...
-)
+  standardization_option = "rotate_tunnel", get_velocity = TRUE,
+  select_x_percent = TRUE, rename_viewr_characters = FALSE,
+  separate_trajectories = TRUE, get_full_trajectories = TRUE,
+  fill_traj_gaps = FALSE, ...)
 }
 \arguments{
 \item{file_name}{Target file}
@@ -98,8 +90,7 @@ motive_import_and_clean <-
   )
 }
 \seealso{
-Other all in one functions: 
-\code{\link{clean_viewr}()}
+Other all in one functions: \code{\link{clean_viewr}}
 }
 \author{
 Vikram B. Baliga

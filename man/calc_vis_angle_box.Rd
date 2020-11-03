@@ -28,10 +28,8 @@ thereby maximizes visual angles. All length measurements reported in
 meters.
 }
 \seealso{
-Other visual perception functions: 
-\code{\link{calc_sf_V}()},
-\code{\link{calc_sf_box}()},
-\code{\link{calc_vis_angle_V}()}
+Other visual perception functions: \code{\link{calc_sf_V}},
+  \code{\link{calc_sf_box}}, \code{\link{calc_vis_angle_V}}
 }
 \author{
 Eric R. Press

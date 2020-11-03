@@ -36,7 +36,7 @@ Please feel free to reach out to the `pathviewR` authors should you have trouble
 with any of our data import options. We are happy to work with you to design
 custom `read_` functions for filetypes we have not encountered ourselves. 
 
-We'll start by loading `pathviewR` and a few of the pacakges in the `tidyverse`.
+We'll start by loading `pathviewR` and a few of the packages in the `tidyverse`.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewR installed:

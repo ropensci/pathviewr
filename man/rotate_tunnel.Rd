@@ -4,20 +4,11 @@
 \alias{rotate_tunnel}
 \title{Rotate a tunnel so that perches are approximately aligned}
 \usage{
-rotate_tunnel(
-  obj_name,
-  all_heights_min = 0.11,
-  all_heights_max = 0.3,
-  perch1_len_min = -0.06,
-  perch1_len_max = 0.06,
-  perch2_len_min = 2.48,
-  perch2_len_max = 2.6,
-  perch1_wid_min = 0.09,
-  perch1_wid_max = 0.31,
-  perch2_wid_min = 0.13,
-  perch2_wid_max = 0.35,
-  ...
-)
+rotate_tunnel(obj_name, all_heights_min = 0.11, all_heights_max = 0.3,
+  perch1_len_min = -0.06, perch1_len_max = 0.06,
+  perch2_len_min = 2.48, perch2_len_max = 2.6, perch1_wid_min = 0.09,
+  perch1_wid_max = 0.31, perch2_wid_min = 0.13,
+  perch2_wid_max = 0.35, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -98,22 +89,20 @@ attr(motive_rotated, "perch2_midpoint_original")
 attr(motive_rotated, "perch2_midpoint_current")
 }
 \seealso{
-Other data cleaning functions: 
-\code{\link{gather_tunnel_data}()},
-\code{\link{get_full_trajectories}()},
-\code{\link{quick_separate_trajectories}()},
-\code{\link{redefine_tunnel_center}()},
-\code{\link{relabel_viewr_axes}()},
-\code{\link{rename_viewr_characters}()},
-\code{\link{select_x_percent}()},
-\code{\link{separate_trajectories}()},
-\code{\link{standardize_tunnel}()},
-\code{\link{trim_tunnel_outliers}()},
-\code{\link{visualize_frame_gap_choice}()}
+Other data cleaning functions: \code{\link{gather_tunnel_data}},
+  \code{\link{get_full_trajectories}},
+  \code{\link{quick_separate_trajectories}},
+  \code{\link{redefine_tunnel_center}},
+  \code{\link{relabel_viewr_axes}},
+  \code{\link{rename_viewr_characters}},
+  \code{\link{select_x_percent}},
+  \code{\link{separate_trajectories}},
+  \code{\link{standardize_tunnel}},
+  \code{\link{trim_tunnel_outliers}},
+  \code{\link{visualize_frame_gap_choice}}
 
-Other tunnel standardization functions: 
-\code{\link{redefine_tunnel_center}()},
-\code{\link{standardize_tunnel}()}
+Other tunnel standardization functions: \code{\link{redefine_tunnel_center}},
+  \code{\link{standardize_tunnel}}
 }
 \author{
 Vikram B. Baliga

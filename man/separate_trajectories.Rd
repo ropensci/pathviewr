@@ -4,14 +4,9 @@
 \alias{separate_trajectories}
 \title{Separate rows of data into separately labeled trajectories.}
 \usage{
-separate_trajectories(
-  obj_name,
-  max_frame_gap = 1,
-  frame_rate_proportion = 0.1,
-  frame_gap_messaging = FALSE,
-  frame_gap_plotting = FALSE,
-  ...
-)
+separate_trajectories(obj_name, max_frame_gap = 1,
+  frame_rate_proportion = 0.1, frame_gap_messaging = FALSE,
+  frame_gap_plotting = FALSE, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -91,23 +86,21 @@ motive_separated <-
 names(motive_separated)
 }
 \seealso{
-Other data cleaning functions: 
-\code{\link{gather_tunnel_data}()},
-\code{\link{get_full_trajectories}()},
-\code{\link{quick_separate_trajectories}()},
-\code{\link{redefine_tunnel_center}()},
-\code{\link{relabel_viewr_axes}()},
-\code{\link{rename_viewr_characters}()},
-\code{\link{rotate_tunnel}()},
-\code{\link{select_x_percent}()},
-\code{\link{standardize_tunnel}()},
-\code{\link{trim_tunnel_outliers}()},
-\code{\link{visualize_frame_gap_choice}()}
+Other data cleaning functions: \code{\link{gather_tunnel_data}},
+  \code{\link{get_full_trajectories}},
+  \code{\link{quick_separate_trajectories}},
+  \code{\link{redefine_tunnel_center}},
+  \code{\link{relabel_viewr_axes}},
+  \code{\link{rename_viewr_characters}},
+  \code{\link{rotate_tunnel}},
+  \code{\link{select_x_percent}},
+  \code{\link{standardize_tunnel}},
+  \code{\link{trim_tunnel_outliers}},
+  \code{\link{visualize_frame_gap_choice}}
 
-Other functions that define or clean trajectories: 
-\code{\link{get_full_trajectories}()},
-\code{\link{quick_separate_trajectories}()},
-\code{\link{visualize_frame_gap_choice}()}
+Other functions that define or clean trajectories: \code{\link{get_full_trajectories}},
+  \code{\link{quick_separate_trajectories}},
+  \code{\link{visualize_frame_gap_choice}}
 }
 \author{
 Vikram B. Baliga and Melissa S. Armstrong

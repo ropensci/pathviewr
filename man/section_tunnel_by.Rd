@@ -4,7 +4,8 @@
 \alias{section_tunnel_by}
 \title{Bin data along a specified axis}
 \usage{
-section_tunnel_by(obj_name, axis = "position_length", number_of_sections = 20)
+section_tunnel_by(obj_name, axis = "position_length",
+  number_of_sections = 20)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute

@@ -4,18 +4,10 @@
 \alias{insert_treatments}
 \title{Inserts treatment and experiment information}
 \usage{
-insert_treatments(
-  obj_name,
-  vertex_height = NULL,
-  vertex_angle = NULL,
-  pos_wall = NULL,
-  neg_wall = NULL,
-  front_wall = NULL,
-  stim_param_pos = NULL,
-  stim_param_neg = NULL,
-  stim_param_front = NULL,
-  treatment = NULL
-)
+insert_treatments(obj_name, vertex_height = NULL, vertex_angle = NULL,
+  pos_wall = NULL, neg_wall = NULL, front_wall = NULL,
+  stim_param_pos = NULL, stim_param_neg = NULL,
+  stim_param_front = NULL, treatment = NULL)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute

@@ -4,7 +4,8 @@
 \alias{rescale_tunnel_data}
 \title{Rescale position data within a \code{viewr} object}
 \usage{
-rescale_tunnel_data(obj_name, original_scale = 0.5, desired_scale = 1, ...)
+rescale_tunnel_data(obj_name, original_scale = 0.5, desired_scale = 1,
+  ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute

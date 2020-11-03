@@ -162,7 +162,8 @@ problems.",
                                     type_vec,
                                     names_vec,
                                     simplify = NA, # container to be filled
-                                    subjects = NA  # container to be filled
+                                    subjects = NA, # container to be filled
+                                    stringsAsFactors = FALSE
                                     )
 
     ## Now add the actual markers' names to the "simplify" column of
@@ -226,7 +227,8 @@ problems.",
     ## Make data frame to help with data names
     data_names_frame <- data.frame(v1 = marker_id_line,
                                    v2 = data_names_part_one,
-                                   v3 = data_names_part_two)
+                                   v3 = data_names_part_two,
+                                   stringsAsFactors = FALSE)
     ## v2 (Position) seems useless, but I'm keeping it in for now and ignoring
     ## it in the next step
 

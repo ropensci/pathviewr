@@ -4,13 +4,8 @@
 \alias{calc_sf_V}
 \title{Estimate spatial frequency of visual stimuli in V-shaped tunnel}
 \usage{
-calc_sf_V(
-  obj_name,
-  vertex_angle,
-  stim_param_pos,
-  stim_param_neg,
-  simplify_output = FALSE
-)
+calc_sf_V(obj_name, vertex_angle, stim_param_pos, stim_param_neg,
+  simplify_output = FALSE)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -49,10 +44,9 @@ either side of the tunnel that minimizes the distance to visual stimuli and
 thereby minimizes spatial frequencies.
 }
 \seealso{
-Other visual perception functions: 
-\code{\link{calc_sf_box}()},
-\code{\link{calc_vis_angle_V}()},
-\code{\link{calc_vis_angle_box}()}
+Other visual perception functions: \code{\link{calc_sf_box}},
+  \code{\link{calc_vis_angle_V}},
+  \code{\link{calc_vis_angle_box}}
 }
 \author{
 Eric R. Press
