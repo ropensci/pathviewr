@@ -56,17 +56,18 @@ motive_data_gathered <- gather_tunnel_data(motive_data_relabeled)
 names(motive_data_gathered)
 }
 \seealso{
-Other data cleaning functions: \code{\link{get_full_trajectories}},
-  \code{\link{quick_separate_trajectories}},
-  \code{\link{redefine_tunnel_center}},
-  \code{\link{relabel_viewr_axes}},
-  \code{\link{rename_viewr_characters}},
-  \code{\link{rotate_tunnel}},
-  \code{\link{select_x_percent}},
-  \code{\link{separate_trajectories}},
-  \code{\link{standardize_tunnel}},
-  \code{\link{trim_tunnel_outliers}},
-  \code{\link{visualize_frame_gap_choice}}
+Other data cleaning functions: 
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{trim_tunnel_outliers}()},
+\code{\link{visualize_frame_gap_choice}()}
 }
 \author{
 Vikram B. Baliga

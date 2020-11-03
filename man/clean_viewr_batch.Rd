@@ -90,9 +90,10 @@ motive_bound_two <-
 identical(motive_bound_one, motive_bound_two)
 }
 \seealso{
-Other batch functions: \code{\link{bind_viewr_objects}},
-  \code{\link{import_and_clean_batch}},
-  \code{\link{import_batch}}
+Other batch functions: 
+\code{\link{bind_viewr_objects}()},
+\code{\link{import_and_clean_batch}()},
+\code{\link{import_batch}()}
 }
 \author{
 Vikram B. Baliga

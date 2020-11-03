@@ -4,10 +4,17 @@
 \alias{get_velocity}
 \title{Get instantaneous velocity for subjects}
 \usage{
-get_velocity(obj_name, time_col = "time_sec",
-  length_col = "position_length", width_col = "position_width",
-  height_col = "position_height", add_to_viewr = TRUE,
-  velocity_min = NA, velocity_max = NA, ...)
+get_velocity(
+  obj_name,
+  time_col = "time_sec",
+  length_col = "position_length",
+  width_col = "position_width",
+  height_col = "position_height",
+  add_to_viewr = TRUE,
+  velocity_min = NA,
+  velocity_max = NA,
+  ...
+)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -77,12 +84,14 @@ motive_data <-
    get_velocity(add_to_viewr = TRUE)
 }
 \seealso{
-Other mathematical functions: \code{\link{deg_2_rad}},
-  \code{\link{find_curve_elbow}},
-  \code{\link{get_2d_angle}}, \code{\link{get_3d_angle}},
-  \code{\link{get_3d_cross_prod}},
-  \code{\link{get_dist_point_line}},
-  \code{\link{rad_2_deg}}
+Other mathematical functions: 
+\code{\link{deg_2_rad}()},
+\code{\link{find_curve_elbow}()},
+\code{\link{get_2d_angle}()},
+\code{\link{get_3d_angle}()},
+\code{\link{get_3d_cross_prod}()},
+\code{\link{get_dist_point_line}()},
+\code{\link{rad_2_deg}()}
 }
 \author{
 Vikram B. Baliga and Melissa S. Armstrong

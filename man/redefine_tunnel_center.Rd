@@ -4,12 +4,17 @@
 \alias{redefine_tunnel_center}
 \title{"Center" the tunnel data, i.e. translation but no rotation}
 \usage{
-redefine_tunnel_center(obj_name, axes = c("position_length",
-  "position_width", "position_height"), length_method = c("original",
-  "middle", "median", "user-defined"), width_method = c("original",
-  "middle", "median", "user-defined"), height_method = c("original",
-  "middle", "median", "user-defined"), length_zero = NA,
-  width_zero = NA, height_zero = NA, ...)
+redefine_tunnel_center(
+  obj_name,
+  axes = c("position_length", "position_width", "position_height"),
+  length_method = c("original", "middle", "median", "user-defined"),
+  width_method = c("original", "middle", "median", "user-defined"),
+  height_method = c("original", "middle", "median", "user-defined"),
+  length_zero = NA,
+  width_zero = NA,
+  height_zero = NA,
+  ...
+)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -73,20 +78,22 @@ flydra_centered <-
                          height_zero = 1.44)
 }
 \seealso{
-Other data cleaning functions: \code{\link{gather_tunnel_data}},
-  \code{\link{get_full_trajectories}},
-  \code{\link{quick_separate_trajectories}},
-  \code{\link{relabel_viewr_axes}},
-  \code{\link{rename_viewr_characters}},
-  \code{\link{rotate_tunnel}},
-  \code{\link{select_x_percent}},
-  \code{\link{separate_trajectories}},
-  \code{\link{standardize_tunnel}},
-  \code{\link{trim_tunnel_outliers}},
-  \code{\link{visualize_frame_gap_choice}}
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{trim_tunnel_outliers}()},
+\code{\link{visualize_frame_gap_choice}()}
 
-Other tunnel standardization functions: \code{\link{rotate_tunnel}},
-  \code{\link{standardize_tunnel}}
+Other tunnel standardization functions: 
+\code{\link{rotate_tunnel}()},
+\code{\link{standardize_tunnel}()}
 }
 \author{
 Vikram B. Baliga

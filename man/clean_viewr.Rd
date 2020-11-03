@@ -4,12 +4,20 @@
 \alias{clean_viewr}
 \title{All-in-one function to clean imported objects}
 \usage{
-clean_viewr(obj_name, relabel_viewr_axes = TRUE,
-  gather_tunnel_data = TRUE, trim_tunnel_outliers = TRUE,
-  standardization_option = "rotate_tunnel", get_velocity = TRUE,
-  select_x_percent = TRUE, rename_viewr_characters = FALSE,
-  separate_trajectories = TRUE, get_full_trajectories = TRUE,
-  fill_traj_gaps = FALSE, ...)
+clean_viewr(
+  obj_name,
+  relabel_viewr_axes = TRUE,
+  gather_tunnel_data = TRUE,
+  trim_tunnel_outliers = TRUE,
+  standardization_option = "rotate_tunnel",
+  get_velocity = TRUE,
+  select_x_percent = TRUE,
+  rename_viewr_characters = FALSE,
+  separate_trajectories = TRUE,
+  get_full_trajectories = TRUE,
+  fill_traj_gaps = FALSE,
+  ...
+)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -87,7 +95,8 @@ motive_import_and_clean <-
   )
 }
 \seealso{
-Other all in one functions: \code{\link{import_and_clean_viewr}}
+Other all in one functions: 
+\code{\link{import_and_clean_viewr}()}
 }
 \author{
 Vikram B. Baliga

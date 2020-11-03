@@ -4,8 +4,12 @@
 \alias{standardize_tunnel}
 \title{Rotate and center a tunnel based on landmarks}
 \usage{
-standardize_tunnel(obj_name, landmark_one = "perch1",
-  landmark_two = "perch2", ...)
+standardize_tunnel(
+  obj_name,
+  landmark_one = "perch1",
+  landmark_two = "perch2",
+  ...
+)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
@@ -51,20 +55,22 @@ the rotation will apply to a mirror-image of the tunnel
 ## should you need it.
 }
 \seealso{
-Other data cleaning functions: \code{\link{gather_tunnel_data}},
-  \code{\link{get_full_trajectories}},
-  \code{\link{quick_separate_trajectories}},
-  \code{\link{redefine_tunnel_center}},
-  \code{\link{relabel_viewr_axes}},
-  \code{\link{rename_viewr_characters}},
-  \code{\link{rotate_tunnel}},
-  \code{\link{select_x_percent}},
-  \code{\link{separate_trajectories}},
-  \code{\link{trim_tunnel_outliers}},
-  \code{\link{visualize_frame_gap_choice}}
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{trim_tunnel_outliers}()},
+\code{\link{visualize_frame_gap_choice}()}
 
-Other tunnel standardization functions: \code{\link{redefine_tunnel_center}},
-  \code{\link{rotate_tunnel}}
+Other tunnel standardization functions: 
+\code{\link{redefine_tunnel_center}()},
+\code{\link{rotate_tunnel}()}
 }
 \author{
 Vikram B. Baliga

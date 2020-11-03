@@ -255,10 +255,22 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=cowplot"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utf8",
+      "name": "utf8",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=utf8"
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "8261.437KB",
+  "fileSize": "8264.446KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }

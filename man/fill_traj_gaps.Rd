@@ -4,9 +4,13 @@
 \alias{fill_traj_gaps}
 \title{Interpolate gaps within trajectories}
 \usage{
-fill_traj_gaps(obj_name, loess_degree = 1, loess_criterion = c("aicc",
-  "gcv"), loess_family = c("gaussian", "symmetric"),
-  loess_user_span = NULL)
+fill_traj_gaps(
+  obj_name,
+  loess_degree = 1,
+  loess_criterion = c("aicc", "gcv"),
+  loess_family = c("gaussian", "symmetric"),
+  loess_user_span = NULL
+)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute

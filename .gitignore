@@ -7,3 +7,4 @@ pathviewR.Rproj
 inst/doc
 doc
 Meta
+tests/testthat/Rplots.pdf

@@ -4,8 +4,11 @@
 \alias{plot_viewr_trajectories}
 \title{Plot each trajectory within a viewr object}
 \usage{
-plot_viewr_trajectories(obj_name, plot_axes = c("length", "width"),
-  multi_plot = FALSE)
+plot_viewr_trajectories(
+  obj_name,
+  plot_axes = c("length", "width"),
+  multi_plot = FALSE
+)
 }
 \arguments{
 \item{obj_name}{A viewr object (a tibble or data.frame with attribute
@@ -46,8 +49,9 @@ plot_viewr_trajectories(motive_full, multi_plot = FALSE)
 plot_viewr_trajectories(motive_full, multi_plot = TRUE)
 }
 \seealso{
-Other plotting functions: \code{\link{plot_by_subject}},
-  \code{\link{visualize_frame_gap_choice}}
+Other plotting functions: 
+\code{\link{plot_by_subject}()},
+\code{\link{visualize_frame_gap_choice}()}
 }
 \author{
 Vikram B. Baliga

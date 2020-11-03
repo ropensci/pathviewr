@@ -4,8 +4,7 @@
 \alias{read_motive_csv}
 \title{Import data from a CSV exported from Optitrack's Motive software}
 \usage{
-read_motive_csv(file_name, file_id = NA, simplify_marker_naming = TRUE,
-  ...)
+read_motive_csv(file_name, file_id = NA, simplify_marker_naming = TRUE, ...)
 }
 \arguments{
 \item{file_name}{A file (or path to file) in CSV format}
@@ -82,9 +81,11 @@ attributes(motive_data)
 \seealso{
 \code{\link{read_flydra_mat}} for importing Flydra data
 
-Other data import functions: \code{\link{as_viewr}},
-  \code{\link{import_and_clean_batch}},
-  \code{\link{import_batch}}, \code{\link{read_flydra_mat}}
+Other data import functions: 
+\code{\link{as_viewr}()},
+\code{\link{import_and_clean_batch}()},
+\code{\link{import_batch}()},
+\code{\link{read_flydra_mat}()}
 }
 \author{
 Vikram B. Baliga

@@ -65,8 +65,9 @@ motive_full \%>\%
 plot_by_subject(col_by_treat = TRUE)
 }
 \seealso{
-Other plotting functions: \code{\link{plot_viewr_trajectories}},
-  \code{\link{visualize_frame_gap_choice}}
+Other plotting functions: 
+\code{\link{plot_viewr_trajectories}()},
+\code{\link{visualize_frame_gap_choice}()}
 }
 \author{
 Melissa S. Armstrong

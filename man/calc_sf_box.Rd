@@ -27,9 +27,10 @@ either side of the tunnel that minimizes the distance to visual stimuli and
 thereby minimizes spatial frequencies.
 }
 \seealso{
-Other visual perception functions: \code{\link{calc_sf_V}},
-  \code{\link{calc_vis_angle_V}},
-  \code{\link{calc_vis_angle_box}}
+Other visual perception functions: 
+\code{\link{calc_sf_V}()},
+\code{\link{calc_vis_angle_V}()},
+\code{\link{calc_vis_angle_box}()}
 }
 \author{
 Eric R. Press

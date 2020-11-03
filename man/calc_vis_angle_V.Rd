@@ -36,9 +36,10 @@ visual stimuli and therefore maximizes visual angles. All length
 measurements are reported in meters.
 }
 \seealso{
-Other visual perception functions: \code{\link{calc_sf_V}},
-  \code{\link{calc_sf_box}},
-  \code{\link{calc_vis_angle_box}}
+Other visual perception functions: 
+\code{\link{calc_sf_V}()},
+\code{\link{calc_sf_box}()},
+\code{\link{calc_vis_angle_box}()}
 }
 \author{
 Eric R. Press

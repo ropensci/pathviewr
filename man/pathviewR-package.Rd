@@ -24,12 +24,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Vikram B. Baliga \email{vbaliga87@gmail.com} (0000-0002-9367-8974)
+\strong{Maintainer}: Vikram B. Baliga \email{vbaliga87@gmail.com} (\href{https://orcid.org/0000-0002-9367-8974}{ORCID})
 
 Authors:
 \itemize{
-  \item Melissa S. Armstrong \email{melissa.armstrong@gmail.com} (0000-0002-3059-0094)
-  \item Eric R. Press \email{epress12@gmail.com} (0000-0002-1944-3755)
+  \item Melissa S. Armstrong \email{melissa.armstrong@gmail.com} (\href{https://orcid.org/0000-0002-3059-0094}{ORCID})
+  \item Eric R. Press \email{epress12@gmail.com} (\href{https://orcid.org/0000-0002-1944-3755}{ORCID})
 }
 
 }

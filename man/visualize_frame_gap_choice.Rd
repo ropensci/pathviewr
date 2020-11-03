@@ -47,24 +47,27 @@ motive_selected <-
 visualize_frame_gap_choice(motive_selected, loops = 10)
 }
 \seealso{
-Other data cleaning functions: \code{\link{gather_tunnel_data}},
-  \code{\link{get_full_trajectories}},
-  \code{\link{quick_separate_trajectories}},
-  \code{\link{redefine_tunnel_center}},
-  \code{\link{relabel_viewr_axes}},
-  \code{\link{rename_viewr_characters}},
-  \code{\link{rotate_tunnel}},
-  \code{\link{select_x_percent}},
-  \code{\link{separate_trajectories}},
-  \code{\link{standardize_tunnel}},
-  \code{\link{trim_tunnel_outliers}}
+Other data cleaning functions: 
+\code{\link{gather_tunnel_data}()},
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{redefine_tunnel_center}()},
+\code{\link{relabel_viewr_axes}()},
+\code{\link{rename_viewr_characters}()},
+\code{\link{rotate_tunnel}()},
+\code{\link{select_x_percent}()},
+\code{\link{separate_trajectories}()},
+\code{\link{standardize_tunnel}()},
+\code{\link{trim_tunnel_outliers}()}
 
-Other plotting functions: \code{\link{plot_by_subject}},
-  \code{\link{plot_viewr_trajectories}}
+Other plotting functions: 
+\code{\link{plot_by_subject}()},
+\code{\link{plot_viewr_trajectories}()}
 
-Other functions that define or clean trajectories: \code{\link{get_full_trajectories}},
-  \code{\link{quick_separate_trajectories}},
-  \code{\link{separate_trajectories}}
+Other functions that define or clean trajectories: 
+\code{\link{get_full_trajectories}()},
+\code{\link{quick_separate_trajectories}()},
+\code{\link{separate_trajectories}()}
 }
 \author{
 Melissa S. Armstrong and Vikram B. Baliga
