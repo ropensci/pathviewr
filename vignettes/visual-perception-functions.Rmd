@@ -6,7 +6,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Estimating visual perceptions from tracking data}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{ggplot2}
+  %\VignetteDepends{magrittr}
   %\VignetteEncoding{UTF-8}
 ---
 ```{r, include = FALSE}
@@ -21,12 +22,13 @@ distance between the subject/observer and visual stimuli on the walls of the
 experimental tunnel.
 
 ## Loading packages
-We'll need to start by loading `pathviewR` as well as `tidyverse` for
-visualizing the data.
+We'll need to start by loading `pathviewR` as well as a couple `tidyverse` 
+packages for visualizing the data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewR)
-library(tidyverse)
+library(ggplot2)
+library(magrittr)
 ```
 
 

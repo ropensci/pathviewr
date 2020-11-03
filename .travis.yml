@@ -3,7 +3,7 @@
 language: R
 sudo: false
 r:
-  #- oldrel # see if this works
+  - oldrel # see if this works
   - release
   - devel
 cache: packages

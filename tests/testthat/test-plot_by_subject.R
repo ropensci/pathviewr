@@ -1,5 +1,6 @@
 #Tests of plot_by_subject()
-library(tidyverse)
+library(ggplot2)
+library(magrittr)
 
 ## test of object input
 test_that("plot_by_subject() fails when data are missing or nonsense args",

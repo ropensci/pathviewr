@@ -6,7 +6,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Managing frame gaps with pathviewR}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{ggplot2}
+  %\VignetteDepends{magrittr}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -22,7 +23,8 @@ knitr::opts_chunk$set(
 region of interest to the other. Before trajectories can be defined, the region
 of interest must be selected via `select_x_percent()` in addition to all the
 previous steps of the data import and cleaning pipeline as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
-We'll start with loading `pathviewR` and `tidyverse` and importing our data.
+We'll start with loading `pathviewR` and a few packages from the `tidyverse`
+and importing our data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewR installed:
@@ -30,7 +32,8 @@ We'll start with loading `pathviewR` and `tidyverse` and importing our data.
 # devtools::install_github("vbaliga/pathviewR")
 
 library(pathviewR)
-library(tidyverse)
+library(ggplot2)
+library(magrittr)
 
 ## Import the example Motive data included in 
 ## the package

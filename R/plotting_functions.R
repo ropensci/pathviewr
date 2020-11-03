@@ -324,7 +324,8 @@ plot_viewr_trajectories <- function(obj_name,
 #' @family plotting functions
 #' @examples
 #' library(pathviewR)
-#' library(tidyverse)
+#' library(ggplot2)
+#' library(magrittr)
 #'
 #' ## Import the example Motive data included in the package
 #' motive_data <-

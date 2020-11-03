@@ -37,11 +37,13 @@ devtools::install_github("vbaliga/pathviewR")
 
 ## Example
 
-Data import and cleaning via `pathviewR`
+Data import and cleaning via `pathviewR`; we’ll also load two
+`tidyverse` packages for wrangling & plotting.
 
 ``` r
 library(pathviewR)
-library(tidyverse)
+library(ggplot2)
+library(magrittr)
 ```
 
 We will import and clean a sample data set from `.csv` files exported by

@@ -39,7 +39,8 @@
 ## and cleaning pipeline to generate an object that calc_vis_angle can apply to.
 
                       #####   Load packages   #####
-library(tidyverse) # used only for plotting at the end
+library(ggplot2)
+library(magrittr)
 
                      #####   Source scripts    #####
 ## First define the directory to inspect

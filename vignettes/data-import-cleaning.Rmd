@@ -6,7 +6,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Basics of data import and cleaning in pathviewR}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{ggplot2}
+  %\VignetteDepends{magrittr}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -35,7 +36,7 @@ Please feel free to reach out to the `pathviewR` authors should you have trouble
 with any of our data import options. We are happy to work with you to design
 custom `read_` functions for filetypes we have not encountered ourselves. 
 
-We'll start by loading `pathviewR` and `tidyverse`.
+We'll start by loading `pathviewR` and a few of the pacakges in the `tidyverse`.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewR installed:
@@ -43,7 +44,8 @@ We'll start by loading `pathviewR` and `tidyverse`.
 # devtools::install_github("vbaliga/pathviewR")
 
 library(pathviewR)
-library(tidyverse)
+library(ggplot2)
+library(magrittr)
 ```
 
 ### Motive CSV files
