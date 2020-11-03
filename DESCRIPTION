@@ -1,6 +1,6 @@
 Package: pathviewR
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
-Version: 0.9.3.9001
+Version: 0.9.3.9002
 Authors@R: 
     c(person(given = "Melissa S.", 
              family = "Armstrong",

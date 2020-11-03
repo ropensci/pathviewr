@@ -73,7 +73,7 @@ from elevation and bird's eye views." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9002</span>
       </span>
     </div>
 
@@ -170,8 +170,9 @@ density plots of width or height depending on the view.
 treatment in both the trajectory plots and the density plots.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other plotting functions: <code><a href='plot_viewr_trajectories.html'>plot_viewr_trajectories</a></code>,
-  <code><a href='visualize_frame_gap_choice.html'>visualize_frame_gap_choice</a></code></p></div>
+    <div class='dont-index'><p>Other plotting functions: 
+<code><a href='plot_viewr_trajectories.html'>plot_viewr_trajectories</a>()</code>,
+<code><a href='visualize_frame_gap_choice.html'>visualize_frame_gap_choice</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Melissa S. Armstrong</p>
@@ -181,32 +182,33 @@ treatment in both the trajectory plots and the density plots.</p>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>magrittr</span><span class='op'>)</span>
 
-<span class='co'>## Import the example Motive data included in the package</span>
-<span class='va'>motive_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='co'>## Import the example Motive data included in the package</span>
+  <span class='va'>motive_data</span> <span class='op'>&lt;-</span>
+    <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>,
+                                <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                                package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='co'>## Clean, isolate, and label trajectories</span>
-<span class='va'>motive_full</span> <span class='op'>&lt;-</span>
-  <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='clean_viewr.html'>clean_viewr</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span>,
-              max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
-              span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
-<span class='co'>## Plot all trajectories by subject</span>
-<span class='va'>motive_full</span> <span class='op'>%&gt;%</span>
-<span class='fu'>plot_by_subject</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_by_subject-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; [[2]]</div><div class='img'><img src='plot_by_subject-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='input'>
-<span class='co'>## Add treatment information</span>
-<span class='va'>motive_full</span><span class='op'>$</span><span class='va'>treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latA"</span>, <span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latB"</span>, <span class='fl'>100</span><span class='op'>)</span>,
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latA"</span>, <span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latB"</span>, <span class='fl'>149</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='co'>## Clean, isolate, and label trajectories</span>
+  <span class='va'>motive_full</span> <span class='op'>&lt;-</span>
+    <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='clean_viewr.html'>clean_viewr</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span>,
+                max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
+                span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 
-<span class='co'>## Plot all trajectories by subject, color by treatment</span>
-<span class='va'>motive_full</span> <span class='op'>%&gt;%</span>
-<span class='fu'>plot_by_subject</span><span class='op'>(</span>col_by_treat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_by_subject-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; [[2]]</div><div class='img'><img src='plot_by_subject-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
+  <span class='co'>## Plot all trajectories by subject</span>
+  <span class='va'>motive_full</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>plot_by_subject</span><span class='op'>(</span><span class='op'>)</span>
+
+  <span class='co'>## Add treatment information</span>
+  <span class='va'>motive_full</span><span class='op'>$</span><span class='va'>treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latA"</span>, <span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latB"</span>, <span class='fl'>100</span><span class='op'>)</span>,
+                             <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latA"</span>, <span class='fl'>100</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latB"</span>, <span class='fl'>149</span><span class='op'>)</span><span class='op'>)</span>
+
+  <span class='co'>## Plot all trajectories by subject, color by treatment</span>
+  <span class='va'>motive_full</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>plot_by_subject</span><span class='op'>(</span>col_by_treat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/vbaliga/pathviewR",
   "issueTracker": "https://github.com/vbaliga/pathviewR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.9.3.9001",
+  "version": "0.9.3.9002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "8271.516KB",
+  "fileSize": "8271.409KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active"
 }
