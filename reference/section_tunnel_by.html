@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9002</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
     <p>Chop data into X sections (of equal size) along a specified axis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>section_tunnel_by</span>(<span class='kw'>obj_name</span>, axis = <span class='st'>"position_length"</span>, number_of_sections = <span class='fl'>20</span>)</pre>
+    <pre class="usage"><span class='fu'>section_tunnel_by</span><span class='op'>(</span><span class='va'>obj_name</span>, axis <span class='op'>=</span> <span class='st'>"position_length"</span>, number_of_sections <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,22 +169,22 @@ which is an ordered factor that indicates grouping.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Load data and run section_tunnel_by()</span>
-<span class='kw'>test_mat</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
-                             package = <span class='st'>'pathviewR'</span>),
-                  subject_name = <span class='st'>"birdie_wooster"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='redefine_tunnel_center.html'>redefine_tunnel_center</a></span>(length_method = <span class='st'>"middle"</span>,
-                         height_method = <span class='st'>"user-defined"</span>,
-                         height_zero = <span class='fl'>1.44</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span>(desired_percent = <span class='fl'>50</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span>(max_frame_gap = <span class='fl'>1</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span>(span = <span class='fl'>0.95</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>section_tunnel_by</span>(number_of_sections = <span class='fl'>10</span>)
+<span class='va'>test_mat</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
+                             package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+                  subject_name <span class='op'>=</span> <span class='st'>"birdie_wooster"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='redefine_tunnel_center.html'>redefine_tunnel_center</a></span><span class='op'>(</span>length_method <span class='op'>=</span> <span class='st'>"middle"</span>,
+                         height_method <span class='op'>=</span> <span class='st'>"user-defined"</span>,
+                         height_zero <span class='op'>=</span> <span class='fl'>1.44</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span><span class='op'>(</span>span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>section_tunnel_by</span><span class='op'>(</span>number_of_sections <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 
 <span class='co'>## Plot; color by section ID</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>test_mat</span><span class='op'>$</span><span class='kw'>position_length</span>,
-     <span class='kw'>test_mat</span><span class='op'>$</span><span class='kw'>position_width</span>,
-     asp = <span class='fl'>1</span>, col = <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='kw'>test_mat</span><span class='op'>$</span><span class='kw'>section_id</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>test_mat</span><span class='op'>$</span><span class='va'>position_length</span>,
+     <span class='va'>test_mat</span><span class='op'>$</span><span class='va'>position_width</span>,
+     asp <span class='op'>=</span> <span class='fl'>1</span>, col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_mat</span><span class='op'>$</span><span class='va'>section_id</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='section_tunnel_by-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
