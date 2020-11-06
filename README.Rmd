@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pathviewR
+# pathviewR <a href='https://vbaliga.github.io/pathviewR'><img src='man/figures/logo.png' align="right" height="133" /></a>
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -103,6 +103,16 @@ motive_allinone %>%
     legend.position = "none"
   )
   
+```
+
+To get a sense of what we've done, compare the data before and after it has passed through the pipeline.
+
+```{r compare before and after}
+## Check out the data's structure before cleaning and wrangling:
+str(motive_data)
+
+## Check out the data's structure after cleaning and wrangling:
+str(motive_allinone)
 ```
 
 An important aspect of how `pathviewR` defines trajectories is by managing gaps
