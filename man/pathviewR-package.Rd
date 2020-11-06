@@ -6,6 +6,8 @@
 \alias{pathviewR-package}
 \title{pathviewR: Wrangle, Analyze, and Visualize Animal Movement Data}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 Tools to import, clean, and visualize 
     animal movement data from Optitrack's Motive, from Flydra, or from 
     another source. We provide functions to remove artifacts, standardize
