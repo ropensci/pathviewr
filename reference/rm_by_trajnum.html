@@ -8,6 +8,13 @@
 
 <title>Remove subjects by trajectory number — rm_by_trajnum • pathviewR</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -42,6 +49,7 @@
 <meta property="og:title" content="Remove subjects by trajectory number — rm_by_trajnum" />
 <meta property="og:description" content="Specify a minimum number of trajectories that each subject must complete
 during a treatment, trial, or session." />
+<meta property="og:image" content="https://vbaliga.github.io/pathviewR/logo.png" />
 
 
 
@@ -137,14 +145,14 @@ during a treatment, trial, or session." />
 during a treatment, trial, or session.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rm_by_trajnum</span><span class='op'>(</span>
-  <span class='va'>obj_name</span>,
-  trajnum <span class='op'>=</span> <span class='fl'>5</span>,
-  mirrored <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>treatment1</span>,
-  <span class='va'>treatment2</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rm_by_trajnum</span>(
+  <span class='kw'>obj_name</span>,
+  trajnum = <span class='fl'>5</span>,
+  mirrored = <span class='fl'>FALSE</span>,
+  <span class='kw'>treatment1</span>,
+  <span class='kw'>treatment2</span>,
+  <span class='kw'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,41 +216,41 @@ named <code>"treatment"</code>.</p>
     <p>Melissa S. Armstrong</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/vbaliga/pathviewR'>pathviewR</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/vbaliga/pathviewR'>pathviewR</a></span>)
 
 <span class='co'>## Import the example Motive data included in the package</span>
-<span class='va'>motive_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>motive_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                              package = <span class='st'>'pathviewR'</span>))
 
 <span class='co'>## Clean, isolate, and label trajectories</span>
-<span class='va'>motive_full</span> <span class='op'>&lt;-</span>
-  <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='clean_viewr.html'>clean_viewr</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span>,
-              max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
-              span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+<span class='kw'>motive_full</span> <span class='op'>&lt;-</span>
+  <span class='kw'>motive_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='clean_viewr.html'>clean_viewr</a></span>(desired_percent = <span class='fl'>50</span>,
+              max_frame_gap = <span class='st'>"autodetect"</span>,
+              span = <span class='fl'>0.95</span>)
 </div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
 <span class='co'>##Remove subjects that have not completed at least 150 trajectories:</span>
-<span class='va'>motive_rm_unmirrored</span> <span class='op'>&lt;-</span>
-  <span class='va'>motive_full</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>rm_by_trajnum</span><span class='op'>(</span>trajnum <span class='op'>=</span> <span class='fl'>150</span><span class='op'>)</span>
+<span class='kw'>motive_rm_unmirrored</span> <span class='op'>&lt;-</span>
+  <span class='kw'>motive_full</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rm_by_trajnum</span>(trajnum = <span class='fl'>150</span>)
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "subject"</span></div><div class='input'>
 <span class='co'>## Add treatment information</span>
-<span class='va'>motive_full</span><span class='op'>$</span><span class='va'>treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latA"</span>, <span class='fl'>100</span><span class='op'>)</span>,
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latB"</span>, <span class='fl'>100</span><span class='op'>)</span>,
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latA"</span>, <span class='fl'>100</span><span class='op'>)</span>,
-                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"latB"</span>, <span class='fl'>149</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>motive_full</span><span class='op'>$</span><span class='kw'>treatment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latA"</span>, <span class='fl'>100</span>),
+                           <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"latB"</span>, <span class='fl'>149</span>))
 
 <span class='co'>## Remove subjects by that have not completed at least 10 trajectories in</span>
 <span class='co'>## both treatments</span>
-<span class='va'>motive_rm_mirrored</span> <span class='op'>&lt;-</span>
-  <span class='va'>motive_full</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>rm_by_trajnum</span><span class='op'>(</span>
-    trajnum <span class='op'>=</span> <span class='fl'>10</span>,
-    mirrored <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    treatment1 <span class='op'>=</span> <span class='st'>"latA"</span>,
-    treatment2 <span class='op'>=</span> <span class='st'>"latB"</span>
-  <span class='op'>)</span>
+<span class='kw'>motive_rm_mirrored</span> <span class='op'>&lt;-</span>
+  <span class='kw'>motive_full</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>rm_by_trajnum</span>(
+    trajnum = <span class='fl'>10</span>,
+    mirrored = <span class='fl'>TRUE</span>,
+    treatment1 = <span class='st'>"latA"</span>,
+    treatment2 = <span class='st'>"latB"</span>
+  )
 </div><div class='output co'>#&gt; <span class='message'>Joining, by = "subject"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
