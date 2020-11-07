@@ -8,6 +8,13 @@
 
 <title>Bind viewr objects — bind_viewr_objects • pathviewR</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="Bind viewr objects — bind_viewr_objects" />
 <meta property="og:description" content="Combine a list of multiple viewr objects into a single viewr object" />
+<meta property="og:image" content="https://vbaliga.github.io/pathviewR/logo.png" />
 
 
 
@@ -187,7 +195,7 @@ caution.</p>
     max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
     span <span class='op'>=</span> <span class='fl'>0.95</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>File 1 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 2 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>File 3 has been cleaned successfully.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>File 1 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>File 2 has been cleaned successfully.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>File 3 has been cleaned successfully.</span></div><div class='input'>
 <span class='co'>## Alternatively, use import_and_clean_batch() to</span>
 <span class='co'>## combine import with cleaning on a batch of files</span>
 <span class='va'>motive_batch_import_and_clean</span> <span class='op'>&lt;-</span>
@@ -200,7 +208,7 @@ caution.</p>
     max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span>,
     span <span class='op'>=</span> <span class='fl'>0.95</span>
   <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>File 1 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 2 imported.</span></div><div class='output co'>#&gt; <span class='message'>File 3 imported.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
 <span class='co'>## Each of these lists of objects can be bound into</span>
 <span class='co'>## one viewr object (i.e. one tibble) via</span>
 <span class='co'>## bind_viewr_objects()</span>
