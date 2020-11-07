@@ -176,7 +176,7 @@ clean_viewr_batch <- function(obj_list,
   for (i in seq_len(length(obj_list))){
     cleaned_list[[i]] <-
       obj_list[[i]] %>%
-      clean_viewr()
+      clean_viewr(...)
     if (file_announce == TRUE){
       message("File ",i," has been cleaned successfully.")
     }

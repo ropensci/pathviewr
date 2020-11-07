@@ -142,7 +142,7 @@ test_that("bind_viewr_objects() binds data properly",
           {
             expect_equal(
               dim(bind_viewr_objects(motive_batch_cleaned)),
-              c(1011, 24)
+              c(1347, 24)
               )
           })
 test_that("bind_viewr_objects() handles attributes",
