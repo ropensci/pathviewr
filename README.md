@@ -17,14 +17,14 @@ coverage](https://codecov.io/gh/vbaliga/pathviewR/graph/badge.svg)](https://code
 <!-- badges: end -->
 
 `pathviewR` offers tools to import, clean, and visualize animal movement
-data from [Optitrack’s Motive](https://optitrack.com/products/motive/),
-the [Straw Lab’s Flydra](https://github.com/strawlab/flydra), or from
-other sources. We provide functions to remove artifacts, standardize
-tunnel position and tunnel axes, select a region of interest, isolate
-specific trajectories, fill gaps in trajectory data, and calculate 3D
-and per-axis velocity. For experiments of visual guidance, we also
-provide functions that use animal position to estimate perception of
-visual stimuli.
+data from motion capture systems such as [Optitrack’s
+Motive](https://optitrack.com/software/motive/), the [Straw Lab’s
+Flydra](https://github.com/strawlab/flydra), or other sources. We
+provide functions to remove artifacts, standardize tunnel position and
+tunnel axes, select a region of interest, isolate specific trajectories,
+fill gaps in trajectory data, and calculate 3D and per-axis velocity.
+For experiments of visual guidance, we also provide functions that use
+animal position to estimate perception of visual stimuli.
 
 ## Installation
 
@@ -37,8 +37,9 @@ devtools::install_github("vbaliga/pathviewR")
 
 ## Example
 
-Data import and cleaning via `pathviewR`; we’ll also load two
-`tidyverse` packages for wrangling & plotting.
+#### Data import and cleaning via `pathviewR`
+
+We’ll also load two `tidyverse` packages for wrangling & plotting.
 
 ``` r
 library(pathviewR)
@@ -101,7 +102,7 @@ motive_allinone %>%
   )
 ```
 
-<img src="man/figures/README-all-in-one-1.png" width="100%" />
+<img src="man/figures/README-all_in_one-1.png" width="100%" />
 
 To get a sense of what we’ve done, compare the data before and after it
 has passed through the pipeline.
@@ -139,7 +140,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewR_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-07 23:22:18"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-11 12:07:14"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -182,7 +183,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-07 23:22:18"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-11 12:07:14"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -224,9 +225,17 @@ tunnel. For a complete description of these functions, [see the Visual
 Perception Functions
 vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
 
+#### Add more info about experiments
+
 Now that our objects have been cleaned, we will use
 `insert_treatments()` to add information about the experiments that are
 necessary for calculating visual perceptions.
+
+The data from this example were recorded in a V-shaped tunnel.
+Accordingly, the vertex angle and vertex height of the tunnel, along
+with information about the visual stimuli used during the experiment,
+will be added to the data to inform calculations of visual perception
+(next section).
 
 ``` r
 motive_V <- 
@@ -237,6 +246,8 @@ motive_V <-
                     stim_param_neg = 0.2,
                     treatment = "latB")
 ```
+
+#### Estimate perception of visual stimuli
 
 To calculate the spatial frequency of the visual stimuli as perceived by
 the subject some distance from the stimuli, we will use `calc_sf_V()`.

@@ -331,8 +331,3 @@ ggplot(flydra_box_angle, aes(x = position_width, y = position_length)) +
                    yend = 0.5))
 ```
 
-
-
-## Future steps...
-### Orientation 
-### Optic flow estimation

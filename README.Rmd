@@ -23,9 +23,10 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 `pathviewR` offers tools to import, clean, and visualize animal movement data
-from [Optitrack's Motive](https://optitrack.com/products/motive/), 
-the [Straw Lab's Flydra](https://github.com/strawlab/flydra), 
-or from other sources. We provide functions to remove artifacts, standardize
+from motion capture systems such as 
+[Optitrack's Motive](https://optitrack.com/software/motive/), the 
+[Straw Lab's Flydra](https://github.com/strawlab/flydra), 
+or other sources. We provide functions to remove artifacts, standardize
 tunnel position and tunnel axes, select a region of interest, isolate specific
 trajectories, fill gaps in trajectory data, and calculate 3D and per-axis
 velocity. For experiments of visual guidance, we also provide functions that 
@@ -41,8 +42,8 @@ devtools::install_github("vbaliga/pathviewR")
 
 ## Example
 
-Data import and cleaning via `pathviewR`; we'll also load two `tidyverse` 
-packages for wrangling & plotting.
+#### Data import and cleaning via `pathviewR`
+We'll also load two `tidyverse` packages for wrangling & plotting.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewR)
@@ -74,7 +75,7 @@ will use one of two "all-in-one" functions: `clean_viewr()`.
 [See the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html)
 for the full pipeline and the other "all-in-one" function.
 
-```{r all-in-one, fig.height=3, fig.width=6, dpi=300}
+```{r all_in_one, fig.height=3, fig.width=6, dpi=300}
 motive_allinone <-
   motive_data %>%
   clean_viewr(
@@ -107,7 +108,7 @@ motive_allinone %>%
 
 To get a sense of what we've done, compare the data before and after it has passed through the pipeline.
 
-```{r compare before and after}
+```{r compare_before_and_after}
 ## Check out the data's structure before cleaning and wrangling:
 str(motive_data)
 
@@ -116,16 +117,26 @@ str(motive_allinone)
 ```
 
 An important aspect of how `pathviewR` defines trajectories is by managing gaps
-in the data. [See the Managing Frame Gaps vignette](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html) for more information on trajectory definition and frame gaps.
+in the data. 
+[See the Managing Frame Gaps vignette](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
+for more information on trajectory definition and frame gaps.
 
 Now that the data is cleaned, `pathviewR` includes functions that estimate
 visual perceptions based on the distance between the subject/observer and visual
 stimuli on the walls of the experimental tunnel. For a complete description of
-these functions, [see the Visual Perception Functions vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
+these functions, 
+[see the Visual Perception Functions vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
 
+
+#### Add more info about experiments
 Now that our objects have been cleaned, we will use `insert_treatments()` to add
 information about the experiments that are necessary for calculating visual
 perceptions.
+
+The data from this example were recorded in a V-shaped tunnel. Accordingly,
+the vertex angle and vertex height of the tunnel, along with information about
+the visual stimuli used during the experiment, will be added to the data
+to inform calculations of visual perception (next section).
 
 ```{r insert_treats}
 motive_V <- 
@@ -137,6 +148,8 @@ motive_V <-
                     treatment = "latB")
 ```
 
+
+#### Estimate perception of visual stimuli
 To calculate the spatial frequency of the visual stimuli as perceived by the
 subject some distance from the stimuli, we will use `calc_sf_V()`.
 
