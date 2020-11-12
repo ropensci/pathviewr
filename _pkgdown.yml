@@ -2,6 +2,9 @@ url: https://vbaliga.github.io/pathviewR/
 
 destination: docs
 
+template:
+package: rotemplate
+
 authors:
   Melissa S. Armstrong:
     href: https://melissasarmstrong.com
@@ -9,3 +12,77 @@ authors:
     href: https://www.vikram-baliga.com/
   Eric R. Press:
     href: https://www.grad.ubc.ca/campus-community/meet-our-students/press-eric
+
+navbar:
+  components:
+    articles:
+      text: Vignettes
+      menu:
+      - text: 'Basics of data import and cleaning in pathviewR'
+        href: articles/data-import-cleaning.html
+      - text: 'Managing frame gaps with pathviewR'
+        href: articles/managing-frame-gaps.html
+      - text: 'Estimating visual perceptions from tracking data'
+        href: articles/visual-perception-functions.html
+
+reference:
+- title: Data import functions
+  desc:  Functions for creating 'viewr' objects from external data
+  contents:
+  - read_motive_csv
+  - read_flydra_mat
+  - as_viewr
+- title: Utility functions
+  desc: Functions for wrangling and cleaning 'viewr' objects
+  contents:
+  - get_header_viewr
+  - relabel_viewr_axes
+  - gather_tunnel_data
+  - rescale_tunnel_data
+  - rename_viewr_characters
+  - trim_tunnel_outliers
+  - rotate_tunnel
+  - standardize_tunnel
+  - redefine_tunnel_center
+  - select_x_percent
+  - quick_separate_trajectories
+  - separate_trajectories
+  - get_full_trajectories
+  - section_tunnel_by
+  - exclude_by_velocity
+  - fill_traj_gaps
+  - rm_by_trajnum
+  - insert_treatments
+- title: Analytical functions
+  desc:  Functions for quantitative analysis
+  contents:
+  - find_curve_elbow
+  - get_velocity
+  - calc_vis_angle_V
+  - calc_vis_angle_box
+  - calc_sf_V
+  - calc_sf_box
+  - get_dist_point_line
+  - get_3d_cross_prod
+  - rad_2_deg
+  - deg_2_rad
+  - get_2d_angle
+  - get_3d_angle
+  title: Plotting functions
+  desc: Functions for plotting 'viewr' objects
+  contents:
+  - visualize_frame_gap_choice
+  - plot_viewr_trajectories
+  - plot_by_subject
+- title: All-in-one functions
+  desc:  Complete data import and cleaning pipelines
+  contents:
+  - clean_viewr
+  - import_and_clean_viewr
+- title: Batch analysis functions
+  desc:  Functions for the analysis of multiple files or `viewr` objects
+  contents:
+  - import_batch
+  - clean_viewr_batch
+  - import_and_clean_batch
+  - bind_viewr_objects
