@@ -144,10 +144,10 @@
      asp = <span class="fl">1</span>)
 </pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/cleanup%20data-1.png" width="700"></p>
-<div id="inspecting-the-data-weve-cleaned-up-our-data-and-are-ready-to-link" class="section level3">
+<div id="inspecting-the-data" class="section level3">
 <h3 class="hasAnchor">
-<a href="#inspecting-the-data-weve-cleaned-up-our-data-and-are-ready-to-link" class="anchor"></a>Inspecting the data We’ve cleaned up our data and are ready to link</h3>
-<p>individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
+<a href="#inspecting-the-data" class="anchor"></a>Inspecting the data</h3>
+<p>We’ve cleaned up our data and are ready to link individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">motive_mfg1</span> <span class="op">&lt;-</span> 
   <span class="kw">motive_cleaned</span> <span class="op">%&gt;%</span> 
@@ -214,10 +214,10 @@
 </pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/get_full_trajectories-2.png" width="700"></p>
 </div>
-<div id="visualize-frame-gap-choice-pathviewr-has-several-tools-to-help-users" class="section level3">
+<div id="visualize-frame-gap-choice" class="section level3">
 <h3 class="hasAnchor">
-<a href="#visualize-frame-gap-choice-pathviewr-has-several-tools-to-help-users" class="anchor"></a>Visualize frame gap choice <code>pathviewR</code> has several tools to help users</h3>
-<p>decide what frame gap allowances may be appropriate depending on their data and resolution needs. <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> runs the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function over the same data set as many times as the user would like via the <code>loop</code> argument, each time with a different <code>max_frame_gap</code> allowance.</p>
+<a href="#visualize-frame-gap-choice" class="anchor"></a>Visualize frame gap choice</h3>
+<p><code>pathviewR</code> has several tools to help users decide what frame gap allowances may be appropriate depending on their data and resolution needs. <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> runs the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function over the same data set as many times as the user would like via the <code>loop</code> argument, each time with a different <code>max_frame_gap</code> allowance.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">motive_cleaned</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice</a></span>(
