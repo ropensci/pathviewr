@@ -68,12 +68,13 @@ plot(motive_cleaned$position_length,
      asp = 1)
 ```
 
-### Inspecting the data We've cleaned up our data and are ready to link
-individual data points into continuous trajectories. Deciding exactly how to
-define a trajectory will depend largely on the quality of data collected and the
-resolution required to answer a given question about the data. If the data is
-fairly continuous and high resolution is required, the default 
-`max_frame_gap = 1` will not allow any frame gaps--movement must be continuous.
+### Inspecting the data 
+We've cleaned up our data and are ready to link individual data points into
+continuous trajectories. Deciding exactly how to define a trajectory will depend
+largely on the quality of data collected and the resolution required to answer a
+given question about the data. If the data is fairly continuous and high
+resolution is required, the default `max_frame_gap = 1` will not allow any frame
+gaps--movement must be continuous.
 
 ```{r max_frame_gap_1}
 motive_mfg1 <- 
@@ -143,12 +144,13 @@ plot_viewr_trajectories(motive_mfg5_full,
                         multi_plot = TRUE)
 ```
 
-### Visualize frame gap choice `pathviewR` has several tools to help users
-decide what frame gap allowances may be appropriate depending on their data and
-resolution needs. `visualize_frame_gap_choice()` runs the
-`separate_trajectories()` function over the same data set as many times as the
-user would like via the `loop` argument, each time with a different
-`max_frame_gap` allowance.
+### Visualize frame gap choice 
+
+`pathviewR` has several tools to help users decide what frame gap allowances may
+be appropriate depending on their data and resolution needs.
+`visualize_frame_gap_choice()` runs the `separate_trajectories()` function over
+the same data set as many times as the user would like via the `loop` argument,
+each time with a different `max_frame_gap` allowance.
 
 ```{r visualize_frame_gap_choice}
 motive_cleaned %>% 
