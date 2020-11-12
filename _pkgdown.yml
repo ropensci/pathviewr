@@ -68,7 +68,7 @@ reference:
   - deg_2_rad
   - get_2d_angle
   - get_3d_angle
-  title: Plotting functions
+- title: Plotting functions
   desc: Functions for plotting 'viewr' objects
   contents:
   - visualize_frame_gap_choice
