@@ -86,11 +86,17 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Vignettes
      
     <span class="caret"></span>
   </a>
@@ -141,8 +147,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-data-import-functions" class="hasAnchor"><a href="#section-data-import-functions" class="anchor"></a>Data import functions</h2>
+          <p class="section-desc"><p>Functions for creating ‘viewr’ objects from external data</p></p>
         </th>
       </tr>
       
@@ -153,57 +159,118 @@
       <tr>
         
         <td>
+          <p><code><a href="read_motive_csv.html">read_motive_csv()</a></code> </p>
+        </td>
+        <td><p>Import data from a CSV exported from Optitrack's Motive software</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="read_flydra_mat.html">read_flydra_mat()</a></code> </p>
+        </td>
+        <td><p>Import data from a MAT file exported from Flydra software</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="as_viewr.html">as_viewr()</a></code> </p>
         </td>
         <td><p>Convert data from another format into a viewr object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility functions</h2>
+          <p class="section-desc"><p>Functions for wrangling and cleaning ‘viewr’ objects</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="get_header_viewr.html">get_header_viewr()</a></code> </p>
+        </td>
+        <td><p>Extract header info from imported viewr object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bind_viewr_objects.html">bind_viewr_objects()</a></code> </p>
+          <p><code><a href="relabel_viewr_axes.html">relabel_viewr_axes()</a></code> </p>
         </td>
-        <td><p>Bind viewr objects</p></td>
+        <td><p>Relabel the dimensions as length, width, and height</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="calc_sf_V.html">calc_sf_V()</a></code> </p>
+          <p><code><a href="gather_tunnel_data.html">gather_tunnel_data()</a></code> </p>
         </td>
-        <td><p>Estimate spatial frequency of visual stimuli in V-shaped tunnel</p></td>
+        <td><p>Gather data columns into key-value pairs</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="calc_sf_box.html">calc_sf_box()</a></code> </p>
+          <p><code><a href="rescale_tunnel_data.html">rescale_tunnel_data()</a></code> </p>
         </td>
-        <td><p>Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box</p></td>
+        <td><p>Rescale position data within a <code>viewr</code> object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="calc_vis_angle_V.html">calc_vis_angle_V()</a></code> </p>
+          <p><code><a href="rename_viewr_characters.html">rename_viewr_characters()</a></code> </p>
         </td>
-        <td><p>Estimate visual angles in a V-shaped tunnel</p></td>
+        <td><p>Rename subjects in the data via pattern detection</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="calc_vis_angle_box.html">calc_vis_angle_box()</a></code> </p>
+          <p><code><a href="trim_tunnel_outliers.html">trim_tunnel_outliers()</a></code> </p>
         </td>
-        <td><p>Estimate visual angles in a box-shaped tunnel</p></td>
+        <td><p>Trim out artifacts and other outliers from the extremes of the tunnel</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="clean_viewr.html">clean_viewr()</a></code> </p>
+          <p><code><a href="rotate_tunnel.html">rotate_tunnel()</a></code> </p>
         </td>
-        <td><p>All-in-one function to clean imported objects</p></td>
+        <td><p>Rotate a tunnel so that perches are approximately aligned</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="clean_viewr_batch.html">clean_viewr_batch()</a></code> </p>
+          <p><code><a href="standardize_tunnel.html">standardize_tunnel()</a></code> </p>
         </td>
-        <td><p>Batch clean viewr files</p></td>
+        <td><p>Rotate and center a tunnel based on landmarks</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="deg_2_rad.html">deg_2_rad()</a></code> </p>
+          <p><code><a href="redefine_tunnel_center.html">redefine_tunnel_center()</a></code> </p>
         </td>
-        <td><p>Convert degrees to radians</p></td>
+        <td><p>"Center" the tunnel data, i.e. translation but no rotation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="select_x_percent.html">select_x_percent()</a></code> </p>
+        </td>
+        <td><p>Select a region of interest within the tunnel</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="quick_separate_trajectories.html">quick_separate_trajectories()</a></code> </p>
+        </td>
+        <td><p>Quick version of separate_trajectories()</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="separate_trajectories.html">separate_trajectories()</a></code> </p>
+        </td>
+        <td><p>Separate rows of data into separately labeled trajectories.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_full_trajectories.html">get_full_trajectories()</a></code> </p>
+        </td>
+        <td><p>Retain trajectories that span a selected region of interest</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="section_tunnel_by.html">section_tunnel_by()</a></code> </p>
+        </td>
+        <td><p>Bin data along a specified axis</p></td>
       </tr><tr>
         
         <td>
@@ -219,15 +286,88 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="rm_by_trajnum.html">rm_by_trajnum()</a></code> </p>
+        </td>
+        <td><p>Remove subjects by trajectory number</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="insert_treatments.html">insert_treatments()</a></code> </p>
+        </td>
+        <td><p>Inserts treatment and experiment information</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-analytical-functions" class="hasAnchor"><a href="#section-analytical-functions" class="anchor"></a>Analytical functions</h2>
+          <p class="section-desc"><p>Functions for quantitative analysis</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
           <p><code><a href="find_curve_elbow.html">find_curve_elbow()</a></code> </p>
         </td>
         <td><p>Find the "elbow" of a curve.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="gather_tunnel_data.html">gather_tunnel_data()</a></code> </p>
+          <p><code><a href="get_velocity.html">get_velocity()</a></code> </p>
         </td>
-        <td><p>Gather data columns into key-value pairs</p></td>
+        <td><p>Get instantaneous velocity for subjects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calc_vis_angle_V.html">calc_vis_angle_V()</a></code> </p>
+        </td>
+        <td><p>Estimate visual angles in a V-shaped tunnel</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calc_vis_angle_box.html">calc_vis_angle_box()</a></code> </p>
+        </td>
+        <td><p>Estimate visual angles in a box-shaped tunnel</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calc_sf_V.html">calc_sf_V()</a></code> </p>
+        </td>
+        <td><p>Estimate spatial frequency of visual stimuli in V-shaped tunnel</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calc_sf_box.html">calc_sf_box()</a></code> </p>
+        </td>
+        <td><p>Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_dist_point_line.html">get_dist_point_line()</a></code> </p>
+        </td>
+        <td><p>Compute distance between a point and a line</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_3d_cross_prod.html">get_3d_cross_prod()</a></code> </p>
+        </td>
+        <td><p>Compute the cross product of two 3D vectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rad_2_deg.html">rad_2_deg()</a></code> </p>
+        </td>
+        <td><p>Convert radians to degrees</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="deg_2_rad.html">deg_2_rad()</a></code> </p>
+        </td>
+        <td><p>Convert degrees to radians</p></td>
       </tr><tr>
         
         <td>
@@ -240,66 +380,25 @@
           <p><code><a href="get_3d_angle.html">get_3d_angle()</a></code> </p>
         </td>
         <td><p>Compute an angle in 3D space</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plotting-functions" class="hasAnchor"><a href="#section-plotting-functions" class="anchor"></a>Plotting functions</h2>
+          <p class="section-desc"><p>Functions for plotting ‘viewr’ objects</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
-          <p><code><a href="get_3d_cross_prod.html">get_3d_cross_prod()</a></code> </p>
+          <p><code><a href="visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> </p>
         </td>
-        <td><p>Compute the cross product of two 3D vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_dist_point_line.html">get_dist_point_line()</a></code> </p>
-        </td>
-        <td><p>Compute distance between a point and a line</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_full_trajectories.html">get_full_trajectories()</a></code> </p>
-        </td>
-        <td><p>Retain trajectories that span a selected region of interest</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_header_viewr.html">get_header_viewr()</a></code> </p>
-        </td>
-        <td><p>Extract header info from imported viewr object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_velocity.html">get_velocity()</a></code> </p>
-        </td>
-        <td><p>Get instantaneous velocity for subjects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="import_and_clean_batch.html">import_and_clean_batch()</a></code> </p>
-        </td>
-        <td><p>Batch import and clean files</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="import_and_clean_viewr.html">import_and_clean_viewr()</a></code> </p>
-        </td>
-        <td><p>Import + clean_viewr()</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="import_batch.html">import_batch()</a></code> </p>
-        </td>
-        <td><p>Batch import of files for either Motive or Flydra (but not a mix of both)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="insert_treatments.html">insert_treatments()</a></code> </p>
-        </td>
-        <td><p>Inserts treatment and experiment information</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_by_subject.html">plot_by_subject()</a></code> </p>
-        </td>
-        <td><p>Plot trajectories and density plots of position by subject</p></td>
+        <td><p>Visualize the consequence of using various max_frame_gap values</p></td>
       </tr><tr>
         
         <td>
@@ -309,99 +408,71 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="quick_separate_trajectories.html">quick_separate_trajectories()</a></code> </p>
+          <p><code><a href="plot_by_subject.html">plot_by_subject()</a></code> </p>
         </td>
-        <td><p>Quick version of separate_trajectories()</p></td>
+        <td><p>Plot trajectories and density plots of position by subject</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-in-one-functions" class="hasAnchor"><a href="#section-all-in-one-functions" class="anchor"></a>All-in-one functions</h2>
+          <p class="section-desc"><p>Complete data import and cleaning pipelines</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="clean_viewr.html">clean_viewr()</a></code> </p>
+        </td>
+        <td><p>All-in-one function to clean imported objects</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="rad_2_deg.html">rad_2_deg()</a></code> </p>
+          <p><code><a href="import_and_clean_viewr.html">import_and_clean_viewr()</a></code> </p>
         </td>
-        <td><p>Convert radians to degrees</p></td>
+        <td><p>Import + clean_viewr()</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-batch-analysis-functions" class="hasAnchor"><a href="#section-batch-analysis-functions" class="anchor"></a>Batch analysis functions</h2>
+          <p class="section-desc"><p>Functions for the analysis of multiple files or <code>viewr</code> objects</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="import_batch.html">import_batch()</a></code> </p>
+        </td>
+        <td><p>Batch import of files for either Motive or Flydra (but not a mix of both)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="read_flydra_mat.html">read_flydra_mat()</a></code> </p>
+          <p><code><a href="clean_viewr_batch.html">clean_viewr_batch()</a></code> </p>
         </td>
-        <td><p>Import data from a MAT file exported from Flydra software</p></td>
+        <td><p>Batch clean viewr files</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="read_motive_csv.html">read_motive_csv()</a></code> </p>
+          <p><code><a href="import_and_clean_batch.html">import_and_clean_batch()</a></code> </p>
         </td>
-        <td><p>Import data from a CSV exported from Optitrack's Motive software</p></td>
+        <td><p>Batch import and clean files</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="redefine_tunnel_center.html">redefine_tunnel_center()</a></code> </p>
+          <p><code><a href="bind_viewr_objects.html">bind_viewr_objects()</a></code> </p>
         </td>
-        <td><p>"Center" the tunnel data, i.e. translation but no rotation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="relabel_viewr_axes.html">relabel_viewr_axes()</a></code> </p>
-        </td>
-        <td><p>Relabel the dimensions as length, width, and height</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rename_viewr_characters.html">rename_viewr_characters()</a></code> </p>
-        </td>
-        <td><p>Rename subjects in the data via pattern detection</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rescale_tunnel_data.html">rescale_tunnel_data()</a></code> </p>
-        </td>
-        <td><p>Rescale position data within a <code>viewr</code> object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rm_by_trajnum.html">rm_by_trajnum()</a></code> </p>
-        </td>
-        <td><p>Remove subjects by trajectory number</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rotate_tunnel.html">rotate_tunnel()</a></code> </p>
-        </td>
-        <td><p>Rotate a tunnel so that perches are approximately aligned</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="section_tunnel_by.html">section_tunnel_by()</a></code> </p>
-        </td>
-        <td><p>Bin data along a specified axis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="select_x_percent.html">select_x_percent()</a></code> </p>
-        </td>
-        <td><p>Select a region of interest within the tunnel</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="separate_trajectories.html">separate_trajectories()</a></code> </p>
-        </td>
-        <td><p>Separate rows of data into separately labeled trajectories.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="standardize_tunnel.html">standardize_tunnel()</a></code> </p>
-        </td>
-        <td><p>Rotate and center a tunnel based on landmarks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="trim_tunnel_outliers.html">trim_tunnel_outliers()</a></code> </p>
-        </td>
-        <td><p>Trim out artifacts and other outliers from the extremes of the tunnel</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> </p>
-        </td>
-        <td><p>Visualize the consequence of using various max_frame_gap values</p></td>
+        <td><p>Bind viewr objects</p></td>
       </tr>
     </tbody>
     </table>
@@ -421,7 +492,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

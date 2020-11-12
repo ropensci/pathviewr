@@ -88,11 +88,17 @@ trims out anything beyond these estimates." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Vignettes
      
     <span class="caret"></span>
   </a>
@@ -139,16 +145,16 @@ trims out anything beyond these estimates." />
 trims out anything beyond these estimates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>trim_tunnel_outliers</span><span class='op'>(</span>
-  <span class='va'>obj_name</span>,
-  lengths_min <span class='op'>=</span> <span class='fl'>0</span>,
-  lengths_max <span class='op'>=</span> <span class='fl'>3</span>,
-  widths_min <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.4</span>,
-  widths_max <span class='op'>=</span> <span class='fl'>0.8</span>,
-  heights_min <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.2</span>,
-  heights_max <span class='op'>=</span> <span class='fl'>0.5</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>trim_tunnel_outliers</span>(
+  <span class='no'>obj_name</span>,
+  <span class='kw'>lengths_min</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>lengths_max</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>widths_min</span> <span class='kw'>=</span> -<span class='fl'>0.4</span>,
+  <span class='kw'>widths_max</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+  <span class='kw'>heights_min</span> <span class='kw'>=</span> -<span class='fl'>0.2</span>,
+  <span class='kw'>heights_max</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,27 +225,26 @@ values.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Import the example Motive data included in the package</span>
-<span class='va'>motive_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='no'>motive_data</span> <span class='kw'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                              <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pathviewR'</span>))
 
 <span class='co'>## Clean the file. It is generally recommended to clean up to the</span>
 <span class='co'>## "gather" step before running trim_tunnel_outliers().</span>
-<span class='va'>motive_gathered</span> <span class='op'>&lt;-</span>
-  <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='no'>motive_gathered</span> <span class='kw'>&lt;-</span>
+  <span class='no'>motive_data</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span>()
 
 <span class='co'>## Now trim outliers using default values</span>
-<span class='va'>motive_trimmed</span> <span class='op'>&lt;-</span>
-  <span class='va'>motive_gathered</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>trim_tunnel_outliers</span><span class='op'>(</span>lengths_min <span class='op'>=</span> <span class='fl'>0</span>,
-                       lengths_max <span class='op'>=</span> <span class='fl'>3</span>,
-                       widths_min <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.4</span>,
-                       widths_max <span class='op'>=</span> <span class='fl'>0.8</span>,
-                       heights_min <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.2</span>,
-                       heights_max <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-</div></pre>
+<span class='no'>motive_trimmed</span> <span class='kw'>&lt;-</span>
+  <span class='no'>motive_gathered</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>trim_tunnel_outliers</span>(<span class='kw'>lengths_min</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+                       <span class='kw'>lengths_max</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+                       <span class='kw'>widths_min</span> <span class='kw'>=</span> -<span class='fl'>0.4</span>,
+                       <span class='kw'>widths_max</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
+                       <span class='kw'>heights_min</span> <span class='kw'>=</span> -<span class='fl'>0.2</span>,
+                       <span class='kw'>heights_max</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -255,7 +260,7 @@ values.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
