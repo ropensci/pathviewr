@@ -81,19 +81,13 @@ what value to use" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -145,7 +139,7 @@ what value to use" />
 what value to use</p>
     </div>
 
-    <pre class="usage"><span class='fu'>visualize_frame_gap_choice</span>(<span class='no'>obj_name</span>, <span class='kw'>loops</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>visualize_frame_gap_choice</span><span class='op'>(</span><span class='va'>obj_name</span>, loops <span class='op'>=</span> <span class='fl'>20</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,23 +194,24 @@ that has passed through the <code><a href='select_x_percent.html'>select_x_perce
     <p>Melissa S. Armstrong and Vikram B. Baliga</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>pathviewR</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/vbaliga/pathviewR'>pathviewR</a></span><span class='op'>)</span>
 
 <span class='co'>## Import the example Motive data included in the package</span>
-<span class='no'>motive_data</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                             <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pathviewR'</span>))
+<span class='va'>motive_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                             package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>motive_selected</span> <span class='kw'>&lt;-</span>
-  <span class='no'>motive_data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='get_velocity.html'>get_velocity</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span>(<span class='kw'>desired_percent</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='va'>motive_selected</span> <span class='op'>&lt;-</span>
+  <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='get_velocity.html'>get_velocity</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
 
-<span class='fu'>visualize_frame_gap_choice</span>(<span class='no'>motive_selected</span>, <span class='kw'>loops</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='img'><img src='visualize_frame_gap_choice-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; [[1]]
+<span class='fu'>visualize_frame_gap_choice</span><span class='op'>(</span><span class='va'>motive_selected</span>, loops <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='img'><img src='visualize_frame_gap_choice-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; [[1]]
 #&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
 #&gt;    frame_gap_allowed trajectory_count file_id        
 #&gt;                </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
@@ -249,7 +244,7 @@ that has passed through the <code><a href='select_x_percent.html'>select_x_perce
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

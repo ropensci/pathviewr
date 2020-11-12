@@ -38,18 +38,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -109,102 +103,111 @@
 <a href="#defining-trajectories-with-pathviewr" class="anchor"></a>Defining trajectories with <code>pathviewR</code>
 </h2>
 <p><code>pathviewR</code> defines trajectories as continuous movement from one side of a region of interest to the other. Before trajectories can be defined, the region of interest must be selected via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> in addition to all the previous steps of the data import and cleaning pipeline as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a>. We’ll start with loading <code>pathviewR</code> and a few packages from the <code>tidyverse</code> and importing our data.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co">## If you do not already have pathviewR installed:</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co">## If you do not already have pathviewR installed:</span>
 <span class="co"># install.packages("devtools")</span>
 <span class="co"># devtools::install_github("vbaliga/pathviewR")</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pathviewR</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">magrittr</span><span class="op">)</span>
 
 <span class="co">## Import the example Motive data included in </span>
 <span class="co">## the package</span>
-<span class="no">motive_data</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="../reference/read_motive_csv.html">read_motive_csv</a></span>(
-    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pathviewR_motive_example_data.csv"</span>,
-                <span class="kw">package</span> <span class="kw">=</span> <span class="st">'pathviewR'</span>)
-  )</pre></body></html></div>
+<span class="va">motive_data</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewR_motive_example_data.csv"</span>,
+                package <span class="op">=</span> <span class="st">'pathviewR'</span><span class="op">)</span>
+  <span class="op">)</span></pre></div>
 <p>We’ll quickly run through the cleanup pipeline using one of <code>pathviewR</code>’s all-in-one cleaning functions as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a>. Since trajectories are defined in the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function, we’ll stop the all-in-one there by setting it and every step after it to <code>FALSE</code> so we can take a closer look at how trajectories are defined. Since all steps are set to <code>TRUE</code> by default, we don’t actually need to list them in the function, just those we want to switch to <code>FALSE</code> or those that require additional arguments.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">motive_cleaned</span> <span class="kw">&lt;-</span>
-  <span class="no">motive_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/clean_viewr.html">clean_viewr</a></span>(
-    <span class="kw">desired_percent</span> <span class="kw">=</span> <span class="fl">70</span>,
-    <span class="kw">rename_viewr_characters</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">separate_trajectories</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">get_full_trajectories</span> <span class="kw">=</span> <span class="fl">FALSE</span>
-  )
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="va">motive_cleaned</span> <span class="op">&lt;-</span>
+  <span class="va">motive_data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/clean_viewr.html">clean_viewr</a></span><span class="op">(</span>
+    desired_percent <span class="op">=</span> <span class="fl">70</span>,
+    rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,
+    separate_trajectories <span class="op">=</span> <span class="cn">FALSE</span>,
+    get_full_trajectories <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span>
 
 <span class="co">## Quick plot</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">motive_cleaned</span>$<span class="no">position_length</span>,
-     <span class="no">motive_cleaned</span>$<span class="no">position_width</span>,
-     <span class="kw">asp</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_cleaned</span><span class="op">$</span><span class="va">position_length</span>,
+     <span class="va">motive_cleaned</span><span class="op">$</span><span class="va">position_width</span>,
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/cleanup%20data-1.png" width="700"></p>
 <div id="inspecting-the-data-weve-cleaned-up-our-data-and-are-ready-to-link" class="section level3">
 <h3 class="hasAnchor">
 <a href="#inspecting-the-data-weve-cleaned-up-our-data-and-are-ready-to-link" class="anchor"></a>Inspecting the data We’ve cleaned up our data and are ready to link</h3>
 <p>individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">motive_mfg1</span> <span class="kw">&lt;-</span>
-  <span class="no">motive_cleaned</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span>(
-    <span class="kw">max_frame_gap</span> <span class="kw">=</span> <span class="fl">1</span>
-  )
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="va">motive_mfg1</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>
+    max_frame_gap <span class="op">=</span> <span class="fl">1</span>
+  <span class="op">)</span>
 
 <span class="co">## Quick plot</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">motive_mfg1</span>$<span class="no">position_length</span>,
-     <span class="no">motive_mfg1</span>$<span class="no">position_width</span>,
-     <span class="kw">asp</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">motive_mfg1</span>$<span class="no">file_sub_traj</span>))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_mfg1</span><span class="op">$</span><span class="va">position_length</span>,
+     <span class="va">motive_mfg1</span><span class="op">$</span><span class="va">position_width</span>,
+     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_mfg1</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/max_frame_gap_1-1.png" width="700"></p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r">
+<div class="sourceCode" id="cb4"><pre class="downlit">
+
 <span class="co">## How many trajectories do we end up with?</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">motive_mfg1</span>$<span class="no">file_sub_traj</span>))
-<span class="co">#&gt; [1] 16</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">motive_mfg1</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 16</span></pre></div>
 <p>Plotting each trajectory reveals that perhaps some trajectories that should be continuous have been split into two or more separate trajectories because of a dropped frame or two. This data may require relaxing the stringent no-frame-gaps requirement in order to link data points that should go together into a single trajectory. Let’s try setting <code>max_frame_gap = 5</code>.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">motive_mfg5</span> <span class="kw">&lt;-</span>
-  <span class="no">motive_cleaned</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span>(
-    <span class="kw">max_frame_gap</span> <span class="kw">=</span> <span class="fl">5</span>
-  )
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">motive_mfg5</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>
+    max_frame_gap <span class="op">=</span> <span class="fl">5</span>
+  <span class="op">)</span>
 
 <span class="co">## Quick plot</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">motive_mfg5</span>$<span class="no">position_length</span>,
-     <span class="no">motive_mfg5</span>$<span class="no">position_width</span>,
-     <span class="kw">asp</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">motive_mfg5</span>$<span class="no">file_sub_traj</span>))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_mfg5</span><span class="op">$</span><span class="va">position_length</span>,
+     <span class="va">motive_mfg5</span><span class="op">$</span><span class="va">position_width</span>,
+     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_mfg5</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/max_frame_gap_5-1.png" width="700"></p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">
+<div class="sourceCode" id="cb6"><pre class="downlit">
+
 <span class="co">## How many trajectories do we end up with?</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">motive_mfg5</span>$<span class="no">file_sub_traj</span>))
-<span class="co">#&gt; [1] 13</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">motive_mfg5</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 13</span></pre></div>
 <p>By increasing the allowable frame gap, more chunks of data have been linked into trajectories and so our trajectory count has dropped from 335 to 224. Because it is hard to see all the trajectories piled up on top of each other, let’s go ahead and run this through <code><a href="../reference/get_full_trajectories.html">get_full_trajectories()</a></code> to clean out bits of data that do not span our region of interest. To inspect each trajectory individually, we can then use the <code><a href="../reference/plot_viewr_trajectories.html">plot_viewr_trajectories()</a></code> function to take a closer look at the quality of each trajectory. This can be computationally expensive depending on your data set.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">motive_mfg5_full</span> <span class="kw">&lt;-</span>
-  <span class="no">motive_mfg5</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_full_trajectories.html">get_full_trajectories</a></span>(
-    <span class="kw">span</span> <span class="kw">=</span> <span class="fl">.6</span>
-  )
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="va">motive_mfg5_full</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_mfg5</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>
+    span <span class="op">=</span> <span class="fl">.6</span>
+  <span class="op">)</span>
 
 <span class="co">## Quick plot</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">motive_mfg5_full</span>$<span class="no">position_length</span>,
-     <span class="no">motive_mfg5_full</span>$<span class="no">position_width</span>,
-     <span class="kw">asp</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">motive_mfg5_full</span>$<span class="no">file_sub_traj</span>))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_mfg5_full</span><span class="op">$</span><span class="va">position_length</span>,
+     <span class="va">motive_mfg5_full</span><span class="op">$</span><span class="va">position_width</span>,
+     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_mfg5_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/get_full_trajectories-1.png" width="700"></p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">
+<div class="sourceCode" id="cb8"><pre class="downlit">
+
 <span class="co">## How many trajectories do we end up with?</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">motive_mfg5_full</span>$<span class="no">file_sub_traj</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">motive_mfg5_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 10</span>
 
 <span class="co">## Plot each trajectory</span>
-<span class="fu"><a href="../reference/plot_viewr_trajectories.html">plot_viewr_trajectories</a></span>(<span class="no">motive_mfg5_full</span>,
-                        <span class="kw">plot_axes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"length"</span>, <span class="st">"width"</span>),
-                        <span class="kw">multi_plot</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/plot_viewr_trajectories.html">plot_viewr_trajectories</a></span><span class="op">(</span><span class="va">motive_mfg5_full</span>,
+                        plot_axes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"length"</span>, <span class="st">"width"</span><span class="op">)</span>,
+                        multi_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/get_full_trajectories-2.png" width="700"></p>
 </div>
 <div id="visualize-frame-gap-choice-pathviewr-has-several-tools-to-help-users" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualize-frame-gap-choice-pathviewr-has-several-tools-to-help-users" class="anchor"></a>Visualize frame gap choice <code>pathviewR</code> has several tools to help users</h3>
 <p>decide what frame gap allowances may be appropriate depending on their data and resolution needs. <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> runs the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function over the same data set as many times as the user would like via the <code>loop</code> argument, each time with a different <code>max_frame_gap</code> allowance.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">motive_cleaned</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice</a></span>(
-    <span class="kw">loops</span> <span class="kw">=</span> <span class="fl">20</span>
-  )</pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice</a></span><span class="op">(</span>
+    loops <span class="op">=</span> <span class="fl">20</span>
+  <span class="op">)</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/visualize_frame_gap_choice-1.png" width="700"></p>
 <pre><code>#&gt; [[1]]
 #&gt; # A tibble: 20 x 3
@@ -239,24 +242,26 @@
 <h3 class="hasAnchor">
 <a href="#autodetect" class="anchor"></a>Autodetect</h3>
 <p>Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>. In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, “autodetect” does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set. The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to <code>.10</code>.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">motive_auto</span> <span class="kw">&lt;-</span>
-  <span class="no">motive_cleaned</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span>(
-    <span class="kw">max_frame_gap</span> <span class="kw">=</span> <span class="st">"autodetect"</span>,
-    <span class="kw">frame_rate_proportion</span> <span class="kw">=</span> <span class="fl">0.1</span>,
-    <span class="kw">frame_gap_messaging</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-    <span class="kw">frame_gap_plotting</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-  )
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="va">motive_auto</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>
+    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,
+    frame_rate_proportion <span class="op">=</span> <span class="fl">0.1</span>,
+    frame_gap_messaging <span class="op">=</span> <span class="cn">TRUE</span>,
+    frame_gap_plotting <span class="op">=</span> <span class="cn">TRUE</span>
+  <span class="op">)</span>
 <span class="co">#&gt; autodetect is an experimental feature -- please report issues.</span>
 <span class="co">#&gt; For subject: device02, estimated best value for max_frame_gap: 1</span>
-<span class="co">#&gt; For subject: device03, estimated best value for max_frame_gap: 2</span></pre></body></html></div>
+<span class="co">#&gt; For subject: device03, estimated best value for max_frame_gap: 2</span></pre></div>
 <p><img src="managing-frame-gaps_files/figure-html/max_frame_gap_auto-1.png" width="700"></p>
 <pre><code>#&gt; For subject: device05, estimated best value for max_frame_gap: 2</code></pre>
 <p><img src="managing-frame-gaps_files/figure-html/max_frame_gap_auto-2.png" width="700"><img src="managing-frame-gaps_files/figure-html/max_frame_gap_auto-3.png" width="700"></p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r">
+<div class="sourceCode" id="cb13"><pre class="downlit">
+
 <span class="co">## How many trajectories do we end up with?</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">motive_auto</span>$<span class="no">file_sub_traj</span>))
-<span class="co">#&gt; [1] 13</span></pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">motive_auto</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] 13</span></pre></div>
 <p>Our sample data has 3 subjects so with <code>frame_gap_messaging = TRUE</code>, the <code>max_frame_gap</code> for each subject will be reported (the default is <code>FALSE</code>). <code>frame_gap_plotting = TRUE</code> will display the elbow plots for each subject, but also defaults to <code>FALSE</code>.</p>
 </div>
 </div>
@@ -277,7 +282,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
