@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewR/actions)
 [![Travis build status](https://travis-ci.org/vbaliga/pathviewR.svg?branch=master)](https://travis-ci.org/vbaliga/pathviewR)
 [![Codecov test coverage](https://codecov.io/gh/vbaliga/pathviewR/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewR?branch=master)
+[![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)
 <!-- badges: end -->
 
 `pathviewR` offers tools to import, clean, and visualize animal movement data
@@ -200,7 +201,9 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 
 ## Citation
 
-TBD
+The preferred way to cite `pathviewR` (but subject to change) is:
+
+Baliga VB, Armstrong MS, Press ER (2020). _pathviewR: Tools to import, clean, and visualize animal movement data in R_. R package version 0.9.4, [https://github.com/vbaliga/pathviewR](https://github.com/vbaliga/pathviewR).
 
 ## License
 

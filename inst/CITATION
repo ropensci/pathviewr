@@ -1,0 +1,28 @@
+year <- format(Sys.Date(), "%Y")
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "pathviewR: Tools to import, clean, and visualize animal movement data in R",
+         author = c(
+          person(
+             given = "Vikram B.",
+             family = "Baliga",
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-9367-8974")),
+          person(
+             given = "Melissa S.",
+             family = "Armstrong",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-3059-0094")),
+          person(
+             given = "Eric R.",
+             family = "Press",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-1944-3755"))
+          ),
+         year = year,
+         note = note,
+         publisher = "Github",
+         journal = "Github repository",
+         url = "https://github.com/vbaliga/pathviewR"
+         )

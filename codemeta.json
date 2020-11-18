@@ -258,7 +258,43 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "9484.284KB",
+  "fileSize": "7986.961KB",
   "contIntegration": ["https://travis-ci.org/vbaliga/pathviewR", "https://codecov.io/gh/vbaliga/pathviewR?branch=master"],
-  "developmentStatus": "https://www.repostatus.org/#active"
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2020",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Vikram B.",
+          "familyName": "Baliga",
+          "@id": "https://orcid.org/0000-0002-9367-8974"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Melissa S.",
+          "familyName": "Armstrong",
+          "@id": "https://orcid.org/0000-0002-3059-0094"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Eric R.",
+          "familyName": "Press",
+          "@id": "https://orcid.org/0000-0002-1944-3755"
+        }
+      ],
+      "name": "pathviewR: Tools to import, clean, and visualize animal movement data in R",
+      "url": "https://github.com/vbaliga/pathviewR",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "datePublished": "2020",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "name": "Github repository"
+        }
+      }
+    }
+  ]
 }

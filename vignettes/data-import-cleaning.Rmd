@@ -32,9 +32,11 @@ Data can be imported via one of three ways:
 
 We will showcase examples from each of these methods in this section.
 
-Please feel free to reach out to the `pathviewR` authors should you have trouble
-with any of our data import options. We are happy to work with you to design
-custom `read_` functions for filetypes we have not encountered ourselves. 
+Please feel free to reach out to the `pathviewR` authors via 
+[our Github Issues page](https://github.com/vbaliga/pathviewR/issues/) 
+should you have trouble with any of our data import options. We are happy to
+work with you to design custom `read_` functions for file types we have not
+encountered ourselves. 
 
 We'll start by loading `pathviewR` and a few of the packages in the `tidyverse`.
 
@@ -140,6 +142,12 @@ test <-
     position_height_col = 4
   )
 ```
+
+We also welcome you to request custom data import functions, especially if
+`as_viewr()` does not fit your needs . We are interested in expanding our data
+import functions to accommodate additional file types. Please feel free to 
+[file a request for additional import functions](https://github.com/vbaliga/pathviewR/issues/new/choose) 
+via our Github Issues page.
 
 
 ## Data cleaning

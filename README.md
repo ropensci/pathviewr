@@ -14,6 +14,7 @@ status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](h
 status](https://travis-ci.org/vbaliga/pathviewR.svg?branch=master)](https://travis-ci.org/vbaliga/pathviewR)
 [![Codecov test
 coverage](https://codecov.io/gh/vbaliga/pathviewR/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewR?branch=master)
+[![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)
 <!-- badges: end -->
 
 `pathviewR` offers tools to import, clean, and visualize animal movement
@@ -140,7 +141,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewR_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-18 02:53:24"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-17 19:36:47"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -183,7 +184,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-18 02:53:24"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-17 19:36:47"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -301,7 +302,11 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 
 ## Citation
 
-TBD
+The preferred way to cite `pathviewR` (but subject to change) is:
+
+Baliga VB, Armstrong MS, Press ER (2020). *pathviewR: Tools to import,
+clean, and visualize animal movement data in R*. R package version
+0.9.4, <https://github.com/vbaliga/pathviewR>.
 
 ## License
 
