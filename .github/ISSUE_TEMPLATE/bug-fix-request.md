@@ -2,7 +2,7 @@
 name: 'Bug fix request'
 about: 'Notify us of a bug so we can fix it'
 title: "[bug_fix_request]"
-labels: enhancement
+labels: bug
 assignees: ''
 
 ---
