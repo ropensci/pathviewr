@@ -139,7 +139,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewR_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 05:09:34"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 07:14:23"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -182,7 +182,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 05:09:34"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 07:14:23"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
