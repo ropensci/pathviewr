@@ -1,7 +1,7 @@
 ---
-name: 'General Feature Request'
+name: 'Feature Request: General'
 about: 'Let us know if you have an idea to improve `pathviewR`'
-title: "[general_feature_request]"
+title: "[feature_request_general]"
 labels: enhancement
 assignees: ''
 
