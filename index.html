@@ -53,7 +53,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -82,7 +82,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/vbaliga/pathviewR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -109,10 +109,9 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>This package can be installed via:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co">#install.packages("devtools") # if devtools is not installed</span>
-<span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"vbaliga/pathviewR"</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#install.packages("devtools") # if devtools is not installed</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vbaliga/pathviewR"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -122,58 +121,55 @@
 <a href="#data-import-and-cleaning-via-pathviewr" class="anchor"></a>Data import and cleaning via <code>pathviewR</code>
 </h4>
 <p>We’ll also load two <code>tidyverse</code> packages for wrangling &amp; plotting.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://magrittr.tidyverse.org">magrittr</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></code></pre></div>
 <p>We will import and clean a sample data set from <code>.csv</code> files exported by <a href="https://optitrack.com/software/motive/">Optitrack’s Motive</a> software. For examples of how to import and clean other types of data, <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">see the data import and cleaning vignette</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co">## Import the Motive example data included in </span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Import the Motive example data included in </span>
 <span class="co">## the package</span>
 
-<span class="kw">motive_data</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="reference/read_motive_csv.html">read_motive_csv</a></span>(
-    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"pathviewR_motive_example_data.csv"</span>,
-                package = <span class="st">'pathviewR'</span>)
-  )
-</pre></div>
+<span class="va">motive_data</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="reference/read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewR_motive_example_data.csv"</span>,
+                package <span class="op">=</span> <span class="st">'pathviewR'</span><span class="op">)</span>
+  <span class="op">)</span></code></pre></div>
 <p>Several functions to clean and wrangle data are available, and we have a suggested pipeline for how these steps should be handled. For this example, we will use one of two “all-in-one” functions: <code><a href="reference/clean_viewr.html">clean_viewr()</a></code>. <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">See the Data Import and Cleaning vignette</a> for the full pipeline and the other “all-in-one” function.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">motive_allinone</span> <span class="op">&lt;-</span>
-  <span class="kw">motive_data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/clean_viewr.html">clean_viewr</a></span>(
-    relabel_viewr_axes = <span class="fl">TRUE</span>,
-    gather_tunnel_data = <span class="fl">TRUE</span>,
-    trim_tunnel_outliers = <span class="fl">TRUE</span>,
-    standardization_option = <span class="st">"rotate_tunnel"</span>,
-    select_x_percent = <span class="fl">TRUE</span>,
-    desired_percent = <span class="fl">50</span>,
-    rename_viewr_characters = <span class="fl">FALSE</span>,
-    separate_trajectories = <span class="fl">TRUE</span>,
-    max_frame_gap = <span class="st">"autodetect"</span>,
-    get_full_trajectories = <span class="fl">TRUE</span>,
-    span = <span class="fl">0.95</span>
-  )
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_allinone</span> <span class="op">&lt;-</span>
+  <span class="va">motive_data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/clean_viewr.html">clean_viewr</a></span><span class="op">(</span>
+    relabel_viewr_axes <span class="op">=</span> <span class="cn">TRUE</span>,
+    gather_tunnel_data <span class="op">=</span> <span class="cn">TRUE</span>,
+    trim_tunnel_outliers <span class="op">=</span> <span class="cn">TRUE</span>,
+    standardization_option <span class="op">=</span> <span class="st">"rotate_tunnel"</span>,
+    select_x_percent <span class="op">=</span> <span class="cn">TRUE</span>,
+    desired_percent <span class="op">=</span> <span class="fl">50</span>,
+    rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,
+    separate_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
+    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,
+    get_full_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
+    span <span class="op">=</span> <span class="fl">0.95</span>
+  <span class="op">)</span>
 <span class="co">#&gt; autodetect is an experimental feature -- please report issues.</span>
 
 <span class="co">## Quick plot</span>
 <span class="co">## Colors correspond to unique trajectories (file_sub_traj)</span>
-<span class="kw">motive_allinone</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">position_length</span>, y = <span class="kw">position_width</span>, 
-             fill = <span class="kw">file_sub_traj</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(pch = <span class="fl">21</span>) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(
-    legend.position = <span class="st">"none"</span>
-  )
-</pre></div>
+<span class="va">motive_allinone</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span>, 
+             fill <span class="op">=</span> <span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+    legend.position <span class="op">=</span> <span class="st">"none"</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-all_in_one-1.png" width="100%"></p>
 <p>To get a sense of what we’ve done, compare the data before and after it has passed through the pipeline.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co">## Check out the data's structure before cleaning and wrangling:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">motive_data</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Check out the data's structure before cleaning and wrangling:</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">motive_data</span><span class="op">)</span>
 <span class="co">#&gt; tibble [934 × 26] (S3: tbl_df/tbl/data.frame)</span>
 <span class="co">#&gt;  $ frame                     : int [1:934] 72210 72211 72212 72213 72214 72215 72216 72217 72218 72219 ...</span>
 <span class="co">#&gt;  $ time_sec                  : num [1:934] 722 722 722 722 722 ...</span>
@@ -204,7 +200,7 @@
 <span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  - attr(*, "pathviewR_steps")= chr "viewr"</span>
 <span class="co">#&gt;  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"</span>
-<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 16:59:08"</span>
+<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 18:27:42"</span>
 <span class="co">#&gt;  - attr(*, "frame_rate")= num 100</span>
 <span class="co">#&gt;  - attr(*, "header")='data.frame':   11 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...</span>
@@ -220,7 +216,7 @@
 <span class="co">#&gt;  - attr(*, "import_method")= chr "motive"</span>
 
 <span class="co">## Check out the data's structure after cleaning and wrangling:</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">motive_allinone</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">motive_allinone</span><span class="op">)</span>
 <span class="co">#&gt; tibble [449 × 24] (S3: tbl_df/tbl/data.frame)</span>
 <span class="co">#&gt;  $ frame            : int [1:449] 72213 72214 72215 72216 72217 72218 72219 72220 72221 72222 ...</span>
 <span class="co">#&gt;  $ time_sec         : num [1:449] 722 722 722 722 722 ...</span>
@@ -247,7 +243,7 @@
 <span class="co">#&gt;  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...</span>
 <span class="co">#&gt;  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...</span>
 <span class="co">#&gt;  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"</span>
-<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 16:59:08"</span>
+<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-11-19 18:27:42"</span>
 <span class="co">#&gt;  - attr(*, "frame_rate")= num 100</span>
 <span class="co">#&gt;  - attr(*, "header")='data.frame':   11 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...</span>
@@ -274,8 +270,7 @@
 <span class="co">#&gt;  - attr(*, "selected_tunnel_length")= num 1.32</span>
 <span class="co">#&gt;  - attr(*, "max_frame_gap")= int [1:3] 1 1 2</span>
 <span class="co">#&gt;  - attr(*, "span")= num 0.95</span>
-<span class="co">#&gt;  - attr(*, "trajectories_removed")= int 5</span>
-</pre></div>
+<span class="co">#&gt;  - attr(*, "trajectories_removed")= int 5</span></code></pre></div>
 <p>An important aspect of how <code>pathviewR</code> defines trajectories is by managing gaps in the data. <a href="https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html">See the Managing Frame Gaps vignette</a> for more information on trajectory definition and frame gaps.</p>
 <p>Now that the data is cleaned, <code>pathviewR</code> includes functions that estimate visual perceptions based on the distance between the subject/observer and visual stimuli on the walls of the experimental tunnel. For a complete description of these functions, <a href="https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html">see the Visual Perception Functions vignette</a>.</p>
 </div>
@@ -284,51 +279,47 @@
 <a href="#add-more-info-about-experiments" class="anchor"></a>Add more info about experiments</h4>
 <p>Now that our objects have been cleaned, we will use <code><a href="reference/insert_treatments.html">insert_treatments()</a></code> to add information about the experiments that are necessary for calculating visual perceptions.</p>
 <p>The data from this example were recorded in a V-shaped tunnel. Accordingly, the vertex angle and vertex height of the tunnel, along with information about the visual stimuli used during the experiment, will be added to the data to inform calculations of visual perception (next section).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">motive_V</span> <span class="op">&lt;-</span> 
-  <span class="kw">motive_allinone</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/insert_treatments.html">insert_treatments</a></span>(vertex_height = <span class="op">-</span><span class="fl">0.3855</span>,
-                    vertex_angle = <span class="fl">45</span>,
-                    stim_param_pos = <span class="fl">0.1</span>,
-                    stim_param_neg = <span class="fl">0.2</span>,
-                    treatment = <span class="st">"latB"</span>)
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_V</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_allinone</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/insert_treatments.html">insert_treatments</a></span><span class="op">(</span>vertex_height <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
+                    vertex_angle <span class="op">=</span> <span class="fl">45</span>,
+                    stim_param_pos <span class="op">=</span> <span class="fl">0.1</span>,
+                    stim_param_neg <span class="op">=</span> <span class="fl">0.2</span>,
+                    treatment <span class="op">=</span> <span class="st">"latB"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="estimate-perception-of-visual-stimuli" class="section level4">
 <h4 class="hasAnchor">
 <a href="#estimate-perception-of-visual-stimuli" class="anchor"></a>Estimate perception of visual stimuli</h4>
 <p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code><a href="reference/calc_sf_V.html">calc_sf_V()</a></code>.</p>
 <p>The resulting object contains 10 new variables which are values involved in the calculation of spatial frequency.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">motive_V_sf</span> <span class="op">&lt;-</span> 
-  <span class="kw">motive_V</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/calc_sf_V.html">calc_sf_V</a></span>(simplify_output = <span class="fl">FALSE</span>)
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_V_sf</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_V</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/calc_sf_V.html">calc_sf_V</a></span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>To calculate an estimation of the visual angles perceived by the subject, we will use <code>calc_vis_angle_V</code>.</p>
 <p>The resulting object contains 12 new variables which are values involved in the calculation of visual angles.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">motive_V_angle</span> <span class="op">&lt;-</span> 
-  <span class="kw">motive_V</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/calc_vis_angle_V.html">calc_vis_angle_V</a></span>(simplify_output=<span class="fl">FALSE</span>)
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_V_angle</span> <span class="op">&lt;-</span> 
+  <span class="va">motive_V</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/calc_vis_angle_V.html">calc_vis_angle_V</a></span><span class="op">(</span>simplify_output<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please <a href="https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html">see the Visual Perception Functions vignette</a> for more examples of visualizing calculations.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">position_width</span>, y = <span class="kw">position_height</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(color = <span class="kw">sf_pos</span>), shape=<span class="fl">1</span>, size=<span class="fl">3</span>) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
-                  y = <span class="op">-</span><span class="fl">0.3855</span>,
-                  xend = <span class="fl">0.5869</span>,
-                  yend = <span class="fl">0.2014</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
-                   y = <span class="op">-</span><span class="fl">0.3855</span>,
-                   xend = <span class="op">-</span><span class="fl">0.5869</span>,
-                   yend = <span class="fl">0.2014</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(
-    legend.position = <span class="st">"none"</span>
-  )
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
+                  y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
+                  xend <span class="op">=</span> <span class="fl">0.5869</span>,
+                  yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the negative wall</span>
+                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
+                   xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
+                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+    legend.position <span class="op">=</span> <span class="st">"none"</span>
+  <span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-motive_V_sf_pos-1.png" width="100%"></p>
 </div>
 </div>

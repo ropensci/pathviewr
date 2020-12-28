@@ -89,7 +89,7 @@ positions along axes." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@ positions along axes." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vbaliga/pathviewR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -145,17 +145,17 @@ positions along axes." />
 positions along axes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>redefine_tunnel_center</span>(
-  <span class='kw'>obj_name</span>,
-  axes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"position_length"</span>, <span class='st'>"position_width"</span>, <span class='st'>"position_height"</span>),
-  length_method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"original"</span>, <span class='st'>"middle"</span>, <span class='st'>"median"</span>, <span class='st'>"user-defined"</span>),
-  width_method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"original"</span>, <span class='st'>"middle"</span>, <span class='st'>"median"</span>, <span class='st'>"user-defined"</span>),
-  height_method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"original"</span>, <span class='st'>"middle"</span>, <span class='st'>"median"</span>, <span class='st'>"user-defined"</span>),
-  length_zero = <span class='fl'>NA</span>,
-  width_zero = <span class='fl'>NA</span>,
-  height_zero = <span class='fl'>NA</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>redefine_tunnel_center</span><span class='op'>(</span>
+  <span class='va'>obj_name</span>,
+  axes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"position_length"</span>, <span class='st'>"position_width"</span>, <span class='st'>"position_height"</span><span class='op'>)</span>,
+  length_method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"middle"</span>, <span class='st'>"median"</span>, <span class='st'>"user-defined"</span><span class='op'>)</span>,
+  width_method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"middle"</span>, <span class='st'>"median"</span>, <span class='st'>"user-defined"</span><span class='op'>)</span>,
+  height_method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"original"</span>, <span class='st'>"middle"</span>, <span class='st'>"median"</span>, <span class='st'>"user-defined"</span><span class='op'>)</span>,
+  length_zero <span class='op'>=</span> <span class='cn'>NA</span>,
+  width_zero <span class='op'>=</span> <span class='cn'>NA</span>,
+  height_zero <span class='op'>=</span> <span class='cn'>NA</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -238,24 +238,24 @@ customize where the (0, 0, 0) point in the tunnel will end up. Each
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Import the Flydra example data included in</span>
 <span class='co'>## the package</span>
-<span class='kw'>flydra_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>,
+<span class='va'>flydra_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>,
                 <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
-                package = <span class='st'>'pathviewR'</span>),
-    subject_name = <span class='st'>"birdie_wooster"</span>
-  )
+                package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+    subject_name <span class='op'>=</span> <span class='st'>"birdie_wooster"</span>
+  <span class='op'>)</span>
 
 <span class='co'>## Re-center the Flydra data set.</span>
 <span class='co'>## Width will be untouched</span>
 <span class='co'>## Length will use the "middle" definition</span>
 <span class='co'>## And height will be user-defined to be</span>
 <span class='co'>## zeroed at 1.44 on the original axis</span>
-<span class='kw'>flydra_centered</span> <span class='op'>&lt;-</span>
-  <span class='kw'>flydra_data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>redefine_tunnel_center</span>(length_method = <span class='st'>"middle"</span>,
-                         height_method = <span class='st'>"user-defined"</span>,
-                         height_zero = <span class='fl'>1.44</span>)
+<span class='va'>flydra_centered</span> <span class='op'>&lt;-</span>
+  <span class='va'>flydra_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>redefine_tunnel_center</span><span class='op'>(</span>length_method <span class='op'>=</span> <span class='st'>"middle"</span>,
+                         height_method <span class='op'>=</span> <span class='st'>"user-defined"</span>,
+                         height_zero <span class='op'>=</span> <span class='fl'>1.44</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

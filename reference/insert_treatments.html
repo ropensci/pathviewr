@@ -89,7 +89,7 @@ analysis in other pathviewR functions" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@ analysis in other pathviewR functions" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vbaliga/pathviewR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -145,18 +145,18 @@ analysis in other pathviewR functions" />
 analysis in other pathviewR functions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>insert_treatments</span>(
-  <span class='kw'>obj_name</span>,
-  vertex_height = <span class='kw'>NULL</span>,
-  vertex_angle = <span class='kw'>NULL</span>,
-  pos_wall = <span class='kw'>NULL</span>,
-  neg_wall = <span class='kw'>NULL</span>,
-  front_wall = <span class='kw'>NULL</span>,
-  stim_param_pos = <span class='kw'>NULL</span>,
-  stim_param_neg = <span class='kw'>NULL</span>,
-  stim_param_front = <span class='kw'>NULL</span>,
-  treatment = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>insert_treatments</span><span class='op'>(</span>
+  <span class='va'>obj_name</span>,
+  vertex_height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  vertex_angle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  pos_wall <span class='op'>=</span> <span class='cn'>NULL</span>,
+  neg_wall <span class='op'>=</span> <span class='cn'>NULL</span>,
+  front_wall <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stim_param_pos <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stim_param_neg <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stim_param_front <span class='op'>=</span> <span class='cn'>NULL</span>,
+  treatment <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -235,33 +235,33 @@ information is also stored in the viewr object's metadata</p>
     <pre class="examples"><div class='input'>
 
  <span class='co'>## Import sample data from package</span>
- <span class='kw'>motive_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                              package = <span class='st'>'pathviewR'</span>))
+ <span class='va'>motive_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'>## Clean data up to and including get_full_trajectories()</span>
-<span class='kw'>motive_data_full</span> <span class='op'>&lt;-</span>
- <span class='kw'>motive_data</span> <span class='op'>%&gt;%</span>
- <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span>() <span class='op'>%&gt;%</span>
- <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span>() <span class='op'>%&gt;%</span>
- <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span>() <span class='op'>%&gt;%</span>
- <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span>() <span class='op'>%&gt;%</span>
- <span class='fu'><a href='get_velocity.html'>get_velocity</a></span>() <span class='op'>%&gt;%</span>
- <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span>(desired_percent = <span class='fl'>50</span>) <span class='op'>%&gt;%</span>
- <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span>(max_frame_gap = <span class='st'>"autodetect"</span>) <span class='op'>%&gt;%</span>
- <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span>(span = <span class='fl'>0.95</span>)
+<span class='va'>motive_data_full</span> <span class='op'>&lt;-</span>
+ <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='get_velocity.html'>get_velocity</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span><span class='op'>(</span>span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
 <span class='co'>## Now add information about the experimental configuration. In this example,</span>
 <span class='co'>## a V-shaped chamber in which the vertex is 90deg and lies 0.40m below the</span>
 <span class='co'>## origin. The visual stimuli on the lateral walls both have a cycle of 0.1m</span>
 <span class='co'>## and the treatment is labeled "latA"</span>
-<span class='kw'>motive_data_V</span> <span class='op'>&lt;-</span>
-<span class='kw'>motive_data_full</span> <span class='op'>%&gt;%</span>
-<span class='fu'>insert_treatments</span>(vertex_height = <span class='op'>-</span><span class='fl'>0.40</span>,
-                   vertex_angle = <span class='fl'>45</span>,
-                   stim_param_pos = <span class='fl'>0.1</span>,
-                   stim_param_neg = <span class='fl'>0.1</span>,
-                   treatment = <span class='st'>"latA"</span>)
+<span class='va'>motive_data_V</span> <span class='op'>&lt;-</span>
+<span class='va'>motive_data_full</span> <span class='op'>%&gt;%</span>
+<span class='fu'>insert_treatments</span><span class='op'>(</span>vertex_height <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.40</span>,
+                   vertex_angle <span class='op'>=</span> <span class='fl'>45</span>,
+                   stim_param_pos <span class='op'>=</span> <span class='fl'>0.1</span>,
+                   stim_param_neg <span class='op'>=</span> <span class='fl'>0.1</span>,
+                   treatment <span class='op'>=</span> <span class='st'>"latA"</span><span class='op'>)</span>
 
 <span class='co'>## For an experiment using the box-shaped configuration where the origin lies</span>
 <span class='co'>## 0.5m away from the front and lateral walls and the treatment is labeled</span>
