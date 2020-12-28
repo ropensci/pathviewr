@@ -89,7 +89,7 @@ calc_min_dist_v <- function(obj_name,
 
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
-                                         "min_dist_calculated")
+                                         "min_dist_v_calculated")
 
   ## for simplify = TRUE
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
@@ -135,7 +135,7 @@ calc_min_dist_box <- function(obj_name){
 
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
-                                         "min_dist_calculated")
+                                         "min_dist_box_calculated")
 
 
   return(obj_name)
@@ -151,7 +151,8 @@ get_vis_angle <- function(obj_name){
   }
 
   ## Check that calc_min_dist() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "min_dist_calculated")){
+  if (!any(attr(obj_name,"pathviewR_steps") == "min_dist_v_calculated" |
+                                               "min_dist_box_calculated")){
     stop("Please calculate minimum distances prior to use")
   }
 
@@ -207,6 +208,11 @@ get_tf <- function(obj_name){
   ## Check that get_vis_angle() has been run
   if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
     stop("Please run get_vis_angle() prior to use")
+  }
+
+  ## Check that get_velocity() has been run
+  if (!any(attr(obj_name, "pathviewR_steps") == "velocity_computed")){
+    stop("Please run get_velocity() prior to use")
   }
 
   ## Temporal frequency (cycles/second) is calculated from the axis-specific
@@ -285,6 +291,39 @@ get_image_expansion <- function(obj_name){
 
   return(obj_name)
 }
+
+
+
+## all in one function for visual perceptions
+
+get_vis_percepts <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Run appropriate calc_min_dist based on tunnel configuration
+  if (any(names(obj_name) == "vertex_angle")){
+    calc_min_dist_v(obj_name)
+  } else if (any(names(obj_name)) == "pos_wall"){
+    calc_min_dist_box(obj_name)
+  } else {
+    print("Please check arguments for insert_treatments()")
+  }
+
+  ## Get visual angles, spatial frequency, temporal frequency, pattern velocity,
+  ## and image expansion
+get_vis_angle(obj_name)
+get_sf(obj_name)
+get_tf(obj_name) # need to get instantaneous velocity first
+get_pattern_vel(obj_name)
+get_image_expansion(obj_name)
+
+}
+
+
+
 
 
 
