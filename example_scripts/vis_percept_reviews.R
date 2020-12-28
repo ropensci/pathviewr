@@ -1,7 +1,94 @@
 ## work space for addressing visual perception functions reivews
-## Things to address:
+
+## change argument for vertex_angle to mean the actual angle of the V in the
+## V-shaped tunnel. Build into insert_treatments() a calculation that makes it
+## work with calc_min_dist functions
+
+## insert_treatments()
+## use tunnel_length argument so that front/back wall distances can be calculated
+
+insert_treatments <- function(obj_name,
+                              perch_2_vertex = NULL,
+                              vertex_angle = NULL, # actual angle of vertex
+                              tunnel_width = NULL,
+                              tunnel_length = NULL,
+                              stim_param_lat_pos = NULL,
+                              stim_param_lat_neg = NULL,
+                              stim_param_end_pos = NULL,
+                              stim_param_end_neg = NULL,
+                              treatment = NULL){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that get_full_trajectories has been run prior to use
+  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
+    stop("Run get_full_trajectories() prior to use")
+  }
+
+
+  ## Translate arguments into variables at beginning of data frame
+  ##
+  ## figure out how to do it such that only the arguments supplied are added to
+  ## the data frame
+  if (attr(obj_name, "import_method") == "motive"){
+    obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   perch_2_vertex = perch_2_vertex,
+                                   vertex_angle = deg_2_rad(vertex_angle/2),
+                                   tunnel_width = tunnel_width,
+                                   tunnel_length = tunnel_length,
+                                   stim_param_lat_pos = stim_param_lat_pos,
+                                   stim_param_lat_neg = stim_param_lat_neg,
+                                   stim_param_end_pos = stim_param_end_pos,
+                                   stim_param_end_neg = stim_param_end_neg,
+                                   treatment = treatment)
+  } else if (attr(obj_name, "import_method") == "flydra"){
+    obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   tunnel_width = tunel_width,
+                                   tunnel_length= tunnel_length,
+                                   stim_param_lat_pos = stim_param_lat_pos,
+                                   stim_param_lat_neg = stim_param_lat_neg,
+                                   stim_param_end_pos = stim_param_end_pos,
+                                   stim_param_end_neg = stim_param_end_neg,
+                                   treatment = treatment)
+  }
+
+  ## Add arguments into metadata......surewhynot
+  if (attr(obj_name, "import_method") == "motive"){
+    attr(obj_name, "perch_2_vertex") <- perch_2_vertex
+    attr(obj_name, "vertex_angle") <- vertex_angle
+    attr(obj_name, "tunnel_width") <- tunnel_width
+    attr(obj_name, "tunnel_length") <- tunnel_length
+    attr(obj_name, "stim_param_lat_pos") <- stim_param_lat_pos
+    attr(obj_name, "stim_param_lat_neg") <- stim_param_lat_neg
+    attr(obj_name, "stim_param_end_pos") <- stim_param_end_pos
+    attr(obj_name, "stim_param_end_neg") <- stim_param_end_neg
+    attr(obj_name, "treatment") <- treatment
+  } else if (attr(obj_name, "import_method") == "flydra"){
+    attr(obj_name, "tunnel_width") <- tunnel_width
+    attr(obj_name, "tunnel_length") <- tunnel_length
+    attr(obj_name, "stim_param_lat_pos") <- stim_param_lat_pos
+    attr(obj_name, "stim_param_lat_neg") <- stim_param_lat_neg
+    attr(obj_name, "stim_param_end_pos") <- stim_param_end_pos
+    attr(obj_name, "stim_param_end_neg") <- stim_param_end_neg
+    attr(obj_name, "treatment") <- treatment
+  }
+
+  ## Leave note that treatments were added
+  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+                                         "treatments_added")
+  return(obj_name)
+}
+
+
 
 # min_dist function for V-shaped tunnel
+# get min_dist for front/back wall by using direction of bird flight to
+# determine the distance to the opposite wall. Then can use this distance to
+# get vis_angle, sf, tf, image vel, and image expansion from the front of the
+# tunnel
 calc_min_dist_v <- function(obj_name,
                            simplify = TRUE){
 
@@ -18,7 +105,7 @@ calc_min_dist_v <- function(obj_name,
   ## duplicate object for simplify = TRUE
   obj_simplify <- obj_name
 
-
+          ## For distance to lateral walls ##
   ## Introduce variables for vertical_2_vertex and vertical_2_screen
   ## vertical_2_vertex and vertical_2_screen refer to the vertical distance
   ## between the subject's position and the the vertex of the tunnel and screen
@@ -87,6 +174,14 @@ calc_min_dist_v <- function(obj_name,
            obj_name$min_dist_neg)
            # return original min_dist_neg calculation
 
+  ## For minimum distances to end walls (assuming animal locomotes forward)
+  if (obj_name$direction == 1){
+    obj_name$min_dist_end <- (tunnel_length/2 - position_length)
+  } else if (obj_name$direction == -1) {
+    obj_name$min_dist_end <- abs(-tunnel_length/2 - position_length)
+  }
+
+
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
                                          "min_dist_v_calculated")
@@ -94,6 +189,7 @@ calc_min_dist_v <- function(obj_name,
   ## for simplify = TRUE
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
   obj_simplify$min_dist_neg <- obj_name$min_dist_neg
+  obj_simplify$min_dist_end <- obj_name$min_dist_end
 
   if(simplify = TRUE){
     return(obj_simplify)
@@ -133,6 +229,13 @@ calc_min_dist_box <- function(obj_name){
            abs(obj_name$neg_wall) + obj_name$position_width # FALSE
     )
 
+  ## For minimum distances to end walls (assuming animal locomotes forward)
+  if (obj_name$direction == 1){
+    obj_name$min_dist_end <- (tunnel_length/2 - position_length)
+  } else if (obj_name$direction == -1) {
+    obj_name$min_dist_end <- abs(-tunnel_length/2 - position_length)
+  }
+
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
                                          "min_dist_box_calculated")
@@ -143,6 +246,7 @@ calc_min_dist_box <- function(obj_name){
 
 
 ## get_vis_angle
+## include vis_angle for end wall
 get_vis_angle <- function(obj_name){
 
   ## Check that it's a viewr object
@@ -173,7 +277,7 @@ get_vis_angle <- function(obj_name){
 }
 
 ## get_sf
-
+## include sf for front wall?
 get_sf <- function(obj_name){
 
   ## Check that it's a viewr object
@@ -197,6 +301,9 @@ get_sf <- function(obj_name){
 
   return(obj_name)
 }
+
+## get_tf
+## include tf for end wall
 
 get_tf <- function(obj_name){
 
@@ -230,7 +337,7 @@ get_tf <- function(obj_name){
 
 
 ## get_pattern_velocity
-
+## include pattern velocity for end wall
 get_pattern_vel <- function(obj_name){
 
   ## Check that it's a viewr object
@@ -260,7 +367,7 @@ get_pattern_vel <- function(obj_name){
 
 
 ## get image expansion
-
+## add image expansion for end wall
 get_image_expansion <- function(obj_name){
 
   ## Check that it's a viewr object
