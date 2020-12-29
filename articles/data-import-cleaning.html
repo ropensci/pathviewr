@@ -104,6 +104,12 @@
 
     
     
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>Raw movement data, including those from motion capture systems, may have a variety of issues. These raw data often contain noise or artifacts from the recording session, which may not be easily removed via the recording software itself. Data may not be organized as “tidy” key-value pairs, the axes and overall orientation of the environment may not conform to a standard, and individual movement trajectories may be ill-defined.</p>
+<p><code>pathviewR</code> provides functions in R to deal with such problems. This vignette will cover the basics of how to import raw data and how to “clean” data to prepare it for statistical analyses.</p>
+</div>
 <div id="data-import-via-pathviewr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-import-via-pathviewr" class="anchor"></a>Data import via <code>pathviewR</code>
@@ -198,7 +204,7 @@
 <h3 class="hasAnchor">
 <a href="#flydra-matlab-files" class="anchor"></a>Flydra Matlab files</h3>
 <p><code>.mat</code> files exported from Flydra can be imported via <code><a href="../reference/read_flydra_mat.html">read_flydra_mat()</a></code>.</p>
-<p>Note that a subject name is required. Only one name can be added and it will be used throughout the resultant <code>tibble</code>.</p>
+<p>Note that a <code>subject_name</code> is required. Only one name can be added and it will be used throughout the resultant <code>tibble</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Import the Flydra example data included in </span>
 <span class="co">## the package</span>
