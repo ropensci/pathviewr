@@ -262,13 +262,14 @@ cleaving off some of this stuff into its own vignette
 those.
 
 Items for us:  
-- [ ] add contribution guidelines
+- [x] add contribution guidelines provided by rOpenSci (with slight 
+modification)
 
 > The Maintainer field is missing in the DESCRIPTION - altough Vikram is listed
 as CRE.
 
 Items for us:  
-- [ ] update the Maintainer field
+- [x] update the Maintainer field [(9146e09)](https://github.com/vbaliga/pathviewR/commit/9146e099f699425e46ba31b6ff340ef911d11944cont)
 
 > pathviewR ... I submitted a package here once and the feedback was to either
 stick with capital letters or just lower case. I don't know if that changed, but
