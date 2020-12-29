@@ -1,4 +1,4 @@
-## work space for addressing visual perception functions reivews
+## work space for addressing visual perception functions reviews
 
 ## change argument for vertex_angle to mean the actual angle of the V in the
 ## V-shaped tunnel. Build into insert_treatments() a calculation that makes it
@@ -263,12 +263,21 @@ get_vis_angle <- function(obj_name){
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
   obj_name$vis_angle_pos_rad <-
-    2*atan(obj_name$stim_param_pos/(2*obj_name$min_dist_pos)) # radians
+    2*atan(obj_name$stim_param_lat_pos/(2*obj_name$min_dist_pos)) # radians
   obj_name$vis_angle_neg_rad <-
-    2*atan(obj_name$stim_param_neg/(2*obj_name$min_dist_neg)) # radians
+    2*atan(obj_name$stim_param_lat_neg/(2*obj_name$min_dist_neg)) # radians
+  if (obj_name$direction == 1){ # when flying towards positive end wall
+    obj_name$vis_angle_end_rad <-
+      2*atan(obj_name$stim_param_end_pos/(2*obj_name$min_dist_end)) # radians
+  }
+  if (obj_name$direction == -1){ # when flying towards negative end wall
+    obj_name$vis_angle_end_rad <-
+      2*atan(obj_name$stim_param_end_neg/(2*obj_name$min_dist_end)) # radians
+
 
   obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
-  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degree
+  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
+  obj_name$vis_angle_end_deg <- rad_2_deg(obj_name$vis_angle_end_rad)
 
   ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
@@ -293,6 +302,7 @@ get_sf <- function(obj_name){
   ## spatial frequency (cycles/rad) is the inverse of visual angle (rad/cycle)
   obj_name$sf_pos <- 1/vis_angle_pos_deg
   obj_name$sf_neg <- 1/vis_angle_neg_deg
+  obj_name$sf_end <- 1/vis_angle_end_deg
 
   ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
@@ -325,8 +335,49 @@ get_tf <- function(obj_name){
   ## Temporal frequency (cycles/second) is calculated from the axis-specific
   ## instantaneous velocity of the subject and the arc length of the cycle
   ## from the subject's perspective
-  obj_name$tf_pos <- abs(length_inst_vel)/(min_dist_pos*vis_angle_pos_rad)
-  obj_name$tf_neg <- abs(length_inst_vel)/(min_dist_neg*vis_angle_neg_rad)
+
+  ##
+  if (any(attr(obj_name, "pathviewR_steps")) == "min_dist_box_calculated"){
+    # tf of positive wall from forward movement
+    obj_name$tf_forward_pos <- abs(length_inst_vel)/
+      (min_dist_pos*vis_angle_pos_rad)
+    # tf of negative wall from forward movement
+    obj_name$tf_forward_neg <- abs(length_inst_vel)/
+      (min_dist_neg*vis_angle_neg_rad)
+    # tf of positive wall from vertical movement
+    obj_name$tf_vertical_pos <- abs(height_inst_vel)/
+      (min_dist_pos*vis_angle_pos_rad)
+    # tf of negative wall from vertical movement
+    obj_name$tf_vertical_neg <- abs(height_inst_vel)/
+      (min_dist_neg*vis_angle_neg_rad)
+    # tf of end wall from horizontal movement
+    obj_name$tf_horizontal_end <- abs(width_inst_vel)/
+      (min_dist_end*vis_angle_end_rad)
+    # tf of end wall from vertical movement
+    obj_name$tf_vertical_end <- abs(height_inst_vel)/
+      (min_dist_end*vis_angle_end_rad)
+
+    # tf of length-height planar image movement from forward-vertical planar locomotion
+    obj_name$lat_planar_inst_vel <- sqrt(length_inst_vel^2 + height_inst_vel^2) # locomotion
+    obj_name$tf_lat_planar_pos <- abs(lat_planar_inst_vel)/
+      (min_dist_pos*vis_angle_pos_rad) # tf
+
+    # tf of the width_height planar image movement from horizontal-vertical planar locomotion
+    obj_name$end_planar_inst_vel <- sqrt(width_inst_vel^2 + height_inst_vel^2) # locomotion
+    obj_name$tf_end_planar <- abs(end_planar_inst_vel)/
+      (min_dist_end*vis_angle_end_rad) # tf
+
+  } else if (any(attr(obj_name, "pathviewR_steps")) == "min_dist_v_calculated"){
+    # tf of positive wall from forward movement
+    obj_name$tf_forward_pos <- abs(length_inst_vel)/
+      (min_dist_pos*vis_angle_pos_rad)
+    # tf of negative wall from forward movement
+    obj_name$tf_forward_neg <- abs(length_inst_vel)/
+      (min_dist_neg*vis_angle_neg_rad)
+  }
+
+  ### analysis of how multi-dimensional motion affects temporal frequency is in
+  ### development
 
   ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
