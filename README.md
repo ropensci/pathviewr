@@ -139,7 +139,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewR_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 20:36:01"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 22:11:27"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -182,7 +182,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 20:36:01"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 22:11:27"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -297,6 +297,17 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 ```
 
 <img src="man/figures/README-motive_V_sf_pos-1.png" width="100%" />
+
+## Contributing and/or raising Issues
+
+We welcome feedback on bugs, improvements, and/or feature requests.
+Please [see our Issues templates on
+GitHub](https://github.com/vbaliga/pathviewR/issues/new/choose) to make
+a bug fix request or feature request.
+
+To contribute code via a pull request, please consult our [Contributing
+Guide](https://github.com/vbaliga/pathviewR/blob/master/.github/CONTRIBUTING.md)
+first.
 
 ## Citation
 

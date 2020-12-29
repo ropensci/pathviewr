@@ -45,7 +45,7 @@ visual perception function(s) we make)
 > Only in the DESCRIPTION file, but not in the README. 
 
 Items for us:  
-- [ ] add contribution guidelines (links to Issues pages) in README
+- [x] add contribution guidelines (links to Issues pages) in README.
 
 #### **Functionality**
 *We will address these items in the `Review Comments` section below*
@@ -263,7 +263,7 @@ those.
 
 Items for us:  
 - [x] add contribution guidelines provided by rOpenSci (with slight 
-modification)
+modification) [(5252918)](https://github.com/vbaliga/pathviewR/commit/5252918ff124a315834dc7e060806c3ada3682dc)
 
 > The Maintainer field is missing in the DESCRIPTION - altough Vikram is listed
 as CRE.
