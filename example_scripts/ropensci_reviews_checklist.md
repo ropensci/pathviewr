@@ -255,7 +255,7 @@ input data can look like. So, you need x,y,z ... but what more. And what defines
 Optitrack and flydra data.
 
 Items for us:  
-- [ ] update the language of the Data import and wrangling vignette OR consider
+- [ ] update the language of the Data import and cleaning vignette OR consider
 cleaving off some of this stuff into its own vignette
 
 > I did not see any contribution guidelines, so it would be helpful to include
