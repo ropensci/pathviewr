@@ -177,9 +177,9 @@ Setting `max_frame_gap = "autodetect"` rather than a numeric value uses the
 value(s) for `max_frame_gap`. In addition to automatically selecting the
 `max_frame_gap` depending on the data, "autodetect" does so on a per subject
 basis rather than applying the same allowable frame gap to all data in the data
-set. The cap on how high the `max_frame_gap` can go is defined as a proportion
-of the capture frame rate and set by the `frame_rate_proportion` argument, which
-defaults to `.10`.
+set since frame gaps can vary between subjects. The cap on how high the
+`max_frame_gap` can go is defined as a proportion of the capture frame rate and
+set by the `frame_rate_proportion` argument, which defaults to `.10`.
 
 ```{r max_frame_gap_auto}
 motive_auto <- 

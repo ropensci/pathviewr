@@ -109,8 +109,8 @@ considered (i.e. that each loop represents an increment of 1 on the frame gap
 value)?
 
 Items for us:   
-- [ ] add details to vignette  
-- [ ] add details to Help file
+- [x] add details to vignette [(bcf6424)](https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)
+- [x] add details to Help file [(bcf6424)](https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)
 
 > Could there be cases when frame gaps can vary between devices (i.e. if I
 understood well in the case of the Motive data, between subjects)? If so, would
