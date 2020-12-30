@@ -10,7 +10,9 @@ visualize_frame_gap_choice(obj_name, loops = 20, ...)
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{loops}{How many total frame gap entries to consider}
+\item{loops}{How many total frame gap entries to consider. Each loop will
+increase the \code{max_fram_gap} argument in \code{separate_trajectories}
+by 1.}
 
 \item{...}{Additional arguments}
 }

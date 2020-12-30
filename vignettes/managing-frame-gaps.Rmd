@@ -150,7 +150,10 @@ plot_viewr_trajectories(motive_mfg5_full,
 be appropriate depending on their data and resolution needs.
 `visualize_frame_gap_choice()` runs the `separate_trajectories()` function over
 the same data set as many times as the user would like via the `loop` argument,
-each time with a different `max_frame_gap` allowance.
+each time with a different `max_frame_gap` allowance. Each loop represents an
+increase in the max frame gap value of 1. For example the default of `loops =
+20` will run `separate_trajectories()` over the data set 20 times, with an
+increase in the `max_frame_gap` argument of 1 each time.
 
 ```{r visualize_frame_gap_choice}
 motive_cleaned %>% 

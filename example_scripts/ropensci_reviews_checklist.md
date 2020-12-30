@@ -118,8 +118,7 @@ it be relevant to allow the autodetect approach to be applied to each subject
 separately? (or maybe that is not relevant...)
 
 Items for us:  
-- [ ] do we not already do this? Let's look into it. If we already do, let's
-see if we can make it clearer in the vignette.
+- [ ] we already do this. add example in the vignette
 
 #### Visual perception 
 
