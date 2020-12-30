@@ -45,7 +45,7 @@ visual perception function(s) we make)
 > Only in the DESCRIPTION file, but not in the README. 
 
 Items for us:  
-- [x] add contribution guidelines (links to Issues pages) in README.
+- [x] add contribution guidelines (links to Issues pages) in README. [(f5d47e7)](https://github.com/vbaliga/pathviewR/commit/f5d47e7c473a9dc08331dbe78d882cd6c360bcf8)  
 
 #### **Functionality**
 *We will address these items in the `Review Comments` section below*
@@ -68,7 +68,7 @@ this could be made a bit clearer in the vignette?
 
 Items for us:   
 - [x] clarify language of this vignette to indicate that relabeling & gathering
-are only necessary in certain cases (e.g. using Motive data)
+are only necessary in certain cases (e.g. using Motive data) [(591dd50)](https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 > Maybe that was me not being very familiar with the kind of experiments the
 package is relevant for, but I had trouble to understand when we would use the
@@ -83,9 +83,9 @@ software?
 
 Items for us:   
 - [x] in this vignette: clarify the circumstances under which standardization is
-needed and what types of landmarks are appropriate (consider adding a figure?)  
+needed and what types of landmarks are appropriate (consider adding a figure?) [(591dd50)](https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)    
 - [x] in the Help file for `standardize_tunnel()`: clarify this function's use 
-cases and perhaps link to the vignette itself?  
+cases and perhaps link to the vignette itself? [(591dd50)](https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)    
 
 > Also, considering how the select_x_percent() function works (by selecting a
 certain percentage of the tunnel length on each site of (0,0,0) along the length
@@ -93,13 +93,13 @@ axis), shouldn’t it be more appropriate to say that the (0,0,0) must be at the
 centre of the region of interest, rather than at the centre of the tunnel?
 
 Items for us:   
-- [x] revise language of this vignette on what (0,0,0) represents
+- [x] revise language of this vignette on what (0,0,0) represents [(591dd50)](https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 > Minor point: the link to the vignette for managing frame gaps is missing in
 the text.
 
 Items for us:   
-- [x] add link
+- [x] add link [(591dd50)](https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 #### Managing frame gaps 
 
@@ -109,8 +109,8 @@ considered (i.e. that each loop represents an increment of 1 on the frame gap
 value)?
 
 Items for us:   
-- [x] add details to vignette [(bcf6424)](https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)
-- [x] add details to Help file [(bcf6424)](https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)
+- [x] add details to vignette [(bcf6424)](https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)  
+- [x] add details to Help file [(bcf6424)](https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)  
 
 > Could there be cases when frame gaps can vary between devices (i.e. if I
 understood well in the case of the Motive data, between subjects)? If so, would
@@ -256,7 +256,7 @@ Optitrack and flydra data.
 
 Items for us:  
 - [x] add a short walkthrough of what movement data look like, both generally
-and specifically in Motive and Flydra
+and specifically in Motive and Flydra [(591dd50)](https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 > I did not see any contribution guidelines, so it would be helpful to include
 those.

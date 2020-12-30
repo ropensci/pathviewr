@@ -395,7 +395,7 @@ summary {
 <p>Only in the DESCRIPTION file, but not in the README.</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] add contribution guidelines (links to Issues pages) in README.</p>
+- [x] add contribution guidelines (links to Issues pages) in README. <a href="https://github.com/vbaliga/pathviewR/commit/f5d47e7c473a9dc08331dbe78d882cd6c360bcf8">(f5d47e7)</a></p>
 </div>
 <div id="functionality" class="section level4">
 <h4><strong>Functionality</strong></h4>
@@ -415,23 +415,23 @@ summary {
 <p>My understanding is that the “Relabeling axes” and “gathering data columns” parts are only relevant in the case of Motive data (Flydra data already comes in the correct format, and as_viewr(), the function to import other types of data also takes data in the correct format and already relabels the columns). Maybe this could be made a bit clearer in the vignette?</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] clarify language of this vignette to indicate that relabeling &amp; gathering are only necessary in certain cases (e.g. using Motive data)</p>
+- [x] clarify language of this vignette to indicate that relabeling &amp; gathering are only necessary in certain cases (e.g. using Motive data) <a href="https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd">(591dd50)</a></p>
 <blockquote>
 <p>Maybe that was me not being very familiar with the kind of experiments the package is relevant for, but I had trouble to understand when we would use the standardize_tunnel() function or the rotate_tunnel() function. Maybe you could provide some examples when these functions to be applied? Also I struggled to understand the standardize_tunnel() function, maybe particularly because there was no example in the help file. When would the landmarks already be in the data? I guess it will never be the case with Flydra data, considering that the read_flydra_mat() function allows to input only a single subject_name. Is that why it doesn’t need to be rotated, or is that something arising from the Flydra software?</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] in this vignette: clarify the circumstances under which standardization is needed and what types of landmarks are appropriate (consider adding a figure?)<br />
-- [x] in the Help file for <code>standardize_tunnel()</code>: clarify this function’s use cases and perhaps link to the vignette itself?</p>
+- [x] in this vignette: clarify the circumstances under which standardization is needed and what types of landmarks are appropriate (consider adding a figure?) <a href="https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd">(591dd50)</a><br />
+- [x] in the Help file for <code>standardize_tunnel()</code>: clarify this function’s use cases and perhaps link to the vignette itself? <a href="https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd">(591dd50)</a></p>
 <blockquote>
 <p>Also, considering how the select_x_percent() function works (by selecting a certain percentage of the tunnel length on each site of (0,0,0) along the length axis), shouldn’t it be more appropriate to say that the (0,0,0) must be at the centre of the region of interest, rather than at the centre of the tunnel?</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] revise language of this vignette on what (0,0,0) represents</p>
+- [x] revise language of this vignette on what (0,0,0) represents <a href="https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd">(591dd50)</a></p>
 <blockquote>
 <p>Minor point: the link to the vignette for managing frame gaps is missing in the text.</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] add link</p>
+- [x] add link <a href="https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd">(591dd50)</a></p>
 </div>
 <div id="managing-frame-gaps" class="section level4">
 <h4>Managing frame gaps</h4>
@@ -439,12 +439,13 @@ summary {
 <p>Very minor point: could it be clearer in the visualize_frame_gap_choice() help or in the vignette that the loops argument represents the maximum frame gap considered (i.e. that each loop represents an increment of 1 on the frame gap value)?</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] add details to vignette <a href="https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646">(bcf6424)</a> - [x] add details to Help file <a href="https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646">(bcf6424)</a></p>
+- [x] add details to vignette <a href="https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646">(bcf6424)</a><br />
+- [x] add details to Help file <a href="https://github.com/vbaliga/pathviewR/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646">(bcf6424)</a></p>
 <blockquote>
 <p>Could there be cases when frame gaps can vary between devices (i.e. if I understood well in the case of the Motive data, between subjects)? If so, would it be relevant to allow the autodetect approach to be applied to each subject separately? (or maybe that is not relevant…)</p>
 </blockquote>
 <p>Items for us:<br />
-- [ ] we already do this. add example in the vignette</p>
+- [x] we already do this. our example includes it so I made a slight modification to the language that will hopefully make it more clear <a href="https://github.com/vbaliga/pathviewR/commit/62b63b7c771036b84540ac9a7a5d259cd66fa07b">(62b63b7)</a></p>
 </div>
 <div id="visual-perception" class="section level4">
 <h4>Visual perception</h4>
@@ -533,7 +534,7 @@ summary {
 <p>It would actually be quite beneficial to give a short walkthrough of what input data can look like. So, you need x,y,z … but what more. And what defines Optitrack and flydra data.</p>
 </blockquote>
 <p>Items for us:<br />
-- [x] add a short walkthrough of what movement data look like, both generally and specifically in Motive and Flydra</p>
+- [x] add a short walkthrough of what movement data look like, both generally and specifically in Motive and Flydra <a href="https://github.com/vbaliga/pathviewR/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd">(591dd50)</a></p>
 <blockquote>
 <p>I did not see any contribution guidelines, so it would be helpful to include those.</p>
 </blockquote>
