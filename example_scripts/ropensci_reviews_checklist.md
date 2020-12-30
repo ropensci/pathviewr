@@ -67,7 +67,7 @@ also takes data in the correct format and already relabels the columns). Maybe
 this could be made a bit clearer in the vignette?
 
 Items for us:   
-- [ ] clarify language of this vignette to indicate that relabeling & gathering
+- [x] clarify language of this vignette to indicate that relabeling & gathering
 are only necessary in certain cases (e.g. using Motive data)
 
 > Maybe that was me not being very familiar with the kind of experiments the
@@ -82,9 +82,9 @@ why it doesn’t need to be rotated, or is that something arising from the Flydr
 software?
 
 Items for us:   
-- [ ] in this vignette: clarify the circumstances under which standardization is
+- [x] in this vignette: clarify the circumstances under which standardization is
 needed and what types of landmarks are appropriate (consider adding a figure?)  
-- [ ] in the Help file for `standardize_tunnel()`: clarify this function's use 
+- [x] in the Help file for `standardize_tunnel()`: clarify this function's use 
 cases and perhaps link to the vignette itself?  
 
 > Also, considering how the select_x_percent() function works (by selecting a
@@ -93,13 +93,13 @@ axis), shouldn’t it be more appropriate to say that the (0,0,0) must be at the
 centre of the region of interest, rather than at the centre of the tunnel?
 
 Items for us:   
-- [ ] revise language of this vignette on what (0,0,0) represents
+- [x] revise language of this vignette on what (0,0,0) represents
 
 > Minor point: the link to the vignette for managing frame gaps is missing in
 the text.
 
 Items for us:   
-- [ ] add link
+- [x] add link
 
 #### Managing frame gaps 
 
@@ -255,8 +255,8 @@ input data can look like. So, you need x,y,z ... but what more. And what defines
 Optitrack and flydra data.
 
 Items for us:  
-- [ ] update the language of the Data import and cleaning vignette OR consider
-cleaving off some of this stuff into its own vignette
+- [x] add a short walkthrough of what movement data look like, both generally
+and specifically in Motive and Flydra
 
 > I did not see any contribution guidelines, so it would be helpful to include
 those.
