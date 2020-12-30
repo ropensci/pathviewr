@@ -95,7 +95,7 @@
       <h1 data-toc-skip>Basics of data import and cleaning in pathviewR</h1>
                         <h4 class="author">Vikram B. Baliga</h4>
             
-            <h4 class="date">2020-12-29</h4>
+            <h4 class="date">2020-12-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/data-import-cleaning.Rmd"><code>vignettes/data-import-cleaning.Rmd</code></a></small>
       <div class="hidden name"><code>data-import-cleaning.Rmd</code></div>
@@ -108,16 +108,22 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>Raw movement data, including those from motion capture systems, may have a variety of issues. These raw data often contain noise or artifacts from the recording session, which may not be easily removed via the recording software itself. Data may not be organized as “tidy” key-value pairs, the axes and overall orientation of the environment may not conform to a standard, and individual movement trajectories may be ill-defined.</p>
-<p><code>pathviewR</code> provides functions in R to deal with such problems. This vignette will cover the basics of how to import raw data and how to “clean” data to prepare it for statistical analyses.</p>
+<p><code>pathviewR</code> provides functions in R to deal with such problems (i.e. “clean” them). This vignette will cover the basics of how to import raw data and how to clean data to prepare it for visualization and/or statistical analyses.</p>
+</div>
+<div id="what-do-movement-data-sets-look-like" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-do-movement-data-sets-look-like" class="anchor"></a>What do movement data sets look like?</h2>
+<p>At minimum, movement data provide information on a subject or object’s position over time. These data are typically supplied in three dimensions (e.g. x, y, z), with position in each dimension sampled at a particular rate (e.g. 100 Hz). Different recording software may provide additional features, such as the ability to track multiple subjects simultaneously, information on subjects’ rotation, tracking of “rigid body” elements, or even the ability to apply Kalman filters.</p>
+<p>A central goal of <code>pathviewR</code> is to take data from different sources (so far: Motive and Flydra), re-organize them into a common format that can be wrangled in R, clean them up a bit, and get them ready for visualization and/or statistical analyses. We’ll first cover what’s included in Motive and in Flydra data and how <code>pathviewR</code> handles these. Should you have data from another source, our <code><a href="../reference/as_viewr.html">as_viewr()</a></code> function will allow you to bring it into the <code>pathviewR</code> framework.</p>
 </div>
 <div id="data-import-via-pathviewr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-import-via-pathviewr" class="anchor"></a>Data import via <code>pathviewR</code>
 </h2>
-<p>Data can be imported via one of three ways:</p>
+<p>Data can be imported via one of three functions:</p>
 <ul>
-<li><p><code><a href="../reference/read_motive_csv.html">read_motive_csv()</a></code> imports data from <code>.csv</code> files exported by <a href="https://optitrack.com/software/motive/">Optitrack’s Motive</a> software</p></li>
-<li><p><code><a href="../reference/read_flydra_mat.html">read_flydra_mat()</a></code> imports data from <code>.mat</code> files exported from <a href="https://github.com/strawlab/flydra">Flydra</a></p></li>
+<li><p><code><a href="../reference/read_motive_csv.html">read_motive_csv()</a></code> imports data from <code>.csv</code> files that have been exported from <a href="https://optitrack.com/software/motive/">Optitrack’s Motive</a> software</p></li>
+<li><p><code><a href="../reference/read_flydra_mat.html">read_flydra_mat()</a></code> imports data from <code>.mat</code> files that have been exported from <a href="https://github.com/strawlab/flydra">Flydra</a></p></li>
 <li><p><code><a href="../reference/as_viewr.html">as_viewr()</a></code> can be used to handle data from other sources</p></li>
 </ul>
 <p>We will showcase examples from each of these methods in this section.</p>
@@ -171,6 +177,7 @@
 <span class="co">#&gt; #   device05_rotation_z &lt;dbl&gt;, device05_rotation_w &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   device05_position_x &lt;dbl&gt;, device05_position_y &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   device05_position_z &lt;dbl&gt;, device05_mean_marker_error &lt;dbl&gt;</span></code></pre></div>
+<p>A key thing to note is that these data, as stored in Motive CSVs, are not “tidy”. Each frame occupies one row, but what that also means is that the rotation and position values for the various subjects take up 24 columns! This format not only makes plotting data more difficult in base R, <code>ggplot2</code>, and <code>rgl</code>, but also makes other aspects of data wrangling more difficult. In a later step, we will ‘gather’ these data into key-value pairs so that e.g. all length-wise position values are in one column, all width-wise are in another…etc.</p>
 <p>Metadata are stored as attributes. We won’t go through all of these, but here are a couple important ones.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## E.g. to see the header of the original file:</span>
@@ -199,6 +206,7 @@
 <span class="co">## Frame rate</span>
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">motive_data</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span></code></pre></div>
+<p>Storing such metatdata in the attributes is a key feature of <code>pathviewR</code>. These metadata may not be as immediately as important as the time series of position or rotation, but they can provide important experimental information such as the date &amp; time of capture and the units of the position data (here, meters).</p>
 </div>
 <div id="flydra-matlab-files" class="section level3">
 <h3 class="hasAnchor">
@@ -232,7 +240,11 @@
 <span class="co">#&gt;  8   753     0.07 birdie_wooster           0.864       -0.00712            1.31</span>
 <span class="co">#&gt;  9   754     0.08 birdie_wooster           0.865       -0.00727            1.31</span>
 <span class="co">#&gt; 10   755     0.09 birdie_wooster           0.865       -0.00760            1.31</span>
-<span class="co">#&gt; # … with 7,734 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 7,734 more rows</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">flydra_data</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 100</span></code></pre></div>
+<p>Note that unlike the example Motive data, the Flydra data are already organized into key-value pairs. Because rotation is not captured by Flydra, such data are also not included.</p>
 </div>
 <div id="data-from-other-sources" class="section level3">
 <h3 class="hasAnchor">
@@ -262,14 +274,22 @@
     position_length_col <span class="op">=</span> <span class="fl">5</span>,
     position_width_col <span class="op">=</span> <span class="fl">6</span>,
     position_height_col <span class="op">=</span> <span class="fl">4</span>
-  <span class="op">)</span></code></pre></div>
+  <span class="op">)</span>
+
+<span class="co">## Some metadata are stored as attributes</span>
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">test</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
+<span class="co">#&gt; [1] 100</span></code></pre></div>
 <p>We also welcome you to request custom data import functions, especially if <code><a href="../reference/as_viewr.html">as_viewr()</a></code> does not fit your needs . We are interested in expanding our data import functions to accommodate additional file types. Please feel free to <a href="https://github.com/vbaliga/pathviewR/issues/new/choose">file a request for additional import functions</a> via our Github Issues page.</p>
 </div>
 </div>
 <div id="data-cleaning" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-cleaning" class="anchor"></a>Data cleaning</h2>
-<p>Data exported via either Motive or Flydra are not typically “tidy”. Functions in <code>pathviewR</code> ultimately rely on having tidy data sets that are easily interpreted.</p>
+<p>As noted above, raw data often suffer the following:<br>
+- contain noise or artifacts from the recording session<br>
+- not organized as “tidy” key-value pairs<br>
+- axes and overall orientation of the environment may not conform to a standard<br>
+- individual movement trajectories may be ill-defined</p>
 <p>Several functions to clean and wrangle data are available, and we have a suggested pipeline for how these steps should be handled. The rest of this vignette will cover these steps.</p>
 <p>All of the steps in the suggested pipeline are also covered by two all-in-one functions: <code><a href="../reference/clean_viewr.html">clean_viewr()</a></code> and <code><a href="../reference/import_and_clean_viewr.html">import_and_clean_viewr()</a></code>. See the section at the very end of this vignette for details.</p>
 <p>And speaking of pipes, all functions in <code>pathviewR</code> are pipe-friendly. We will detail each step separately, but each of the subsequent steps may be piped, e.g. <code>data %&gt;% relabel_viewr_axes() %&gt;% gather_tunnel_data()</code> etc etc</p>
@@ -278,6 +298,7 @@
 <a href="#relabeling-axes-gathering-data-columns-and-trimming-outliers" class="anchor"></a>Relabeling axes, gathering data columns, and trimming outliers</h3>
 <p>Axis labels (x, y, z) may be applied in arbitrary ways by software. A user might intuitively think the z axis represents height, but the original software may label it as the y axis instead.</p>
 <p><code>relabel_viewr_axes</code> provides a means to relabel axes with “tunnel_length”, “tunnel_width”, and “tunnel_height”. <strong>These axis labels will be expected by subsequent functions, so skipping this step is ill-advised.</strong></p>
+<p>Typically, axes from Motive data will need to be relabled, but axes in data imported from Flydra will not.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_relabeled</span> <span class="op">&lt;-</span>
   <span class="va">motive_data</span> <span class="op">%&gt;%</span>
@@ -302,8 +323,8 @@
 <span class="co">#&gt; [21] "device05_rotation_length"   "device05_rotation_real"    </span>
 <span class="co">#&gt; [23] "device05_position_width"    "device05_position_height"  </span>
 <span class="co">#&gt; [25] "device05_position_length"   "device05_mean_marker_error"</span></code></pre></div>
-<p>Akin to the behavior of <code>dplyr::gather()</code>, <code><a href="../reference/gather_tunnel_data.html">gather_tunnel_data()</a></code> will take all data from a given session and organize it so that all data of a given type are within one column, i.e. all position lengths are in <code>position_length</code>, as opposed to separate length columns for each rigid body. <strong>These column names will be expected by subsequent functions, so skipping this step is also ill-advised.</strong></p>
-<p>Use <code><a href="../reference/trim_tunnel_outliers.html">trim_tunnel_outliers()</a></code> to remove artifacts and other outlier data. This step is entirely optional, and should only be used when the user is confident that data outside certain ranges are artifacts or other bugs. Data outside these ranges are then filtered out. Best to plot data beforehand and check!!</p>
+<p>Akin to the behavior of <code>dplyr::gather()</code>, <code><a href="../reference/gather_tunnel_data.html">gather_tunnel_data()</a></code> will take all data from a given session and organize it so that all data of a given type are within one column, i.e. all position lengths are in <code>position_length</code>, as opposed to separate length columns for each rigid body. <strong>These column names will be expected by subsequent functions, so skipping this step is also ill-advised if you are using data from Motive.</strong> Should you have data from Flydra, this step should be skipable.</p>
+<p>Use <code><a href="../reference/trim_tunnel_outliers.html">trim_tunnel_outliers()</a></code> to remove extreme artifacts and other outlier data. What this function does is create a (virtual) boundary box according to user-specification, and any data outside that boundary are removed. For example, if you know your arena measures 10m x 10m x 10m and your data were calibrated to range from 0-10m in each dimension, you can be reasonably sure that extreme values such as 45m on a given axis are bogus. This step is entirely optional, and should only be used when the user is confident that data outside certain ranges are artifacts or other bugs. Data outside these ranges are then filtered out. Best to plot data beforehand and check!!</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## First gather and show the new column names</span>
 <span class="va">motive_gathered</span> <span class="op">&lt;-</span>
@@ -334,14 +355,14 @@
 <h3 class="hasAnchor">
 <a href="#standardization-of-tunnel-position-and-coordinates" class="anchor"></a>Standardization of tunnel position and coordinates</h3>
 <p>The coordinate system of the tunnel itself may require adjustment or standardization. For example, data collected across different days may show slight differences in coordinate systems if calibration equipment was not used in identical ways. Moreover, the user may want to redefine how the coordinate system itself is defined (i.e. change the location of <code>(0, 0, 0)</code> to another place within the tunnel.</p>
-<p>Note that having <code>(0, 0, 0)</code> set to the center of the tunnel is required for all subsequent <code>pathviewR</code> functions to work.</p>
+<p>Note that having <code>(0, 0, 0)</code> set to the center of the region of interest (covered in the next section of this vignette) is required for all subsequent <code>pathviewR</code> functions to work.</p>
 <p><code>pathviewR</code> offers three main choices for such standardization:</p>
 <ul>
-<li><p><code><a href="../reference/redefine_tunnel_center.html">redefine_tunnel_center()</a></code>: Sets the location of 0 on any or all axes to a new location. See the Help page for this function to see the four different methods by which a user can specify this. No rotation of the tunnel is performed.</p></li>
-<li><p><code><a href="../reference/standardize_tunnel.html">standardize_tunnel()</a></code>: Use specified landmarks (<code>subjects</code> within the <code>viewr</code> object) to rotate and translate the location of a tunnel, setting <code>(0, 0, 0)</code> to the center of the tunnel (centering).</p></li>
-<li><p><code>rotate_tunnel</code>: Rotate and center a tunnel based on user-defined coordinates (i.e. similar to <code><a href="../reference/standardize_tunnel.html">standardize_tunnel()</a></code> but for cases where specified landmarks are not in the data).</p></li>
+<li><p><code><a href="../reference/redefine_tunnel_center.html">redefine_tunnel_center()</a></code>: Sets the location of 0 on any or all axes to a new location. See the Help page for this function to see the four different methods by which a user can specify this. No rotation of the tunnel is performed. This function can be used on both Motive and Flydra data.</p></li>
+<li><p><code><a href="../reference/standardize_tunnel.html">standardize_tunnel()</a></code>: Use specified landmarks (<code>subjects</code> within the <code>viewr</code> object) to rotate and translate the location of a tunnel, setting <code>(0, 0, 0)</code> to the center of the tunnel (centering). For example, in an avian flight tunnel, perches may be set up on opposite ends of the tunnel and rigid body markers may be set to them. The positions of these perches can be used as landmarks to standardize tunnel position. Note that this is typically not possible for Flydra data, since Flydra data will be imported with only one <code>subject</code>.</p></li>
+<li><p><code>rotate_tunnel</code>: Rotate and center a tunnel based on user-defined coordinates (i.e. similar to <code><a href="../reference/standardize_tunnel.html">standardize_tunnel()</a></code> but for cases where specified landmarks are not in the data). This function can be used on both Motive and Flydra data.</p></li>
 </ul>
-<p>Two quick examples will follow, using our motive and Flydra data:</p>
+<p>Two quick examples will follow, using our Motive and Flydra data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Rotate and center the motive data set:</span>
 <span class="va">motive_rotated</span> <span class="op">&lt;-</span>
@@ -371,7 +392,7 @@
      asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/rotate_example_plots-2.png" width="700"></p>
 <p>Differences due to rotation may be extremely subtle, but the redefining of <code>(0, 0, 0)</code> to the middle of the tunnel should be clear from contrasting the axes of the plots.</p>
-<p>Flydra data typically do not need to be rotated, so we will instead use <code>redfine_tunnel_center()</code> to adjust the location of <code>(0, 0, 0)</code>:</p>
+<p>Flydra data typically do not need to be rotated, so we will instead use <code><a href="../reference/redefine_tunnel_center.html">redefine_tunnel_center()</a></code> to adjust the location of <code>(0, 0, 0)</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Re-center the Flydra data set:</span>
 <span class="va">flydra_centered</span> <span class="op">&lt;-</span>
@@ -427,7 +448,7 @@
 <a href="#isolating-each-trajectory" class="anchor"></a>Isolating each trajectory</h3>
 <p>The <code>pathviewR</code> standard for defining a trajectory is: continuous movement from one side of the tunnel to the other over the span of the region of interest. Note that this definition does not strictly require linear movement from one end to the other; an animal could make several loops inside the region of interest within a given trajectory.</p>
 <p>Isolating trajectories is handled via the <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> function in <code>pathviewR</code>. Note that a region of interest must be selected beforehand via <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code>.</p>
-<p>Because cameras may occasionally drop frames, we allow the user to permit some relaxation of how stringent the “continuous movement” criterion is. This is handled via the <code>max_frame_gap</code> argument within <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code>. For more details, please see VIGNETTE XXX (LINK HERE).</p>
+<p>Because cameras may occasionally drop frames, we allow the user to permit some relaxation of how stringent the “continuous movement” criterion is. This is handled via the <code>max_frame_gap</code> argument within <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code>. For more details, please see <a href="https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html">the vignette Managing frame gaps with pathviewR</a>.</p>
 <p>In our Motive example, we’ll use the automated feature built into the function to guesstimate the best <code>max_frame_gap</code> allowed. When frame gaps larger than <code>max_frame_gap</code> are encountered, the function will force the defining of a new trajectory. But if frame gaps smaller than <code>max_frame_gap</code> are encountered, keeping observations within the same trajectory is permitted.</p>
 <p>In the Flydra example, we’ll simply set <code>max_frame_gap</code> to <code>1</code> so that no frame gaps are allowed (movement must be continuous with no dropped frames).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
