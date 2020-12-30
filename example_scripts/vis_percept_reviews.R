@@ -46,7 +46,7 @@ insert_treatments <- function(obj_name,
                                    treatment = treatment)
   } else if (attr(obj_name, "import_method") == "flydra"){
     obj_name <- tibble::add_column(obj_name, .before = "frame",
-                                   tunnel_width = tunel_width,
+                                   tunnel_width = tunnel_width,
                                    tunnel_length= tunnel_length,
                                    stim_param_lat_pos = stim_param_lat_pos,
                                    stim_param_lat_neg = stim_param_lat_neg,
@@ -175,11 +175,10 @@ calc_min_dist_v <- function(obj_name,
            # return original min_dist_neg calculation
 
   ## For minimum distances to end walls (assuming animal locomotes forward)
-  if (obj_name$direction == 1){
-    obj_name$min_dist_end <- (tunnel_length/2 - position_length)
-  } else if (obj_name$direction == -1) {
-    obj_name$min_dist_end <- abs(-tunnel_length/2 - position_length)
-  }
+  obj_name$min_dist_end <-
+    ifelse(obj_name$end_length_sign == 1,
+           obj_name$tunnel_length/2 - obj_name$position_length,
+           obj_name$tunnel_length/2 + obj_name$position_length)
 
 
   ## Leave note that minimum distances were calculated
@@ -200,8 +199,6 @@ calc_min_dist_v <- function(obj_name,
 
 
 ## min_dist function for box shaped chamber
-## I believe the ifelse statements for calculating min_dist are necessary - the
-## reviewer's suggestion doesn't work as required.
 
 calc_min_dist_box <- function(obj_name){
 
@@ -217,24 +214,14 @@ calc_min_dist_box <- function(obj_name){
 
   ## Calculate minimum distance to each wall from positive or negative sides of
   ## tunnel
-  obj_name$min_dist_pos <-
-    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
-           obj_name$pos_wall - obj_name$position_width, # TRUE
-           obj_name$pos_wall + abs(obj_name$position_width) # FALSE
-    )
-
-  obj_name$min_dist_neg <-
-    ifelse(obj_name$position_width <= 0, # if in negative side of tunnel
-           abs(obj_name$neg_wall + obj_name$position_width), # TRUE
-           abs(obj_name$neg_wall) + obj_name$position_width # FALSE
-    )
+  obj_name$min_dist_pos <- obj_name$tunnel_width/2 - obj_name$position_width
+  obj_name$min_dist_neg <- obj_name$tunnel_width/2 + obj_name$position_width
 
   ## For minimum distances to end walls (assuming animal locomotes forward)
-  if (obj_name$direction == 1){
-    obj_name$min_dist_end <- (tunnel_length/2 - position_length)
-  } else if (obj_name$direction == -1) {
-    obj_name$min_dist_end <- abs(-tunnel_length/2 - position_length)
-  }
+  obj_name$min_dist_end <-
+    ifelse(obj_name$end_length_sign == 1,
+           obj_name$tunnel_length/2 - obj_name$position_length,
+           obj_name$tunnel_length/2 + obj_name$position_length)
 
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
@@ -255,34 +242,35 @@ get_vis_angle <- function(obj_name){
   }
 
   ## Check that calc_min_dist() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "min_dist_v_calculated" |
-                                               "min_dist_box_calculated")){
-    stop("Please calculate minimum distances prior to use")
-  }
+  #if (!any(attr(obj_name,"pathviewR_steps") == "min_dist_v_calculated" |
+   #                                            "min_dist_box_calculated")){
+    #stop("Please calculate minimum distances prior to use")
+  #}
 
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
+  # visual angle to positive wall
   obj_name$vis_angle_pos_rad <-
-    2*atan(obj_name$stim_param_lat_pos/(2*obj_name$min_dist_pos)) # radians
+    2*atan(obj_name$stim_param_lat_pos/(2*obj_name$min_dist_pos))
+  # visual angle to negative wall
   obj_name$vis_angle_neg_rad <-
-    2*atan(obj_name$stim_param_lat_neg/(2*obj_name$min_dist_neg)) # radians
-  if (obj_name$direction == 1){ # when flying towards positive end wall
-    obj_name$vis_angle_end_rad <-
-      2*atan(obj_name$stim_param_end_pos/(2*obj_name$min_dist_end)) # radians
-  }
-  if (obj_name$direction == -1){ # when flying towards negative end wall
-    obj_name$vis_angle_end_rad <-
-      2*atan(obj_name$stim_param_end_neg/(2*obj_name$min_dist_end)) # radians
+    2*atan(obj_name$stim_param_lat_neg/(2*obj_name$min_dist_neg))
+  # visual angle to end wall (depending on direction of locomotion)
+  obj_name$vis_angle_end_rad <-
+    ifelse(obj_name$end_length_sign == 1,
+           2*atan(obj_name$stim_param_end_pos/(2*obj_name$min_dist_end)),
+           2*atan(obj_name$stim_param_end_neg/(2*obj_name$min_dist_end)))
 
-
-  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
-  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
+  # convert to degrees
+  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad)
+  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad)
   obj_name$vis_angle_end_deg <- rad_2_deg(obj_name$vis_angle_end_rad)
 
   ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
                                          "vis_angles_calculated")
   return(obj_name)
+  }
 }
 
 ## get_sf
@@ -300,9 +288,9 @@ get_sf <- function(obj_name){
   }
 
   ## spatial frequency (cycles/rad) is the inverse of visual angle (rad/cycle)
-  obj_name$sf_pos <- 1/vis_angle_pos_deg
-  obj_name$sf_neg <- 1/vis_angle_neg_deg
-  obj_name$sf_end <- 1/vis_angle_end_deg
+  obj_name$sf_pos <- 1/obj_name$vis_angle_pos_deg
+  obj_name$sf_neg <- 1/obj_name$vis_angle_neg_deg
+  obj_name$sf_end <- 1/obj_name$vis_angle_end_deg
 
   ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
@@ -314,7 +302,8 @@ get_sf <- function(obj_name){
 
 ## get_tf
 
-get_tf <- function(obj_name){
+get_tf <- function(obj_name,
+                   dimensionality = NULL){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
@@ -331,67 +320,71 @@ get_tf <- function(obj_name){
     stop("Please run get_velocity() prior to use")
   }
 
-  ## Temporal frequency (cycles/second) is calculated from the axis-specific
-  ## instantaneous velocity of the subject and the arc length of the cycle
-  ## from the subject's perspective
 
-  ##
+  ## Temporal frequency (cycles/second)instantaneous velocity of the subject and
+  ## the arc length of the cycle from the subject's perspective
   if (any(attr(obj_name, "pathviewR_steps")) == "min_dist_box_calculated"){
-    ## Lateral wall temporal frequencies ##
+
+        ## Lateral wall 1D (axial) temporal frequencies
     # tf of positive wall from forward movement
-    obj_name$tf_forward_pos <- abs(length_inst_vel)/
-      (min_dist_pos*vis_angle_pos_rad)
+    obj_name$tf_forward_pos <- abs(obj_name$length_inst_vel)/
+      (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # tf of negative wall from forward movement
-    obj_name$tf_forward_neg <- abs(length_inst_vel)/
-      (min_dist_neg*vis_angle_neg_rad)
+    obj_name$tf_forward_neg <- abs(obj_name$length_inst_vel)/
+      (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
     # tf of positive wall from vertical movement
-    obj_name$tf_vertical_pos <- abs(height_inst_vel)/
-      (min_dist_pos*vis_angle_pos_rad)
+    obj_name$tf_vertical_pos <- abs(obj_name$height_inst_vel)/
+      (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # tf of negative wall from vertical movement
-    obj_name$tf_vertical_neg <- abs(height_inst_vel)/
-      (min_dist_neg*vis_angle_neg_rad)
+    obj_name$tf_vertical_neg <- abs(obj_name$height_inst_vel)/
+      (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
     # tf of end wall from horizontal movement
 
-    ## End wall temporal frequencies
-    obj_name$tf_horizontal_end <- abs(width_inst_vel)/
-      (min_dist_end*vis_angle_end_rad)
+        ## End wall 1D (axial) temporal frequencies
+    # tf of end wall from horizontal movement
+    obj_name$tf_horizontal_end <- abs(obj_name$width_inst_vel)/
+      (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
     # tf of end wall from vertical movement
-    obj_name$tf_vertical_end <- abs(height_inst_vel)/
-      (min_dist_end*vis_angle_end_rad)
+    obj_name$tf_vertical_end <- abs(obj_name$height_inst_vel)/
+      (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
 
-    ## Lateral wall planar temporal frequency
+        ## Lateral wall 2D (planar) temporal frequencies
     # relevant locomotion
-    obj_name$lat_planar_inst_vel <- sqrt(length_inst_vel^2 + height_inst_vel^2)
+    obj_name$lat_planar_inst_vel <- sqrt(obj_name$length_inst_vel^2 +
+                                         obj_name$height_inst_vel^2)
     # planar tf from positive wall
-    obj_name$tf_planar_pos <- abs(lat_planar_inst_vel)/
-      (min_dist_pos*vis_angle_pos_rad)
+    obj_name$tf_planar_pos <- abs(obj_name$lat_planar_inst_vel)/
+      (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # planar tf from negative wall
-    obj_name$tf_planar_neg <- abs(lat_planar_inst_vel)/
-      (min_dist_neg*vis_angle_neg_rad)
+    obj_name$tf_planar_neg <- abs(obj_name$lat_planar_inst_vel)/
+      (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
 
-    ## End wall planar temporal frequency
+        ## End wall 2d (planar) temporal frequency
     # relevant locomotion
-    obj_name$end_planar_inst_vel <- sqrt(width_inst_vel^2 + height_inst_vel^2)
+    obj_name$end_planar_inst_vel <- sqrt(obj_name$width_inst_vel^2 +
+                                         obj_name$height_inst_vel^2)
     # planar tf from end wall
-    obj_name$tf_planar_end <- abs(end_planar_inst_vel)/
-      (min_dist_end*vis_angle_end_rad)
+    obj_name$tf_planar_end <- abs(obj_name$end_planar_inst_vel)/
+      (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
 
   } else if (any(attr(obj_name, "pathviewR_steps")) == "min_dist_v_calculated"){
-    ## Lateral wall temporal frequencies ##
+        ## Lateral wall 1D (axial) temporal frequencies
     # tf of positive wall from forward movement
-    obj_name$tf_forward_pos <- abs(length_inst_vel)/
-      (min_dist_pos*vis_angle_pos_rad)
+    obj_name$tf_forward_pos <- abs(obj_name$length_inst_vel)/
+      (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # tf of negative wall from forward movement
-    obj_name$tf_forward_neg <- abs(length_inst_vel)/
-      (min_dist_neg*vis_angle_neg_rad)
+    obj_name$tf_forward_neg <- abs(obj_name$length_inst_vel)/
+      (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
   }
 
   ### analysis of how multi-dimensional motion affects temporal frequency is in
-  ### development for V-shaped tunnel
+  ### development for V-shaped tunnel configurations
 
   ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
                                          "tf_calculated")
+
+
 
   return(obj_name)
 }
@@ -418,7 +411,7 @@ get_pattern_vel <- function(obj_name){
   }
 
   if (any(attr(obj_name, "pathviewR_steps")) == "min_dist_box_calculated"){
-  ## Lateral wall pattern velocities ##
+      ## Lateral wall pattern velocities ##
   # forward pattern velocity from positive wall
   obj_name$forward_pattern_vel_pos <- tf_forward_pos/sf_pos
   # forward pattern velocity from negative wall
@@ -428,20 +421,19 @@ get_pattern_vel <- function(obj_name){
   # vertical pattern velocity from negative wall
   obj_name$vertical_pattern_vel_neg <- tf_vertical_neg/sf_neg
 
-  ## end wall pattern velocities ##
+      ## End wall pattern velocities ##
   # horizontal pattern velocity from end wall
   obj_name$horizontal_pattern_vel_end <- tf_horizontal_end/sf_end
   # vertical pattern velocity from end wall
   obj_name$vertical_pattern_vel_end <- tf_vertical_end/sf_end
 
-  ## Lateral wall planar pattern velocities ##
+      ## Lateral wall planar pattern velocities ##
   # planar pattern velocity from positive wall
   obj_name$planar_pattern_vel_pos <- tf_planar_pos/sf_pos
   # planar pattern velocity from negative wall
   obj_name$planar_pattern_vel_neg <- tf_planar_neg/sf_neg
 
-
-  ## End wall planar pattern velocity ##
+      ## End wall planar pattern velocity ##
   # planar pattern velocity from positive wall
   obj_name$planar_pattern_vel_end <- tf_planar_end/sf_end
   } else if (any(attr(obj_name, "pathviewR_steps")) ==
@@ -495,6 +487,35 @@ get_image_expansion <- function(obj_name){
 }
 
 
+#### function to get direction of pattern velocity ####
+## output will be a degree value from 0 to 360 on the plane of the stimulus
+
+get_pattern_direction <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that get_velocity() has been run
+  if (!any(attr(obj_name, "pathviewR_steps") == "velocity_computed")){
+    stop("Please run get_velocity() prior to use")
+  }
+
+  ## For lateral walls, 0˚ is forward pattern velocity and
+  ## 90˚ is upward pattern velocity
+  lat_pattern_direction <- rad_2_deg(
+    atan(height_inst_vel/length_inst_vel)) + 180
+
+  ## For end wall, 0˚ is rightward pattern velocity and
+  ## 90˚ is upward pattern velocity
+  end_pattern_direction <- rad_2_deg(
+    atan(height_inst_vel/width_inst_vel)) + 180
+}
+
+
+
+
 
 ## all in one function for visual perceptions
 
@@ -516,21 +537,13 @@ get_vis_percepts <- function(obj_name){
 
   ## Get visual angles, spatial frequency, temporal frequency, pattern velocity,
   ## and image expansion
-get_vis_angle(obj_name)
-get_sf(obj_name)
-get_tf(obj_name) # need to get instantaneous velocity first
-get_pattern_vel(obj_name)
-get_image_expansion(obj_name)
+  get_vis_angle(obj_name)
+  get_sf(obj_name)
+  get_tf(obj_name) # need to get instantaneous velocity first
+  get_pattern_vel(obj_name)
+  get_image_expansion(obj_name)
 
 }
-
-
-
-
-
-
-
-
 
 
 
