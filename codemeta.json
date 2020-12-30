@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/vbaliga/pathviewR",
   "issueTracker": "https://github.com/vbaliga/pathviewR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.9.4",
+  "version": "0.9.4.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "7986.507KB",
+  "fileSize": "8036.008KB",
   "contIntegration": "https://codecov.io/gh/vbaliga/pathviewR?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
@@ -296,5 +296,10 @@
         }
       }
     }
-  ]
+  ],
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/409",
+    "provider": "https://ropensci.org"
+  }
 }

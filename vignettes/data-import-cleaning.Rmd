@@ -18,15 +18,47 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Overview
+
+Raw movement data, including those from motion capture systems, may have a
+variety of issues. These raw data often contain noise or artifacts from the
+recording session, which may not be easily removed via the recording software
+itself. Data may not be organized as “tidy” key-value pairs, the axes and
+overall orientation of the environment may not conform to a standard, and
+individual movement trajectories may be ill-defined. 
+
+`pathviewR` provides functions in R to deal with such problems (i.e. "clean"
+them). This vignette will cover the basics of how to import raw data and how to
+clean data to prepare it for visualization and/or statistical analyses.
+
+
+## What do movement data sets look like?
+
+At minimum, movement data provide information on a subject or object's position
+over time. These data are typically supplied in three dimensions (e.g. x, y, z),
+with position in each dimension sampled at a particular rate (e.g. 100 Hz).
+Different recording software may provide additional features, such as the
+ability to track multiple subjects simultaneously, information on subjects'
+rotation, tracking of "rigid body" elements, or even the ability to apply Kalman
+filters.
+
+A central goal of `pathviewR` is to take data from different sources (so far:
+Motive and Flydra), re-organize them into a common format that can be wrangled
+in R, clean them up a bit, and get them ready for visualization and/or
+statistical analyses. We'll first cover what's included in Motive and in Flydra
+data and how `pathviewR` handles these. Should you have data from another
+source, our `as_viewr()` function will allow you to bring it into the
+`pathviewR` framework.
+
 ## Data import via `pathviewR`
 
-Data can be imported via one of three ways:  
+Data can be imported via one of three functions:  
 
-- `read_motive_csv()` imports data from `.csv` files exported by 
-[Optitrack's Motive](https://optitrack.com/software/motive/) software  
+- `read_motive_csv()` imports data from `.csv` files that have been exported
+from [Optitrack's Motive](https://optitrack.com/software/motive/) software
 
-- `read_flydra_mat()` imports data from  `.mat` files exported from 
-[Flydra](https://github.com/strawlab/flydra)  
+- `read_flydra_mat()` imports data from  `.mat` files that have been exported
+from [Flydra](https://github.com/strawlab/flydra)
 
 - `as_viewr()` can be used to handle data from other sources  
 
@@ -68,6 +100,15 @@ motive_data <-
 motive_data
 ``` 
 
+A key thing to note is that these data, as stored in Motive CSVs, are not
+"tidy". Each frame occupies one row, but what that also means is that the
+rotation and position values for the various subjects take up 24 columns! This
+format not only makes plotting data more difficult in base R, `ggplot2`, and
+`rgl`, but also makes other aspects of data wrangling more difficult. In a later
+step, we will 'gather' these data into key-value pairs so that e.g. all
+length-wise position values are in one column, all width-wise are in
+another...etc.
+
 Metadata are stored as attributes. We won't go through all of these, but here
 are a couple important ones.
 
@@ -85,11 +126,16 @@ attr(motive_data, "data_types_simple")
 attr(motive_data, "frame_rate")
 ```
 
+Storing such metatdata in the attributes is a key feature of `pathviewR`. These
+metadata may not be as immediately as important as the time series of position
+or rotation, but they can provide important experimental information such as the
+date & time of capture and the units of the position data (here, meters).
+
 ### Flydra Matlab files
 
 `.mat` files exported from Flydra can be imported via `read_flydra_mat()`.
 
-Note that a subject name is required. Only one name can be added and it will
+Note that a `subject_name` is required. Only one name can be added and it will
 be used throughout the resultant `tibble`.
 
 ```{r import_flydra}
@@ -106,7 +152,13 @@ flydra_data <-
 ## Similarly, this produces a tibble with important 
 ## metadata as attributes
 flydra_data
+
+attr(flydra_data, "frame_rate")
 ```
+
+Note that unlike the example Motive data, the Flydra data are already organized
+into key-value pairs. Because rotation is not captured by Flydra, such data are
+also not included.
 
 ### Data from other sources
 
@@ -141,6 +193,9 @@ test <-
     position_width_col = 6,
     position_height_col = 4
   )
+
+## Some metadata are stored as attributes
+attr(test, "frame_rate")
 ```
 
 We also welcome you to request custom data import functions, especially if
@@ -151,9 +206,11 @@ via our Github Issues page.
 
 
 ## Data cleaning
-Data exported via either Motive or Flydra are not typically "tidy". Functions in
-`pathviewR` ultimately rely on having tidy data sets that are easily 
-interpreted.
+As noted above, raw data often suffer the following:  
+- contain noise or artifacts from the recording session  
+- not organized as “tidy” key-value pairs  
+- axes and overall orientation of the environment may not conform to a standard  
+- individual movement trajectories may be ill-defined
 
 Several functions to clean and wrangle data are available, and we have a
 suggested pipeline for how these steps should be handled. The rest of this
@@ -176,6 +233,9 @@ label it as the y axis instead.
 "tunnel_width", and "tunnel_height". **These axis labels will be expected by
 subsequent functions, so skipping this step is ill-advised.**
 
+Typically, axes from Motive data will need to be relabled, but axes in data
+imported from Flydra will not.
+
 ```{r relabel_axes}
 motive_relabeled <-
   motive_data %>%
@@ -194,12 +254,18 @@ data from a given session and organize it so that all data of a given type are
 within one column, i.e. all position lengths are in `position_length`, as
 opposed to separate length columns for each rigid body. **These column names
 will be expected by subsequent functions, so skipping this step is also
-ill-advised.**
+ill-advised if you are using data from Motive.** Should you have data from 
+Flydra, this step should be skipable.
 
-Use `trim_tunnel_outliers()` to remove artifacts and other outlier data. This
-step is entirely optional, and should only be used when the user is confident
-that data outside certain ranges are artifacts or other bugs. Data outside these
-ranges are then filtered out. Best to plot data beforehand and check!!
+Use `trim_tunnel_outliers()` to remove extreme artifacts and other outlier data.
+What this function does is create a (virtual) boundary box according to
+user-specification, and any data outside that boundary are removed. For example,
+if you know your arena measures 10m x 10m x 10m and your data were calibrated to
+range from 0-10m in each dimension, you can be reasonably sure that extreme
+values such as 45m on a given axis are bogus. This step is entirely optional,
+and should only be used when the user is confident that data outside certain
+ranges are artifacts or other bugs. Data outside these ranges are then filtered
+out. Best to plot data beforehand and check!!
 
 ```{r gather_and_trim}
 ## First gather and show the new column names
@@ -232,24 +298,30 @@ in identical ways. Moreover, the user may want to redefine how the coordinate
 system itself is defined (i.e. change the location of `(0, 0, 0)` to another
 place within the tunnel.
 
-Note that having `(0, 0, 0)` set to the center of the tunnel is required for 
-all subsequent `pathviewR` functions to work.
+Note that having `(0, 0, 0)` set to the center of the region of interest
+(covered in the next section of this vignette) is required for all subsequent
+`pathviewR` functions to work.
 
 `pathviewR` offers three main choices for such standardization:  
 
 - `redefine_tunnel_center()`: Sets the location of 0 on any or all axes to a new
 location. See the Help page for this function to see the four different methods
-by which a user can specify this. No rotation of the tunnel is performed.  
+by which a user can specify this. No rotation of the tunnel is performed. This
+function can be used on both Motive and Flydra data.  
 
 - `standardize_tunnel()`: Use specified landmarks (`subjects` within the `viewr`
 object) to rotate and translate the location of a tunnel, setting `(0, 0, 0)` to
-the center of the tunnel (centering).
+the center of the tunnel (centering). For example, in an avian flight tunnel,
+perches may be set up on opposite ends of the tunnel and rigid body markers may
+be set to them. The positions of these perches can be used as landmarks to
+standardize tunnel position. Note that this is typically not possible for Flydra
+data, since Flydra data will be imported with only one `subject`.  
 
-- `rotate_tunnel`:  Rotate and center a tunnel based on user-defined coordinates
+- `rotate_tunnel`: Rotate and center a tunnel based on user-defined coordinates
 (i.e. similar to `standardize_tunnel()` but for cases where specified landmarks
-are not in the data).  
+are not in the data). This function can be used on both Motive and Flydra data.  
 
-Two quick examples will follow, using our motive and Flydra data:
+Two quick examples will follow, using our Motive and Flydra data:
 
 ```{r rotate_example}
 ## Rotate and center the motive data set:
@@ -291,7 +363,7 @@ Differences due to rotation may be extremely subtle, but the redefining of
 axes of the plots.
 
 Flydra data typically do not need to be rotated, so we will instead use
-`redfine_tunnel_center()` to adjust the location of `(0, 0, 0)`:
+`redefine_tunnel_center()` to adjust the location of `(0, 0, 0)`:
 
 ```{r redefine_tunnel_example}
 ## Re-center the Flydra data set:
@@ -369,7 +441,7 @@ Isolating trajectories is handled via the `separate_trajectories()` function in
 Because cameras may occasionally drop frames, we allow the user to permit some
 relaxation of how stringent the "continuous movement" criterion is. This is
 handled via the `max_frame_gap` argument within `separate_trajectories()`. For
-more details, please see VIGNETTE XXX (LINK HERE).  
+more details, please see [the vignette Managing frame gaps with pathviewR](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html).  
 
 In our Motive example, we'll use the automated feature built into the function
 to guesstimate the best `max_frame_gap` allowed. When frame gaps larger than

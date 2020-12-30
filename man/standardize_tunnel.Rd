@@ -34,12 +34,15 @@ landmarks (specific subjects in the data).
 }
 \details{
 The center point of the tunnel is estimated as the point between the
-two landmarks. The angle between landmark_one, tunnel_center_point, and
-arbitrary point along the length axis (tunnel_center_point - 1 on length)
-is estimated. That angle is then used to rotate the data, again only in the
-length and width dimensions. Height is standardized by average landmark
-height; values greater than 0 are above the landmarks and values less than
-0 are below the landmark level.
+two landmarks. It is therefore recommended that \code{landmark_one} and
+\code{landmark_two} be objects that are placed on opposite ends of the
+tunnel (e.g. in an avian flight tunnel, these landmarks may be perches that
+are placed at the extreme ends). The angle between landmark_one,
+tunnel_center_point, and arbitrary point along the length axis
+(tunnel_center_point - 1 on length) is estimated. That angle is then used
+to rotate the data, again only in the length and width dimensions. Height
+is standardized by average landmark height; values greater than 0 are above
+the landmarks and values less than 0 are below the landmark level.
 }
 \section{Warning}{
 

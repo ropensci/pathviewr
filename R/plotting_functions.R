@@ -11,11 +11,13 @@
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param loops How many total frame gap entries to consider
+#' @param loops How many total frame gap entries to consider. Each loop will
+#'   increase the \code{max_fram_gap} argument in \code{separate_trajectories}
+#'   by 1.
 #' @param ... Additional arguments
 #'
 #' @details The input viewr object (\code{obj_name}) should likely be an object
-#' that has passed through the \code{select_x_percent()} step.
+#'   that has passed through the \code{select_x_percent()} step.
 #'
 #' @return A plot and a tibble, each of which shows the total number of
 #'   trajectories that result from using the specified range of

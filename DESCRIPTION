@@ -1,6 +1,6 @@
 Package: pathviewR
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
-Version: 0.9.4
+Version: 0.9.4.9000
 Authors@R: 
     c(person(given = "Melissa S.", 
              family = "Armstrong",
@@ -26,6 +26,7 @@ Description: Tools to import, clean, and visualize
     gaps in trajectory data, and calculate 3D and per-axis velocity. For 
     experiments of visual guidance, we also provide functions that use 
     animal position to estimate perception of visual stimuli. 
+Maintainer: Vikram B. Baliga <vbaliga87@gmail.com>
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
