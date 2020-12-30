@@ -118,7 +118,8 @@ it be relevant to allow the autodetect approach to be applied to each subject
 separately? (or maybe that is not relevant...)
 
 Items for us:  
-- [ ] we already do this. add example in the vignette
+- [x] we already do this. our example includes it so I made a slight modification 
+to the language that will hopefully make it more clear [(62b63b7)](https://github.com/vbaliga/pathviewR/commit/62b63b7c771036b84540ac9a7a5d259cd66fa07b)
 
 #### Visual perception 
 
