@@ -8,6 +8,7 @@
 ## use tunnel_length argument so that front/back wall distances can be calculated
 
 insert_treatments <- function(obj_name,
+                              tunnel_config = "box",
                               perch_2_vertex = NULL,
                               vertex_angle = NULL, # actual angle of vertex
                               tunnel_width = NULL,
@@ -33,19 +34,20 @@ insert_treatments <- function(obj_name,
   ##
   ## figure out how to do it such that only the arguments supplied are added to
   ## the data frame
-  if (attr(obj_name, "import_method") == "motive"){
+  if (tunnel_config == "v"){
     obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   tunnel_config = tunnel_config,
                                    perch_2_vertex = perch_2_vertex,
                                    vertex_angle = deg_2_rad(vertex_angle/2),
-                                   tunnel_width = tunnel_width,
                                    tunnel_length = tunnel_length,
                                    stim_param_lat_pos = stim_param_lat_pos,
                                    stim_param_lat_neg = stim_param_lat_neg,
                                    stim_param_end_pos = stim_param_end_pos,
                                    stim_param_end_neg = stim_param_end_neg,
                                    treatment = treatment)
-  } else if (attr(obj_name, "import_method") == "flydra"){
+  } else if (tunnel_config == "box"){
     obj_name <- tibble::add_column(obj_name, .before = "frame",
+                                   tunnel_config = tunnel_config,
                                    tunnel_width = tunnel_width,
                                    tunnel_length= tunnel_length,
                                    stim_param_lat_pos = stim_param_lat_pos,
@@ -56,7 +58,7 @@ insert_treatments <- function(obj_name,
   }
 
   ## Add arguments into metadata......surewhynot
-  if (attr(obj_name, "import_method") == "motive"){
+  if (tunnel_config == "v"){
     attr(obj_name, "perch_2_vertex") <- perch_2_vertex
     attr(obj_name, "vertex_angle") <- vertex_angle
     attr(obj_name, "tunnel_width") <- tunnel_width
@@ -66,7 +68,7 @@ insert_treatments <- function(obj_name,
     attr(obj_name, "stim_param_end_pos") <- stim_param_end_pos
     attr(obj_name, "stim_param_end_neg") <- stim_param_end_neg
     attr(obj_name, "treatment") <- treatment
-  } else if (attr(obj_name, "import_method") == "flydra"){
+  } else if (tunnel_config == "box"){
     attr(obj_name, "tunnel_width") <- tunnel_width
     attr(obj_name, "tunnel_length") <- tunnel_length
     attr(obj_name, "stim_param_lat_pos") <- stim_param_lat_pos
@@ -90,7 +92,7 @@ insert_treatments <- function(obj_name,
 # get vis_angle, sf, tf, image vel, and image expansion from the front of the
 # tunnel
 calc_min_dist_v <- function(obj_name,
-                           simplify = TRUE){
+                            simplify = TRUE){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
@@ -190,7 +192,7 @@ calc_min_dist_v <- function(obj_name,
   obj_simplify$min_dist_neg <- obj_name$min_dist_neg
   obj_simplify$min_dist_end <- obj_name$min_dist_end
 
-  if(simplify = TRUE){
+  if(simplify == TRUE){
     return(obj_simplify)
   } else {
     return(obj_name)
@@ -403,10 +405,11 @@ get_pattern_vel <- function(obj_name){
   }
 
   ## Check that get_sf() and get_tf() have been run
-  #if (!any(attr(obj_name, "pathviewR_steps") == "sf_calculated" ||
-   #   !any(attr(obj_name, "pathviewR_steps") == "tf_calculated"))){
-    #stop("Please run get_sf() and get_tf() prior to use")
-  #}
+  if (!any(attr(obj_name, "pathviewR_steps") == "sf_calculated")){
+    stop("Please run get_sf() prior to use")
+  } else if (!any(attr(obj_name, "pathviewR_steps") == "tf_calculated")){
+    stop("Please run get_tf() prior to use")
+  }
 
   ## For box-shaped tunnel configuration
   if (any(attr(obj_name, "pathviewR_steps") == "min_dist_box_calculated")){
