@@ -2668,7 +2668,7 @@ rm_by_trajnum <- function(obj_name,
 #'                         height_zero = 1.44) %>%
 #'   select_x_percent(desired_percent = 50) %>%
 #'   separate_trajectories(max_frame_gap = "autodetect") %>%
-#'   get_full_trajectories(span = 0.95) %>%
+#'   get_full_trajectories(span = 0.95)
 #'
 #'
 #' ## Now add information about the experimental configuration. In this example,
