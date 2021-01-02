@@ -572,6 +572,180 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 }
 
 
+#########################         get_min_dist_v        ########################
+
+#' Calculate minimum distance to lateral and end walls V-shaped experimental
+#' tunnel
+#'
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"} and
+#'   \code{treatments_added}.
+#' @param simplify If TRUE, the returned object includes only the minimum
+#'   distance between the subject and the lateral/end walls. If FALSE, the
+#'   returned object includes all variables internal to the calculation.
+#'
+#' @return A tibble or data.frame with added variables for
+#'   \code{height_2_vertex}, \code{height_2_screen}, \code{width_2_screen_pos},
+#'   \code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
+#'   \code{bound_pos}, \code{bound_neg}.
+#'
+#' @details For tunnels in which \code{vertex_angle} is >90˚, \code{bound_pos}
+#' and \code{bound_neg} represent a planes orthogonal to the lateral walls and
+#' are used to modify \code{min_dist_pos} and \code{min_dist_neg} calculations
+#' to prevent erroneous outputs.
+#' \code{calc_min_dist_v()} assumes the subject locomotes facing forward,
+#' therefore \code{min_dist_end} represents the minimum distance between the
+#' subject and the end wall to which it is moving towards
+#' All outputs are in meters.
+#'
+#' @author Eric R. Press
+#'
+#' @family mathematical functions
+#'
+#' @examples
+#'  ## Import sample data from package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#' flydra_data <-
+#'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'                               package = 'pathviewR'))
+#'
+#'  ## Clean data up to and including get_full_trajectories()
+#' motive_data_full <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect") %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30") %>%
+#'
+#'  ## now calculate the minimum distances to each wall
+#'   calc_min_dist_v(simplify = TRUE)
+#'
+#'   ## See 3 new columns for calculations to lateral and end walls
+#'   names(motive_data_full)
+
+calc_min_dist_v <- function(obj_name,
+                            simplify = TRUE){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that insert_treatments() has been run
+  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+    stop("Please run insert_treatments() prior to use")
+  }
+
+  ## duplicate object for simplify = TRUE
+  obj_simplify <- obj_name
+
+  ## For distance to lateral walls ##
+  ## Introduce variables for vertical_2_vertex and vertical_2_screen
+  ## vertical_2_vertex and vertical_2_screen refer to the vertical distance
+  ## between the subject's position and the the vertex of the tunnel and screen
+  ## below them, respectively.
+  obj_name$vertical_2_vertex <-
+    abs(obj_name$perch_2_vertex) + obj_name$position_height
+  obj_name$vertical_2_screen <-
+    obj_name$vertical_2_vertex -
+    (abs(obj_name$position_width) / tan(obj_name$vertex_angle))
+
+  ## Introduce variables for horizontal_2_screen on positive and negative sides
+  ## of the tunnel.
+  ## horizontal_2_screen refers to the horizontal distance between the bird and
+  ## either screen.
+  obj_name$horizontal_2_screen_pos <-
+    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
+           obj_name$vertical_2_screen * tan(obj_name$vertex_angle), # TRUE
+           (obj_name$vertical_2_screen * tan(obj_name$vertex_angle)) +
+             (2 * abs(obj_name$position_width))) # FALSE
+
+  obj_name$horizontal_2_screen_neg <-
+    ifelse(obj_name$position_width < 0, # if in negative side of tunnel
+           obj_name$vertical_2_screen * tan(obj_name$vertex_angle), # TRUE
+           (obj_name$vertical_2_screen * tan(obj_name$vertex_angle)) +
+             (2 * abs(obj_name$position_width))) # FALSE
+
+
+  ## Introduce variable min_dist on positive and negative sides of the
+  ## tunnel. min_dist refers to the minimum distance between the bird and either
+  ## screen (axis of gaze is orthogonal to plane of each screen)
+  obj_name$min_dist_pos <-
+    obj_name$horizontal_2_screen_pos * sin(pi/2 - obj_name$vertex_angle)
+  # min_dist to positive screen
+  obj_name$min_dist_neg <-
+    obj_name$horizontal_2_screen_neg * sin(pi/2 - obj_name$vertex_angle)
+  # min_dist to negative screen
+
+  ## When the subject is outside the boundaries created by orthogonal planes to
+  ## each wall, erroneous visual angles are calculated.
+  ## Therefore we must adjust min_dist values according to position_width
+
+  ## Create variable holding the boundary values for each observation
+  obj_name$bound_pos <-
+    obj_name$vertical_2_vertex * tan(pi/2 - obj_name$vertex_angle)
+  obj_name$bound_neg <-
+    obj_name$vertical_2_vertex * -tan(pi/2 - obj_name$vertex_angle)
+
+  obj_name$min_dist_pos <- # overwrite min_dist_pos
+    ifelse(obj_name$position_width <= 0 &
+             obj_name$position_width <= obj_name$bound_neg,
+           # if position_width is positive and greater than the boundary value
+           sqrt(obj_name$vertical_2_vertex^2 + obj_name$position_width^2),
+           # return distance to vertex
+           obj_name$min_dist_pos)
+  # return original min_dist_pos calculation
+
+  obj_name$min_dist_neg <-
+    ifelse(obj_name$position_width >= 0 &
+             obj_name$position_width >= obj_name$bound_pos,
+           # if position_width is negative and smaller than the boundary value
+           sqrt(obj_name$vertical_2_vertex^2 + obj_name$position_width^2),
+           # return distance to vertex
+           obj_name$min_dist_neg)
+  # return original min_dist_neg calculation
+
+  ## For minimum distances to end walls (assuming animal locomotes forward)
+  obj_name$min_dist_end <-
+    ifelse(obj_name$end_length_sign == 1,
+           obj_name$tunnel_length/2 - obj_name$position_length,
+           obj_name$tunnel_length/2 + obj_name$position_length)
+
+
+  ## for simplify = TRUE
+  obj_simplify$min_dist_pos <- obj_name$min_dist_pos
+  obj_simplify$min_dist_neg <- obj_name$min_dist_neg
+  obj_simplify$min_dist_end <- obj_name$min_dist_end
+
+  ## return object and add note that minimum distaces were calculated
+  if(simplify == TRUE){
+    attr(obj_simplify, "pathviewR_steps") <-
+      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
+    return(obj_simplify)
+  } else {
+    attr(obj_name, "pathviewR_steps") <-
+      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
+    return(obj_name)
+  }
+}
+
+
+
 #########################        calc_vis_angle_V       ########################
 
 #' Estimate visual angles in a V-shaped tunnel
