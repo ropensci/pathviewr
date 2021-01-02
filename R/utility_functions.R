@@ -2605,33 +2605,34 @@ rm_by_trajnum <- function(obj_name,
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param vertex_height If using a V-shaped chamber, this is the height of the
-#'   vertex. This value should be negative and represents the distance between
-#'   the origin (0,0,0) and the vertex.
-#' @param vertex_angle  If using a V-shaped chamber, this is the angle (in
-#'   degrees) subtended by a vertical axis and the sides of the V-shaped
-#'   chamber. Equivalent to half the angle of the "V". \code{vertex_angle}
-#'   defaults to 45.
-#' @param pos_wall If using a box-shaped chamber, this is the distance in meters
-#'   between the origin (0,0,0) and the positive wall.
-#' @param neg_wall If using a box-shaped chamber, this is the distance in meters
-#'   between the origin (0,0,0) and the negative wall.
-#' @param front_wall If using a box-shaped chamber, this is the distance in
-#'   meters between the origin (0,0,0) and the front wall.
+#' @param tunnel_config The configuration of the experimental tunnel.
+#' Currently, pathviewR supports rectangular "box" and V-shaped tunnel
+#' configurations.
+#' @param perch_2_vertex If using a V-shaped tunnel, this is the vertical
+#' distance between the vertex and the height of the perches. If the tunnel does
+#' not have perches, insert the vertical distance between the vertex and the
+#' height of the origin (0,0,0).
+#' @param vertex_angle  If using a V-shaped tunnel, the angle of the vertex (in
+#' degrees) \code{vertex_angle} defaults to 90.
+#' @param tunnel_width If using a box-shaped tunnel, the width of the tunnel.
+#' @param tunnel_length The length of the tunnel.
+#' @param stim_param_lat_pos The size of the stimulus on the lateral positive
+#' wall of the tunnel. Eg. for 10cm wide gratings,
+#' \code{stim_param_lat_pos} = 0.1.
+#' @param stim_param_lat_neg The size of the stimulus on the lateral negative
+#' wall of the tunnel..
+#' @param stim_param_end_pos The size of the stimulus on the end positive
+#' wall of the tunnel.
+#' @param stim_param_end_neg The size of the stimulus on the end negative
+#' wall of the tunnel.
 #' @param treatment The name of the treatment assigned to all rows of the viewr
-#'   object. Currently only able to accept a single treatment per viewr object.
-#' @param stim_param_pos The width of the visual stimulus cycle displayed
-#'   on the positive wall of the chamber.
-#' @param stim_param_neg The width of the visual stimulus cycle displayed
-#'   on the negative wall of the chamber.
-#' @param stim_param_front If using a box-shaped chamber, the width of the
-#'   visual stimulus cycle on the front wall.
+#' object. Currently only able to accept a single treatment per viewr data
+#' object.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"treatments added"}). Depending
-#'   on the chamber configuration, it also includes columns for
-#'   \code{vertex_height}, \code{vertex_angle}, \code{pos_wall},
-#'   \code{neg_wall}, \code{front_wall}, and \code{treatment}. This experiment
+#'   on the argument \code{tunnel_config}, the viewr object also includes
+#'   columns storing the values of the supplied arguments. This experimental
 #'   information is also stored in the viewr object's metadata
 #'
 #' @details All length measurements reported in meters.
@@ -2640,11 +2641,7 @@ rm_by_trajnum <- function(obj_name,
 #'
 #' @family utility functions
 #'
-#' @export
-#'
 #' @examples
-#'
-#'
 #'  ## Import sample data from package
 #'  motive_data <-
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
@@ -2663,36 +2660,49 @@ rm_by_trajnum <- function(obj_name,
 #'  get_full_trajectories(span = 0.95)
 #'
 #' ## Now add information about the experimental configuration. In this example,
-#' ## a V-shaped chamber in which the vertex is 90deg and lies 0.40m below the
-#' ## origin. The visual stimuli on the lateral walls both have a cycle of 0.1m
-#' ## and the treatment is labeled "latA"
-#' motive_data_V <-
-#' motive_data_full %>%
-#' insert_treatments(vertex_height = -0.40,
-#'                    vertex_angle = 45,
-#'                    stim_param_pos = 0.1,
-#'                    stim_param_neg = 0.1,
-#'                    treatment = "latA")
+#' ## a V-shaped tunnel in which the vertex is 90deg and lies 0.40m below the
+#' ## origin. The visual stimuli on the lateral and end walls have a cycle
+#' length of 0.1m and 0.3m respectively, and the treatment is labeled
+#' "lat10_end30"
 #'
-#' ## For an experiment using the box-shaped configuration where the origin lies
-#' ## 0.5m away from the front and lateral walls and the treatment is labeled
-#' ## "latB".
-#' #motive_data_box %>%
-#' #insert_treatments(pos_wall = 0.5,
-#' #                  neg_wall = 0.5,
-#' #                  front_wall = 0.5,
-#' #                  treatment = "latB")
+#' motive_v <-
+#' motive_data_full %>%
+#'  insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30")
+#'
+#' ## For an experiment using the box-shaped configuration where the tunnel is
+#' 1m wide and 3m long and the visual stimuli on the lateral and end walls have
+#' a cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled
+#' "lat20_end30".
+#' flydra_treat <-
+#'  flydra_full %>%
+#'  insert_treatments(tunnel_config = "box",
+#'                    tunnel_width = 1,
+#'                    tunnel_length = 3,
+#'                    stim_param_lat_pos = 0.2,
+#'                    stim_param_lat_neg = 0.2,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat20_end30")
 
 
 insert_treatments <- function(obj_name,
-                              vertex_height = NULL,
-                              vertex_angle = NULL,
-                              pos_wall = NULL,
-                              neg_wall = NULL,
-                              front_wall = NULL,
-                              stim_param_pos = NULL,
-                              stim_param_neg = NULL,
-                              stim_param_front = NULL,
+                              tunnel_config = "box",
+                              perch_2_vertex = NULL,
+                              vertex_angle = 90,
+                              tunnel_width = NULL,
+                              tunnel_length = NULL,
+                              stim_param_lat_pos = NULL,
+                              stim_param_lat_neg = NULL,
+                              stim_param_end_pos = NULL,
+                              stim_param_end_neg = NULL,
                               treatment = NULL){
 
   ## Check that it's a viewr object
@@ -2705,48 +2715,54 @@ insert_treatments <- function(obj_name,
     stop("Run get_full_trajectories() prior to use")
   }
 
-  ## Check that only V-shaped OR box-shaped arguments are supplied. Most common
-  ## mistake could be users supplying for example: vertex_height AND pos_wall.
-  if(is.numeric(vertex_height) & is.numeric(pos_wall)){
-    stop("V-shaped and box-shaped arguments supplied.")
-  }
-
 
   ## Translate arguments into variables at beginning of data frame
-  ## NOTE: make sure this doesn't eff up other functions that depend on the
-  ## position of certain variables remaining constant
-  if (attr(obj_name, "import_method") == "motive"){
+  ##
+  ## figure out how to do it such that only the arguments supplied are added to
+  ## the data frame
+  if (tunnel_config == "v"){
     obj_name <- tibble::add_column(obj_name, .before = "frame",
-                                   vertex_height = vertex_height,
-                                   vertex_angle = deg_2_rad(vertex_angle),
-                                   stim_param_pos = stim_param_pos,
-                                   stim_param_neg = stim_param_neg,
+                                   tunnel_config = tunnel_config,
+                                   perch_2_vertex = perch_2_vertex,
+                                   vertex_angle = deg_2_rad(vertex_angle/2),
+                                   tunnel_length = tunnel_length,
+                                   stim_param_lat_pos = stim_param_lat_pos,
+                                   stim_param_lat_neg = stim_param_lat_neg,
+                                   stim_param_end_pos = stim_param_end_pos,
+                                   stim_param_end_neg = stim_param_end_neg,
                                    treatment = treatment)
-  } else if (attr(obj_name, "import_method") == "flydra"){
+  } else if (tunnel_config == "box"){
     obj_name <- tibble::add_column(obj_name, .before = "frame",
-                                   pos_wall = pos_wall,
-                                   neg_wall = neg_wall,
-                                   front_wall = front_wall,
-                                   stim_param_pos = stim_param_pos,
-                                   stim_param_neg = stim_param_neg,
-                                   stim_param_front = stim_param_front,
+                                   tunnel_config = tunnel_config,
+                                   tunnel_width = tunnel_width,
+                                   tunnel_length= tunnel_length,
+                                   stim_param_lat_pos = stim_param_lat_pos,
+                                   stim_param_lat_neg = stim_param_lat_neg,
+                                   stim_param_end_pos = stim_param_end_pos,
+                                   stim_param_end_neg = stim_param_end_neg,
                                    treatment = treatment)
   }
 
   ## Add arguments into metadata......surewhynot
-  if (attr(obj_name, "import_method") == "motive"){
-    attr(obj_name, "vertex_height") <- vertex_height
+  if (tunnel_config == "v"){
+    attr(obj_name, "tunnel_config") <- tunnel_config
+    attr(obj_name, "perch_2_vertex") <- perch_2_vertex
     attr(obj_name, "vertex_angle") <- vertex_angle
-    attr(obj_name, "stim_param_pos") <- stim_param_pos
-    attr(obj_name, "stim_param_neg") <- stim_param_neg
+    attr(obj_name, "tunnel_width") <- tunnel_width
+    attr(obj_name, "tunnel_length") <- tunnel_length
+    attr(obj_name, "stim_param_lat_pos") <- stim_param_lat_pos
+    attr(obj_name, "stim_param_lat_neg") <- stim_param_lat_neg
+    attr(obj_name, "stim_param_end_pos") <- stim_param_end_pos
+    attr(obj_name, "stim_param_end_neg") <- stim_param_end_neg
     attr(obj_name, "treatment") <- treatment
-  } else if (attr(obj_name, "import_method") == "flydra"){
-    attr(obj_name, "pos_wall") <- pos_wall
-    attr(obj_name, "neg_wall") <- neg_wall
-    attr(obj_name, "front_wall") <- front_wall
-    attr(obj_name, "stim_param_pos") <- stim_param_pos
-    attr(obj_name, "stim_param_neg") <- stim_param_neg
-    attr(obj_name, "stim_param_front") <- stim_param_front
+  } else if (tunnel_config == "box"){
+    attr(obj_name, "tunnel_config") <- tunnel_config
+    attr(obj_name, "tunnel_width") <- tunnel_width
+    attr(obj_name, "tunnel_length") <- tunnel_length
+    attr(obj_name, "stim_param_lat_pos") <- stim_param_lat_pos
+    attr(obj_name, "stim_param_lat_neg") <- stim_param_lat_neg
+    attr(obj_name, "stim_param_end_pos") <- stim_param_end_pos
+    attr(obj_name, "stim_param_end_neg") <- stim_param_end_neg
     attr(obj_name, "treatment") <- treatment
   }
 
@@ -2755,6 +2771,7 @@ insert_treatments <- function(obj_name,
                                          "treatments_added")
   return(obj_name)
 }
+
 
 
 
