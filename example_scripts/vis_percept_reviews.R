@@ -59,6 +59,7 @@ insert_treatments <- function(obj_name,
 
   ## Add arguments into metadata......surewhynot
   if (tunnel_config == "v"){
+    attr(obj_name, "tunnel_config") <- tunnel_config
     attr(obj_name, "perch_2_vertex") <- perch_2_vertex
     attr(obj_name, "vertex_angle") <- vertex_angle
     attr(obj_name, "tunnel_width") <- tunnel_width
@@ -69,6 +70,7 @@ insert_treatments <- function(obj_name,
     attr(obj_name, "stim_param_end_neg") <- stim_param_end_neg
     attr(obj_name, "treatment") <- treatment
   } else if (tunnel_config == "box"){
+    attr(obj_name, "tunnel_config") <- tunnel_config
     attr(obj_name, "tunnel_width") <- tunnel_width
     attr(obj_name, "tunnel_length") <- tunnel_length
     attr(obj_name, "stim_param_lat_pos") <- stim_param_lat_pos
@@ -118,7 +120,6 @@ calc_min_dist_v <- function(obj_name,
     obj_name$vertical_2_vertex -
     (abs(obj_name$position_width) / tan(obj_name$vertex_angle))
 
-
   ## Introduce variables for horizontal_2_screen on positive and negative sides
   ## of the tunnel.
   ## horizontal_2_screen refers to the horizontal distance between the bird and
@@ -146,7 +147,6 @@ calc_min_dist_v <- function(obj_name,
     obj_name$horizontal_2_screen_neg * sin(pi/2 - obj_name$vertex_angle)
   # min_dist to negative screen
 
-
   ## When the subject is outside the boundaries created by orthogonal planes to
   ## each wall, erroneous visual angles are calculated.
   ## Therefore we must adjust min_dist values according to position_width
@@ -156,7 +156,6 @@ calc_min_dist_v <- function(obj_name,
     obj_name$vertical_2_vertex * tan(pi/2 - obj_name$vertex_angle)
   obj_name$bound_neg <-
     obj_name$vertical_2_vertex * -tan(pi/2 - obj_name$vertex_angle)
-
 
   obj_name$min_dist_pos <- # overwrite min_dist_pos
     ifelse(obj_name$position_width <= 0 &
@@ -183,18 +182,19 @@ calc_min_dist_v <- function(obj_name,
            obj_name$tunnel_length/2 + obj_name$position_length)
 
 
-  ## Leave note that minimum distances were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
-                                         "min_dist_calculated")
-
   ## for simplify = TRUE
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
   obj_simplify$min_dist_neg <- obj_name$min_dist_neg
   obj_simplify$min_dist_end <- obj_name$min_dist_end
 
+  ## return object and add note that minimum distaces were calculated
   if(simplify == TRUE){
+    attr(obj_simplify, "pathviewR_steps") <-
+      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
     return(obj_simplify)
   } else {
+    attr(obj_name, "pathviewR_steps") <-
+      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
     return(obj_name)
   }
 }
@@ -325,58 +325,90 @@ get_tf <- function(obj_name,
   ## the arc length of the cycle from the subject's perspective
 
   ## For box-shaped tunnel
-   if (obj_name$tunnel_config == "box"){
+   if (attr(obj_name, "tunnel_config") == "box"){
+
         ## Lateral wall 1D (axial) temporal frequencies
     # tf of positive wall from forward movement
-    obj_name$tf_forward_pos <- abs(obj_name$length_inst_vel)/
+    obj_name$tf_forward_pos <-
+      abs(obj_name$length_inst_vel)/
       (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # tf of negative wall from forward movement
-    obj_name$tf_forward_neg <- abs(obj_name$length_inst_vel)/
+    obj_name$tf_forward_neg <-
+      abs(obj_name$length_inst_vel)/
       (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
     # tf of positive wall from vertical movement
-    obj_name$tf_vertical_pos <- abs(obj_name$height_inst_vel)/
+    obj_name$tf_vertical_pos <-
+      abs(obj_name$height_inst_vel)/
       (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # tf of negative wall from vertical movement
-    obj_name$tf_vertical_neg <- abs(obj_name$height_inst_vel)/
+    obj_name$tf_vertical_neg <-
+      abs(obj_name$height_inst_vel)/
       (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
     # tf of end wall from horizontal movement
 
         ## End wall 1D (axial) temporal frequencies
     # tf of end wall from horizontal movement
-    obj_name$tf_horizontal_end <- abs(obj_name$width_inst_vel)/
+    obj_name$tf_horizontal_end <-
+      abs(obj_name$width_inst_vel)/
       (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
     # tf of end wall from vertical movement
-    obj_name$tf_vertical_end <- abs(obj_name$height_inst_vel)/
+    obj_name$tf_vertical_end <-
+      abs(obj_name$height_inst_vel)/
       (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
 
         ## Lateral wall 2D (planar) temporal frequencies
     # relevant locomotion
-    obj_name$lat_planar_inst_vel <- sqrt(obj_name$length_inst_vel^2 +
-                                         obj_name$height_inst_vel^2)
+    obj_name$lat_planar_inst_vel <-
+      sqrt(obj_name$length_inst_vel^2 + obj_name$height_inst_vel^2)
     # planar tf from positive wall
-    obj_name$tf_planar_pos <- abs(obj_name$lat_planar_inst_vel)/
+    obj_name$tf_planar_pos <-
+      abs(obj_name$lat_planar_inst_vel)/
       (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # planar tf from negative wall
-    obj_name$tf_planar_neg <- abs(obj_name$lat_planar_inst_vel)/
+    obj_name$tf_planar_neg <-
+      abs(obj_name$lat_planar_inst_vel)/
       (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
 
         ## End wall 2d (planar) temporal frequency
     # relevant locomotion
-    obj_name$end_planar_inst_vel <- sqrt(obj_name$width_inst_vel^2 +
-                                         obj_name$height_inst_vel^2)
+    obj_name$end_planar_inst_vel <-
+      sqrt(obj_name$width_inst_vel^2 + obj_name$height_inst_vel^2)
     # planar tf from end wall
-    obj_name$tf_planar_end <- abs(obj_name$end_planar_inst_vel)/
+    obj_name$tf_planar_end <-
+      abs(obj_name$end_planar_inst_vel)/
       (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
 
     ## for v-shaped tunnel
-  } else if (obj_name$tunnel_config == "v"){
+  } else if (attr(obj_name, "tunnel_config") == "v"){
         ## Lateral wall 1D (axial) temporal frequencies
     # tf of positive wall from forward movement
-    obj_name$tf_forward_pos <- abs(obj_name$length_inst_vel)/
+    obj_name$tf_forward_pos <-
+      abs(obj_name$length_inst_vel)/
       (obj_name$min_dist_pos * obj_name$vis_angle_pos_rad)
     # tf of negative wall from forward movement
-    obj_name$tf_forward_neg <- abs(obj_name$length_inst_vel)/
+    obj_name$tf_forward_neg <-
+      abs(obj_name$length_inst_vel)/
       (obj_name$min_dist_neg * obj_name$vis_angle_neg_rad)
+
+      ## End wall 1D (axial) temporal frequencies
+    # tf of end wall from horizontal movement
+    obj_name$tf_horizontal_end <-
+      abs(obj_name$width_inst_vel)/
+      (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
+    # tf of end wall from vertical movement
+    obj_name$tf_vertical_end <-
+      abs(obj_name$height_inst_vel)/
+      (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
+
+      ## End wall 2d (planar) temporal frequency
+    # relevant locomotion
+    obj_name$end_planar_inst_vel <-
+      sqrt(obj_name$width_inst_vel^2 + obj_name$height_inst_vel^2)
+    # planar tf from end wall
+    obj_name$tf_planar_end <-
+      abs(obj_name$end_planar_inst_vel)/
+      (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
+
   }
 
   ### analysis of how multi-dimensional motion affects temporal frequency is in
@@ -412,39 +444,66 @@ get_pattern_vel <- function(obj_name){
   }
 
   ## For box-shaped tunnel configuration
-  if (obj_name$tunnel_config == "box"){
-    ## Lateral wall pattern velocities ##
+  if (attr(obj_name, "tunnel_config") == "box"){
+    ## Lateral wall 1D (axial) pattern velocities
   # forward pattern velocity from positive wall
-  obj_name$forward_pattern_vel_pos <- obj_name$tf_forward_pos/obj_name$sf_pos
+  obj_name$forward_pattern_vel_pos <-
+    obj_name$tf_forward_pos/obj_name$sf_pos
   # forward pattern velocity from negative wall
-  obj_name$forward_pattern_vel_neg <- obj_name$tf_forward_neg/obj_name$sf_neg
+  obj_name$forward_pattern_vel_neg <-
+    obj_name$tf_forward_neg/obj_name$sf_neg
   # vertical pattern velocity from positive wall
-  obj_name$vertical_pattern_vel_pos <- obj_name$tf_vertical_pos/obj_name$sf_pos
+  obj_name$vertical_pattern_vel_pos <-
+    obj_name$tf_vertical_pos/obj_name$sf_pos
   # vertical pattern velocity from negative wall
-  obj_name$vertical_pattern_vel_neg <- obj_name$tf_vertical_neg/obj_name$sf_neg
+  obj_name$vertical_pattern_vel_neg <-
+    obj_name$tf_vertical_neg/obj_name$sf_neg
 
-      ## End wall pattern velocities ##
+      ## End wall 1D (axial) pattern velocities
   # horizontal pattern velocity from end wall
-  obj_name$horizontal_pattern_vel_end <- obj_name$tf_horizontal_end/obj_name$sf_end
+  obj_name$horizontal_pattern_vel_end <-
+    obj_name$tf_horizontal_end/obj_name$sf_end
   # vertical pattern velocity from end wall
-  obj_name$vertical_pattern_vel_end <- obj_name$tf_vertical_end/obj_name$sf_end
+  obj_name$vertical_pattern_vel_end <-
+    obj_name$tf_vertical_end/obj_name$sf_end
 
-      ## Lateral wall planar pattern velocities ##
+      ## Lateral wall 2D (planar) pattern velocities
   # planar pattern velocity from positive wall
-  obj_name$planar_pattern_vel_pos <- obj_name$tf_planar_pos/obj_name$sf_pos
+  obj_name$planar_pattern_vel_pos <- o
+  bj_name$tf_planar_pos/obj_name$sf_pos
   # planar pattern velocity from negative wall
-  obj_name$planar_pattern_vel_neg <- obj_name$tf_planar_neg/obj_name$sf_neg
+  obj_name$planar_pattern_vel_neg <-
+    obj_name$tf_planar_neg/obj_name$sf_neg
 
-      ## End wall planar pattern velocity ##
+      ## End wall 2D (planar) pattern velocity
   # planar pattern velocity from positive wall
-  obj_name$planar_pattern_vel_end <- obj_name$tf_planar_end/obj_name$sf_end
+  obj_name$planar_pattern_vel_end <-
+    obj_name$tf_planar_end/obj_name$sf_end
 
   ## For v-shaped tunnel configuration
-  } else if (obj_name$tunnel_config == "v"){
+  } else if (attr(obj_name, "tunnel_config") == "v"){
+      ## Lateral wall 1D (axial) pattern velocities
     # forward pattern velocity for positive wall
-    obj_name$forward_pattern_vel_pos <- obj_name$tf_forward_pos/obj_name$sf_pos
+    obj_name$forward_pattern_vel_pos <-
+      obj_name$tf_forward_pos/obj_name$sf_pos
     # forward pattern velocity for negative wall
-    obj_name$forward_pattern_vel_neg <- obj_name$tf_forward_neg/obj_name$sf_neg
+    obj_name$forward_pattern_vel_neg <-
+      obj_name$tf_forward_neg/obj_name$sf_neg
+
+    ## End wall 1D (axial) pattern velocities
+    # horizontal pattern velocity from end wall
+    obj_name$horizontal_pattern_vel_end <-
+      obj_name$tf_horizontal_end/obj_name$sf_end
+    # vertical pattern velocity from end wall
+    obj_name$vertical_pattern_vel_end <-
+      obj_name$tf_vertical_end/obj_name$sf_end
+
+    ## End wall 2D (planar) pattern velocity
+    # planar pattern velocity from positive wall
+    obj_name$planar_pattern_vel_end <-
+      obj_name$tf_planar_end/obj_name$sf_end
+
+
   }
 
   ## Leave a note that pattern velocities were calculated
@@ -456,7 +515,6 @@ get_pattern_vel <- function(obj_name){
 
 
 ## get image expansion
-## add image expansion for end wall
 get_image_expansion <- function(obj_name){
 
   ## Check that it's a viewr object
@@ -513,6 +571,8 @@ get_pattern_vel_direction <- function(obj_name){
   ## The direction of pattern velocity depends on the end wall to which the
   ## subject is facing and whether it's moving forward or backward.
 
+  ## for box-shaped tunnel configurations
+  if (attr(obj_name, "tunnel_config") == "box"){
   obj_name$lat_pattern_direction <-
     ifelse(obj_name$end_length_sign == 1,
            # when facing positive end of tunnel
@@ -567,7 +627,40 @@ get_pattern_vel_direction <- function(obj_name){
                   (360 - (rad_2_deg(atan(
                                   obj_name$width_inst_vel/
                                   obj_name$length_inst_vel))))) %% 360
-    )
+    )} else if (
+       ## For v-shaped tunnel configurations
+    attr(obj_name, "tunnel_config") == "v"){
+      ## For end wall, rightward pattern velocity is 0˚ or 360˚ and intermediate
+      ## angles fill the circle counter-clockwise.
+      ## The direction of pattern velocity depends on the end wall to which the
+      ## subject is facing and whether it's moving towards the positive or negative
+      ## lateral walls.
+
+      obj_name$end_pattern_direction <-
+        ifelse(obj_name$end_length_sign == 1,
+               # when facing positive end of tunnel
+               ifelse(obj_name$width_inst_vel >= 0,
+                      # when moving rightwards
+                      180 + rad_2_deg(atan(
+                        obj_name$height_inst_vel/
+                          obj_name$width_inst_vel)),
+                      # when moving leftwards
+                      (360 + rad_2_deg(atan(
+                        obj_name$height_inst_vel/
+                          obj_name$width_inst_vel)))) %% 360,
+
+               # when facing negative end of tunnel
+               ifelse(obj_name$width_inst_vel < 0,
+                      # when moving rightwards
+                      180 - rad_2_deg(atan(
+                        obj_name$height_inst_vel/
+                          obj_name$width_inst_vel)),
+                      # when moving leftwards
+                      (360 - (rad_2_deg(atan(
+                        obj_name$width_inst_vel/
+                          obj_name$length_inst_vel))))) %% 360
+        )
+    }
 
   ## Leave a note that pattern velocity direction was calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
