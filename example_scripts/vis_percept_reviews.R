@@ -185,7 +185,7 @@ calc_min_dist_v <- function(obj_name,
 
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
-                                         "min_dist_v_calculated")
+                                         "min_dist_calculated")
 
   ## for simplify = TRUE
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
@@ -227,7 +227,7 @@ calc_min_dist_box <- function(obj_name){
 
   ## Leave note that minimum distances were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
-                                         "min_dist_box_calculated")
+                                         "min_dist_calculated")
 
 
   return(obj_name)
@@ -244,10 +244,9 @@ get_vis_angle <- function(obj_name){
   }
 
   ## Check that calc_min_dist() has been run
-  #if (!any(attr(obj_name,"pathviewR_steps") == "min_dist_v_calculated" ||
-   #   !any(attr(obj_name,"pathviewR_steps") == "min_dist_box_calculated"))){
-    #stop("Please calculate minimum distances prior to use")
-  #}
+  if (!any(attr(obj_name, "pathviewR_steps") == "min_dist_calculated")){
+    stop("Please run calc_min_dist_v() or calc_min_dist_box() prior to use")
+  }
 
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
@@ -273,7 +272,6 @@ get_vis_angle <- function(obj_name){
                                          "vis_angles_calculated")
   return(obj_name)
   }
-}
 
 ## get_sf
 ## include sf for front wall?
@@ -325,8 +323,9 @@ get_tf <- function(obj_name,
 
   ## Temporal frequency (cycles/second)instantaneous velocity of the subject and
   ## the arc length of the cycle from the subject's perspective
-  if (any(attr(obj_name, "pathviewR_steps") == "min_dist_box_calculated")){
 
+  ## For box-shaped tunnel
+   if (obj_name$tunnel_config == "box"){
         ## Lateral wall 1D (axial) temporal frequencies
     # tf of positive wall from forward movement
     obj_name$tf_forward_pos <- abs(obj_name$length_inst_vel)/
@@ -369,7 +368,8 @@ get_tf <- function(obj_name,
     obj_name$tf_planar_end <- abs(obj_name$end_planar_inst_vel)/
       (obj_name$min_dist_end * obj_name$vis_angle_end_rad)
 
-  } else if (any(attr(obj_name, "pathviewR_steps") == "min_dist_v_calculated")){
+    ## for v-shaped tunnel
+  } else if (obj_name$tunnel_config == "v"){
         ## Lateral wall 1D (axial) temporal frequencies
     # tf of positive wall from forward movement
     obj_name$tf_forward_pos <- abs(obj_name$length_inst_vel)/
@@ -412,8 +412,7 @@ get_pattern_vel <- function(obj_name){
   }
 
   ## For box-shaped tunnel configuration
-  if (any(attr(obj_name, "pathviewR_steps") == "min_dist_box_calculated")){
-
+  if (obj_name$tunnel_config == "box"){
     ## Lateral wall pattern velocities ##
   # forward pattern velocity from positive wall
   obj_name$forward_pattern_vel_pos <- obj_name$tf_forward_pos/obj_name$sf_pos
@@ -440,7 +439,8 @@ get_pattern_vel <- function(obj_name){
   # planar pattern velocity from positive wall
   obj_name$planar_pattern_vel_end <- obj_name$tf_planar_end/obj_name$sf_end
 
-  } else if (any(attr(obj_name, "pathviewR_steps") == "min_dist_v_calculated")){
+  ## For v-shaped tunnel configuration
+  } else if (obj_name$tunnel_config == "v"){
     # forward pattern velocity for positive wall
     obj_name$forward_pattern_vel_pos <- obj_name$tf_forward_pos/obj_name$sf_pos
     # forward pattern velocity for negative wall
@@ -508,12 +508,10 @@ get_pattern_vel_direction <- function(obj_name){
     stop("Please run get_velocity() prior to use")
   }
 
-  ## For lateral walls, forward pattern velocity is 0˚ and backward pattern
-  ## velocity is +-180˚. Upward and downward are +-90˚ respectively.
+  ## For lateral walls, forward pattern velocity is 0˚/360˚ and intermediate
+  ## angles fill the circle counter-clockwise.
   ## The direction of pattern velocity depends on the end wall to which the
   ## subject is facing and whether it's moving forward or backward.
-  ##
-  ## Need to fix the degree offset for different scenarios
 
   obj_name$lat_pattern_direction <-
     ifelse(obj_name$end_length_sign == 1,
@@ -545,34 +543,30 @@ get_pattern_vel_direction <- function(obj_name){
   ## The direction of pattern velocity depends on the end wall to which the
   ## subject is facing and whether it's moving towards the positive or negative
   ## lateral walls.
-  ##
-  ##
-  ## Need to fix the degree offsets for the different scenarios
-  ##
-  ##
+
   obj_name$end_pattern_direction <-
     ifelse(obj_name$end_length_sign == 1,
            # when facing positive end of tunnel
            ifelse(obj_name$width_inst_vel >= 0,
                  # when moving rightwards
                  180 + rad_2_deg(atan(
-                            obj_name$height_inst_vel/
-                            obj_name$width_inst_vel)),
+                                  obj_name$height_inst_vel/
+                                  obj_name$width_inst_vel)),
                  # when moving leftwards
                  (360 + rad_2_deg(atan(
-                      obj_name$height_inst_vel/
-                      obj_name$width_inst_vel)))) %% 360,
+                                  obj_name$height_inst_vel/
+                                  obj_name$width_inst_vel)))) %% 360,
 
            # when facing negative end of tunnel
            ifelse(obj_name$width_inst_vel < 0,
                   # when moving rightwards
                   180 - rad_2_deg(atan(
-                    obj_name$height_inst_vel/
-                      obj_name$width_inst_vel)),
+                                  obj_name$height_inst_vel/
+                                  obj_name$width_inst_vel)),
                   # when moving leftwards
                   (360 - (rad_2_deg(atan(
-                    obj_name$width_inst_vel/
-                      obj_name$length_inst_vel))))) %% 360
+                                  obj_name$width_inst_vel/
+                                  obj_name$length_inst_vel))))) %% 360
     )
 
   ## Leave a note that pattern velocity direction was calculated
