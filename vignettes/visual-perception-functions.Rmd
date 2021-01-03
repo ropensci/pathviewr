@@ -18,12 +18,11 @@ knitr::opts_chunk$set(
 ```
 
 `pathviewR` includes functions that estimate visual perceptions based on the 
-distance between the subject/observer and visual stimuli on the walls of the 
+distance between the subject and visual stimuli on the walls of the 
 experimental tunnel.
 
 ## Loading packages
-We'll need to start by loading `pathviewR` as well as a couple `tidyverse` 
-packages for visualizing the data.
+We'll need to start by loading `pathviewR` as well as `tidyverse` for visualizing the data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewR)
@@ -96,53 +95,43 @@ flydra_full <- # clean
 ```
 
 ### Add experiment information with `insert_treatments()`
-Now that our objects have been cleaned, we will use `insert_treatments()` to add
-information about the experiments that are necessary for calculating visual 
-perceptions.  
+Now that our objects have been cleaned, we will use `insert_treatments()` to add information about the experiments that are necessary for calculating visual perceptions.  
 
-#### Motive example
-The data within `motive_full` were collected from birds flying through a
-V-shaped tunnel in which the origin `(0,0,0)` was set to the height of the
-perches that sit 0.3855m above the height of the vertex. The lateral walls were
-angled ±45˚ from the vertical axis. The visual stimulus on the positive side of
-the tunnel (where `position_width` values > 0) were horizontal sine wave
-gratings with a cycle length of 0.1m on the screen. The visual stimulus on the
-negative side of the tunnel (where `position_width` values < 0) were vertical
-sine wave gratings with a cycle length of 0.2m on the screen.
+#### V-shaped tunnel example
+The data within `motive_full` were collected from birds flying through a 3m long V-shaped tunnel in which the height of the origin `(0,0,0)` was set to the height of the perches, which sit 0.3855m above the vertex angled at 90˚. The visual stimuli on the positive and negative walls of the tunnel (where `position_width` values > 0 and < 0, respectively) were stationary dot-fields where each dot was of size 0.05m in diameter. The visual stimuli on the end walls of the tunnel were vertical sine-wave gratings with a cycle length of 0.1m. Finally, this treatment is referred to as `"latB"`. 
 
 Therefore we will use the following code:
 ```{r}
 motive_V <- 
   motive_full %>% 
-  insert_treatments(vertex_height = -0.3855,
-                    vertex_angle = 45,
-                    stim_param_pos = 0.1,
-                    stim_param_neg = 0.2,
+  insert_treatments(tunnel_config = "v",
+                    perch_2_vertex = 0.3855,
+                    vertex_angle = 90,
+                    tunnel_length = 3,
+                    stim_param_lat_pos = 0.05,
+                    stim_param_lat_neg = 0.05,
+                    stim_param_end_pos = 0.1,
+                    stim_param_end_neg = 0.1,
                     treatment = "latB")
 ```
-Our object now has the variables, `vertex_height`, `vertex_angle`, 
-`stim_param_pos`, and `stim_param_neg` which are needed to calculate visual 
-perceptions. The variable `treatment` has also been included and this 
-information has been stored in the object's metadata.
+Our object now has the variables `tunnel_config`, `perch_2_vertex`, `vertex_angle`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, and `stim_param_end_neg` which are needed to calculate visual perceptions. The variable `treatment` has also been included and all this information has been stored in the object's metadata.
+
 ```{r}
 motive_V
 ```
 
-#### Flydra example
-The data within `flydra_full` were collected from birds flying in a rectangular
-tunnel i.e. a box where the positive, negative, and front walls were 0.5m from
-the origin. The visual stimuli were the same as in the motive example, though
-now with a stimulus on the front wall of 0.2m cycle length.
-
+#### Box-shaped tunnel example
+The data within `flydra_full` were collected from birds flying in a 1 x 3m rectangular tunnel (a box). The visual stimuli were the same as in the motive example. 
 ```{r}
-flydra_box <- # prep for calculations
+flydra_box <-
   flydra_full %>%
-  insert_treatments(pos_wall = 0.5,
-                    neg_wall = 0.5,
-                    front_wall = 0.5,
-                    stim_param_pos = 0.1,
-                    stim_param_neg = 0.2,
-                    stim_param_front = 0.2,
+  insert_treatments(tunnel_config = "box",
+                    tunnel_width = 1,
+                    tunnel_length = 2,
+                    stim_param_lat_pos = 0.05,
+                    stim_param_lat_neg = 0.05,
+                    stim_param_end_pos = 0.1,
+                    stim_param_end_neg = 0.1,
                     treatment = "latB")
 ```
 
