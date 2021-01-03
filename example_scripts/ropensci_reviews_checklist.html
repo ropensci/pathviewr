@@ -494,8 +494,11 @@ summary {
 <blockquote>
 <p>I seem to understand that the functions to calculate visual angle and spatial frequency in the box example don’t handle the front wall (only the side walls), am I right? Is there any reason for this? If the front wall is not relevant, maybe there is no need to include the option to add parameters for it in the insert_treatments() function?</p>
 </blockquote>
-<p>Items for us:<br />
-- [x] consider adding in this functionality, OR state in the Help files for these functions that it is something that will be developed in future pathviewR updates</p>
+<p>Items for us:</p>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+consider adding in this functionality, OR state in the Help files for these functions that it is something that will be developed in future pathviewR updates</li>
+</ul>
 <p><em>The visual perception functions now include calculations for the end walls, though the outputs from these functions only include the end wall to which the subject is moving towards.</em></p>
 <ul>
 <li>get_sf() <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></li>
@@ -507,43 +510,59 @@ summary {
 <blockquote>
 <p>On that note, there is no need for an ifelse() to calculate these distances, these lines could simply replace these lines and these lines in calc_sf_box() and calc_vis_angle_box()</p>
 </blockquote>
-<p>Items for us:<br />
-- [x] replace <code>ifelse()</code> statement in <code>calc_sf_box()</code><br />
-- [x] replace <code>ifelse()</code> statement in <code>calc_vis_angle_box()</code></p>
+<p>Items for us:</p>
 <ul>
-<li>get_sf() <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></li>
-<li>get_vis_angle() <a href="https://github.com/vbaliga/pathviewR/commit/d5d1e2f1726472505d19c091ed4363590fddc855">(dfd1e2f)</a></li>
+<li><p><input type="checkbox" disabled checked></input>
+replace <code>ifelse()</code> statement in <code>calc_sf_box()</code><br />
+</p></li>
+<li><p><input type="checkbox" disabled checked></input>
+replace <code>ifelse()</code> statement in <code>calc_vis_angle_box()</code></p></li>
+<li><p>get_sf() <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></p></li>
+<li><p>get_vis_angle() <a href="https://github.com/vbaliga/pathviewR/commit/d5d1e2f1726472505d19c091ed4363590fddc855">(dfd1e2f)</a></p></li>
 </ul>
 <blockquote>
 <p>Can you please correct the calculations, and adapt the test-calc_vis_angle_box.R file?</p>
 </blockquote>
-<p>Items for us:<br />
-- [x] make corrections to the calculations of vis angle and SF <a href="https://github.com/vbaliga/pathviewR/commit/d5d1e2f1726472505d19c091ed4363590fddc855">(dfd1e2f)</a> <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></p>
+<p>Items for us:</p>
 <ul>
+<li><input type="checkbox" disabled checked></input>
+make corrections to the calculations of vis angle and SF <a href="https://github.com/vbaliga/pathviewR/commit/d5d1e2f1726472505d19c091ed4363590fddc855">(dfd1e2f)</a> <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></li>
 <li><input type="checkbox" disabled></input>
 update <code>test-calc_vis_angle_box.R</code></li>
 </ul>
 <blockquote>
 <p>And also on this, I noticed that the user can supply negative values for the neg_wall and pos_wall arguments in the insert_treatments() function, which in this case would lead to spurious distances being calculated. Maybe insert a warning/error message if that is the case, and add the appropriate tests?</p>
 </blockquote>
-<p>Items for us:<br />
-- [ ] add guidance to the Help file of <code>insert_treatments()</code> about feasible <code>neg_wall</code> and <code>pos_wall</code> values<br />
-- [ ] add a check to <code>insert_treatments()</code> that stops the function if faulty <code>neg_wall</code> and <code>pos_wall</code> values are supplied<br />
-- [ ] add a test to <code>test-insert_treatments.R</code> to check the functionality of the above check</p>
+<p>Items for us:</p>
+<ul>
+<li><p><input type="checkbox" disabled checked></input>
+add guidance to the Help file of <code>insert_treatments()</code> about feasible <code>neg_wall</code> and <code>pos_wall</code> values <a href="https://github.com/vbaliga/pathviewR/commit/429258bf4039cf26671d915d507b48838c1aeb87">(429258b)</a></p></li>
+<li><p><input type="checkbox" disabled checked></input>
+add a check to <code>insert_treatments()</code> that stops the function if faulty <code>neg_wall</code> and <code>pos_wall</code> values are supplied <a href="https://github.com/vbaliga/pathviewR/commit/429258bf4039cf26671d915d507b48838c1aeb87">(429258b)</a></p></li>
+<li><p><input type="checkbox" disabled></input>
+add a test to <code>test-insert_treatments.R</code> to check the functionality of the above check</p></li>
+</ul>
 </div>
 <div id="spatial-frequency" class="section level4">
 <h4>Spatial frequency</h4>
 <blockquote>
 <p>Another point, on the spatial frequency. If I understand it well (being the number of cycles per degree of visual angle), I think there is an error in these lines of calc_sf_V() and these lines of calc_sf_box().</p>
 </blockquote>
-<p>Items for us:<br />
-- [ ] make corrections to the calculation of SF</p>
+<p>Items for us:</p>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+make corrections to the calculation of SF <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></li>
+</ul>
 <blockquote>
 <p>Just one final broader question, don’t these calculations assume that the bird is parallel to the length axis of the tunnel? Is that not important/common practice not to use the rotation information?</p>
 </blockquote>
-<p>Items for us:<br />
-- [ ] in the Help files for each visual perception function: add a note that rotation information may be integrated in future pathviewR updates<br />
-- [ ] in the Visual perception vignette: add a note that rotation information may be integrated in future pathviewR updates</p>
+<p>Items for us:</p>
+<ul>
+<li><input type="checkbox" disabled checked></input>
+in the Help files for each visual perception function: add a note that rotation information may be integrated in future pathviewR updates <a href="https://github.com/vbaliga/pathviewR/commit/46ba850c9d2b2db453365531280b8dde1ded831a">(46ba850)</a></li>
+<li><input type="checkbox" disabled></input>
+in the Visual perception vignette: add a note that rotation information may be integrated in future pathviewR updates</li>
+</ul>
 </div>
 </div>
 </div>
