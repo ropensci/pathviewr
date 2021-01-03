@@ -572,11 +572,10 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 }
 
 
-#########################         get_min_dist_v        ########################
+#########################         calc_min_dist_v        ########################
 
-#' Calculate minimum distance to lateral and end walls V-shaped experimental
-#' tunnel
-#'
+#' Calculate minimum distance to lateral and end walls in a V-shaped
+#' experimentaltunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"} and
@@ -588,7 +587,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' @return A tibble or data.frame with added variables for
 #'   \code{height_2_vertex}, \code{height_2_screen}, \code{width_2_screen_pos},
 #'   \code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
-#'   \code{bound_pos}, \code{bound_neg}.
+#'   \code{min_dist_end}, \code{bound_pos}, and \code{bound_neg}.
 #'
 #' @details For tunnels in which \code{vertex_angle} is >90˚, \code{bound_pos}
 #' and \code{bound_neg} represent a planes orthogonal to the lateral walls and
@@ -632,10 +631,10 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'                    stim_param_end_neg = 0.3,
 #'                    treatment = "lat10_end_30") %>%
 #'
-#'  ## now calculate the minimum distances to each wall
+#'  ## Now calculate the minimum distances to each wall
 #'   calc_min_dist_v(simplify = TRUE)
 #'
-#'   ## See 3 new columns for calculations to lateral and end walls
+#'   ## See 3 new variables for calculations to lateral and end walls
 #'   names(motive_data_full)
 
 calc_min_dist_v <- function(obj_name,
@@ -742,6 +741,132 @@ calc_min_dist_v <- function(obj_name,
       c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
     return(obj_name)
   }
+}
+
+
+#########################       calc_min_dist_box      ##########################
+
+#' Calculate minimum distance to lateral and end walls in a box-shaped
+#' experimental tunnel
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewR_steps} that includes \code{"viewr"} and
+#'   \code{treatments_added}.
+#'
+#' @return A tibble or data.frame with added variables for
+#'   \code{min_dist_pos}, \code{min_dist_neg}, and \code{min_dist_end},.
+#'
+#' @details \code{calc_min_dist_box()} assumes the subject locomotes facing
+#' forward, therefore \code{min_dist_end} represents the minimum distance
+#' between the subject and the end wall to which it is moving towards.
+#' All outputs are in meters.
+#'
+#' @author Eric R. Press
+#'
+#' @family visual perception functioins
+#'
+#' @examples
+#' ## Import sample data from package
+#'  flydra_data <-
+#'  read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'                               package = 'pathviewR'))
+#'
+#'   ## Clean data up to and including get_full_trajectories()
+#'  flydra_data_full <-
+#'   flydra_data %>%
+#'   redefine_tunnel_center(length_method = "middle",
+#'                         height_method = "user-defined",
+#'                         height_zero = 1.44) %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect") %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30") %>%
+#'
+#'   ## Now calculate the minimum distances to each wall
+#'   calc_min_dist_box()
+#'
+#'   ## See 3 new variables for calculations to lateral and end walls
+#'   names(flydra_data_full)
+
+
+
+calc_min_dist_box <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that insert_treatments() has been run
+  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+    stop("Please run insert_treatments() prior to use")
+  }
+
+  ## Calculate minimum distance to each wall from positive or negative sides of
+  ## tunnel
+  obj_name$min_dist_pos <- obj_name$tunnel_width/2 - obj_name$position_width
+  obj_name$min_dist_neg <- obj_name$tunnel_width/2 + obj_name$position_width
+
+  ## For minimum distances to end walls (assuming animal locomotes forward)
+  obj_name$min_dist_end <-
+    ifelse(obj_name$end_length_sign == 1,
+           obj_name$tunnel_length/2 - obj_name$position_length,
+           obj_name$tunnel_length/2 + obj_name$position_length)
+
+  ## Leave note that minimum distances were calculated
+  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+                                         "min_dist_calculated")
+
+
+  return(obj_name)
+}
+
+
+## get_vis_angle
+## include vis_angle for end wall
+get_vis_angle <- function(obj_name){
+
+  ## Check that it's a viewr object
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+    stop("This doesn't seem to be a viewr object")
+  }
+
+  ## Check that calc_min_dist() has been run
+  if (!any(attr(obj_name, "pathviewR_steps") == "min_dist_calculated")){
+    stop("Please run calc_min_dist_v() or calc_min_dist_box() prior to use")
+  }
+
+  ## Calculate visual angles (radians and degrees) using distance to
+  ## positive and negative screens. Add these variables into the dataframe.
+  # visual angle to positive wall
+  obj_name$vis_angle_pos_rad <-
+    2*atan(obj_name$stim_param_lat_pos/(2*obj_name$min_dist_pos))
+  # visual angle to negative wall
+  obj_name$vis_angle_neg_rad <-
+    2*atan(obj_name$stim_param_lat_neg/(2*obj_name$min_dist_neg))
+  # visual angle to end wall (depending on direction of locomotion)
+  obj_name$vis_angle_end_rad <-
+    ifelse(obj_name$end_length_sign == 1,
+           2*atan(obj_name$stim_param_end_pos/(2*obj_name$min_dist_end)),
+           2*atan(obj_name$stim_param_end_neg/(2*obj_name$min_dist_end)))
+
+  # convert to degrees
+  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad)
+  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad)
+  obj_name$vis_angle_end_deg <- rad_2_deg(obj_name$vis_angle_end_rad)
+
+  ## Leave a note that visual angles were calculated
+  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+                                         "vis_angles_calculated")
+  return(obj_name)
 }
 
 
