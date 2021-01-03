@@ -102,7 +102,7 @@ The data within `motive_full` were collected from birds flying through a 3m long
 
 Therefore we will use the following code:
 ```{r}
-motive_V <- 
+motive_treatments <- 
   motive_full %>% 
   insert_treatments(tunnel_config = "v",
                     perch_2_vertex = 0.3855,
@@ -117,13 +117,13 @@ motive_V <-
 Our object now has the variables `tunnel_config`, `perch_2_vertex`, `vertex_angle`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, and `stim_param_end_neg` which are needed to calculate visual perceptions. The variable `treatment` has also been included and all this information has been stored in the object's metadata.
 
 ```{r}
-motive_V
+motive_treatmenets
 ```
 
 #### Box-shaped tunnel example
 The data within `flydra_full` were collected from birds flying in a 1 x 3m rectangular tunnel (a box). The visual stimuli were the same as in the motive example. 
 ```{r}
-flydra_box <-
+flydra_treatments <-
   flydra_full %>%
   insert_treatments(tunnel_config = "box",
                     tunnel_width = 1,
@@ -134,6 +134,95 @@ flydra_box <-
                     stim_param_end_neg = 0.1,
                     treatment = "latB")
 ```
+
+## Calculating visual angles
+#### Start by calculating the minimum distances to visual stimuli 
+
+To estimate the visual angles perceived by the subject is it moves through the tunnel, we first need to calculate the distance between the subject and the visual stimuli. For this, we will use `calc_min_dist_v` or `calc_min_dist_box` depending on the configuration of the experimental tunnel.  
+For v-shaped tunnels, several internal calculations are required and can be added to the output object with `simplify_output = FALSE`. Otherwise, the minimum distance are computed to the lateral walls and the end wall to which the subject is facing.
+
+```{r motive_min_dist_pos, fig.height=4, fig.width=7}
+motive_min_dist <- 
+  motive_treatments %>% 
+  calc_min_dist_v(simplify_output = FALSE)
+
+## Display minimum distances to the positive lateral wall
+motive_min_dist %>% 
+  ggplot(aes(x = position_width, y - position_height)) +
+  geom_point(aes(color = min_dist_pos), size = 2) +
+  coord_fixed() +
+  geom_segment(aes(x = 0,         # dimensions of the positive wall
+                   y = -0.3855,
+                   xend = 0.5869,
+                   yend = 0.2014)) +
+  geom_segment(aes(x = 0,         # dimensions of the negative wall
+                   y = -0.3855,
+                   xend = -0.5869,
+                   yend = 0.2014))
+```
+
+```{r flydra_min_dist_end, fig.height=4, fig.width=7}
+flydra_min_dist <- 
+  flydra_treatments %>% 
+  calc_min_dist_box()
+
+## Display minimum distances to the end walls
+flydra_min_dist %>% 
+  ggplot(aes(x = position_length, y = position_width)) +
+  geom_point(aes(color = min_dist_end), size = 2) +
+  coord_fixed() +
+  geom_segment(aes(x = -1,
+                   y = -0.5,
+                   xend = 1,
+                   yend = -0.5)) +
+  geom_segment(aes(x = -1,
+                   y = 0.5,
+                   xend = 1,
+                   yend = 0.5))
+```
+
+
+#### Now get visual angles 
+
+```{r motive_vis_angle_pos}
+motive_angle <- 
+  motive_min_dist %>% 
+  get_vis_angle()
+
+motive_angle %>% 
+  ggplot(aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = vis_angle_pos_deg), size = 2, shape = 1,) +
+  coord_fixed()+
+  geom_segment(aes(x = 0,         # dimensions of the positive wall
+                   y = -0.3855,
+                   xend = 0.5869,
+                   yend = 0.2014)) +
+  geom_segment(aes(x = 0,         # dimensions of the negative wall
+                   y = -0.3855,
+                   xend = -0.5869,
+                   yend = 0.2014))
+```
+
+```{r}
+flydra_vis_angle <- 
+  flydra_min_dist %>% 
+  get_vis_angle()
+
+flydra_vis_angle %>% 
+  ggplot(aes(x = position_length, y = position_width)) +
+  geom_point(aes(color = vis_angle_end_deg), size = 2) +
+  coord_fixed() +
+  geom_segment(aes(x = -1,
+                   y = -0.5,
+                   xend = 1,
+                   yend = -0.5)) +
+  geom_segment(aes(x = -1,
+                   y = 0.5,
+                   xend = 1,
+                   yend = 0.5))
+```
+
+`
 
 
 ## Calculating spatial frequency
@@ -160,26 +249,6 @@ flydra_box_sf
 `min_dist_pos`, `mind_dist_neg`, `sf_pos`, `sf_neg`. Note for `calc_sf_box`,
 there is no need for a simplify_output argument.
 
-## Calculating visual angles
-To calculate an estimation of the visual angles perceived by the subject, we
-will use `calc_vis_angle_V` and not `calc_vis_angle_box` because the data was
-collected in a V-shaped tunnel.
-
-```{r}
-motive_V_angle <- 
-  motive_V %>% 
-  calc_vis_angle_V(simplify_output=FALSE)
-
-## The resulting object contains 12 new variables which are values involved in the calculation of visual angles. 
-motive_V_angle 
-```
-```{r}
-flydra_box_angle <- 
-  flydra_box %>% 
-  calc_vis_angle_box()
-```
-`simplify_output=TRUE` returns an object containing the 4 new variables
-`min_dist_pos`, `min_dist_neg`, `vis_angle_pos_deg`, and `vis_angle_neg_deg`.
 
 
 ## Visualizing the calculations
