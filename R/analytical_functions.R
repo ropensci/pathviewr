@@ -841,8 +841,8 @@ calc_min_dist_box <- function(obj_name){
 #' @details \code{get_vis_angle()} assumes the subject's gaze is fixed at the
 #'   point on the either side of the tunnel that minimizes the distance to
 #'   visual stimuli and therefore maximizes visual angles. Angles are reported
-#'   in radians eg. \code{vis_angle_pos_rad} or degrees eg.
-#'   \code{vis_angle_pos_deg}.
+#'   in radians/cycle (\code{vis_angle_pos_rad}) or degrees/cycle
+#'   (\code{vis_angle_pos_deg}).
 #'
 #' @return A tibble or data.frame with added variables for
 #'   \code{vis_angle_pos_rad}, \code{vis_angle_pos_deg},
@@ -952,219 +952,98 @@ get_vis_angle <- function(obj_name){
 #' perspective in an experimental tunnel.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#' \code{pathviewR_steps} that includes \code{"viewr"}
-#' @param vertex_angle The angle (in degrees) subtended by a vertical axis and
-#' the sides of the tunnel. Equivalent to the angle of the "V" divided by 2.
-#' \code{vertex_angle)} defaults to 45.
-#' @param stim_param_pos The length (in meters) of the visual stimulus presented
-#' on the positive side of the tunnel (i.e. \code{position_width >= 0}). For
-#' example, a sinusoidal grating 10cm wide is \code{stim_param_pos = 0.1}
-#' @param stim_param_neg The same convention as \code{stim_param_pos} but for
-#' stimuli presented on the negative side of the tunnel
-#' (i.e. \code{position_width < 0}).
-#' @param simplify_output If TRUE, the returned object includes minimum distance
-#' as well as the spatial frequencies perceived on either side of the
-#' tunnel. If FALSE, the returned object includes all variables internal to the
-#' calculation.
+#' \code{pathviewR_steps} that includes \code{"viewr"} and
+#' \code{vis_angles_calculated}.
 #'
-#' @details \code{cal_sf_V} assumes fixed gaze at the point on the
-#' either side of the tunnel that minimizes the distance to visual stimuli and
-#' thereby minimizes spatial frequencies.
+#' @details \code{get_sf} in cycles/degree is the inverse of visual angle
+#' (degrees/cycle).
 #'
 #' @return A tibble or data.frame with added variables for
-#' \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg of visual
+#' \code{sf_pos}, \code{sf_neg}, and \code{sf_end}.
 #' angle.
 #'
 #' @author Eric R. Press
 #'
 #' @family visual perception functions
 #'
-#' @export
+#' @example
+#'  ## Import sample data from package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#' flydra_data <-
+#'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'                               package = 'pathviewR'))
+#'
+#'  ## Process data up to and including get_vis_angle()
+#' motive_data_full <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect") %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30") %>%
+#'   calc_min_dist_v(simplify = TRUE) %>%
+#'   get_vis_angle() %>%
+#'
+#'   ## Now calculate the spatial frequencies
+#'   get_sf()
+#'
+#'   flydra_data_full <-
+#'   flydra_data %>%
+#'   redefine_tunnel_center(length_method = "middle",
+#'                         height_method = "user-defined",
+#'                         height_zero = 1.44) %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect") %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30") %>%
+#'   calc_min_dist_box() %>%
+#'   get_vis_angle() %>%
+#'
+#'   ## Now calculate the spatial frequencies
+#'   get_sf()
 
-
-calc_sf_V <- function(obj_name,
-                      vertex_angle,
-                      stim_param_pos,
-                      stim_param_neg,
-                      simplify_output = FALSE) {
+get_sf <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
-  ## Check that get_full_trajectories has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "treatments_added")) {
-    stop("Run insert_treatments() prior to use.")
+  ## Check that get_vis_angle() has been run
+  if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
+    stop("Please run get_vis_angle() prior to use")
   }
 
-  ## duplicate object for simplify = TRUE
-  obj_simplify <- obj_name
+  ## spatial frequency (cycles/rad) is the inverse of visual angle (rad/cycle)
+  obj_name$sf_pos <- 1/obj_name$vis_angle_pos_deg
+  obj_name$sf_neg <- 1/obj_name$vis_angle_neg_deg
+  obj_name$sf_end <- 1/obj_name$vis_angle_end_deg
 
-  ## Introduce variables for height_2_vertex and height_2_screen
-  obj_name$height_2_vertex <-
-    abs(obj_name$vertex_height) + obj_name$position_height
-  obj_name$height_2_screen <- obj_name$height_2_vertex -
-    (abs(obj_name$position_width) / tan(obj_name$vertex_angle))
-
-
-  ## Introduce variables for width_2_screen on positive and negative sides
-  ## of the tunnel.
-  ## width_2_screen refers to the horizontal distance between the bird and
-  ## either screen.
-  obj_name$width_2_screen_pos <-
-    ifelse(
-      obj_name$position_width >= 0,
-      # if in positive side of tunnel
-      obj_name$height_2_screen * tan(obj_name$vertex_angle),
-      # TRUE
-      (obj_name$height_2_screen * tan(obj_name$vertex_angle)) +
-        (2 * abs(obj_name$position_width))
-    ) # FALSE
-
-  obj_name$width_2_screen_neg <-
-    ifelse(
-      obj_name$position_width < 0,
-      # if in negative side of tunnel
-      obj_name$height_2_screen * tan(obj_name$vertex_angle),
-      # TRUE
-      (obj_name$height_2_screen * tan(obj_name$vertex_angle)) +
-        (2 * abs(obj_name$position_width))
-    ) # FALSE
-
-
-  ## When the bird is outside the boundaries created by orthogonal planes to
-  ## each screen, erroneous visual angles are calculated based on a
-  ## minimum distance to either screen.
-  ## Therefore min_dist values need to be adjusted according to position_width
-
-  ## Create variable of boundary values for each observation
-  obj_name$bound_pos <-
-    obj_name$height_2_vertex * tan(deg_2_rad(90) - obj_name$vertex_angle)
-  obj_name$bound_neg <-
-    obj_name$height_2_vertex * -tan(deg_2_rad(90) - obj_name$vertex_angle)
-
-
-  ## Introduce variable min_dist on positive and negative sides of the
-  ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen.
-  obj_name$min_dist_pos <-
-    ifelse(
-      obj_name$position_width <= 0 &
-        obj_name$position_width <= obj_name$bound_neg,
-      # if position_width is negative and less than the boundary value
-      sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
-      # return distance to vertex
-      obj_name$width_2_screen_pos * sin(deg_2_rad(90) - obj_name$vertex_angle))
-      # return minimum distance to positive screen
-
-  obj_name$min_dist_neg <-
-    ifelse(
-      obj_name$position_width >= 0 &
-        obj_name$position_width >= obj_name$bound_pos,
-      # if position_width is positive and greater than the boundary value
-      sqrt(obj_name$height_2_vertex^2 + obj_name$position_width ^2),
-      # return distance to vertex
-      obj_name$width_2_screen_neg * sin(deg_2_rad(90) - obj_name$vertex_angle))
-      # return minimum distance to negative screen
-
-
-  ## Calculate distance along plane of screen equal to 1deg of visual angle.
-  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
-  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
-
-  ## Calculate spatial frequency as number of cycles of stimulus per 1deg of
-  ## visual angle.
-  obj_name$sf_pos <- deg_dist_pos / obj_name$stim_param_pos
-  obj_name$sf_neg <- deg_dist_neg / obj_name$stim_param_neg
-
-
-  ## Create simple data frame by adding min_dist and spatial frequencies
-  obj_simplify$min_dist_pos <- obj_name$min_dist_pos
-  obj_simplify$min_dist_neg <- obj_name$min_dist_neg
-  obj_simplify$sf_pos <- obj_name$sf_pos
-  obj_simplify$sf_neg <- obj_name$sf_neg
-
-  ## Leave note that spatial frequencies were calculated on dataset
-  attr(obj_name, "pathviewR_steps") <-
-    c(attr(obj_name, "pathviewR_steps"),
-      "sf_calculated")
-
-  ## return simple or complete data table based on simplify argument
-  if (simplify_output == TRUE) {
-    return(obj_simplify)
-  } else {
-    return(obj_name)
-  }
-}
-
-
-
-##################################  calc_sf_box   ##############################
-
-#' Estimate spatial frequency of visual stimuli in rectangular tunnel, i.e. box
-#'
-#' Based on animal head positions in a rectangular tunnel i.e. box,
-#' \code{calc_sf_box()} calculates how the animal perceives the spatial
-#' frequency of lateral visual stimuli as modulated by distance to the stimulus.
-#'
-#' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
-#'
-#' @details \code{calc_sf_box} assumes fixed gaze at the point on the
-#' either side of the tunnel that minimizes the distance to visual stimuli and
-#' thereby minimizes spatial frequencies.
-#'
-#' @return A tibble or data.frame with added variables \code{min_dist_pos} and
-#'   \code{min_dist_neg} describing the minimum distance to the tunnel walls as
-#'   well as \code{s_freq_pos} and \code{s_freq_neg} reported in cycles per 1deg
-#'   of visual angle.
-#'
-#' @author Eric R. Press
-#'
-#' @family visual perception functions
-#'
-#' @export
-
-
-calc_sf_box <- function(obj_name){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Check that insert_treatments has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "treatments_added")){
-    stop("Please run insert_treatments() prior to use")
-  }
-
-  ## Calculate minimum distance to each screen
-  obj_name$min_dist_pos <-
-    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
-           obj_name$pos_wall - obj_name$position_width, # TRUE
-           obj_name$pos_wall + abs(obj_name$position_width) # FALSE
-          )
-
-  obj_name$min_dist_neg <-
-    ifelse(obj_name$position_width <= 0, # if in negative side of tunnel
-           abs(obj_name$neg_wall) - abs(obj_name$position_width), # TRUE
-           abs(obj_name$neg_wall + obj_name$position_width) # FALSE
-          )
-
-  ## Calculate distance along plane of the wall equal to 1deg of visual angle.
-  deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
-  deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
-
-  ## Calculate spatial frequency as number of cycles of stimulus per 1deg of
-  ## visual angle.
-  obj_name$sf_pos <- deg_dist_pos / obj_name$stim_param_pos
-  obj_name$sf_neg <- deg_dist_neg / obj_name$stim_param_neg
-
-  ## Leave note that spatial frequencies were calculated on dataset
+  ## Leave a note that visual angles were calculated
   attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
-                                         "frequencies_calculated")
+                                         "sf_calculated")
+
 
   return(obj_name)
 }
-
