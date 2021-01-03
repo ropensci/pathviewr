@@ -21,11 +21,17 @@ A tibble or data.frame with added variables for
 Estimate visual angles from a subject's perspective in an experimental tunnel
 }
 \details{
-\code{get_vis_angle()} assumes the subject's gaze is fixed at the
-point on the either side of the tunnel that minimizes the distance to
-visual stimuli and therefore maximizes visual angles. Angles are reported
-in radians/cycle (\code{vis_angle_pos_rad}) or degrees/cycle
-(\code{vis_angle_pos_deg}).
+\code{get_vis_angle()} assumes the following:
+\itemize{
+\item The subject's gaze is fixed at the point on the either side of the tunnel
+that minimizes the distance to visual stimuli and therefore maximizes visual
+angles.
+\item The subject's head is facing parallel to the length axis of the tunnel.
+Visual perception functions in future versions of pathviewR will integrate
+head orientation coordinates.
+Angles are reported in radians/cycle (\code{vis_angle_pos_rad}) and
+degrees/cycle (\code{vis_angle_pos_deg}).
+}
 }
 \seealso{
 Other visual perception functions: 

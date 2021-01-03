@@ -8,7 +8,7 @@ insert_treatments(
   obj_name,
   tunnel_config = "box",
   perch_2_vertex = NULL,
-  vertex_angle = 90,
+  vertex_angle = NULL,
   tunnel_width = NULL,
   tunnel_length = NULL,
   stim_param_lat_pos = NULL,

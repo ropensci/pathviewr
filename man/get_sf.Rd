@@ -22,8 +22,17 @@ Estimate the spatial frequency of visual stimuli from the subject's
 perspective in an experimental tunnel.
 }
 \details{
-\code{get_sf} in cycles/degree is the inverse of visual angle
-(degrees/cycle).
+\code{get_sf()} assumes the following:
+\itemize{
+\item The subject's gaze is fixed at the point on the either side of the tunnel
+that minimizes the distance to visual stimuli and therefore maximizes visual
+angles.
+\item The subject's head is facing parallel to the length axis of the tunnel.
+Visual perception functions in future versions of pathviewR will integrate
+head orientation coordinates.
+Spatial frequency is reported in cycles/degree and is the inverse of visual
+angle (degrees/cycle).
+}
 }
 \seealso{
 Other visual perception functions: 
