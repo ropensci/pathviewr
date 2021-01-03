@@ -29,12 +29,25 @@ insert_treatments <- function(obj_name,
     stop("Run get_full_trajectories() prior to use")
   }
 
-
   ## Translate arguments into variables at beginning of data frame
-  ##
-  ## figure out how to do it such that only the arguments supplied are added to
-  ## the data frame
   if (tunnel_config == "v"){
+    ## Check that relevant numerical arguments have positive values
+    if (perch_2_vertex < 0){
+      stop("perch_2_vertex must have a positive value.")
+    } else if (vertex_angle < 0){
+      stop("vertex_angle must have a positive value")
+    } else if (tunnel_length < 0){
+      stop("tunnel_length must have a positive value")
+    } else if (stim_param_lat_pos < 0){
+      stop("stim_param_lat_pos must have a positive value")
+    } else if (stim_param_lat_neg < 0){
+      stop("stim_param_lat_neg must have a positive value")
+    } else if (stim_param_end_pos < 0){
+      stop("stim_param_end_pos must have a positive value")
+    } else if (stim_param_end_neg < 0){
+      stop("stim_param_end_neg must have a positive value")
+    }
+
     obj_name <- tibble::add_column(obj_name, .before = "frame",
                                    tunnel_config = tunnel_config,
                                    perch_2_vertex = perch_2_vertex,
@@ -46,6 +59,21 @@ insert_treatments <- function(obj_name,
                                    stim_param_end_neg = stim_param_end_neg,
                                    treatment = treatment)
   } else if (tunnel_config == "box"){
+    ## Check that relevant numerical arguments have positive values
+    if (tunnel_width < 0){
+      stop("tunnel_width must have a positive value")
+    } else if (tunnel_length < 0){
+      stop("tunnel_length must have a positive value")
+    } else if (stim_param_lat_pos < 0){
+      stop("stim_param_lat_pos must have a positive value")
+    } else if (stim_param_lat_neg < 0){
+      stop("stim_param_lat_neg must have a positive value")
+    } else if (stim_param_end_pos < 0){
+      stop("stim_param_end_pos must have a positive value")
+    } else if (stim_param_end_neg < 0){
+      stop("stim_param_end_neg must have a positive value")
+    }
+
     obj_name <- tibble::add_column(obj_name, .before = "frame",
                                    tunnel_config = tunnel_config,
                                    tunnel_width = tunnel_width,
