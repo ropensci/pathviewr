@@ -580,7 +580,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"} and
 #'   \code{treatments_added}.
-#' @param simplify If TRUE, the returned object includes only the minimum
+#' @param simplify_output If TRUE, the returned object includes only the minimum
 #'   distance between the subject and the lateral/end walls. If FALSE, the
 #'   returned object includes all variables internal to the calculation.
 #'
@@ -632,13 +632,13 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'                    treatment = "lat10_end_30") %>%
 #'
 #'  ## Now calculate the minimum distances to each wall
-#'   calc_min_dist_v(simplify = TRUE)
+#'   calc_min_dist_v(simplify_output = TRUE)
 #'
 #'   ## See 3 new variables for calculations to lateral and end walls
 #'   names(motive_data_full)
 
 calc_min_dist_v <- function(obj_name,
-                            simplify = TRUE){
+                            simplify_output = TRUE){
 
   ## Check that it's a viewr object
   if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
@@ -650,7 +650,7 @@ calc_min_dist_v <- function(obj_name,
     stop("Please run insert_treatments() prior to use")
   }
 
-  ## duplicate object for simplify = TRUE
+  ## duplicate object for simplify_output = TRUE
   obj_simplify <- obj_name
 
   ## For distance to lateral walls ##
@@ -726,13 +726,13 @@ calc_min_dist_v <- function(obj_name,
            obj_name$tunnel_length/2 + obj_name$position_length)
 
 
-  ## for simplify = TRUE
+  ## for simplify_output = TRUE
   obj_simplify$min_dist_pos <- obj_name$min_dist_pos
   obj_simplify$min_dist_neg <- obj_name$min_dist_neg
   obj_simplify$min_dist_end <- obj_name$min_dist_end
 
   ## return object and add note that minimum distaces were calculated
-  if(simplify == TRUE){
+  if(simplify_output == TRUE){
     attr(obj_simplify, "pathviewR_steps") <-
       c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
     return(obj_simplify)
@@ -885,7 +885,7 @@ calc_min_dist_box <- function(obj_name){
 #'                    stim_param_end_pos = 0.3,
 #'                    stim_param_end_neg = 0.3,
 #'                    treatment = "lat10_end_30") %>%
-#'   calc_min_dist_v(simplify = TRUE) %>%
+#'   calc_min_dist_v(simplify_output = TRUE) %>%
 #'
 #'   ## Now calculate the visual angles
 #'   get_vis_angle()
@@ -1005,7 +1005,7 @@ get_vis_angle <- function(obj_name){
 #'                    stim_param_end_pos = 0.3,
 #'                    stim_param_end_neg = 0.3,
 #'                    treatment = "lat10_end_30") %>%
-#'   calc_min_dist_v(simplify = TRUE) %>%
+#'   calc_min_dist_v(simplify_output = TRUE) %>%
 #'   get_vis_angle() %>%
 #'
 #'   ## Now calculate the spatial frequencies
