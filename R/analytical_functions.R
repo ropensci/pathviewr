@@ -838,11 +838,15 @@ calc_min_dist_box <- function(obj_name){
 #' attributes \code{pathviewR_steps} that include \code{"viewr"}
 #' and \code{min_dist_calculated}.
 #'
-#' @details \code{get_vis_angle()} assumes the subject's gaze is fixed at the
-#'   point on the either side of the tunnel that minimizes the distance to
-#'   visual stimuli and therefore maximizes visual angles. Angles are reported
-#'   in radians/cycle (\code{vis_angle_pos_rad}) or degrees/cycle
-#'   (\code{vis_angle_pos_deg}).
+#' @details \code{get_vis_angle()} assumes the following:
+#' - The subject's gaze is fixed at the point on the either side of the tunnel
+#' that minimizes the distance to visual stimuli and therefore maximizes visual
+#' angles.
+#' - The subject's head is facing parallel to the length axis of the tunnel.
+#' Visual perception functions in future versions of pathviewR will integrate
+#' head orientation coordinates.
+#' Angles are reported in radians/cycle (\code{vis_angle_pos_rad}) and
+#' degrees/cycle (\code{vis_angle_pos_deg}).
 #'
 #' @return A tibble or data.frame with added variables for
 #'   \code{vis_angle_pos_rad}, \code{vis_angle_pos_deg},
@@ -955,8 +959,15 @@ get_vis_angle <- function(obj_name){
 #' \code{pathviewR_steps} that includes \code{"viewr"} and
 #' \code{vis_angles_calculated}.
 #'
-#' @details \code{get_sf} in cycles/degree is the inverse of visual angle
-#' (degrees/cycle).
+#' @details \code{get_sf()} assumes the following:
+#' - The subject's gaze is fixed at the point on the either side of the tunnel
+#' that minimizes the distance to visual stimuli and therefore maximizes visual
+#' angles.
+#' - The subject's head is facing parallel to the length axis of the tunnel.
+#' Visual perception functions in future versions of pathviewR will integrate
+#' head orientation coordinates.
+#' Spatial frequency is reported in cycles/degree and is the inverse of visual
+#' angle (degrees/cycle).
 #'
 #' @return A tibble or data.frame with added variables for
 #' \code{sf_pos}, \code{sf_neg}, and \code{sf_end}.
