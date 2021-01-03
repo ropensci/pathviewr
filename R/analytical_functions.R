@@ -602,7 +602,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'
 #' @family mathematical functions
 #'
-#' @examples
+#' @example
 #'  ## Import sample data from package
 #' motive_data <-
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
@@ -611,7 +611,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
 #'                               package = 'pathviewR'))
 #'
-#'  ## Clean data up to and including get_full_trajectories()
+#'  ## Process data up to and including insert_treatments()
 #' motive_data_full <-
 #'   motive_data %>%
 #'   relabel_viewr_axes() %>%
@@ -750,7 +750,7 @@ calc_min_dist_v <- function(obj_name,
 #' experimental tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} and
+#'   \code{pathviewR_steps} that include \code{"viewr"} and
 #'   \code{treatments_added}.
 #'
 #' @return A tibble or data.frame with added variables for
@@ -765,13 +765,13 @@ calc_min_dist_v <- function(obj_name,
 #'
 #' @family visual perception functioins
 #'
-#' @examples
+#' @example
 #' ## Import sample data from package
 #'  flydra_data <-
 #'  read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
 #'                               package = 'pathviewR'))
 #'
-#'   ## Clean data up to and including get_full_trajectories()
+#'   ## Process data up to and including insert_treatments()
 #'  flydra_data_full <-
 #'   flydra_data %>%
 #'   redefine_tunnel_center(length_method = "middle",
@@ -830,8 +830,84 @@ calc_min_dist_box <- function(obj_name){
 }
 
 
-## get_vis_angle
-## include vis_angle for end wall
+#########################        get_vis_angle       ###########################
+
+#' Estimate visual angles from a subject's perspective in an experimental tunnel
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with
+#' attributes \code{pathviewR_steps} that include \code{"viewr"}
+#' and \code{min_dist_calculated}.
+#'
+#' @details \code{get_vis_angle()} assumes the subject's gaze is fixed at the
+#'   point on the either side of the tunnel that minimizes the distance to
+#'   visual stimuli and therefore maximizes visual angles. Angles are reported
+#'   in radians eg. \code{vis_angle_pos_rad} or degrees eg.
+#'   \code{vis_angle_pos_deg}.
+#'
+#' @return A tibble or data.frame with added variables for
+#'   \code{vis_angle_pos_rad}, \code{vis_angle_pos_deg},
+#'   \code{vis_angle_neg_rad}, \code{vos_angle_neg_deg},
+#'   \code{vis_angle_end_rad}, and \code{vis_angle_end_deg}.
+#'
+#' @author Eric R. Press
+#'
+#' @family visual perception functions
+#'
+#' @examples
+#'  ## Import sample data from package
+#' motive_data <-
+#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+#'                               package = 'pathviewR'))
+#' flydra_data <-
+#'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'                               package = 'pathviewR'))
+#'
+#'  ## Process data up to and including get_min_dist()
+#' motive_data_full <-
+#'   motive_data %>%
+#'   relabel_viewr_axes() %>%
+#'   gather_tunnel_data() %>%
+#'   trim_tunnel_outliers() %>%
+#'   rotate_tunnel() %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect") %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30") %>%
+#'   calc_min_dist_v(simplify = TRUE) %>%
+#'
+#'   ## Now calculate the visual angles
+#'   get_vis_angle()
+#'
+#'   flydra_data_full <-
+#'   flydra_data %>%
+#'   redefine_tunnel_center(length_method = "middle",
+#'                         height_method = "user-defined",
+#'                         height_zero = 1.44) %>%
+#'   select_x_percent(desired_percent = 50) %>%
+#'   separate_trajectories(max_frame_gap = "autodetect") %>%
+#'   get_full_trajectories(span = 0.95) %>%
+#'   insert_treatments(tunnel_config = "v",
+#'                    perch_2_vertex = 0.4,
+#'                    vertex_angle = 90,
+#'                    tunnel_length = 2,
+#'                    stim_param_lat_pos = 0.1,
+#'                    stim_param_lat_neg = 0.1,
+#'                    stim_param_end_pos = 0.3,
+#'                    stim_param_end_neg = 0.3,
+#'                    treatment = "lat10_end_30") %>%
+#'   calc_min_dist_box() %>%
+#'
+#'    ## Now calculate the visual angles
+#'   get_vis_angle()
+
 get_vis_angle <- function(obj_name){
 
   ## Check that it's a viewr object
@@ -870,223 +946,10 @@ get_vis_angle <- function(obj_name){
 }
 
 
+###############################    get_sf     ##################################
 
-#########################        calc_vis_angle_V       ########################
-
-#' Estimate visual angles in a V-shaped tunnel
-#'
-#' Based on animal head positions in a V-shaped tunnel tunnel,
-#' \code{calc_vis_angle_V()} calculates the visual angles created by lateral
-#' visual stimuli.
-#'
-#' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} and
-#'   \code{treatments_added}.
-#' @param simplify_output If TRUE, the returned object includes the minimum
-#'   distance between the subject and the lateral walls as well as the visual
-#'   angles (in degrees) to those points on the walls. If FALSE, the returned
-#'   object includes all variables internal to the calculation.
-#'
-#' @details \code{cal_vis_angle_V} assumes the subject's gaze is fixed at the
-#'   point on the either side of the tunnel that minimizes the distance to
-#'   visual stimuli and therefore maximizes visual angles. All length
-#'   measurements are reported in meters.
-#'
-#' @return A tibble or data.frame with added variables for
-#'   \code{height_2_vertex}, \code{height_2_screen}, \code{width_2_screen_pos},
-#'   \code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
-#'   \code{bound_pos}, \code{bound_neg}, \code{vis_angle_pos_rad},
-#'   \code{vis_angle_neg_rad}, \code{vis_angle_pos_deg},
-#'   \code{vis_angle_neg_deg}
-#'
-#' @author Eric R. Press
-#'
-#' @family visual perception functions
-#'
-#' @export
-
-calc_vis_angle_V <- function(obj_name,
-                             simplify_output = FALSE){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
-    stop("Please run insert_treatments() prior to use")
-  }
-
-  ## duplicate object for simplify = TRUE
-  obj_simplify <- obj_name
-
-  ## Introduce variables for height_2_vertex and height_2_screen
-  obj_name$height_2_vertex <-
-    abs(obj_name$vertex_height) + obj_name$position_height
-  obj_name$height_2_screen <-
-    obj_name$height_2_vertex -
-    (abs(obj_name$position_width) / tan(obj_name$vertex_angle))
-
-
-  ## Introduce variables for width_2_screen on positive and negative sides
-  ## of the tunnel.
-  ## width_2_screen refers to the horizontal distance between the bird and
-  ## either screen.
-  obj_name$width_2_screen_pos <-
-    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
-           obj_name$height_2_screen * tan(obj_name$vertex_angle), # TRUE
-           (obj_name$height_2_screen * tan(obj_name$vertex_angle)) +
-             (2 * abs(obj_name$position_width))) # FALSE
-
-  obj_name$width_2_screen_neg <-
-    ifelse(obj_name$position_width < 0, # if in negative side of tunnel
-           obj_name$height_2_screen * tan(obj_name$vertex_angle), # TRUE
-           (obj_name$height_2_screen * tan(obj_name$vertex_angle)) +
-             (2 * abs(obj_name$position_width))) # FALSE
-
-  ## Introduce variable min_dist on positive and negative sides of the
-  ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen (axis of gaze is orthogonal to plane of each screen)
-  obj_name$min_dist_pos <-
-    obj_name$width_2_screen_pos * sin((pi/2) - obj_name$vertex_angle)
-  # min_dist to positive screen
-  obj_name$min_dist_neg <-
-    obj_name$width_2_screen_neg * sin((pi/2) - obj_name$vertex_angle)
-  # min_dist to negative screen
-
-
-  ## When the subject is outside the boundaries created by orthogonal planes to
-  ## each wall, erroneous visual angles are calculated.
-  ## Therefore we must adjust min_dist values according to position_width
-
-  ## Create variable holding the boundary values for each observation
-  obj_name$bound_pos <-
-    obj_name$height_2_vertex * tan(pi/2 - obj_name$vertex_angle)
-  obj_name$bound_neg <-
-    obj_name$height_2_vertex * -tan(pi/2 - obj_name$vertex_angle)
-
-
-  obj_name$min_dist_pos <- # overwrite min_dist_pos
-  ifelse(obj_name$position_width <= 0 &
-         obj_name$position_width <= obj_name$bound_neg,
-         # if position_width is positive and greater than the boundary value
-          sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
-         # return distance to vertex
-          obj_name$min_dist_pos)
-         # reurn original min_dist_pos calculation
-
-  obj_name$min_dist_neg <-
-  ifelse(obj_name$position_width >= 0 &
-         obj_name$position_width >= obj_name$bound_pos,
-         # if position_width is negative and smaller than the boundary value
-          sqrt(obj_name$height_2_vertex^2 + obj_name$position_width^2),
-         # return distance to vertex
-          obj_name$min_dist_neg)
-         # return original min_dist_neg calculation
-
-
-  ## Calculate visual angles (radians and degrees) using distance to
-  ## positive and negative screens. Add these variables into the dataframe.
-  obj_name$vis_angle_pos_rad <-
-    2*atan(obj_name$stim_param_pos/(2*obj_name$min_dist_pos)) # radians
-  obj_name$vis_angle_neg_rad <-
-    2*atan(obj_name$stim_param_neg/(2*obj_name$min_dist_neg)) # radians
-
-  obj_name$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad) # degrees
-  obj_name$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad) # degrees
-
-  ## simplify = TRUE output
-  obj_simplify$min_dist_pos <- obj_name$min_dist_pos
-  obj_simplify$min_dist_neg <- obj_name$min_dist_neg
-  obj_simplify$vis_angle_pos_deg <- rad_2_deg(obj_name$vis_angle_pos_rad)
-  obj_simplify$vis_angle_neg_deg <- rad_2_deg(obj_name$vis_angle_neg_rad)
-
-  ## return simple or complete data table based on simplify argument
-  if(simplify_output == TRUE){
-    return(obj_simplify)
-  } else {
-    return(obj_name)
-    }
-}
-
-
-#########################        calc_vis_angle_box       ######################
-
-#' Estimate visual angles in a box-shaped tunnel
-#'
-#' Based on  animal head positions in a rectangular tunnel i.e. box,
-#' \code{calc_vis_angle_box()} calculates the visual angles created by lateral
-#' visual stimuli.
-#'
-#' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} and
-#'   \code{treatments_added}.
-#'
-#' @details \code{cal_vis_angle_box} assumes fixed gaze at the point on the
-#'   either side of the tunnel that minimizes the distance to visual stimuli and
-#'   thereby maximizes visual angles. All length measurements reported in
-#'   meters.
-#'
-#' @return A tibble or data.frame with added variables for \code{min_dist_pos},
-#'   \code{min_dist_neg}, \code{vis_angle_pos_rad}, \code{vis_angle_neg_rad},
-#'   \code{vis_angle_pos_deg}, and \code{vis_angle_neg_deg}.
-#'
-#' @author Eric R. Press
-#'
-#' @family visual perception functions
-#'
-#' @export
-
-
-calc_vis_angle_box <- function(obj_name){
-
-  ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
-
-  ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
-    stop("Please run insert_treatments() prior to use")
-  }
-
-  ## Calculate minimum distance to each screen
-  obj_name$min_dist_pos <-
-    ifelse(obj_name$position_width >= 0, # if in positive side of tunnel
-           obj_name$pos_wall - obj_name$position_width, # TRUE
-           obj_name$pos_wall + abs(obj_name$position_width) # FALSE
-           )
-
-  obj_name$min_dist_neg <-
-    ifelse(obj_name$position_width <= 0, # if in negative side of tunnel
-           abs(obj_name$neg_wall) - abs(obj_name$position_width), # TRUE
-           abs(obj_name$neg_wall - obj_name$position_width) # FALSE
-           )
-
-  ## Calculate visual angles (radians and degrees) using distance to
-  ## positive and negative screens. Add these variables into the dataframe.
-  obj_name$vis_angle_pos_rad <-
-    2*atan(obj_name$stim_param_pos / (2*obj_name$min_dist_pos)) # radians
-  obj_name$vis_angle_neg_rad <-
-    2*atan(obj_name$stim_param_neg / (2*obj_name$min_dist_neg)) # radians
-
-  obj_name$vis_angle_pos_deg <-
-    rad_2_deg(as.numeric(obj_name$vis_angle_pos_rad)) # degrees
-  obj_name$vis_angle_neg_deg <-
-    rad_2_deg(as.numeric(obj_name$vis_angle_neg_rad)) # degrees
-
-  return(obj_name)
-}
-
-
-###############################    calc_sf_V     ###############################
-
-#' Estimate spatial frequency of visual stimuli in V-shaped tunnel
-#'
-#' Based on animal head positions in a V-shaped tunnel,
-#' \code{calc_sf_V()} calculates how the animal perceives the spatial frequency
-#' of lateral visual stimuli as modulated by distance to the stimulus.
+#' Estimate the spatial frequency of visual stimuli from the subject's
+#' perspective in an experimental tunnel.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #' \code{pathviewR_steps} that includes \code{"viewr"}
