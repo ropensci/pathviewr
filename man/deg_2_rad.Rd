@@ -24,6 +24,7 @@ deg_2_rad(c(5, 10, 15, 20))
 }
 \seealso{
 Other mathematical functions: 
+\code{\link{calc_min_dist_v}()},
 \code{\link{find_curve_elbow}()},
 \code{\link{get_2d_angle}()},
 \code{\link{get_3d_angle}()},

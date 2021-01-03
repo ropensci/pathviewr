@@ -24,6 +24,7 @@ rad_2_deg(c(pi / 2, pi, 2 * pi))
 }
 \seealso{
 Other mathematical functions: 
+\code{\link{calc_min_dist_v}()},
 \code{\link{deg_2_rad}()},
 \code{\link{find_curve_elbow}()},
 \code{\link{get_2d_angle}()},

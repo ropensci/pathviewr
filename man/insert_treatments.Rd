@@ -6,14 +6,15 @@
 \usage{
 insert_treatments(
   obj_name,
-  vertex_height = NULL,
-  vertex_angle = NULL,
-  pos_wall = NULL,
-  neg_wall = NULL,
-  front_wall = NULL,
-  stim_param_pos = NULL,
-  stim_param_neg = NULL,
-  stim_param_front = NULL,
+  tunnel_config = "box",
+  perch_2_vertex = NULL,
+  vertex_angle = 90,
+  tunnel_width = NULL,
+  tunnel_length = NULL,
+  stim_param_lat_pos = NULL,
+  stim_param_lat_neg = NULL,
+  stim_param_end_pos = NULL,
+  stim_param_end_neg = NULL,
   treatment = NULL
 )
 }
@@ -21,42 +22,44 @@ insert_treatments(
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"}}
 
-\item{vertex_height}{If using a V-shaped chamber, this is the height of the
-vertex. This value should be negative and represents the distance between
-the origin (0,0,0) and the vertex.}
+\item{tunnel_config}{The configuration of the experimental tunnel.
+Currently, pathviewR supports rectangular "box" and V-shaped tunnel
+configurations.}
 
-\item{vertex_angle}{If using a V-shaped chamber, this is the angle (in
-degrees) subtended by a vertical axis and the sides of the V-shaped
-chamber. Equivalent to half the angle of the "V". \code{vertex_angle}
-defaults to 45.}
+\item{perch_2_vertex}{If using a V-shaped tunnel, this is the vertical
+distance between the vertex and the height of the perches. If the tunnel does
+not have perches, insert the vertical distance between the vertex and the
+height of the origin (0,0,0).}
 
-\item{pos_wall}{If using a box-shaped chamber, this is the distance in meters
-between the origin (0,0,0) and the positive wall.}
+\item{vertex_angle}{If using a V-shaped tunnel, the angle of the vertex (in
+degrees) \code{vertex_angle} defaults to 90.}
 
-\item{neg_wall}{If using a box-shaped chamber, this is the distance in meters
-between the origin (0,0,0) and the negative wall.}
+\item{tunnel_width}{If using a box-shaped tunnel, the width of the tunnel.}
 
-\item{front_wall}{If using a box-shaped chamber, this is the distance in
-meters between the origin (0,0,0) and the front wall.}
+\item{tunnel_length}{The length of the tunnel.}
 
-\item{stim_param_pos}{The width of the visual stimulus cycle displayed
-on the positive wall of the chamber.}
+\item{stim_param_lat_pos}{The size of the stimulus on the lateral positive
+wall of the tunnel. Eg. for 10cm wide gratings,
+\code{stim_param_lat_pos} = 0.1.}
 
-\item{stim_param_neg}{The width of the visual stimulus cycle displayed
-on the negative wall of the chamber.}
+\item{stim_param_lat_neg}{The size of the stimulus on the lateral negative
+wall of the tunnel..}
 
-\item{stim_param_front}{If using a box-shaped chamber, the width of the
-visual stimulus cycle on the front wall.}
+\item{stim_param_end_pos}{The size of the stimulus on the end positive
+wall of the tunnel.}
+
+\item{stim_param_end_neg}{The size of the stimulus on the end negative
+wall of the tunnel.}
 
 \item{treatment}{The name of the treatment assigned to all rows of the viewr
-object. Currently only able to accept a single treatment per viewr object.}
+object. Currently only able to accept a single treatment per viewr data
+object.}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"treatments added"}). Depending
-on the chamber configuration, it also includes columns for
-\code{vertex_height}, \code{vertex_angle}, \code{pos_wall},
-\code{neg_wall}, \code{front_wall}, and \code{treatment}. This experiment
+on the argument \code{tunnel_config}, the viewr object also includes
+columns storing the values of the supplied arguments. This experimental
 information is also stored in the viewr object's metadata
 }
 \description{
@@ -65,47 +68,6 @@ analysis in other pathviewR functions
 }
 \details{
 All length measurements reported in meters.
-}
-\examples{
-
-
- ## Import sample data from package
- motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
-
-  ## Clean data up to and including get_full_trajectories()
-motive_data_full <-
- motive_data \%>\%
- relabel_viewr_axes() \%>\%
- gather_tunnel_data() \%>\%
- trim_tunnel_outliers() \%>\%
- rotate_tunnel() \%>\%
- get_velocity() \%>\%
- select_x_percent(desired_percent = 50) \%>\%
- separate_trajectories(max_frame_gap = "autodetect") \%>\%
- get_full_trajectories(span = 0.95)
-
-## Now add information about the experimental configuration. In this example,
-## a V-shaped chamber in which the vertex is 90deg and lies 0.40m below the
-## origin. The visual stimuli on the lateral walls both have a cycle of 0.1m
-## and the treatment is labeled "latA"
-motive_data_V <-
-motive_data_full \%>\%
-insert_treatments(vertex_height = -0.40,
-                   vertex_angle = 45,
-                   stim_param_pos = 0.1,
-                   stim_param_neg = 0.1,
-                   treatment = "latA")
-
-## For an experiment using the box-shaped configuration where the origin lies
-## 0.5m away from the front and lateral walls and the treatment is labeled
-## "latB".
-#motive_data_box \%>\%
-#insert_treatments(pos_wall = 0.5,
-#                  neg_wall = 0.5,
-#                  front_wall = 0.5,
-#                  treatment = "latB")
 }
 \author{
 Eric R. Press

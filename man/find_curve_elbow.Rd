@@ -38,6 +38,7 @@ find_curve_elbow(df, plot_curve = TRUE)
 }
 \seealso{
 Other mathematical functions: 
+\code{\link{calc_min_dist_v}()},
 \code{\link{deg_2_rad}()},
 \code{\link{get_2d_angle}()},
 \code{\link{get_3d_angle}()},
