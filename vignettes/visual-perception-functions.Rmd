@@ -17,12 +17,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-`pathviewR` includes functions that estimate visual perceptions based on the 
-distance between the subject and visual stimuli on the walls of the 
-experimental tunnel.
+## Introduction
+
+  Studies of visually guided locomotion in birds, insects or even humans during often involve data gathered from motion capture technologies such as Optitrack's [(Motive)](https://optitrack.com/software/motive/), or the Straw Lab's [(Flydra)](https://github.com/strawlab/flydra). For these experiments, it is important to understand how visual stimuli influence behaviour. While is it not possible to measure how subjects directly perceive visual stimuli, it is possible to use the same motion capture data to calculate estimates of stimulus properties as they are perceived by the subject. With the tools available in pathviewR, researchers in ethology or psychology can provide analyses of both stimulus and response under natural locomotor conditions. 
+  *Inherent to estimations of visual perceptions, we make several assumptions, which will be discussed below. We welcome suggestions and aim to address any assumptions that limit the accuracy of these estimates*. 
+  To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject's retina - the visual angle. 
+  Visual angles can be calculated provided there is information about the physical size of the pattern  and its distance from the subject's retina. Because researchers can control or measure the size of a  pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by any pattern in the visual scene. Therefore, we first need to calculate the distance to the pattern. *Currently, we assume the subject's gaze is directly frontal or lateral to the face, in effect estimating image properties at a point in the frontal and lateral fields of view, respectively*. 
+  
 
 ## Loading packages
-We'll need to start by loading `pathviewR` as well as `tidyverse` for visualizing the data.
+  To begin, let's load `pathviewR` as well as `tidyverse`.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewR)
@@ -32,26 +36,20 @@ library(magrittr)
 
 
 ## Data preparation
-Data objects must be prepared as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) 
-pipeline prior to their use in these functions. For a detailed description of 
-these functions, please see the linked vignette. 
+Data objects must be prepared as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) pipeline prior to their use with these functions. For a detailed description of the importing and cleaning functions, and when to use them, please see the linked vignette. 
 
-Let's work with a few example datasets included in `pathviewR`. 
-`pathviewR_motive_example_data.csv` is a .csv file exported from `Motive`. 
-`pathviewR_flydra_example_data.mat` is a .mat file exported from `Flydra`.
-`pathviewR` contains an all-in-one cleaning function `clean_viewr` for more 
-coarse-grained data cleaning tasks. We will use this function in the examples 
-below. 
+Let's work with a few example datasets included in `pathviewR`. `pathviewR_motive_example_data.csv` is a .csv file exported from `Motive`. `pathviewR_flydra_example_data.mat` is a .mat file exported from `Flydra`. For more coarse-grained data cleaning tasks, `pathviewR` contains an all-in-one cleaning function `clean_viewr`. We will use this function for the following examples. 
 
 
 ```{r}
-## motive data set
+## Import motive data set
 motive_data <- # import
   read_motive_csv(
     system.file("extdata", "pathviewR_motive_example_data.csv",
                 package = 'pathviewR')
   )
 
+## Clean motive data set
 motive_full <-
   motive_data %>%
   clean_viewr(
@@ -69,14 +67,15 @@ motive_full <-
   )
 ```
 ```{r}
-## flydra data set
-flydra_data <- # import
+## Import flydra data set
+flydra_data <- 
   read_flydra_mat(
     system.file("extdata", "pathviewR_flydra_example_data.mat",
                 package = 'pathviewR'),
     subject_name = "birdie_wooster")
 
-flydra_full <- # clean
+## Clean flydra data set
+flydra_full <- 
   flydra_data %>%
   clean_viewr(
     relabel_viewr_axes = FALSE,
@@ -94,11 +93,12 @@ flydra_full <- # clean
   )
 ```
 
-### Add experiment information with `insert_treatments()`
-Now that our objects have been cleaned, we will use `insert_treatments()` to add information about the experiments that are necessary for calculating visual perceptions.  
+## Add experiment information with `insert_treatments()`
+Now that our objects have been cleaned, we must use `insert_treatments()` to add information about the experiments, including relevant properties of the visual stimulus and experimental tunnel that are necessary for calculating visual angles.
+*`pathviewR` currently supports rectangular (box) or v-shaped experimental tunnels, though we are intrigued to include additional tunnel configurations*
 
 #### V-shaped tunnel example
-The data within `motive_full` were collected from birds flying through a 3m long V-shaped tunnel in which the height of the origin `(0,0,0)` was set to the height of the perches, which sit 0.3855m above the vertex angled at 90˚. The visual stimuli on the positive and negative walls of the tunnel (where `position_width` values > 0 and < 0, respectively) were stationary dot-fields where each dot was of size 0.05m in diameter. The visual stimuli on the end walls of the tunnel were vertical sine-wave gratings with a cycle length of 0.1m. Finally, this treatment is referred to as `"latB"`. 
+The data within `motive_full` were collected from birds flying through a 3m long v-shaped tunnel in which the height of the origin `(0,0,0)` was set to the height of the perches that were 0.3855m above the vertex, which was angled at 90˚. The visual stimuli on the positive and negative walls of the tunnel (where `position_width` values > 0 and < 0, respectively) were stationary dot-fields. Each dot was of size 0.05m in diameter. The visual stimuli on the positive and negative end walls of the tunnel (where `position_length` > 0 and < 0, respectively) were dot fields with dots 0.1m in diameter. This treatment was referred to as `"latB"`. 
 
 Therefore we will use the following code:
 ```{r}
@@ -113,12 +113,11 @@ motive_treatments <-
                     stim_param_end_pos = 0.1,
                     stim_param_end_neg = 0.1,
                     treatment = "latB")
-```
-Our object now has the variables `tunnel_config`, `perch_2_vertex`, `vertex_angle`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, and `stim_param_end_neg` which are needed to calculate visual perceptions. The variable `treatment` has also been included and all this information has been stored in the object's metadata.
 
-```{r}
-motive_treatmenets
+names(motive_treatments)
 ```
+`motive_treatments` now has the variables `tunnel_config`, `perch_2_vertex`, `vertex_angle`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, and `stim_param_end_neg` which are needed to calculate visual angles. The variable `treatment` has also been included and all of this information has been stored in the object's metadata.
+
 
 #### Box-shaped tunnel example
 The data within `flydra_full` were collected from birds flying in a 1 x 3m rectangular tunnel (a box). The visual stimuli were the same as in the motive example. 
@@ -133,7 +132,10 @@ flydra_treatments <-
                     stim_param_end_pos = 0.1,
                     stim_param_end_neg = 0.1,
                     treatment = "latB")
+
+names(flydra_treatments)
 ```
+`flydra_treatments` similarly has the variables `tunnel_config`, `tunnel_width`, `tunnel_length`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, `stim_param_end_neg` and `treatment`.
 
 ## Calculating visual angles
 #### Start by calculating the minimum distances to visual stimuli 
@@ -146,16 +148,16 @@ motive_min_dist <-
   motive_treatments %>% 
   calc_min_dist_v(simplify_output = FALSE)
 
-## Display minimum distances to the positive lateral wall
+## Display minimum distances to the positive lateral walls
 motive_min_dist %>% 
   ggplot(aes(x = position_width, y - position_height)) +
   geom_point(aes(color = min_dist_pos), size = 2) +
   coord_fixed() +
-  geom_segment(aes(x = 0,         # dimensions of the positive wall
+  geom_segment(aes(x = 0,         # positive wall
                    y = -0.3855,
                    xend = 0.5869,
                    yend = 0.2014)) +
-  geom_segment(aes(x = 0,         # dimensions of the negative wall
+  geom_segment(aes(x = 0,         # negative wall
                    y = -0.3855,
                    xend = -0.5869,
                    yend = 0.2014))
@@ -171,11 +173,11 @@ flydra_min_dist %>%
   ggplot(aes(x = position_length, y = position_width)) +
   geom_point(aes(color = min_dist_end), size = 2) +
   coord_fixed() +
-  geom_segment(aes(x = -1,
+  geom_segment(aes(x = -1,         # negative wall
                    y = -0.5,
                    xend = 1,
                    yend = -0.5)) +
-  geom_segment(aes(x = -1,
+  geom_segment(aes(x = -1,         # positive wall
                    y = 0.5,
                    xend = 1,
                    yend = 0.5))
@@ -185,19 +187,20 @@ flydra_min_dist %>%
 #### Now get visual angles 
 
 ```{r motive_vis_angle_pos}
-motive_angle <- 
+motive_vis_angle <- 
   motive_min_dist %>% 
   get_vis_angle()
 
-motive_angle %>% 
+## visualize the angles produced from stimuli on the positive wall
+motive_vis_angle %>% 
   ggplot(aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = vis_angle_pos_deg), size = 2, shape = 1,) +
+  geom_point(aes(color = vis_angle_pos_deg), size = 2, shape = 1) +
   coord_fixed()+
-  geom_segment(aes(x = 0,         # dimensions of the positive wall
+  geom_segment(aes(x = 0,         # positive wall
                    y = -0.3855,
                    xend = 0.5869,
                    yend = 0.2014)) +
-  geom_segment(aes(x = 0,         # dimensions of the negative wall
+  geom_segment(aes(x = 0,         # negative wall
                    y = -0.3855,
                    xend = -0.5869,
                    yend = 0.2014))
@@ -208,184 +211,70 @@ flydra_vis_angle <-
   flydra_min_dist %>% 
   get_vis_angle()
 
+## visualize the angles produced by stimuli on the end walls
 flydra_vis_angle %>% 
   ggplot(aes(x = position_length, y = position_width)) +
   geom_point(aes(color = vis_angle_end_deg), size = 2) +
   coord_fixed() +
-  geom_segment(aes(x = -1,
+  geom_segment(aes(x = -1,        # negative wall
                    y = -0.5,
                    xend = 1,
                    yend = -0.5)) +
-  geom_segment(aes(x = -1,
+  geom_segment(aes(x = -1,        # positive wall
                    y = 0.5,
                    xend = 1,
                    yend = 0.5))
 ```
 
-`
+
+The spatial frequency of the image of a visual stimulus refers to the size of the stimulus in visual space. It's often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency. 
 
 
 ## Calculating spatial frequency
 To calculate the spatial frequency of the visual stimuli as perceived by the
-subject some distance from the stimuli, we will use `calc_sf_V()` and
-`calc_sf_box` depending on the configuration of the tunnel for each experiment. 
+subject some distance from the stimuli, we will use `get_sf()`. 
 
 ```{r}
-motive_V_sf <- 
-  motive_V %>%
-  calc_sf_V(simplify_output = FALSE)
+motive_sf <- 
+  motive_vis_angle %>%
+  get_sf()
 
-## The resulting object contains 10 new variables which are values involved in 
-## the calculation of spatial frequency.
-motive_V_sf
+## visualize the spatial frequency of the stimulus on the positive wall 
+motive_sf %>% 
+  ggplot(aes(x = position_width, y = position_height)) +
+  geom_point(aes(color = sf_pos), size = 2, shape = 1) +
+  coord_fixed()+
+  geom_segment(aes(x = 0,         # positive wall
+                   y = -0.3855,
+                   xend = 0.5869,
+                   yend = 0.2014)) +
+  geom_segment(aes(x = 0,         # negative wall
+                   y = -0.3855,
+                   xend = -0.5869,
+                   yend = 0.2014))
 ```
+
 ```{r}
-flydra_box_sf <- 
-  flydra_box %>% 
-  calc_sf_box()
-flydra_box_sf
-```
-`simplify_output = TRUE` returns an object containing the 4 new variables
-`min_dist_pos`, `mind_dist_neg`, `sf_pos`, `sf_neg`. Note for `calc_sf_box`,
-there is no need for a simplify_output argument.
+flydra_sf <- 
+  flydra_vis_angle %>% 
+  get_sf()
 
-
-
-## Visualizing the calculations
-Visualizing the calculations provides an more intuitive understanding of how 
-these visual perceptions change as the subject moves throughout the tunnel.
-**Note:** The axes of the following examples differ between the motive and
-flydra data sets. These plots were generated to best visualize the perceptual
-calculations
-
-### Spatial frequency
-**Motive**
-```{r motive_V_sf_pos, fig.height=4, fig.width=7}
-ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = sf_pos), shape=1, size=3) +
+## visualize the spatial frequency of the stimulus on the end walls
+flydra_sf %>% 
+  ggplot(aes(x = position_length, y = position_width)) +
+  geom_point(aes(color = sf_end), size = 2) +
   coord_fixed() +
-  geom_segment(aes(x = 0,         # dimensions of the positive wall
-                  y = -0.3855,
-                  xend = 0.5869,
-                  yend = 0.2014)) +
-  geom_segment(aes(x = 0,         # dimensions of the negative wall
-                   y = -0.3855,
-                   xend = -0.5869,
-                   yend = 0.2014))
-
-```
-We can see that as the position of the subject is closer to the right (positive) wall, the perception of that stimulus is with smaller spatial frequency. 
-```{r motive_V_sf_neg, fig.height=4, fig.width=7}
-ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = sf_neg), shape=1, size=3) +
-  coord_fixed() +
-  geom_segment(aes(x = 0,         # dimensions of the positive wall
-                  y = -0.3855,
-                  xend = 0.5869,
-                  yend = 0.2014)) +
-  geom_segment(aes(x = 0,         # dimensions of the negative wall
-                   y = -0.3855,
-                   xend = -0.5869,
-                   yend = 0.2014))
-
-```
-A different pattern is found by visualizing the spatial frequencies observed
-from the left (negative) wall. 
-
-
-**Flydra**
-```{r flydra_box_sf_pos, fig.height=4, fig.width=7}
-ggplot(flydra_box_sf, aes(x = position_width, y = position_length)) +
-  geom_point(aes(colour = sf_pos), size = 2) + 
-  coord_fixed() +
-  geom_segment(aes(x = -0.5,        # negative wall
+  geom_segment(aes(x = -1,        # negative wall
                    y = -0.5,
-                   xend = -0.5,
-                   yend = 0.5)) +
-  geom_segment(aes(x = 0.5,         # positive wall
-                   y = -0.5,
-                   xend = 0.5,
-                   yend = 0.5))
-```
-```{r flydra_box_sf_neg, fig.height=4, fig.width=7}
-ggplot(flydra_box_sf, aes(x = position_width, y = position_length)) +
-  geom_point(aes(colour = sf_neg), size = 2) + 
-  coord_fixed() +
-  geom_segment(aes(x = -0.5,        # negative wall
-                   y = -0.5,
-                   xend = -0.5,
-                   yend = 0.5)) +
-  geom_segment(aes(x = 0.5,         # positive wall
-                   y = -0.5,
-                   xend = 0.5,
+                   xend = 1,
+                   yend = -0.5)) +
+  geom_segment(aes(x = -1,        # positive wall
+                   y = 0.5,
+                   xend = 1,
                    yend = 0.5))
 ```
 
 
+### Stay tuned as additinal features for image motion analysis are coming soon!
 
-### Visual angles
-**Motive**
-```{r motive_V_angle_pos, fig.height=4, fig.width=7}
-ggplot(motive_V_angle, aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = vis_angle_pos_deg), shape=1, size=3) +
-  coord_fixed() +
-  geom_segment(aes(x = 0,         # dimensions of the positive wall
-                  y = -0.3855,
-                  xend = 0.5869,
-                  yend = 0.2014)) +
-  geom_segment(aes(x = 0,         # dimensions of the negative wall
-                   y = -0.3855,
-                   xend = -0.5869,
-                   yend = 0.2014))
-```
-
-By displaying the visual angles (in degrees) created by the stimulus on the
-positive wall, we can see that the subject perceives larger visual angles the
-closer it gets to the positive wall.
-
-
-Now displaying visual angles perceived on the negative wall. 
-```{r motive_V_angle_neg, fig.height=4, fig.width=7}
-ggplot(motive_V_angle, aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = vis_angle_neg_deg), shape=1, size=3) +
-  coord_fixed() +
-  geom_segment(aes(x = 0,         # dimensions of the positive wall
-                  y = -0.3855,
-                  xend = 0.5869,
-                  yend = 0.2014)) +
-  geom_segment(aes(x = 0,         # dimensions of the negative wall
-                   y = -0.3855,
-                   xend = -0.5869,
-                   yend = 0.2014))
-```
-This shows that the subject perceives larger visual angles the closer it gets to
-the negative wall. 
-
-**Flydra**
-```{r flydra_box_angle_pos, fig.height=4, fig.width=7}
-ggplot(flydra_box_angle, aes(x = position_width, y = position_length)) +
-  geom_point(aes(colour = vis_angle_pos_deg), size = 2) + 
-  coord_fixed() +
-  geom_segment(aes(x = -0.5,        # negative wall
-                   y = -0.5,
-                   xend = -0.5,
-                   yend = 0.5)) +
-  geom_segment(aes(x = 0.5,         # positive wall
-                   y = -0.5,
-                   xend = 0.5,
-                   yend = 0.5))
-```
-```{r flydra_box_angle_neg, fig.height=4, fig.width=7}
-ggplot(flydra_box_angle, aes(x = position_width, y = position_length)) +
-  geom_point(aes(colour = vis_angle_neg_deg), size = 2) + 
-  coord_fixed() +
-  geom_segment(aes(x = -0.5,        # negative wall
-                   y = -0.5,
-                   xend = -0.5,
-                   yend = 0.5)) +
-  geom_segment(aes(x = 0.5,         # positive wall
-                   y = -0.5,
-                   xend = 0.5,
-                   yend = 0.5))
-```
 
