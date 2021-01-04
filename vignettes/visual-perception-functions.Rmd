@@ -58,12 +58,12 @@ motive_full <-
     trim_tunnel_outliers = TRUE,
     standardization_option = "rotate_tunnel",
     select_x_percent = TRUE,
-    desired_percent = 50,
+    desired_percent = 60,
     rename_viewr_characters = FALSE,
     separate_trajectories = TRUE,
     max_frame_gap = "autodetect",
     get_full_trajectories = TRUE,
-    span = 0.95
+    span = 0.90
   )
 ```
 ```{r}
@@ -87,6 +87,7 @@ flydra_full <-
     height_zero = 1.44,
     get_velocity = FALSE,
     select_x_percent = TRUE,
+    desired_percent = 60,
     rename_viewr_characters = FALSE,
     separate_trajectories = TRUE,
     get_full_trajectories = TRUE
@@ -151,8 +152,9 @@ motive_min_dist <-
 ## Display minimum distances to the positive lateral walls
 motive_min_dist %>% 
   ggplot(aes(x = position_width, y = position_height)) +
-  geom_point(aes(color = min_dist_pos), size = 2) +
+  geom_point(aes(color = min_dist_pos), size = 2, shape = 1) +
   coord_fixed() +
+  theme_classic() +
   geom_segment(aes(x = 0,         # positive wall
                    y = -0.3855,
                    xend = 0.5869,
@@ -186,7 +188,7 @@ flydra_min_dist %>%
 
 #### Now get visual angles 
 
-```{r motive_vis_angle_pos}
+```{r motive_vis_angle_pos, fig.height=4, fig.width=7}
 motive_vis_angle <- 
   motive_min_dist %>% 
   get_vis_angle()
@@ -206,7 +208,7 @@ motive_vis_angle %>%
                    yend = 0.2014))
 ```
 
-```{r}
+```{r flydra_vis_angle_end, fig.height=4, fig.width=7}
 flydra_vis_angle <- 
   flydra_min_dist %>% 
   get_vis_angle()
