@@ -604,13 +604,13 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'
 #' @export
 #'
-#' @example
+#' @examples
 #'  ## Import sample data from package
 #' motive_data <-
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                               package = 'pathviewR'))
 #' flydra_data <-
-#'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'   read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
 #'                               package = 'pathviewR'))
 #'
 #'  ## Process data up to and including insert_treatments()
@@ -769,10 +769,10 @@ calc_min_dist_v <- function(obj_name,
 #'
 #' @export
 #'
-#' @example
+#' @examples
 #' ## Import sample data from package
 #'  flydra_data <-
-#'  read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'  read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
 #'                               package = 'pathviewR'))
 #'
 #'   ## Process data up to and including insert_treatments()
@@ -869,7 +869,7 @@ calc_min_dist_box <- function(obj_name){
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                               package = 'pathviewR'))
 #' flydra_data <-
-#'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'   read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
 #'                               package = 'pathviewR'))
 #'
 #'  ## Process data up to and including get_min_dist()
@@ -985,13 +985,13 @@ get_vis_angle <- function(obj_name){
 #'
 #' @export
 #'
-#' @example
+#' @examples
 #'  ## Import sample data from package
 #' motive_data <-
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                               package = 'pathviewR'))
 #' flydra_data <-
-#'   read_flydra_mat(system.fiule("extdata", pathviewR_motive_example_data.mat",
+#'   read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
 #'                               package = 'pathviewR'))
 #'
 #'  ## Process data up to and including get_vis_angle()

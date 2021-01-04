@@ -69,6 +69,73 @@ analysis in other pathviewR functions
 \details{
 All length measurements reported in meters.
 }
+\examples{
+ ## Import sample data from package
+ motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+ flydra_data <-
+ read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
+                              package = 'pathviewR'))
+
+  ## Clean data up to and including get_full_trajectories()
+motive_data_full <-
+ motive_data \%>\%
+ relabel_viewr_axes() \%>\%
+ gather_tunnel_data() \%>\%
+ trim_tunnel_outliers() \%>\%
+ rotate_tunnel() \%>\%
+ select_x_percent(desired_percent = 50) \%>\%
+ separate_trajectories(max_frame_gap = "autodetect") \%>\%
+ get_full_trajectories(span = 0.95)
+
+ flydra_data_full <-
+  flydra_data \%>\%
+  redefine_tunnel_center(length_method = "middle",
+                        height_method = "user-defined",
+                        height_zero = 1.44) \%>\%
+  select_x_percent(desired_percent = 50) \%>\%
+  separate_trajectories(max_frame_gap = "autodetect") \%>\%
+  get_full_trajectories(span = 0.95)
+
+
+## Now add information about the experimental configuration. In this example,
+## a V-shaped tunnel in which the vertex is 90deg and lies 0.40m below the
+## origin. The visual stimuli on the lateral and end walls have a cycle
+length of 0.1m and 0.3m respectively, and the treatment is labeled
+"lat10_end30"
+
+motive_v <-
+motive_data_full \%>\%
+ insert_treatments(tunnel_config = "v",
+                   perch_2_vertex = 0.4,
+                   vertex_angle = 90,
+                   tunnel_length = 2,
+                   stim_param_lat_pos = 0.1,
+                   stim_param_lat_neg = 0.1,
+                   stim_param_end_pos = 0.3,
+                   stim_param_end_neg = 0.3,
+                   treatment = "lat10_end_30")
+
+## For an experiment using the box-shaped configuration where the tunnel is
+1m wide and 3m long and the visual stimuli on the lateral and end walls have
+a cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled
+"lat20_end30".
+flydra_box <-
+ flydra_data_full \%>\%
+ insert_treatments(tunnel_config = "box",
+                   tunnel_width = 1,
+                   tunnel_length = 3,
+                   stim_param_lat_pos = 0.2,
+                   stim_param_lat_neg = 0.2,
+                   stim_param_end_pos = 0.3,
+                   stim_param_end_neg = 0.3,
+                   treatment = "lat20_end30")
+
+## Check out the new columns in the resulting objects
+names(motive_v)
+names(flydra_box)
+}
 \author{
 Eric R. Press
 }

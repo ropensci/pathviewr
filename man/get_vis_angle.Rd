@@ -33,8 +33,64 @@ Angles are reported in radians/cycle (\code{vis_angle_pos_rad}) and
 degrees/cycle (\code{vis_angle_pos_deg}).
 }
 }
+\examples{
+ ## Import sample data from package
+motive_data <-
+  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
+                              package = 'pathviewR'))
+flydra_data <-
+  read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
+                              package = 'pathviewR'))
+
+ ## Process data up to and including get_min_dist()
+motive_data_full <-
+  motive_data \%>\%
+  relabel_viewr_axes() \%>\%
+  gather_tunnel_data() \%>\%
+  trim_tunnel_outliers() \%>\%
+  rotate_tunnel() \%>\%
+  select_x_percent(desired_percent = 50) \%>\%
+  separate_trajectories(max_frame_gap = "autodetect") \%>\%
+  get_full_trajectories(span = 0.95) \%>\%
+  insert_treatments(tunnel_config = "v",
+                   perch_2_vertex = 0.4,
+                   vertex_angle = 90,
+                   tunnel_length = 2,
+                   stim_param_lat_pos = 0.1,
+                   stim_param_lat_neg = 0.1,
+                   stim_param_end_pos = 0.3,
+                   stim_param_end_neg = 0.3,
+                   treatment = "lat10_end_30") \%>\%
+  calc_min_dist_v(simplify_output = TRUE) \%>\%
+
+  ## Now calculate the visual angles
+  get_vis_angle()
+
+  flydra_data_full <-
+  flydra_data \%>\%
+  redefine_tunnel_center(length_method = "middle",
+                        height_method = "user-defined",
+                        height_zero = 1.44) \%>\%
+  select_x_percent(desired_percent = 50) \%>\%
+  separate_trajectories(max_frame_gap = "autodetect") \%>\%
+  get_full_trajectories(span = 0.95) \%>\%
+  insert_treatments(tunnel_config = "v",
+                   perch_2_vertex = 0.4,
+                   vertex_angle = 90,
+                   tunnel_length = 2,
+                   stim_param_lat_pos = 0.1,
+                   stim_param_lat_neg = 0.1,
+                   stim_param_end_pos = 0.3,
+                   stim_param_end_neg = 0.3,
+                   treatment = "lat10_end_30") \%>\%
+  calc_min_dist_box() \%>\%
+
+   ## Now calculate the visual angles
+  get_vis_angle()
+}
 \seealso{
 Other visual perception functions: 
+\code{\link{calc_min_dist_box}()},
 \code{\link{get_sf}()}
 }
 \author{
