@@ -150,7 +150,7 @@ motive_min_dist <-
 
 ## Display minimum distances to the positive lateral walls
 motive_min_dist %>% 
-  ggplot(aes(x = position_width, y - position_height)) +
+  ggplot(aes(x = position_width, y = position_height)) +
   geom_point(aes(color = min_dist_pos), size = 2) +
   coord_fixed() +
   geom_segment(aes(x = 0,         # positive wall
