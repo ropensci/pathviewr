@@ -768,34 +768,34 @@ calc_min_dist_v <- function(obj_name,
 #'
 #' @examples
 #' ## Import sample data from package
-#' # flydra_data <-
-#' # read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#' #                               package = 'pathviewR'),
-#' #                               subject_name = "birdie_sanders")
-#' #
-#' #   ## Process data up to and including insert_treatments()
-#' #  flydra_data_full <-
-#' #   flydra_data %>%
-#' #   redefine_tunnel_center(length_method = "middle",
-#' #                         height_method = "user-defined",
-#' #                         height_zero = 1.44) %>%
-#' #   select_x_percent(desired_percent = 50) %>%
-#' #   separate_trajectories(max_frame_gap = "autodetect") %>%
-#' #   get_full_trajectories(span = 0.95) %>%
-#' #   insert_treatments(tunnel_config = "box",
-#' #                    tunnel_length = 3,
-#' #                    tunnel_width = 1,
-#' #                    stim_param_lat_pos = 0.1,
-#' #                    stim_param_lat_neg = 0.1,
-#' #                    stim_param_end_pos = 0.3,
-#' #                    stim_param_end_neg = 0.3,
-#' #                    treatment = "lat10_end_30") %>%
-#' #
-#' #   ## Now calculate the minimum distances to each wall
-#' #   calc_min_dist_box()
-#' #
-#' #   ## See 3 new variables for calculations to lateral and end walls
-#' #   names(flydra_data_full)
+#'  flydra_data <-
+#'  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+#'                                package = 'pathviewR'),
+#'                                subject_name = "birdie_sanders")
+#'
+#'    ## Process data up to and including insert_treatments()
+#'   flydra_data_full <-
+#'    flydra_data %>%
+#'    redefine_tunnel_center(length_method = "middle",
+#'                          height_method = "user-defined",
+#'                          height_zero = 1.44) %>%
+#'    select_x_percent(desired_percent = 50) %>%
+#'    separate_trajectories(max_frame_gap = "autodetect") %>%
+#'    get_full_trajectories(span = 0.95) %>%
+#'    insert_treatments(tunnel_config = "box",
+#'                     tunnel_length = 3,
+#'                     tunnel_width = 1,
+#'                     stim_param_lat_pos = 0.1,
+#'                     stim_param_lat_neg = 0.1,
+#'                     stim_param_end_pos = 0.3,
+#'                     stim_param_end_neg = 0.3,
+#'                     treatment = "lat10_end_30") %>%
+#'
+#'    ## Now calculate the minimum distances to each wall
+#'    calc_min_dist_box()
+#'
+#'    ## See 3 new variables for calculations to lateral and end walls
+#'    names(flydra_data_full)
 
 
 
