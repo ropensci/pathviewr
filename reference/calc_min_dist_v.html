@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get instantaneous velocity for subjects — get_velocity • pathviewR</title>
+<title>Calculate minimum distance to lateral and end walls in a V-shaped
+experimentaltunnel — calc_min_dist_v • pathviewR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +47,10 @@
 
 
 
-<meta property="og:title" content="Get instantaneous velocity for subjects — get_velocity" />
-<meta property="og:description" content="Velocity (both overall and per-axis) is computed for each row in the data
-(see Details)" />
+<meta property="og:title" content="Calculate minimum distance to lateral and end walls in a V-shaped
+experimentaltunnel — calc_min_dist_v" />
+<meta property="og:description" content="Calculate minimum distance to lateral and end walls in a V-shaped
+experimentaltunnel" />
 <meta property="og:image" content="https://vbaliga.github.io/pathviewR/logo.png" />
 
 
@@ -135,27 +137,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get instantaneous velocity for subjects</h1>
+    <h1>Calculate minimum distance to lateral and end walls in a V-shaped
+experimentaltunnel</h1>
     <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewR/blob/master/R/analytical_functions.R'><code>R/analytical_functions.R</code></a></small>
-    <div class="hidden name"><code>get_velocity.Rd</code></div>
+    <div class="hidden name"><code>calc_min_dist_v.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Velocity (both overall and per-axis) is computed for each row in the data
-(see Details)</p>
+    <p>Calculate minimum distance to lateral and end walls in a V-shaped
+experimentaltunnel</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_velocity</span><span class='op'>(</span>
-  <span class='va'>obj_name</span>,
-  time_col <span class='op'>=</span> <span class='st'>"time_sec"</span>,
-  length_col <span class='op'>=</span> <span class='st'>"position_length"</span>,
-  width_col <span class='op'>=</span> <span class='st'>"position_width"</span>,
-  height_col <span class='op'>=</span> <span class='st'>"position_height"</span>,
-  add_to_viewr <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  velocity_min <span class='op'>=</span> <span class='cn'>NA</span>,
-  velocity_max <span class='op'>=</span> <span class='cn'>NA</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>calc_min_dist_v</span><span class='op'>(</span><span class='va'>obj_name</span>, simplify_output <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,100 +156,93 @@
     <tr>
       <th>obj_name</th>
       <td><p>The input viewr object; a tibble or data.frame with attribute
-<code>pathviewR_steps</code> that includes <code>"viewr"</code></p></td>
+<code>pathviewR_steps</code> that includes <code>"viewr"</code> and
+<code>treatments_added</code>.</p></td>
     </tr>
     <tr>
-      <th>time_col</th>
-      <td><p>Name of the column containing time</p></td>
-    </tr>
-    <tr>
-      <th>length_col</th>
-      <td><p>Name of the column containing length dimension</p></td>
-    </tr>
-    <tr>
-      <th>width_col</th>
-      <td><p>Name of the column containing width dimension</p></td>
-    </tr>
-    <tr>
-      <th>height_col</th>
-      <td><p>Name of the column containing height dimension</p></td>
-    </tr>
-    <tr>
-      <th>add_to_viewr</th>
-      <td><p>Default TRUE; should velocity data be added as new
-columns or should this function create a new simpler object?</p></td>
-    </tr>
-    <tr>
-      <th>velocity_min</th>
-      <td><p>Should data below a certain velocity be filtered out of
-the object? If so, enter a numeric. If not, keep NA.</p></td>
-    </tr>
-    <tr>
-      <th>velocity_max</th>
-      <td><p>Should data above a certain velocity be filtered out of
-the object? If so, enter a numeric. If not, keep NA.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments passed to or from other pathviewR functions.</p></td>
+      <th>simplify_output</th>
+      <td><p>If TRUE, the returned object includes only the minimum
+distance between the subject and the lateral/end walls. If FALSE, the
+returned object includes all variables internal to the calculation.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>If <code>add_to_viewr</code> is <code>TRUE</code>, additional columns are
-appended to the input viewr object. If <code>FALSE</code>, a standalone tibble is
-created. Either way, an "instantaneous" velocity is computed as the
-difference in position divided by the difference in time as each successive
-row is encountered. Additionally, velocities along each of the three
-position axes are computed and provided as additional columns.</p>
+    <p>A tibble or data.frame with added variables for
+<code>height_2_vertex</code>, <code>height_2_screen</code>, <code>width_2_screen_pos</code>,
+<code>width_2_screen_neg</code>, <code>min_dist_pos</code>, <code>min_dist_neg</code>,
+<code>min_dist_end</code>, <code>bound_pos</code>, and <code>bound_neg</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Instantaneous velocity is not truly "instantaneous" but rather is
-approximated as the change in distance divided by change in time from one
-observation (row) to the previous observation (row). Each component of
-velocity is computed (i.e. per axis) along with the overall velocity of
-the subject.</p>
+    <p>For tunnels in which <code>vertex_angle</code> is &gt;90˚, <code>bound_pos</code>
+and <code>bound_neg</code> represent a planes orthogonal to the lateral walls and
+are used to modify <code>min_dist_pos</code> and <code>min_dist_neg</code> calculations
+to prevent erroneous outputs.
+<code>calc_min_dist_v()</code> assumes the subject locomotes facing forward,
+therefore <code>min_dist_end</code> represents the minimum distance between the
+subject and the end wall to which it is moving towards
+All outputs are in meters.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other mathematical functions: 
-<code><a href='calc_min_dist_v.html'>calc_min_dist_v</a>()</code>,
 <code><a href='deg_2_rad.html'>deg_2_rad</a>()</code>,
 <code><a href='find_curve_elbow.html'>find_curve_elbow</a>()</code>,
 <code><a href='get_2d_angle.html'>get_2d_angle</a>()</code>,
 <code><a href='get_3d_angle.html'>get_3d_angle</a>()</code>,
 <code><a href='get_3d_cross_prod.html'>get_3d_cross_prod</a>()</code>,
 <code><a href='get_dist_point_line.html'>get_dist_point_line</a>()</code>,
+<code><a href='get_velocity.html'>get_velocity</a>()</code>,
 <code><a href='rad_2_deg.html'>rad_2_deg</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Vikram B. Baliga and Melissa S. Armstrong</p>
+    <p>Eric R. Press</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Import the example Motive data included in the package</span>
+    <pre class="examples"><div class='input'> <span class='co'>## Import sample data from package</span>
 <span class='va'>motive_data</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                             package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>flydra_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.mat"</span>,
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",     package = "pathviewR")): A subject_name is required</span></div><div class='input'>
+ <span class='co'>## Process data up to and including insert_treatments()</span>
+<span class='va'>motive_data_full</span> <span class='op'>&lt;-</span>
+  <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span><span class='op'>(</span>span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='insert_treatments.html'>insert_treatments</a></span><span class='op'>(</span>tunnel_config <span class='op'>=</span> <span class='st'>"v"</span>,
+                   perch_2_vertex <span class='op'>=</span> <span class='fl'>0.4</span>,
+                   vertex_angle <span class='op'>=</span> <span class='fl'>90</span>,
+                   tunnel_length <span class='op'>=</span> <span class='fl'>2</span>,
+                   stim_param_lat_pos <span class='op'>=</span> <span class='fl'>0.1</span>,
+                   stim_param_lat_neg <span class='op'>=</span> <span class='fl'>0.1</span>,
+                   stim_param_end_pos <span class='op'>=</span> <span class='fl'>0.3</span>,
+                   stim_param_end_neg <span class='op'>=</span> <span class='fl'>0.3</span>,
+                   treatment <span class='op'>=</span> <span class='st'>"lat10_end_30"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
 
-<span class='co'>## Clean the file. It is generally recommended to clean up to the</span>
-<span class='co'>## "standarization" step before running get_velocity().</span>
- <span class='va'>motive_cleaned</span> <span class='op'>&lt;-</span>
-   <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-   <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## Now compute velocity and add as columns</span>
- <span class='va'>motive_velocity_added</span> <span class='op'>&lt;-</span>
-   <span class='va'>motive_cleaned</span> <span class='op'>%&gt;%</span>
-   <span class='fu'>get_velocity</span><span class='op'>(</span>add_to_viewr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='co'>## Or set add_to_viewr to FALSE for a standalone object</span>
- <span class='va'>motive_velocity_standalone</span> <span class='op'>&lt;-</span>
-   <span class='va'>motive_cleaned</span> <span class='op'>%&gt;%</span>
-   <span class='fu'>get_velocity</span><span class='op'>(</span>add_to_viewr <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div></pre>
+ <span class='co'>## Now calculate the minimum distances to each wall</span>
+  <span class='fu'>calc_min_dist_v</span><span class='op'>(</span>simplify_output <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+  <span class='co'>## See 3 new variables for calculations to lateral and end walls</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>motive_data_full</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "tunnel_config"      "perch_2_vertex"     "vertex_angle"      
+#&gt;  [4] "tunnel_length"      "stim_param_lat_pos" "stim_param_lat_neg"
+#&gt;  [7] "stim_param_end_pos" "stim_param_end_neg" "treatment"         
+#&gt; [10] "frame"              "time_sec"           "subject"           
+#&gt; [13] "position_length"    "position_width"     "position_height"   
+#&gt; [16] "rotation_length"    "rotation_width"     "rotation_height"   
+#&gt; [19] "rotation_real"      "mean_marker_error"  "traj_id"           
+#&gt; [22] "file_sub_traj"      "traj_length"        "start_length"      
+#&gt; [25] "end_length"         "length_diff"        "start_length_sign" 
+#&gt; [28] "end_length_sign"    "direction"          "min_dist_pos"      
+#&gt; [31] "min_dist_neg"       "min_dist_end"      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -291,18 +291,18 @@
 <div id="estimate-perception-of-visual-stimuli" class="section level4">
 <h4 class="hasAnchor">
 <a href="#estimate-perception-of-visual-stimuli" class="anchor"></a>Estimate perception of visual stimuli</h4>
-<p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code><a href="reference/calc_sf_V.html">calc_sf_V()</a></code>.</p>
+<p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code>calc_sf_V()</code>.</p>
 <p>The resulting object contains 10 new variables which are values involved in the calculation of spatial frequency.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_V_sf</span> <span class="op">&lt;-</span> 
   <span class="va">motive_V</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/calc_sf_V.html">calc_sf_V</a></span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+  <span class="fu">calc_sf_V</span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>To calculate an estimation of the visual angles perceived by the subject, we will use <code>calc_vis_angle_V</code>.</p>
 <p>The resulting object contains 12 new variables which are values involved in the calculation of visual angles.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_V_angle</span> <span class="op">&lt;-</span> 
   <span class="va">motive_V</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/calc_vis_angle_V.html">calc_vis_angle_V</a></span><span class="op">(</span>simplify_output<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+  <span class="fu">calc_vis_angle_V</span><span class="op">(</span>simplify_output<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please <a href="https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html">see the Visual Perception Functions vignette</a> for more examples of visualizing calculations.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
