@@ -190,9 +190,10 @@ degrees/cycle (<code>vis_angle_pos_deg</code>).</p></li>
   <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
                               package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>flydra_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.mat"</span>,
-                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",     package = "pathviewR")): A subject_name is required</span></div><div class='input'>
+  <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+                              subject_name <span class='op'>=</span> <span class='st'>"birdie_sanders"</span><span class='op'>)</span>
+
  <span class='co'>## Process data up to and including get_min_dist()</span>
 <span class='va'>motive_data_full</span> <span class='op'>&lt;-</span>
   <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
@@ -238,7 +239,10 @@ degrees/cycle (<code>vis_angle_pos_deg</code>).</p></li>
 
    <span class='co'>## Now calculate the visual angles</span>
   <span class='fu'>get_vis_angle</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in redefine_tunnel_center(., length_method = "middle", height_method = "user-defined",     height_zero = 1.44): object 'flydra_data' not found</span></div></pre>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: `tunnel_width`.</span></div><div class='output co'>#&gt; <span class='error'>Error: Assigned data `obj_name$tunnel_width/2 - obj_name$position_width` must be compatible with existing data.</span>
+#&gt; <span class='error'><span style='color: #BB0000;'>✖</span><span> Existing data has 332 rows.</span>
+#&gt; <span class='error'></span><span style='color: #BB0000;'>✖</span><span> Assigned data has 0 rows.</span>
+#&gt; <span class='error'></span><span style='color: #0000BB;'>ℹ</span><span> Only vectors of size 1 are recycled.</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

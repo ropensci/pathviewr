@@ -237,7 +237,82 @@ information is also stored in the viewr object's metadata</p>
     <p>Eric R. Press</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'> <span class='co'>## Import sample data from package</span>
+ <span class='va'>motive_data</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='va'>flydra_data</span> <span class='op'>&lt;-</span>
+ <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
+                              package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",     package = "pathviewR")): A subject_name is required</span></div><div class='input'>
+  <span class='co'>## Clean data up to and including get_full_trajectories()</span>
+<span class='va'>motive_data_full</span> <span class='op'>&lt;-</span>
+ <span class='va'>motive_data</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='relabel_viewr_axes.html'>relabel_viewr_axes</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='gather_tunnel_data.html'>gather_tunnel_data</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='trim_tunnel_outliers.html'>trim_tunnel_outliers</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='rotate_tunnel.html'>rotate_tunnel</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+ <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span><span class='op'>(</span>span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+ <span class='va'>flydra_data_full</span> <span class='op'>&lt;-</span>
+  <span class='va'>flydra_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='redefine_tunnel_center.html'>redefine_tunnel_center</a></span><span class='op'>(</span>length_method <span class='op'>=</span> <span class='st'>"middle"</span>,
+                        height_method <span class='op'>=</span> <span class='st'>"user-defined"</span>,
+                        height_zero <span class='op'>=</span> <span class='fl'>1.44</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span><span class='op'>(</span>span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in redefine_tunnel_center(., length_method = "middle", height_method = "user-defined",     height_zero = 1.44): object 'flydra_data' not found</span></div><div class='input'>
+
+<span class='co'>## Now add information about the experimental configuration. In this example,</span>
+<span class='co'>## a V-shaped tunnel in which the vertex is 90deg and lies 0.40m below the</span>
+<span class='co'>## origin. The visual stimuli on the lateral and end walls have a cycle</span>
+<span class='co'>## length of 0.1m and 0.3m respectively, and the treatment is labeled</span>
+<span class='co'>## "lat10_end30"</span>
+
+<span class='va'>motive_v</span> <span class='op'>&lt;-</span>
+<span class='va'>motive_data_full</span> <span class='op'>%&gt;%</span>
+ <span class='fu'>insert_treatments</span><span class='op'>(</span>tunnel_config <span class='op'>=</span> <span class='st'>"v"</span>,
+                   perch_2_vertex <span class='op'>=</span> <span class='fl'>0.4</span>,
+                   vertex_angle <span class='op'>=</span> <span class='fl'>90</span>,
+                   tunnel_length <span class='op'>=</span> <span class='fl'>2</span>,
+                   stim_param_lat_pos <span class='op'>=</span> <span class='fl'>0.1</span>,
+                   stim_param_lat_neg <span class='op'>=</span> <span class='fl'>0.1</span>,
+                   stim_param_end_pos <span class='op'>=</span> <span class='fl'>0.3</span>,
+                   stim_param_end_neg <span class='op'>=</span> <span class='fl'>0.3</span>,
+                   treatment <span class='op'>=</span> <span class='st'>"lat10_end_30"</span><span class='op'>)</span>
+
+<span class='co'># For an experiment using the box-shaped configuration where the tunnel is 1m</span>
+<span class='co'># wide and 3m long and the visual stimuli on the lateral and end walls have a</span>
+<span class='co'># cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled</span>
+<span class='co'># "lat20_end30".</span>
+
+<span class='va'>flydra_box</span> <span class='op'>&lt;-</span>
+ <span class='va'>flydra_data_full</span> <span class='op'>%&gt;%</span>
+ <span class='fu'>insert_treatments</span><span class='op'>(</span>tunnel_config <span class='op'>=</span> <span class='st'>"box"</span>,
+                   tunnel_width <span class='op'>=</span> <span class='fl'>1</span>,
+                   tunnel_length <span class='op'>=</span> <span class='fl'>3</span>,
+                   stim_param_lat_pos <span class='op'>=</span> <span class='fl'>0.2</span>,
+                   stim_param_lat_neg <span class='op'>=</span> <span class='fl'>0.2</span>,
+                   stim_param_end_pos <span class='op'>=</span> <span class='fl'>0.3</span>,
+                   stim_param_end_neg <span class='op'>=</span> <span class='fl'>0.3</span>,
+                   treatment <span class='op'>=</span> <span class='st'>"lat20_end30"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in insert_treatments(., tunnel_config = "box", tunnel_width = 1,     tunnel_length = 3, stim_param_lat_pos = 0.2, stim_param_lat_neg = 0.2,     stim_param_end_pos = 0.3, stim_param_end_neg = 0.3, treatment = "lat20_end30"): object 'flydra_data_full' not found</span></div><div class='input'>
+<span class='co'>## Check out the new columns in the resulting objects</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>motive_v</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "tunnel_config"      "perch_2_vertex"     "vertex_angle"      
+#&gt;  [4] "tunnel_length"      "stim_param_lat_pos" "stim_param_lat_neg"
+#&gt;  [7] "stim_param_end_pos" "stim_param_end_neg" "treatment"         
+#&gt; [10] "frame"              "time_sec"           "subject"           
+#&gt; [13] "position_length"    "position_width"     "position_height"   
+#&gt; [16] "rotation_length"    "rotation_width"     "rotation_height"   
+#&gt; [19] "rotation_real"      "mean_marker_error"  "traj_id"           
+#&gt; [22] "file_sub_traj"      "traj_length"        "start_length"      
+#&gt; [25] "end_length"         "length_diff"        "start_length_sign" 
+#&gt; [28] "end_length_sign"    "direction"         </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>flydra_box</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'flydra_box' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
