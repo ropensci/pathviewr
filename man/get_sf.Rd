@@ -40,8 +40,9 @@ motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
 flydra_data <-
-  read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
-                              package = 'pathviewR'))
+  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+                              package = 'pathviewR'),
+                              subject_name = "birdie_sanders")
 
  ## Process data up to and including get_vis_angle()
 motive_data_full <-
