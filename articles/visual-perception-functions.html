@@ -140,12 +140,12 @@
     trim_tunnel_outliers <span class="op">=</span> <span class="cn">TRUE</span>,
     standardization_option <span class="op">=</span> <span class="st">"rotate_tunnel"</span>,
     select_x_percent <span class="op">=</span> <span class="cn">TRUE</span>,
-    desired_percent <span class="op">=</span> <span class="fl">60</span>,
+    desired_percent <span class="op">=</span> <span class="fl">50</span>,
     rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,
     separate_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
     max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,
     get_full_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
-    span <span class="op">=</span> <span class="fl">0.90</span>
+    span <span class="op">=</span> <span class="fl">0.95</span>
   <span class="op">)</span>
 <span class="co">#&gt; autodetect is an experimental feature -- please report issues.</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -191,13 +191,12 @@
   <span class="fu"><a href="../reference/insert_treatments.html">insert_treatments</a></span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"v"</span>,
                     perch_2_vertex <span class="op">=</span> <span class="fl">0.3855</span>,
                     vertex_angle <span class="op">=</span> <span class="fl">90</span>,
-                    tunnel_length <span class="op">=</span> <span class="fl">3</span>,
+                    tunnel_length <span class="op">=</span> <span class="fl">2</span>,
                     stim_param_lat_pos <span class="op">=</span> <span class="fl">0.05</span>,
                     stim_param_lat_neg <span class="op">=</span> <span class="fl">0.05</span>,
                     stim_param_end_pos <span class="op">=</span> <span class="fl">0.1</span>,
                     stim_param_end_neg <span class="op">=</span> <span class="fl">0.1</span>,
                     treatment <span class="op">=</span> <span class="st">"latB"</span><span class="op">)</span>
-
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">motive_treatments</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "tunnel_config"      "perch_2_vertex"     "vertex_angle"      </span>
 <span class="co">#&gt;  [4] "tunnel_length"      "stim_param_lat_pos" "stim_param_lat_neg"</span>
@@ -221,22 +220,12 @@
   <span class="va">flydra_full</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/insert_treatments.html">insert_treatments</a></span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"box"</span>,
                     tunnel_width <span class="op">=</span> <span class="fl">1</span>,
-                    tunnel_length <span class="op">=</span> <span class="fl">2</span>,
+                    tunnel_length <span class="op">=</span> <span class="fl">3</span>,
                     stim_param_lat_pos <span class="op">=</span> <span class="fl">0.05</span>,
                     stim_param_lat_neg <span class="op">=</span> <span class="fl">0.05</span>,
                     stim_param_end_pos <span class="op">=</span> <span class="fl">0.1</span>,
                     stim_param_end_neg <span class="op">=</span> <span class="fl">0.1</span>,
-                    treatment <span class="op">=</span> <span class="st">"latB"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">flydra_treatments</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "tunnel_config"      "tunnel_width"       "tunnel_length"     </span>
-<span class="co">#&gt;  [4] "stim_param_lat_pos" "stim_param_lat_neg" "stim_param_end_pos"</span>
-<span class="co">#&gt;  [7] "stim_param_end_neg" "treatment"          "frame"             </span>
-<span class="co">#&gt; [10] "time_sec"           "subject"            "position_length"   </span>
-<span class="co">#&gt; [13] "position_width"     "position_height"    "traj_id"           </span>
-<span class="co">#&gt; [16] "file_sub_traj"      "traj_length"        "start_length"      </span>
-<span class="co">#&gt; [19] "end_length"         "length_diff"        "start_length_sign" </span>
-<span class="co">#&gt; [22] "end_length_sign"    "direction"</span></code></pre></div>
+                    treatment <span class="op">=</span> <span class="st">"latB"</span><span class="op">)</span></code></pre></div>
 <p><code>flydra_treatments</code> similarly has the variables <code>tunnel_config</code>, <code>tunnel_width</code>, <code>tunnel_length</code>, <code>stim_param_lat_pos</code>, <code>stim_param_lat_neg</code>, <code>stim_param_end_pos</code>, <code>stim_param_end_neg</code> and <code>treatment</code>.</p>
 </div>
 </div>
@@ -276,7 +265,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
 <span class="co">## Display minimum distances to the end walls</span>
 <span class="va">flydra_min_dist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">min_dist_end</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">min_dist_end</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,         <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
@@ -318,7 +307,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
 <span class="co">## visualize the angles produced by stimuli on the end walls</span>
 <span class="va">flydra_vis_angle</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_end_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_end_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,        <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
@@ -354,7 +343,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/motive_sf_pos-1.png" width="672"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flydra_sf</span> <span class="op">&lt;-</span> 
   <span class="va">flydra_vis_angle</span> <span class="op">%&gt;%</span> 
@@ -363,7 +352,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
 <span class="co">## visualize the spatial frequency of the stimulus on the end walls</span>
 <span class="va">flydra_sf</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_end</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_end</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,        <span class="co"># negative wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,
@@ -373,10 +362,10 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    y <span class="op">=</span> <span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">1</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div id="stay-tuned-as-additinal-features-for-image-motion-analysis-are-coming-soon" class="section level3">
+<p><img src="visual-perception-functions_files/figure-html/flydra_sf_end-1.png" width="672"></p>
+<div id="stay-tuned-as-additional-features-for-image-motion-analysis-are-coming-soon" class="section level3">
 <h3 class="hasAnchor">
-<a href="#stay-tuned-as-additinal-features-for-image-motion-analysis-are-coming-soon" class="anchor"></a>Stay tuned as additinal features for image motion analysis are coming soon!</h3>
+<a href="#stay-tuned-as-additional-features-for-image-motion-analysis-are-coming-soon" class="anchor"></a>Stay tuned as additional features for image motion analysis are coming soon!</h3>
 </div>
 </div>
   </div>
