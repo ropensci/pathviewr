@@ -182,36 +182,43 @@ All outputs are in meters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Import sample data from package</span>
-<span class='co'># flydra_data &lt;-</span>
-<span class='co'># read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",</span>
-<span class='co'>#                               package = 'pathviewR'),</span>
-<span class='co'>#                               subject_name = "birdie_sanders")</span>
-<span class='co'>#</span>
-<span class='co'>#   ## Process data up to and including insert_treatments()</span>
-<span class='co'>#  flydra_data_full &lt;-</span>
-<span class='co'>#   flydra_data %&gt;%</span>
-<span class='co'>#   redefine_tunnel_center(length_method = "middle",</span>
-<span class='co'>#                         height_method = "user-defined",</span>
-<span class='co'>#                         height_zero = 1.44) %&gt;%</span>
-<span class='co'>#   select_x_percent(desired_percent = 50) %&gt;%</span>
-<span class='co'>#   separate_trajectories(max_frame_gap = "autodetect") %&gt;%</span>
-<span class='co'>#   get_full_trajectories(span = 0.95) %&gt;%</span>
-<span class='co'>#   insert_treatments(tunnel_config = "v",</span>
-<span class='co'>#                    perch_2_vertex = 0.4,</span>
-<span class='co'>#                    vertex_angle = 90,</span>
-<span class='co'>#                    tunnel_length = 2,</span>
-<span class='co'>#                    stim_param_lat_pos = 0.1,</span>
-<span class='co'>#                    stim_param_lat_neg = 0.1,</span>
-<span class='co'>#                    stim_param_end_pos = 0.3,</span>
-<span class='co'>#                    stim_param_end_neg = 0.3,</span>
-<span class='co'>#                    treatment = "lat10_end_30") %&gt;%</span>
-<span class='co'>#</span>
-<span class='co'>#   ## Now calculate the minimum distances to each wall</span>
-<span class='co'>#   calc_min_dist_box()</span>
-<span class='co'>#</span>
-<span class='co'>#   ## See 3 new variables for calculations to lateral and end walls</span>
-<span class='co'>#   names(flydra_data_full)</span>
-</div></pre>
+ <span class='va'>flydra_data</span> <span class='op'>&lt;-</span>
+ <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
+                               package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+                               subject_name <span class='op'>=</span> <span class='st'>"birdie_sanders"</span><span class='op'>)</span>
+
+   <span class='co'>## Process data up to and including insert_treatments()</span>
+  <span class='va'>flydra_data_full</span> <span class='op'>&lt;-</span>
+   <span class='va'>flydra_data</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='redefine_tunnel_center.html'>redefine_tunnel_center</a></span><span class='op'>(</span>length_method <span class='op'>=</span> <span class='st'>"middle"</span>,
+                         height_method <span class='op'>=</span> <span class='st'>"user-defined"</span>,
+                         height_zero <span class='op'>=</span> <span class='fl'>1.44</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='select_x_percent.html'>select_x_percent</a></span><span class='op'>(</span>desired_percent <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='separate_trajectories.html'>separate_trajectories</a></span><span class='op'>(</span>max_frame_gap <span class='op'>=</span> <span class='st'>"autodetect"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='get_full_trajectories.html'>get_full_trajectories</a></span><span class='op'>(</span>span <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='insert_treatments.html'>insert_treatments</a></span><span class='op'>(</span>tunnel_config <span class='op'>=</span> <span class='st'>"box"</span>,
+                    tunnel_length <span class='op'>=</span> <span class='fl'>3</span>,
+                    tunnel_width <span class='op'>=</span> <span class='fl'>1</span>,
+                    stim_param_lat_pos <span class='op'>=</span> <span class='fl'>0.1</span>,
+                    stim_param_lat_neg <span class='op'>=</span> <span class='fl'>0.1</span>,
+                    stim_param_end_pos <span class='op'>=</span> <span class='fl'>0.3</span>,
+                    stim_param_end_neg <span class='op'>=</span> <span class='fl'>0.3</span>,
+                    treatment <span class='op'>=</span> <span class='st'>"lat10_end_30"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+
+   <span class='co'>## Now calculate the minimum distances to each wall</span>
+   <span class='fu'>calc_min_dist_box</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>autodetect is an experimental feature -- please report issues.</span></div><div class='input'>
+   <span class='co'>## See 3 new variables for calculations to lateral and end walls</span>
+   <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>flydra_data_full</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "tunnel_config"      "tunnel_width"       "tunnel_length"     
+#&gt;  [4] "stim_param_lat_pos" "stim_param_lat_neg" "stim_param_end_pos"
+#&gt;  [7] "stim_param_end_neg" "treatment"          "frame"             
+#&gt; [10] "time_sec"           "subject"            "position_length"   
+#&gt; [13] "position_width"     "position_height"    "traj_id"           
+#&gt; [16] "file_sub_traj"      "traj_length"        "start_length"      
+#&gt; [19] "end_length"         "length_diff"        "start_length_sign" 
+#&gt; [22] "end_length_sign"    "direction"          "min_dist_pos"      
+#&gt; [25] "min_dist_neg"       "min_dist_end"      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
