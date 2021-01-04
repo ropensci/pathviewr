@@ -41,9 +41,6 @@ All outputs are in meters.
 motive_data <-
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
-flydra_data <-
-  read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
-                              package = 'pathviewR'))
 
  ## Process data up to and including insert_treatments()
 motive_data_full <-

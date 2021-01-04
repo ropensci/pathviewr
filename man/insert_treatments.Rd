@@ -75,7 +75,7 @@ All length measurements reported in meters.
   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
                               package = 'pathviewR'))
  flydra_data <-
- read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
+ read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
                               package = 'pathviewR'))
 
   ## Clean data up to and including get_full_trajectories()
@@ -102,8 +102,8 @@ motive_data_full <-
 ## Now add information about the experimental configuration. In this example,
 ## a V-shaped tunnel in which the vertex is 90deg and lies 0.40m below the
 ## origin. The visual stimuli on the lateral and end walls have a cycle
-length of 0.1m and 0.3m respectively, and the treatment is labeled
-"lat10_end30"
+## length of 0.1m and 0.3m respectively, and the treatment is labeled
+## "lat10_end30"
 
 motive_v <-
 motive_data_full \%>\%
@@ -117,10 +117,11 @@ motive_data_full \%>\%
                    stim_param_end_neg = 0.3,
                    treatment = "lat10_end_30")
 
-## For an experiment using the box-shaped configuration where the tunnel is
-1m wide and 3m long and the visual stimuli on the lateral and end walls have
-a cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled
-"lat20_end30".
+# For an experiment using the box-shaped configuration where the tunnel is 1m
+# wide and 3m long and the visual stimuli on the lateral and end walls have a
+# cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled
+# "lat20_end30".
+
 flydra_box <-
  flydra_data_full \%>\%
  insert_treatments(tunnel_config = "box",

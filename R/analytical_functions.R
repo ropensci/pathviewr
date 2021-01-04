@@ -609,9 +609,6 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' motive_data <-
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                               package = 'pathviewR'))
-#' flydra_data <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
-#'                               package = 'pathviewR'))
 #'
 #'  ## Process data up to and including insert_treatments()
 #' motive_data_full <-
@@ -771,34 +768,35 @@ calc_min_dist_v <- function(obj_name,
 #'
 #' @examples
 #' ## Import sample data from package
-#'  flydra_data <-
-#'  read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
-#'                               package = 'pathviewR'))
-#'
-#'   ## Process data up to and including insert_treatments()
-#'  flydra_data_full <-
-#'   flydra_data %>%
-#'   redefine_tunnel_center(length_method = "middle",
-#'                         height_method = "user-defined",
-#'                         height_zero = 1.44) %>%
-#'   select_x_percent(desired_percent = 50) %>%
-#'   separate_trajectories(max_frame_gap = "autodetect") %>%
-#'   get_full_trajectories(span = 0.95) %>%
-#'   insert_treatments(tunnel_config = "v",
-#'                    perch_2_vertex = 0.4,
-#'                    vertex_angle = 90,
-#'                    tunnel_length = 2,
-#'                    stim_param_lat_pos = 0.1,
-#'                    stim_param_lat_neg = 0.1,
-#'                    stim_param_end_pos = 0.3,
-#'                    stim_param_end_neg = 0.3,
-#'                    treatment = "lat10_end_30") %>%
-#'
-#'   ## Now calculate the minimum distances to each wall
-#'   calc_min_dist_box()
-#'
-#'   ## See 3 new variables for calculations to lateral and end walls
-#'   names(flydra_data_full)
+#' # flydra_data <-
+#' # read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+#' #                               package = 'pathviewR'),
+#' #                               subject_name = "birdie_sanders")
+#' #
+#' #   ## Process data up to and including insert_treatments()
+#' #  flydra_data_full <-
+#' #   flydra_data %>%
+#' #   redefine_tunnel_center(length_method = "middle",
+#' #                         height_method = "user-defined",
+#' #                         height_zero = 1.44) %>%
+#' #   select_x_percent(desired_percent = 50) %>%
+#' #   separate_trajectories(max_frame_gap = "autodetect") %>%
+#' #   get_full_trajectories(span = 0.95) %>%
+#' #   insert_treatments(tunnel_config = "v",
+#' #                    perch_2_vertex = 0.4,
+#' #                    vertex_angle = 90,
+#' #                    tunnel_length = 2,
+#' #                    stim_param_lat_pos = 0.1,
+#' #                    stim_param_lat_neg = 0.1,
+#' #                    stim_param_end_pos = 0.3,
+#' #                    stim_param_end_neg = 0.3,
+#' #                    treatment = "lat10_end_30") %>%
+#' #
+#' #   ## Now calculate the minimum distances to each wall
+#' #   calc_min_dist_box()
+#' #
+#' #   ## See 3 new variables for calculations to lateral and end walls
+#' #   names(flydra_data_full)
 
 
 
@@ -869,8 +867,9 @@ calc_min_dist_box <- function(obj_name){
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                               package = 'pathviewR'))
 #' flydra_data <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
-#'                               package = 'pathviewR'))
+#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+#'                               package = 'pathviewR'),
+#'                               subject_name = "birdie_sanders")
 #'
 #'  ## Process data up to and including get_min_dist()
 #' motive_data_full <-
@@ -991,8 +990,9 @@ get_vis_angle <- function(obj_name){
 #'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
 #'                               package = 'pathviewR'))
 #' flydra_data <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_motive_example_data.mat",
-#'                               package = 'pathviewR'))
+#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
+#'                               package = 'pathviewR'),
+#'                               subject_name = "birdie_sanders")
 #'
 #'  ## Process data up to and including get_vis_angle()
 #' motive_data_full <-
