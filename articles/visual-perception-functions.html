@@ -140,12 +140,12 @@
     trim_tunnel_outliers <span class="op">=</span> <span class="cn">TRUE</span>,
     standardization_option <span class="op">=</span> <span class="st">"rotate_tunnel"</span>,
     select_x_percent <span class="op">=</span> <span class="cn">TRUE</span>,
-    desired_percent <span class="op">=</span> <span class="fl">50</span>,
+    desired_percent <span class="op">=</span> <span class="fl">60</span>,
     rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,
     separate_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
     max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,
     get_full_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
-    span <span class="op">=</span> <span class="fl">0.95</span>
+    span <span class="op">=</span> <span class="fl">0.90</span>
   <span class="op">)</span>
 <span class="co">#&gt; autodetect is an experimental feature -- please report issues.</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -169,6 +169,7 @@
     height_zero <span class="op">=</span> <span class="fl">1.44</span>,
     get_velocity <span class="op">=</span> <span class="cn">FALSE</span>,
     select_x_percent <span class="op">=</span> <span class="cn">TRUE</span>,
+    desired_percent <span class="op">=</span> <span class="fl">60</span>,
     rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,
     separate_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
     get_full_trajectories <span class="op">=</span> <span class="cn">TRUE</span>
@@ -255,8 +256,9 @@ For v-shaped tunnels, several internal calculations are required and can be adde
 <span class="co">## Display minimum distances to the positive lateral walls</span>
 <span class="va">motive_min_dist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">min_dist_pos</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">min_dist_pos</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># positive wall</span>
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="fl">0.5869</span>,
@@ -307,7 +309,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="visual-perception-functions_files/figure-html/motive_vis_angle_pos-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/motive_vis_angle_pos-1.png" width="672"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flydra_vis_angle</span> <span class="op">&lt;-</span> 
   <span class="va">flydra_min_dist</span> <span class="op">%&gt;%</span> 
@@ -326,7 +328,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    y <span class="op">=</span> <span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">1</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/flydra_vis_angle_end-1.png" width="672"></p>
 <p>The spatial frequency of the image of a visual stimulus refers to the size of the stimulus in visual space. It’s often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency.</p>
 </div>
 </div>
@@ -352,7 +354,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flydra_sf</span> <span class="op">&lt;-</span> 
   <span class="va">flydra_vis_angle</span> <span class="op">%&gt;%</span> 
@@ -371,7 +373,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    y <span class="op">=</span> <span class="fl">0.5</span>,
                    xend <span class="op">=</span> <span class="fl">1</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="visual-perception-functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div id="stay-tuned-as-additinal-features-for-image-motion-analysis-are-coming-soon" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stay-tuned-as-additinal-features-for-image-motion-analysis-are-coming-soon" class="anchor"></a>Stay tuned as additinal features for image motion analysis are coming soon!</h3>
