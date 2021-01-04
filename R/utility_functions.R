@@ -2650,7 +2650,8 @@ rm_by_trajnum <- function(obj_name,
 #'                               package = 'pathviewR'))
 #'  flydra_data <-
 #'  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                               package = 'pathviewR'))
+#'                               package = 'pathviewR'),
+#'                               subject_name = "birdie_sanders")
 #'
 #'   ## Clean data up to and including get_full_trajectories()
 #' motive_data_full <-

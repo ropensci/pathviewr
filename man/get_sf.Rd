@@ -77,10 +77,9 @@ motive_data_full <-
   select_x_percent(desired_percent = 50) \%>\%
   separate_trajectories(max_frame_gap = "autodetect") \%>\%
   get_full_trajectories(span = 0.95) \%>\%
-  insert_treatments(tunnel_config = "v",
-                   perch_2_vertex = 0.4,
-                   vertex_angle = 90,
-                   tunnel_length = 2,
+  insert_treatments(tunnel_config = "box",
+                   tunnel_length = 3,
+                   tunnel_width = 1,
                    stim_param_lat_pos = 0.1,
                    stim_param_lat_neg = 0.1,
                    stim_param_end_pos = 0.3,
