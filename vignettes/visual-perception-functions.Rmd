@@ -58,12 +58,12 @@ motive_full <-
     trim_tunnel_outliers = TRUE,
     standardization_option = "rotate_tunnel",
     select_x_percent = TRUE,
-    desired_percent = 60,
+    desired_percent = 50,
     rename_viewr_characters = FALSE,
     separate_trajectories = TRUE,
     max_frame_gap = "autodetect",
     get_full_trajectories = TRUE,
-    span = 0.90
+    span = 0.95
   )
 ```
 ```{r}
@@ -108,13 +108,12 @@ motive_treatments <-
   insert_treatments(tunnel_config = "v",
                     perch_2_vertex = 0.3855,
                     vertex_angle = 90,
-                    tunnel_length = 3,
+                    tunnel_length = 2,
                     stim_param_lat_pos = 0.05,
                     stim_param_lat_neg = 0.05,
                     stim_param_end_pos = 0.1,
                     stim_param_end_neg = 0.1,
                     treatment = "latB")
-
 names(motive_treatments)
 ```
 `motive_treatments` now has the variables `tunnel_config`, `perch_2_vertex`, `vertex_angle`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, and `stim_param_end_neg` which are needed to calculate visual angles. The variable `treatment` has also been included and all of this information has been stored in the object's metadata.
@@ -127,14 +126,12 @@ flydra_treatments <-
   flydra_full %>%
   insert_treatments(tunnel_config = "box",
                     tunnel_width = 1,
-                    tunnel_length = 2,
+                    tunnel_length = 3,
                     stim_param_lat_pos = 0.05,
                     stim_param_lat_neg = 0.05,
                     stim_param_end_pos = 0.1,
                     stim_param_end_neg = 0.1,
                     treatment = "latB")
-
-names(flydra_treatments)
 ```
 `flydra_treatments` similarly has the variables `tunnel_config`, `tunnel_width`, `tunnel_length`, `stim_param_lat_pos`, `stim_param_lat_neg`, `stim_param_end_pos`, `stim_param_end_neg` and `treatment`.
 
@@ -173,7 +170,7 @@ flydra_min_dist <-
 ## Display minimum distances to the end walls
 flydra_min_dist %>% 
   ggplot(aes(x = position_length, y = position_width)) +
-  geom_point(aes(color = min_dist_end), size = 2) +
+  geom_point(aes(color = min_dist_end), size = 2, shape = 1) +
   coord_fixed() +
   geom_segment(aes(x = -1,         # negative wall
                    y = -0.5,
@@ -216,7 +213,7 @@ flydra_vis_angle <-
 ## visualize the angles produced by stimuli on the end walls
 flydra_vis_angle %>% 
   ggplot(aes(x = position_length, y = position_width)) +
-  geom_point(aes(color = vis_angle_end_deg), size = 2) +
+  geom_point(aes(color = vis_angle_end_deg), size = 2, shape = 1) +
   coord_fixed() +
   geom_segment(aes(x = -1,        # negative wall
                    y = -0.5,
@@ -236,7 +233,7 @@ The spatial frequency of the image of a visual stimulus refers to the size of th
 To calculate the spatial frequency of the visual stimuli as perceived by the
 subject some distance from the stimuli, we will use `get_sf()`. 
 
-```{r}
+```{r motive_sf_pos, fig.height=4, fig.width=7}
 motive_sf <- 
   motive_vis_angle %>%
   get_sf()
@@ -256,7 +253,7 @@ motive_sf %>%
                    yend = 0.2014))
 ```
 
-```{r}
+```{r flydra_sf_end, fig.height=4, fig.width=7}
 flydra_sf <- 
   flydra_vis_angle %>% 
   get_sf()
@@ -264,7 +261,7 @@ flydra_sf <-
 ## visualize the spatial frequency of the stimulus on the end walls
 flydra_sf %>% 
   ggplot(aes(x = position_length, y = position_width)) +
-  geom_point(aes(color = sf_end), size = 2) +
+  geom_point(aes(color = sf_end), size = 2, shape = 1) +
   coord_fixed() +
   geom_segment(aes(x = -1,        # negative wall
                    y = -0.5,
@@ -277,6 +274,6 @@ flydra_sf %>%
 ```
 
 
-### Stay tuned as additinal features for image motion analysis are coming soon!
+### Stay tuned as additional features for image motion analysis are coming soon!
 
 
