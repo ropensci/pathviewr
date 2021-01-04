@@ -5,14 +5,14 @@
 \title{Calculate minimum distance to lateral and end walls in a V-shaped
 experimentaltunnel}
 \usage{
-calc_min_dist_v(obj_name, simplify = TRUE)
+calc_min_dist_v(obj_name, simplify_output = TRUE)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
 \code{pathviewR_steps} that includes \code{"viewr"} and
 \code{treatments_added}.}
 
-\item{simplify}{If TRUE, the returned object includes only the minimum
+\item{simplify_output}{If TRUE, the returned object includes only the minimum
 distance between the subject and the lateral/end walls. If FALSE, the
 returned object includes all variables internal to the calculation.}
 }
