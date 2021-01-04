@@ -2641,6 +2641,8 @@ rm_by_trajnum <- function(obj_name,
 #'
 #' @family utility functions
 #'
+#' @export
+#'
 #' @examples
 #'  ## Import sample data from package
 #'  motive_data <-

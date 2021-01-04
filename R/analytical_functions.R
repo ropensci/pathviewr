@@ -602,6 +602,8 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'
 #' @family mathematical functions
 #'
+#' @export
+#'
 #' @example
 #'  ## Import sample data from package
 #' motive_data <-
@@ -763,7 +765,9 @@ calc_min_dist_v <- function(obj_name,
 #'
 #' @author Eric R. Press
 #'
-#' @family visual perception functioins
+#' @family visual perception functions
+#'
+#' @export
 #'
 #' @example
 #' ## Import sample data from package
@@ -856,6 +860,8 @@ calc_min_dist_box <- function(obj_name){
 #' @author Eric R. Press
 #'
 #' @family visual perception functions
+#'
+#' @export
 #'
 #' @examples
 #'  ## Import sample data from package
@@ -976,6 +982,8 @@ get_vis_angle <- function(obj_name){
 #' @author Eric R. Press
 #'
 #' @family visual perception functions
+#'
+#' @export
 #'
 #' @example
 #'  ## Import sample data from package
