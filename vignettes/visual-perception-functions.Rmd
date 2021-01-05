@@ -20,7 +20,9 @@ knitr::opts_chunk$set(
 ## Introduction
 
   Studies of visually guided locomotion in birds, insects or even humans during often involve data gathered from motion capture technologies such as Optitrack's [(Motive)](https://optitrack.com/software/motive/), or the Straw Lab's [(Flydra)](https://github.com/strawlab/flydra). For these experiments, it is important to understand how visual stimuli influence behaviour. While is it not possible to measure how subjects directly perceive visual stimuli, it is possible to use the same motion capture data to calculate estimates of stimulus properties as they are perceived by the subject. With the tools available in pathviewR, researchers in ethology or psychology can provide analyses of both stimulus and response under natural locomotor conditions. 
+ 
   *Inherent to estimations of visual perceptions, we make several assumptions, which will be discussed below. We welcome suggestions and aim to address any assumptions that limit the accuracy of these estimates*. 
+  
   To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject's retina - the visual angle. 
   Visual angles can be calculated provided there is information about the physical size of the pattern  and its distance from the subject's retina. Because researchers can control or measure the size of a  pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by any pattern in the visual scene. Therefore, we first need to calculate the distance to the pattern. *Currently, we assume the subject's gaze is directly frontal or lateral to the face, in effect estimating image properties at a point in the frontal and lateral fields of view, respectively*. 
   
@@ -172,6 +174,7 @@ flydra_min_dist %>%
   ggplot(aes(x = position_length, y = position_width)) +
   geom_point(aes(color = min_dist_end), size = 2, shape = 1) +
   coord_fixed() +
+  theme_classic() +
   geom_segment(aes(x = -1,         # negative wall
                    y = -0.5,
                    xend = 1,
@@ -195,6 +198,7 @@ motive_vis_angle %>%
   ggplot(aes(x = position_width, y = position_height)) +
   geom_point(aes(color = vis_angle_pos_deg), size = 2, shape = 1) +
   coord_fixed()+
+  theme_classic() +
   geom_segment(aes(x = 0,         # positive wall
                    y = -0.3855,
                    xend = 0.5869,
@@ -215,6 +219,7 @@ flydra_vis_angle %>%
   ggplot(aes(x = position_length, y = position_width)) +
   geom_point(aes(color = vis_angle_end_deg), size = 2, shape = 1) +
   coord_fixed() +
+  theme_classic() +
   geom_segment(aes(x = -1,        # negative wall
                    y = -0.5,
                    xend = 1,
@@ -226,7 +231,9 @@ flydra_vis_angle %>%
 ```
 
 
-The spatial frequency of the image of a visual stimulus refers to the size of the stimulus in visual space. It's often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency. 
+The perceived spatial frequency of a visual stimulus refers to the size of the stimulus in visual space. It's often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency. See
+
+![Fig. 1: Square wave grating stimulus](/example_scripts/visual_pattern_cycles.jpeg)
 
 
 ## Calculating spatial frequency
@@ -243,6 +250,7 @@ motive_sf %>%
   ggplot(aes(x = position_width, y = position_height)) +
   geom_point(aes(color = sf_pos), size = 2, shape = 1) +
   coord_fixed()+
+  theme_classic() +
   geom_segment(aes(x = 0,         # positive wall
                    y = -0.3855,
                    xend = 0.5869,
@@ -263,6 +271,7 @@ flydra_sf %>%
   ggplot(aes(x = position_length, y = position_width)) +
   geom_point(aes(color = sf_end), size = 2, shape = 1) +
   coord_fixed() +
+  theme_classic() +
   geom_segment(aes(x = -1,        # negative wall
                    y = -0.5,
                    xend = 1,
@@ -275,5 +284,6 @@ flydra_sf %>%
 
 
 ### Stay tuned as additional features for image motion analysis are coming soon!
+
 
 
