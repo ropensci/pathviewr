@@ -24,7 +24,13 @@ knitr::opts_chunk$set(
   *Inherent to estimations of visual perceptions, we make several assumptions, which will be discussed below. We welcome suggestions and aim to address any assumptions that limit the accuracy of these estimates*. 
   
   To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject's retina - the visual angle. 
-  Visual angles can be calculated provided there is information about the physical size of the pattern  and its distance from the subject's retina. Because researchers can control or measure the size of a  pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by any pattern in the visual scene. Therefore, we first need to calculate the distance to the pattern. *Currently, we assume the subject's gaze is directly frontal or lateral to the face, in effect estimating image properties at a point in the frontal and lateral fields of view, respectively*. 
+  Visual angles can be calculated provided there is information about the physical size of the pattern  and its distance from the subject's retina. Because researchers can control or measure the size of a  pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by patterns in the visual scene. Therefore, we first need to calculate the distance to the pattern. *Currently, we assume the subject's gaze is directly frontal or lateral to the face, in effect estimating image properties at a point in the frontal and lateral fields of view, respectively*. 
+  
+  
+```{r, echo = FALSE, out.width = "90%", fig.cap = "Visual angles can be calculated using the size of a visual pattern (`stim_param`) and the distance to the pattern. Larger patterns at shorter distances produce larger visual angles.}
+knitr::include_graphics("https://github.com/vbaliga/pathviewR/raw/master/images/stim_param_angle.jpeg")
+```
+
   
 
 ## Loading packages
@@ -231,14 +237,7 @@ flydra_vis_angle %>%
 ```
 
 
-The perceived spatial frequency of a visual stimulus refers to the size of the stimulus in visual space. It's often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency. See
-
-```{r, echo=FALSE, out.width="50%", fig.cap="Stimular parameter of common visual patterns"}
-knitr::include_graphics("https://github.com/vbaliga/pathviewR/raw/master/images/stim_param.jpeg")
-```
-
-
-![Stimulus parameter](https://github.com/vbaliga/pathviewR/raw/master/images/stim_param.jpeg)
+With visual angles, we can now determine the spatial frequency of a visual pattern as it is perceived by the subject. Spatial frequency refers to the size of the pattern in visual space. It's often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, a larger visual pattern produces a smaller spatial frequency, whereas a smaller visual pattern produces a higher spatial frequency. See below for how 
 
 
 ## Calculating spatial frequency
