@@ -233,7 +233,12 @@ flydra_vis_angle %>%
 
 The perceived spatial frequency of a visual stimulus refers to the size of the stimulus in visual space. It's often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency. See
 
-![Fig. 1: Square wave grating stimulus](/example_scripts/visual_pattern_cycles.jpeg)
+```{r, echo=FALSE, out.width="50%", fig.cap="Stimular parameter of common visual patterns"}
+knitr::include_graphics("https://github.com/vbaliga/pathviewR/raw/master/images/stim_param.jpeg")
+```
+
+
+![Stimulus parameter](https://github.com/vbaliga/pathviewR/raw/master/images/stim_param.jpeg)
 
 
 ## Calculating spatial frequency
