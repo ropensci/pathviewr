@@ -225,6 +225,7 @@ motive_vis_angle %>%
                    xend = -0.5869,
                    yend = 0.2014))
 ```
+
 Notice larger visual angles as the subject approaches the positive wall. 
 
 ```{r flydra_vis_angle_end, fig.height=4, fig.width=7}
@@ -248,6 +249,7 @@ flydra_vis_angle %>%
                    xend = 1,
                    yend = 0.5))
 ```
+
 Notice larger visual angles as the subject approaches the end wall that it is moving towards.
 
 
@@ -278,6 +280,7 @@ motive_sf %>%
                    xend = -0.5869,
                    yend = 0.2014))
 ```
+
 Notice the spatial frequency increases the further the subject recedes from positive wall.
 
 ```{r flydra_sf_end, fig.height=4, fig.width=7}
@@ -301,6 +304,7 @@ flydra_sf %>%
                    xend = 1,
                    yend = 0.5))
 ```
+
 Notice the spatial frequency decreases as the subject approaches the end wall that it is moving towards. 
 
 

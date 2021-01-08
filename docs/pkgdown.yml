@@ -1,11 +1,11 @@
-pandoc: 2.3.1
-pkgdown: 1.6.1.9000
-pkgdown_sha: e1e46f2e13c7efdb17bc4eae40bc3779c2b0b517
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
 articles:
   data-import-cleaning: data-import-cleaning.html
   managing-frame-gaps: managing-frame-gaps.html
   visual-perception-functions: visual-perception-functions.html
-last_built: 2020-12-30T07:06Z
+last_built: 2021-01-08T05:08Z
 urls:
   reference: https://vbaliga.github.io/pathviewR//reference
   article: https://vbaliga.github.io/pathviewR//articles
