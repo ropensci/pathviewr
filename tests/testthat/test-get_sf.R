@@ -99,10 +99,14 @@ test_that("get_sf() adds variables appropriately",{
   # output has correct variable names
   expect_equal(names(flydra_sf[c(33:35)]),
                c("sf_pos", "sf_neg", "sf_end")
-              )
+  )
+  expect_equal(names(motive_sf[c(43:45)]),
+               c("sf_pos", "sf_neg", "sf_end")
+  )
   # output has correct dimensions
   expect_equal(dim(flydra_sf), c(381,35))
-})
+  expect_equal(dim(motive_sf), c(449,45))
+  })
 
 
 # Test calculations
@@ -118,6 +122,18 @@ test_that("get_sf makes correct calculations based on position_width",{
   )
   expect_equal(flydra_sf$sf_end[210:214],
                c(0.1059672, 0.1032285, 0.1008556, 0.3881719, 0.3856564),
+               tolerance = 1e-5
+  )
+  expect_equal(motive_sf$sf_pos[62:66],
+               c(0.20007909, 0.19879082, 0.07236257, 0.07296959, 0.07249681),
+               tolerance = 1e-5
+  )
+  expect_equal(motive_sf$sf_neg[62:66],
+               c(0.02711166, 0.02867355, 0.04941639, 0.04824390, 0.04707736),
+               tolerance = 1e-5
+  )
+  expect_equal(motive_sf$sf_end[62:66],
+               c(0.06480766, 0.06051370, 0.28681606, 0.28172211, 0.27692245),
                tolerance = 1e-5
   )
 })
