@@ -140,7 +140,7 @@ tunnels with visual stimuli consisting of sine wave gratings on the tunnel
 walls?
 
 Items for us:   
-- [ ] revise the language of the first couple paragraphs accordingly
+- [x] revise the language of the first couple paragraphs accordingly [(97704bc)](https://github.com/vbaliga/pathviewR/commit/97704bcc46d42257aa113562f39297ec619b3a18)
 
 > Also, my understanding is that here you implement only two cases:
 
@@ -157,7 +157,7 @@ same way you mention that you are happy to work towards the inclusion of more
 data types?
 
 Items for us:  
-- [ ] revise the language of how these experiments are introduced  
+- [x] revise the language of how these experiments are introduced [(97704bc)](https://github.com/vbaliga/pathviewR/commit/97704bcc46d42257aa113562f39297ec619b3a18) 
 - [ ] provide links to Issues page where users can request e.g. different 
 tunnel setups
  
@@ -221,7 +221,9 @@ Items for us:
 
 - [x] make corrections to the calculations of vis angle and SF  [(dfd1e2f)](https://github.com/vbaliga/pathviewR/commit/d5d1e2f1726472505d19c091ed4363590fddc855)
 [(99c9ef5)](https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)
-- [ ] update `test-calc_vis_angle_box.R`
+- [x] update `test-calc_vis_angle_box.R` [(ba8d813)](https://github.com/vbaliga/pathviewR/commit/ba8d813100101304c64e5dd400d28c6476b43af7)
+
+*Tests were written for all new functions (`calc_min_dist_v()`, `calc_min_dist_box`, `get_vis_angle()`, and `get_sf()`)*
 
 > And also on this, I noticed that the user can supply negative values for the
 neg_wall and pos_wall arguments in the insert_treatments() function, which in
@@ -236,8 +238,8 @@ Items for us:
 - [x] add a check to `insert_treatments()` that stops the function if faulty
 `neg_wall` and `pos_wall` values are supplied  [(429258b)](https://github.com/vbaliga/pathviewR/commit/429258bf4039cf26671d915d507b48838c1aeb87)
 
-- [ ] add a test to `test-insert_treatments.R` to check the functionality of the
-above check  
+- [x] add a test to `test-insert_treatments.R` to check the functionality of the
+above check [(a9cc804)](https://github.com/vbaliga/pathviewR/commit/a9cc8041bb3d2dbe7cf7a883437b8f5fe8ccd692) 
 
 
 #### Spatial frequency
@@ -257,8 +259,8 @@ Items for us:
 
 - [x] in the Help files for each visual perception function: add a note that
 rotation information may be integrated in future pathviewR updates  [(46ba850)](https://github.com/vbaliga/pathviewR/commit/46ba850c9d2b2db453365531280b8dde1ded831a)
-- [ ] in the Visual perception vignette: add a note that rotation information
-may be integrated in future pathviewR updates
+- [x] in the Visual perception vignette: add a note that rotation information
+may be integrated in future pathviewR updates [(a3a7795)](https://github.com/vbaliga/pathviewR/commit/a3a7795f21d75b8639d2c3dfab18ff789f299ea8)
 
 ## Review from Reviewer 2 (marcosci)
 

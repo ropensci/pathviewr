@@ -481,8 +481,7 @@ summary {
 <p>On this, a question: is there any plan to code more situations or are these the typical situations for these kinds of experiment? If you welcome suggestions from users of other settings, maybe you could say that in the vignette in the same way you mention that you are happy to work towards the inclusion of more data types?</p>
 </blockquote>
 <p>Items for us:<br />
-- [ ] revise the language of how these experiments are introduced<br />
-- [ ] provide links to Issues page where users can request e.g. different tunnel setups</p>
+- [x] revise the language of how these experiments are introduced <a href="https://github.com/vbaliga/pathviewR/commit/97704bcc46d42257aa113562f39297ec619b3a18">(97704bc)</a> - [ ] provide links to Issues page where users can request e.g. different tunnel setups</p>
 <blockquote>
 <p>More generally, I would have appreciated some definition of what you call “spatial frequency” and “visual angle”. Although I understand that these might be obvious for people in the field (which are ultimately the target users of the package), but I feel like these terms (visual angle, and in particular spatial frequency) are of such broad usage that they might deserve some better description of what they mean in the context of the package. Maybe include a diagram in the vignette for users to visualise what these values represent? In particular, the Value section in the R help for the calc_sf_box() function seems to mention that the spatial frequency is the number of cycles per degree of visual angle. Maybe this info could be included in the vignette (and in the Description section of the function help)?</p>
 </blockquote>
@@ -527,9 +526,10 @@ replace <code>ifelse()</code> statement in <code>calc_vis_angle_box()</code></p>
 <ul>
 <li><input type="checkbox" disabled checked></input>
 make corrections to the calculations of vis angle and SF <a href="https://github.com/vbaliga/pathviewR/commit/d5d1e2f1726472505d19c091ed4363590fddc855">(dfd1e2f)</a> <a href="https://github.com/vbaliga/pathviewR/commit/99c9ef517e265cd27ba790b1cb28929e1986e469">(99c9ef5)</a></li>
-<li><input type="checkbox" disabled></input>
-update <code>test-calc_vis_angle_box.R</code></li>
+<li><input type="checkbox" disabled checked></input>
+update <code>test-calc_vis_angle_box.R</code> <a href="https://github.com/vbaliga/pathviewR/commit/ba8d813100101304c64e5dd400d28c6476b43af7">(ba8d813)</a></li>
 </ul>
+<p><em>Tests were written for all new functions (<code>calc_min_dist_v()</code>, <code>calc_min_dist_box</code>, <code>get_vis_angle()</code>, and <code>get_sf()</code>)</em></p>
 <blockquote>
 <p>And also on this, I noticed that the user can supply negative values for the neg_wall and pos_wall arguments in the insert_treatments() function, which in this case would lead to spurious distances being calculated. Maybe insert a warning/error message if that is the case, and add the appropriate tests?</p>
 </blockquote>
@@ -539,8 +539,8 @@ update <code>test-calc_vis_angle_box.R</code></li>
 add guidance to the Help file of <code>insert_treatments()</code> about feasible <code>neg_wall</code> and <code>pos_wall</code> values <a href="https://github.com/vbaliga/pathviewR/commit/429258bf4039cf26671d915d507b48838c1aeb87">(429258b)</a></p></li>
 <li><p><input type="checkbox" disabled checked></input>
 add a check to <code>insert_treatments()</code> that stops the function if faulty <code>neg_wall</code> and <code>pos_wall</code> values are supplied <a href="https://github.com/vbaliga/pathviewR/commit/429258bf4039cf26671d915d507b48838c1aeb87">(429258b)</a></p></li>
-<li><p><input type="checkbox" disabled></input>
-add a test to <code>test-insert_treatments.R</code> to check the functionality of the above check</p></li>
+<li><p><input type="checkbox" disabled checked></input>
+add a test to <code>test-insert_treatments.R</code> to check the functionality of the above check <a href="https://github.com/vbaliga/pathviewR/commit/a9cc8041bb3d2dbe7cf7a883437b8f5fe8ccd692">(a9cc804)</a></p></li>
 </ul>
 </div>
 <div id="spatial-frequency" class="section level4">
@@ -560,8 +560,8 @@ make corrections to the calculation of SF <a href="https://github.com/vbaliga/pa
 <ul>
 <li><input type="checkbox" disabled checked></input>
 in the Help files for each visual perception function: add a note that rotation information may be integrated in future pathviewR updates <a href="https://github.com/vbaliga/pathviewR/commit/46ba850c9d2b2db453365531280b8dde1ded831a">(46ba850)</a></li>
-<li><input type="checkbox" disabled></input>
-in the Visual perception vignette: add a note that rotation information may be integrated in future pathviewR updates</li>
+<li><input type="checkbox" disabled checked></input>
+in the Visual perception vignette: add a note that rotation information may be integrated in future pathviewR updates <a href="https://github.com/vbaliga/pathviewR/commit/a3a7795f21d75b8639d2c3dfab18ff789f299ea8">(a3a7795)</a></li>
 </ul>
 </div>
 </div>
