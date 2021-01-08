@@ -98,7 +98,8 @@ test_that("insert_treatments() fails when nonsense is supplied", {
                                  tunnel_config = "box",
                                  tunnel_width = 1,
                                  tunnel_length = 3,
-                                 stim_param_lat_pos = -0.05, # negative stim_param
+                                 stim_param_lat_pos = -0.05,
+                                 # negative stim_param
                                  stim_param_lat_neg = 0.05,
                                  stim_param_end_pos = 0.1,
                                  stim_param_end_neg = 0.1,
