@@ -95,7 +95,7 @@
       <h1 data-toc-skip>Estimating visual perceptions from tracking data</h1>
                         <h4 class="author">Eric R. Press</h4>
             
-            <h4 class="date">2021-01-07</h4>
+            <h4 class="date">2021-01-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/visual-perception-functions.Rmd"><code>vignettes/visual-perception-functions.Rmd</code></a></small>
       <div class="hidden name"><code>visual-perception-functions.Rmd</code></div>
@@ -107,14 +107,21 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>Studies of visually guided locomotion in birds, insects or even humans during often involve data gathered from motion capture technologies such as Optitrack’s <a href="https://optitrack.com/software/motive/">(Motive)</a>, or the Straw Lab’s <a href="https://github.com/strawlab/flydra">(Flydra)</a>. For these experiments, it is important to understand how visual stimuli influence behaviour. While is it not possible to measure how subjects directly perceive visual stimuli, it is possible to use the same motion capture data to calculate estimates of stimulus properties as they are perceived by the subject. With the tools available in pathviewR, researchers in ethology or psychology can provide analyses of both stimulus and response under natural locomotor conditions.</p>
+<p>Studies of visually guided locomotion in birds, insects or even humans often involve data gathered from motion capture technologies such as Optitrack’s <a href="https://optitrack.com/software/motive/">(Motive)</a>, or the Straw Lab’s <a href="https://github.com/strawlab/flydra">(Flydra)</a>. For these experiments, it is important to understand how visual stimuli influence behaviour. While is it not possible to measure how subjects directly perceive visual stimuli, it is possible to use motion capture data to calculate estimates of stimulus properties as they are perceived by the subject. With the tools available in pathviewR, researchers in ethology or psychology may provide analyses of both stimulus and response under natural locomotor conditions.</p>
 <p><em>Inherent to estimations of visual perceptions, we make several assumptions, which will be discussed below. We welcome suggestions and aim to address any assumptions that limit the accuracy of these estimates</em>.</p>
-<p>To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject’s retina - the visual angle. Visual angles can be calculated provided there is information about the physical size of the pattern and its distance from the subject’s retina. Because researchers can control or measure the size of a pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by any pattern in the visual scene. Therefore, we first need to calculate the distance to the pattern. <em>Currently, we assume the subject’s gaze is directly frontal or lateral to the face, in effect estimating image properties at a point in the frontal and lateral fields of view, respectively</em>.</p>
+<p>To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject’s retina - the visual angle (θ).</p>
+<p>Visual angles can be calculated provided there is information about the physical size of the pattern and its distance from the subject’s retina. Because researchers can control or measure the size of a pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by patterns in the visual scene. Therefore, we first need to calculate the distance from the subject’s retina to the pattern.</p>
+<p><em>Currently, we assume the subject’s gaze is directly frontal or lateral to the face, in effect estimating image properties at single points in the frontal and lateral fields of view, respectively. We currently calculate distances to the center of the subject’s head rather than the position of the retina - future versions of pathviewR will include features addressing these limitations, such as including head orientation information and eye position relative to the center of the subject’s head</em>.</p>
+<div class="figure">
+<img src="https://github.com/vbaliga/pathviewR/raw/master/images/stim_param_angle.jpeg" alt="Visual angles can be calculated using the size of a visual pattern (`stim_param`) and the distance to the pattern. Larger patterns at shorter distances produce larger visual angles. For a given distance to a grating pattern a constant visual angle is produced from a single line of sight while dot fields produce constant visual angles from many lines of sight" width="100%"><p class="caption">
+Visual angles can be calculated using the size of a visual pattern (<code>stim_param</code>) and the distance to the pattern. Larger patterns at shorter distances produce larger visual angles. For a given distance to a grating pattern a constant visual angle is produced from a single line of sight while dot fields produce constant visual angles from many lines of sight
+</p>
+</div>
 </div>
 <div id="loading-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-packages" class="anchor"></a>Loading packages</h2>
-<p>To begin, let’s load <code>pathviewR</code> as well as <code>tidyverse</code>.</p>
+<p>To begin, let’s load <code>pathviewR</code> and a few of the packages in <code>tidyverse</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
@@ -124,7 +131,7 @@
 <h2 class="hasAnchor">
 <a href="#data-preparation" class="anchor"></a>Data preparation</h2>
 <p>Data objects must be prepared as described in <a href="https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html">the Data Import and Cleaning vignette</a> pipeline prior to their use with these functions. For a detailed description of the importing and cleaning functions, and when to use them, please see the linked vignette.</p>
-<p>Let’s work with a few example datasets included in <code>pathviewR</code>. <code>pathviewR_motive_example_data.csv</code> is a .csv file exported from <code>Motive</code>. <code>pathviewR_flydra_example_data.mat</code> is a .mat file exported from <code>Flydra</code>. For more coarse-grained data cleaning tasks, <code>pathviewR</code> contains an all-in-one cleaning function <code>clean_viewr</code>. We will use this function for the following examples.</p>
+<p>Let’s work with a few example datasets included in the package. <code>pathviewR_motive_example_data.csv</code> is a .csv file exported from Motive. <code>pathviewR_flydra_example_data.mat</code> is a .mat file exported fromFlydra. For more coarse-grained data cleaning tasks, <code>pathviewR</code> contains an all-in-one cleaning function <code>clean_viewr</code>. We will use this function for the following examples.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Import motive data set</span>
 <span class="va">motive_data</span> <span class="op">&lt;-</span> <span class="co"># import</span>
@@ -181,7 +188,7 @@
 <h2 class="hasAnchor">
 <a href="#add-experiment-information-with-insert_treatments" class="anchor"></a>Add experiment information with <code>insert_treatments()</code>
 </h2>
-<p>Now that our objects have been cleaned, we must use <code><a href="../reference/insert_treatments.html">insert_treatments()</a></code> to add information about the experiments, including relevant properties of the visual stimulus and experimental tunnel that are necessary for calculating visual angles. <em><code>pathviewR</code> currently supports rectangular (box) or v-shaped experimental tunnels, though we are intrigued to include additional tunnel configurations</em></p>
+<p>Now that our objects have been cleaned, we must use <code><a href="../reference/insert_treatments.html">insert_treatments()</a></code> to add information about the experiments, including relevant properties of the visual stimulus and experimental tunnel that are necessary for calculating visual perceptions. <em><code>pathviewR</code> currently supports rectangular (box) or v-shaped experimental tunnels, though we are intrigued to include additional tunnel configurations</em>.</p>
 <div id="v-shaped-tunnel-example" class="section level4">
 <h4 class="hasAnchor">
 <a href="#v-shaped-tunnel-example" class="anchor"></a>V-shaped tunnel example</h4>
@@ -211,7 +218,7 @@
 <span class="co">#&gt; [25] "traj_id"            "file_sub_traj"      "traj_length"       </span>
 <span class="co">#&gt; [28] "start_length"       "end_length"         "length_diff"       </span>
 <span class="co">#&gt; [31] "start_length_sign"  "end_length_sign"    "direction"</span></code></pre></div>
-<p><code>motive_treatments</code> now has the variables <code>tunnel_config</code>, <code>perch_2_vertex</code>, <code>vertex_angle</code>, <code>stim_param_lat_pos</code>, <code>stim_param_lat_neg</code>, <code>stim_param_end_pos</code>, and <code>stim_param_end_neg</code> which are needed to calculate visual angles. The variable <code>treatment</code> has also been included and all of this information has been stored in the object’s metadata.</p>
+<p><code>motive_treatments</code> now has the variables <code>tunnel_config</code>, <code>perch_2_vertex</code>, <code>vertex_angle</code>, <code>tunnel_length</code>, <code>stim_param_lat_pos</code>, <code>stim_param_lat_neg</code>, <code>stim_param_end_pos</code>, and <code>stim_param_end_neg</code> which are needed to calculate visual angles. The variable <code>treatment</code> has also been included and all of this information has been stored in the object’s metadata.</p>
 </div>
 <div id="box-shaped-tunnel-example" class="section level4">
 <h4 class="hasAnchor">
@@ -234,17 +241,18 @@
 <div id="calculating-visual-angles" class="section level2">
 <h2 class="hasAnchor">
 <a href="#calculating-visual-angles" class="anchor"></a>Calculating visual angles</h2>
-<div id="start-by-calculating-the-minimum-distances-to-visual-stimuli" class="section level4">
-<h4 class="hasAnchor">
-<a href="#start-by-calculating-the-minimum-distances-to-visual-stimuli" class="anchor"></a>Start by calculating the minimum distances to visual stimuli</h4>
-<p>To estimate the visual angles perceived by the subject is it moves through the tunnel, we first need to calculate the distance between the subject and the visual stimuli. For this, we will use <code>calc_min_dist_v</code> or <code>calc_min_dist_box</code> depending on the configuration of the experimental tunnel.<br>
+<div id="start-by-calculating-distances-to-visual-stimuli" class="section level3">
+<h3 class="hasAnchor">
+<a href="#start-by-calculating-distances-to-visual-stimuli" class="anchor"></a>Start by calculating distances to visual stimuli</h3>
+<p>To estimate the visual angles perceived by the subject is it moves through the tunnel, we first need to calculate the distance between the subject and the visual stimuli. For this, we will use <code>calc_min_dist_v</code> or <code>calc_min_dist_box</code> depending on the configuration of the experimental tunnel. These functions calculate the minimum distance between the subject and the surface displaying a visual pattern, therefore maximizing the visual angles.<br>
 For v-shaped tunnels, several internal calculations are required and can be added to the output object with <code>simplify_output = FALSE</code>. Otherwise, the minimum distance are computed to the lateral walls and the end wall to which the subject is facing.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_min_dist</span> <span class="op">&lt;-</span> 
   <span class="va">motive_treatments</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/calc_min_dist_v.html">calc_min_dist_v</a></span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-<span class="co">## Display minimum distances to the positive lateral walls</span>
+<span class="co">## Display minimum distances to the positive lateral walls </span>
+<span class="co">## Viewpoint is from the end of the tunnel</span>
 <span class="va">motive_min_dist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">min_dist_pos</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -265,6 +273,7 @@ For v-shaped tunnels, several internal calculations are required and can be adde
   <span class="fu"><a href="../reference/calc_min_dist_box.html">calc_min_dist_box</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co">## Display minimum distances to the end walls</span>
+<span class="co">## Viewpoint is from above the tunnel</span>
 <span class="va">flydra_min_dist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">min_dist_end</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -280,15 +289,16 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_min_dist_end-1.png" width="672"></p>
 </div>
-<div id="now-get-visual-angles" class="section level4">
-<h4 class="hasAnchor">
-<a href="#now-get-visual-angles" class="anchor"></a>Now get visual angles</h4>
+<div id="now-get-visual-angles" class="section level3">
+<h3 class="hasAnchor">
+<a href="#now-get-visual-angles" class="anchor"></a>Now get visual angles</h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_vis_angle</span> <span class="op">&lt;-</span> 
   <span class="va">motive_min_dist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/get_vis_angle.html">get_vis_angle</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="co">## visualize the angles produced from stimuli on the positive wall</span>
+<span class="co">## Visualize the angles produced from stimuli on the positive wall</span>
+<span class="co">## Viewpoint is from the end of the tunnel</span>
 <span class="va">motive_vis_angle</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_pos_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -303,12 +313,14 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_vis_angle_pos-1.png" width="672"></p>
+<p>Notice larger visual angles as the subject approaches the positive wall.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flydra_vis_angle</span> <span class="op">&lt;-</span> 
   <span class="va">flydra_min_dist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/get_vis_angle.html">get_vis_angle</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="co">## visualize the angles produced by stimuli on the end walls</span>
+<span class="co">## Visualize the angles produced by stimuli on the end walls</span>
+<span class="co">## Viewpoint is from above the tunnel</span>
 <span class="va">flydra_vis_angle</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">vis_angle_end_deg</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -323,27 +335,21 @@ For v-shaped tunnels, several internal calculations are required and can be adde
                    xend <span class="op">=</span> <span class="fl">1</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_vis_angle_end-1.png" width="672"></p>
-<p>The perceived spatial frequency of a visual stimulus refers to the size of the stimulus in visual space. It’s often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). For a given distance from the subject, an image of a larger visual pattern produces a smaller spatial frequency, whereas an image of a smaller visual pattern produces a higher spatial frequency. See</p>
-<div class="figure">
-<img src="https://github.com/vbaliga/pathviewR/raw/master/images/stim_param.jpeg" alt="Stimular parameter of common visual patterns" width="50%"><p class="caption">
-Stimular parameter of common visual patterns
-</p>
-</div>
-<div class="figure">
-<img src="https://github.com/vbaliga/pathviewR/raw/master/images/stim_param.jpeg" alt=""><p class="caption">Stimulus parameter</p>
-</div>
+<p>Notice larger visual angles as the subject approaches the end wall that it is moving towards.</p>
 </div>
 </div>
 <div id="calculating-spatial-frequency" class="section level2">
 <h2 class="hasAnchor">
 <a href="#calculating-spatial-frequency" class="anchor"></a>Calculating spatial frequency</h2>
+<p>With visual angles, we can now determine the spatial frequency of a visual pattern as it is perceived by the subject. Spatial frequency refers to the size of the pattern in visual space. It’s often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). Here, we will define a cycle length as the length used for the <code>stim_param</code>. For a given distance from the subject, a larger visual pattern produces a smaller spatial frequency, whereas a smaller visual pattern produces a larger spatial frequency.</p>
 <p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code><a href="../reference/get_sf.html">get_sf()</a></code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_sf</span> <span class="op">&lt;-</span> 
   <span class="va">motive_vis_angle</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/get_sf.html">get_sf</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="co">## visualize the spatial frequency of the stimulus on the positive wall </span>
+<span class="co">## Visualize the spatial frequency of the stimulus on the positive wall </span>
+<span class="co">## point is from the end of the tunnel</span>
 <span class="va">motive_sf</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -358,12 +364,14 @@ Stimular parameter of common visual patterns
                    xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,
                    yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_sf_pos-1.png" width="672"></p>
+<p>Notice the spatial frequency increases the further the subject recedes from positive wall.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flydra_sf</span> <span class="op">&lt;-</span> 
   <span class="va">flydra_vis_angle</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/get_sf.html">get_sf</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="co">## visualize the spatial frequency of the stimulus on the end walls</span>
+<span class="co">## Visualize the spatial frequency of the stimulus on the end walls</span>
+<span class="co">## Viewpoint is from above the tunnel</span>
 <span class="va">flydra_sf</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_length</span>, y <span class="op">=</span> <span class="va">position_width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_end</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
@@ -378,9 +386,10 @@ Stimular parameter of common visual patterns
                    xend <span class="op">=</span> <span class="fl">1</span>,
                    yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_sf_end-1.png" width="672"></p>
-<div id="stay-tuned-as-additional-features-for-image-motion-analysis-are-coming-soon" class="section level3">
+<p>Notice the spatial frequency decreases as the subject approaches the end wall that it is moving towards.</p>
+<div id="stay-tuned-as-additional-features-for-image-motion-estimation-are-coming-soon" class="section level3">
 <h3 class="hasAnchor">
-<a href="#stay-tuned-as-additional-features-for-image-motion-analysis-are-coming-soon" class="anchor"></a>Stay tuned as additional features for image motion analysis are coming soon!</h3>
+<a href="#stay-tuned-as-additional-features-for-image-motion-estimation-are-coming-soon" class="anchor"></a>Stay tuned as additional features for image motion estimation are coming soon!</h3>
 </div>
 </div>
   </div>
