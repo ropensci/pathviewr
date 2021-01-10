@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pathviewR <a href='https://vbaliga.github.io/pathviewR'><img src='man/figures/logo.png' align="right" height="133" /></a>
+# pathviewR <a href='https://vbaliga.github.io/pathviewR'><img src='https://github.com/vbaliga/pathviewR/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
 
 <!-- badges: start -->
 
@@ -139,7 +139,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewR_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 22:11:27"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-09 16:14:48"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -182,7 +182,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 22:11:27"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-09 16:14:48"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -238,38 +238,36 @@ will be added to the data to inform calculations of visual perception
 
 ``` r
 motive_V <- 
-  motive_allinone %>% 
-  insert_treatments(vertex_height = -0.3855,
-                    vertex_angle = 45,
-                    stim_param_pos = 0.1,
-                    stim_param_neg = 0.2,
-                    treatment = "latB")
+  motive_allinone %>%
+  insert_treatments(
+    tunnel_config = "v",
+    perch_2_vertex = 0.4,
+    vertex_angle = 90,
+    tunnel_length = 2,
+    stim_param_lat_pos = 0.1,
+    stim_param_lat_neg = 0.1,
+    stim_param_end_pos = 0.3,
+    stim_param_end_neg = 0.3,
+    treatment = "lat10_end_30"
+  ) 
 ```
 
 #### Estimate perception of visual stimuli
 
 To calculate the spatial frequency of the visual stimuli as perceived by
-the subject some distance from the stimuli, we will use `calc_sf_V()`.
+the subject some distance from the stimuli, we will use `get_sf()`.
 
-The resulting object contains 10 new variables which are values involved
-in the calculation of spatial frequency.
+This will require two intermediate steps: 1) calculating the minimum
+distance between a subject and each wall (via `calc_min_dist_v()`) and
+2) estimating the visual angles from the subject’s perspective
+(`get_vis_angle()`).
 
 ``` r
 motive_V_sf <- 
   motive_V %>%
-  calc_sf_V(simplify_output = FALSE)
-```
-
-To calculate an estimation of the visual angles perceived by the
-subject, we will use `calc_vis_angle_V`.
-
-The resulting object contains 12 new variables which are values involved
-in the calculation of visual angles.
-
-``` r
-motive_V_angle <- 
-  motive_V %>% 
-  calc_vis_angle_V(simplify_output=FALSE)
+  calc_min_dist_v(simplify_output = TRUE) %>%
+  get_vis_angle() %>%
+  get_sf()
 ```
 
 Visualizing the calculations provides an more intuitive understanding of

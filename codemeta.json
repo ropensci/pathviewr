@@ -258,13 +258,13 @@
     }
   ],
   "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "8036.008KB",
+  "fileSize": "11559.219KB",
   "contIntegration": "https://codecov.io/gh/vbaliga/pathviewR?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2020",
+      "datePublished": "2021",
       "author": [
         {
           "@type": "Person",
@@ -289,7 +289,7 @@
       "url": "https://github.com/vbaliga/pathviewR",
       "isPartOf": {
         "@type": "PublicationIssue",
-        "datePublished": "2020",
+        "datePublished": "2021",
         "isPartOf": {
           "@type": ["PublicationVolume", "Periodical"],
           "name": "Github repository"

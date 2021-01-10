@@ -45,12 +45,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -75,7 +69,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/vbaliga/pathviewR/">
-    <span class="fab fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,13 +83,13 @@
 
       
 
-      </header><script src="data-import-cleaning_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basics of data import and cleaning in pathviewR</h1>
                         <h4 class="author">Vikram B. Baliga</h4>
             
-            <h4 class="date">2021-01-07</h4>
+            <h4 class="date">2021-01-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/data-import-cleaning.Rmd"><code>vignettes/data-import-cleaning.Rmd</code></a></small>
       <div class="hidden name"><code>data-import-cleaning.Rmd</code></div>
@@ -108,7 +102,7 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>Raw movement data, including those from motion capture systems, may have a variety of issues. These raw data often contain noise or artifacts from the recording session, which may not be easily removed via the recording software itself. Data may not be organized as “tidy” key-value pairs, the axes and overall orientation of the environment may not conform to a standard, and individual movement trajectories may be ill-defined.</p>
-<p><code>pathviewR</code> provides functions in R to deal with such problems (i.e. “clean” them). This vignette will cover the basics of how to import raw data and how to clean data to prepare it for visualization and/or statistical analyses.</p>
+<p><code>pathviewR</code> provides functions in R to deal with such problems (i.e. “clean” them). This vignette will cover the basics of how to import raw data and how to clean data to prepare it for visualization and/or statistical analyses.</p>
 </div>
 <div id="what-do-movement-data-sets-look-like" class="section level2">
 <h2 class="hasAnchor">
@@ -129,20 +123,20 @@
 <p>We will showcase examples from each of these methods in this section.</p>
 <p>Please feel free to reach out to the <code>pathviewR</code> authors via <a href="https://github.com/vbaliga/pathviewR/issues/">our Github Issues page</a> should you have trouble with any of our data import options. We are happy to work with you to design custom <code>read_</code> functions for file types we have not encountered ourselves.</p>
 <p>We’ll start by loading <code>pathviewR</code> and a few of the packages in the <code>tidyverse</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## If you do not already have pathviewR installed:</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co">## If you do not already have pathviewR installed:</span>
 <span class="co"># install.packages("devtools")</span>
 <span class="co"># devtools::install_github("vbaliga/pathviewR")</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vbaliga/pathviewR">pathviewR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></pre></div>
 <div id="motive-csv-files" class="section level3">
 <h3 class="hasAnchor">
 <a href="#motive-csv-files" class="anchor"></a>Motive CSV files</h3>
 <p><code>.csv</code> files exported from Motive can be imported via <code><a href="../reference/read_motive_csv.html">read_motive_csv()</a></code></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Import the Motive example data included in </span>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="co">## Import the Motive example data included in </span>
 <span class="co">## the package</span>
 
 <span class="va">motive_data</span> <span class="op">&lt;-</span>
@@ -176,11 +170,11 @@
 <span class="co">#&gt; #   device05_rotation_x &lt;dbl&gt;, device05_rotation_y &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   device05_rotation_z &lt;dbl&gt;, device05_rotation_w &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   device05_position_x &lt;dbl&gt;, device05_position_y &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   device05_position_z &lt;dbl&gt;, device05_mean_marker_error &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; #   device05_position_z &lt;dbl&gt;, device05_mean_marker_error &lt;dbl&gt;</span></pre></div>
 <p>A key thing to note is that these data, as stored in Motive CSVs, are not “tidy”. Each frame occupies one row, but what that also means is that the rotation and position values for the various subjects take up 24 columns! This format not only makes plotting data more difficult in base R, <code>ggplot2</code>, and <code>rgl</code>, but also makes other aspects of data wrangling more difficult. In a later step, we will ‘gather’ these data into key-value pairs so that e.g. all length-wise position values are in one column, all width-wise are in another…etc.</p>
 <p>Metadata are stored as attributes. We won’t go through all of these, but here are a couple important ones.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## E.g. to see the header of the original file:</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co">## E.g. to see the header of the original file:</span>
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">motive_data</span>, <span class="st">"header"</span><span class="op">)</span>
 <span class="co">#&gt;                 metadata                      value</span>
 <span class="co">#&gt; 1         Format Version                       1.23</span>
@@ -205,7 +199,7 @@
 
 <span class="co">## Frame rate</span>
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">motive_data</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 100</span></code></pre></div>
+<span class="co">#&gt; [1] 100</span></pre></div>
 <p>Storing such metatdata in the attributes is a key feature of <code>pathviewR</code>. These metadata may not be as immediately as important as the time series of position or rotation, but they can provide important experimental information such as the date &amp; time of capture and the units of the position data (here, meters).</p>
 </div>
 <div id="flydra-matlab-files" class="section level3">
@@ -213,8 +207,8 @@
 <a href="#flydra-matlab-files" class="anchor"></a>Flydra Matlab files</h3>
 <p><code>.mat</code> files exported from Flydra can be imported via <code><a href="../reference/read_flydra_mat.html">read_flydra_mat()</a></code>.</p>
 <p>Note that a <code>subject_name</code> is required. Only one name can be added and it will be used throughout the resultant <code>tibble</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Import the Flydra example data included in </span>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co">## Import the Flydra example data included in </span>
 <span class="co">## the package</span>
 <span class="va">flydra_data</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span>
@@ -243,7 +237,7 @@
 <span class="co">#&gt; # … with 7,734 more rows</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">flydra_data</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 100</span></code></pre></div>
+<span class="co">#&gt; [1] 100</span></pre></div>
 <p>Note that unlike the example Motive data, the Flydra data are already organized into key-value pairs. Because rotation is not captured by Flydra, such data are also not included.</p>
 </div>
 <div id="data-from-other-sources" class="section level3">
@@ -251,8 +245,8 @@
 <a href="#data-from-other-sources" class="anchor"></a>Data from other sources</h3>
 <p>Data from another format can be converted to a <code>viewr</code> object via <code><a href="../reference/as_viewr.html">pathviewR::as_viewr()</a></code>. Although this function does not handle data import per se, it allows data that you may already have imported into R as a <code>tibble</code> or <code>data.frame</code> to then be reformatted for use with <code>pathviewR</code> functions.</p>
 <p>We’ll run through a quick example with simulated data:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Create a dummy data frame with simulated (nonsense) data</span>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co">## Create a dummy data frame with simulated (nonsense) data</span>
 <span class="va">df</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
     frame <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
@@ -278,7 +272,7 @@
 
 <span class="co">## Some metadata are stored as attributes</span>
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">test</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 100</span></code></pre></div>
+<span class="co">#&gt; [1] 100</span></pre></div>
 <p>We also welcome you to request custom data import functions, especially if <code><a href="../reference/as_viewr.html">as_viewr()</a></code> does not fit your needs . We are interested in expanding our data import functions to accommodate additional file types. Please feel free to <a href="https://github.com/vbaliga/pathviewR/issues/new/choose">file a request for additional import functions</a> via our Github Issues page.</p>
 </div>
 </div>
@@ -299,8 +293,8 @@
 <p>Axis labels (x, y, z) may be applied in arbitrary ways by software. A user might intuitively think the z axis represents height, but the original software may label it as the y axis instead.</p>
 <p><code>relabel_viewr_axes</code> provides a means to relabel axes with “tunnel_length”, “tunnel_width”, and “tunnel_height”. <strong>These axis labels will be expected by subsequent functions, so skipping this step is ill-advised.</strong></p>
 <p>Typically, axes from Motive data will need to be relabled, but axes in data imported from Flydra will not.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">motive_relabeled</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">motive_relabeled</span> <span class="op">&lt;-</span>
   <span class="va">motive_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span>
     tunnel_length <span class="op">=</span> <span class="st">"_z"</span>,
@@ -322,11 +316,11 @@
 <span class="co">#&gt; [19] "device05_rotation_width"    "device05_rotation_height"  </span>
 <span class="co">#&gt; [21] "device05_rotation_length"   "device05_rotation_real"    </span>
 <span class="co">#&gt; [23] "device05_position_width"    "device05_position_height"  </span>
-<span class="co">#&gt; [25] "device05_position_length"   "device05_mean_marker_error"</span></code></pre></div>
+<span class="co">#&gt; [25] "device05_position_length"   "device05_mean_marker_error"</span></pre></div>
 <p>Akin to the behavior of <code>dplyr::gather()</code>, <code><a href="../reference/gather_tunnel_data.html">gather_tunnel_data()</a></code> will take all data from a given session and organize it so that all data of a given type are within one column, i.e. all position lengths are in <code>position_length</code>, as opposed to separate length columns for each rigid body. <strong>These column names will be expected by subsequent functions, so skipping this step is also ill-advised if you are using data from Motive.</strong> Should you have data from Flydra, this step should be skipable.</p>
 <p>Use <code><a href="../reference/trim_tunnel_outliers.html">trim_tunnel_outliers()</a></code> to remove extreme artifacts and other outlier data. What this function does is create a (virtual) boundary box according to user-specification, and any data outside that boundary are removed. For example, if you know your arena measures 10m x 10m x 10m and your data were calibrated to range from 0-10m in each dimension, you can be reasonably sure that extreme values such as 45m on a given axis are bogus. This step is entirely optional, and should only be used when the user is confident that data outside certain ranges are artifacts or other bugs. Data outside these ranges are then filtered out. Best to plot data beforehand and check!!</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## First gather and show the new column names</span>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="co">## First gather and show the new column names</span>
 <span class="va">motive_gathered</span> <span class="op">&lt;-</span>
   <span class="va">motive_relabeled</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span>
@@ -349,7 +343,7 @@
     widths_max <span class="op">=</span> <span class="fl">0.8</span>,
     heights_min <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span>,
     heights_max <span class="op">=</span> <span class="fl">0.5</span>
-  <span class="op">)</span></code></pre></div>
+  <span class="op">)</span></pre></div>
 </div>
 <div id="standardization-of-tunnel-position-and-coordinates" class="section level3">
 <h3 class="hasAnchor">
@@ -363,8 +357,8 @@
 <li><p><code>rotate_tunnel</code>: Rotate and center a tunnel based on user-defined coordinates (i.e. similar to <code><a href="../reference/standardize_tunnel.html">standardize_tunnel()</a></code> but for cases where specified landmarks are not in the data). This function can be used on both Motive and Flydra data.</p></li>
 </ul>
 <p>Two quick examples will follow, using our Motive and Flydra data:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Rotate and center the motive data set:</span>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="co">## Rotate and center the motive data set:</span>
 <span class="va">motive_rotated</span> <span class="op">&lt;-</span>
   <span class="va">motive_trimmed</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/rotate_tunnel.html">rotate_tunnel</a></span><span class="op">(</span>
@@ -376,43 +370,43 @@
     perch1_wid_max <span class="op">=</span> <span class="fl">0.31</span>,
     perch2_wid_min <span class="op">=</span> <span class="fl">0.13</span>,
     perch2_wid_max <span class="op">=</span> <span class="fl">0.35</span>
-  <span class="op">)</span></code></pre></div>
+  <span class="op">)</span></pre></div>
 <p>In the above, virtual perches are defined by the user using the arguments shown. The center of each perch is then found and then the locations of the two perch centers are then used to 1) set <code>(0, 0, 0)</code> to the point that is equidistant from the perches (i.e. the middle of the tunnel) and 2) rotate the tunnel about the height axis so that both perch width coordinates are at 0. This may be easier to understand through plotting:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Quick (base-R) plot of the original data</span>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="co">## Quick (base-R) plot of the original data</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_trimmed</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">motive_trimmed</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/rotate_example_plots-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+<div class="sourceCode" id="cb10"><pre class="downlit">
+
 <span class="co">## Quick (base-R) plot of the rotated data</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_rotated</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">motive_rotated</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/rotate_example_plots-2.png" width="700"></p>
 <p>Differences due to rotation may be extremely subtle, but the redefining of <code>(0, 0, 0)</code> to the middle of the tunnel should be clear from contrasting the axes of the plots.</p>
 <p>Flydra data typically do not need to be rotated, so we will instead use <code><a href="../reference/redefine_tunnel_center.html">redefine_tunnel_center()</a></code> to adjust the location of <code>(0, 0, 0)</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Re-center the Flydra data set:</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="co">## Re-center the Flydra data set:</span>
 <span class="va">flydra_centered</span> <span class="op">&lt;-</span>
   <span class="va">flydra_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/redefine_tunnel_center.html">redefine_tunnel_center</a></span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,
                          height_method <span class="op">=</span> <span class="st">"user-defined"</span>,
-                         height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span></code></pre></div>
+                         height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span></pre></div>
 <p>Here, we are using <code>length_method = "middle"</code> to use the middle of the range of “length” data to set length = 0 (a translation), making no change to the width axis, and then specifying that height = 0 should be equal to the value <code>1.44</code> from the original data (another translation). Again, plotting may help; note that this time, we’ll plot length x height (instead of width):</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Quick (base-R) plot of the original data</span>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="co">## Quick (base-R) plot of the original data</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">flydra_data</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">flydra_data</span><span class="op">$</span><span class="va">position_height</span>,
-     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/redefine_example_plots-1.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+<div class="sourceCode" id="cb13"><pre class="downlit">
+
 <span class="co">## Quick (base-R) plot of the redefined data</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">flydra_centered</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">flydra_centered</span><span class="op">$</span><span class="va">position_height</span>,
-     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/redefine_example_plots-2.png" width="700"></p>
 </div>
 <div id="selecting-a-region-of-interest" class="section level3">
@@ -421,18 +415,18 @@
 <p>This required step has benefits that are twofold: 1) treatment effects on animal movement may only manifest over certain regions of the tunnel, and 2) focusing on a subset of the data makes it easier to define explicit trajectories and run computations faster.</p>
 <p>The region of interest is defined via the function <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code>. Once tunnel coordinates have been standardized (via one of the function in the previous section), <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> then selects the middle <code>x</code> percent (along the length axis) of the tunnel as the region of interest. For example, selecting 50 percent would start from the center of the tunnel and move 25% of the tunnel along positive length and 25% along negative length values to then select the middle 50% of the tunnel.</p>
 <p>Quick examples:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Motive data: select the middle 50% of the tunnel as the region of interest</span>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="co">## Motive data: select the middle 50% of the tunnel as the region of interest</span>
 <span class="va">motive_selected</span> <span class="op">&lt;-</span>
   <span class="va">motive_rotated</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/select_x_percent.html">select_x_percent</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
 
 <span class="co">## Quick plot:</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_selected</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">motive_selected</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/select_x_examples-1.png" width="700"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+<div class="sourceCode" id="cb15"><pre class="downlit">
+
 <span class="co">## Flydra data:</span>
 <span class="va">flydra_selected</span> <span class="op">&lt;-</span>
   <span class="va">flydra_centered</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/select_x_percent.html">select_x_percent</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
@@ -440,7 +434,7 @@
 <span class="co">## Quick plot:</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">flydra_selected</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">flydra_selected</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/select_x_examples-2.png" width="700"></p>
 </div>
 <div id="isolating-each-trajectory" class="section level3">
@@ -451,15 +445,15 @@
 <p>Because cameras may occasionally drop frames, we allow the user to permit some relaxation of how stringent the “continuous movement” criterion is. This is handled via the <code>max_frame_gap</code> argument within <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code>. For more details, please see <a href="https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html">the vignette Managing frame gaps with pathviewR</a>.</p>
 <p>In our Motive example, we’ll use the automated feature built into the function to guesstimate the best <code>max_frame_gap</code> allowed. When frame gaps larger than <code>max_frame_gap</code> are encountered, the function will force the defining of a new trajectory. But if frame gaps smaller than <code>max_frame_gap</code> are encountered, keeping observations within the same trajectory is permitted.</p>
 <p>In the Flydra example, we’ll simply set <code>max_frame_gap</code> to <code>1</code> so that no frame gaps are allowed (movement must be continuous with no dropped frames).</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">motive_labeled</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="va">motive_labeled</span> <span class="op">&lt;-</span>
   <span class="va">motive_selected</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span>
 <span class="co">#&gt; autodetect is an experimental feature -- please report issues.</span>
 
 <span class="va">flydra_labeled</span> <span class="op">&lt;-</span>
   <span class="va">flydra_selected</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 </div>
 <div id="retain-only-complete-trajectories" class="section level3">
 <h3 class="hasAnchor">
@@ -468,18 +462,18 @@
 <p>This final step is handled via <code>pathviewR</code>’s <code><a href="../reference/get_full_trajectories.html">get_full_trajectories()</a></code>.</p>
 <p>There is a built-in “fuzziness” feature: because trajectories may not have observations exactly at the beginning or the end of the region of interest, it may be necessary to allow trajectories to be slightly shorter than the range of the selected region of interest. The <code>span</code> parameter of this function handles this. By supplying a numeric proportion from <code>0</code> to <code>1</code>, a user may allow trajectories to span that proportion of the selected region. For example, setting <code>span = 0.95</code> will keep all trajectories that span 95% of the length of the selected region of interest. Setting <code>span = 1</code> (not recommended) will strictly keep trajectories that start and end at the <strong>exact</strong> cut-offs of the selected region of interest.</p>
 <p>For these reasons, <code>span</code>s of <code>0.99</code> to <code>0.95</code> are generally recommended. The best choice ultimately depends on your capture frame rate as well as your own judgment. Should you desire to set it lower (which you can), you may instead consider using a smaller region of interest (i.e. set the <code>desired_percent</code> parameter in <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> to be lower).</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Motive</span>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="co">## Motive</span>
 <span class="va">motive_full</span> <span class="op">&lt;-</span>
   <span class="va">motive_labeled</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_full</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">motive_full</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/get_full_examples-1.png" width="700"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+<div class="sourceCode" id="cb18"><pre class="downlit">
+
 <span class="co">## Flydra</span>
 <span class="va">flydra_full</span> <span class="op">&lt;-</span>
   <span class="va">flydra_labeled</span> <span class="op">%&gt;%</span> 
@@ -487,7 +481,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">flydra_full</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">flydra_full</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">flydra_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">flydra_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/get_full_examples-2.png" width="700"></p>
 </div>
 <div id="all-in-one-cleaning-functions" class="section level3">
@@ -498,8 +492,8 @@
 <p>For example, if the user keeps <code>select_x_percent = TRUE</code> as an argument in <code><a href="../reference/clean_viewr.html">clean_viewr()</a></code>, the <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> function is run internally. This means that should the user desire to select a region of interest that does not match the default value of 33 percent, an additional argument should be supplied to <code><a href="../reference/clean_viewr.html">clean_viewr()</a></code> as if it were being supplied to <code><a href="../reference/select_x_percent.html">select_x_percent()</a></code> itself, e.g.: <code>desired_percent = 50</code>.</p>
 <p>All additional arguments should be written out fully and explicitly.</p>
 <p>Here’s an example using what we previously covered:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">motive_allinone</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="va">motive_allinone</span> <span class="op">&lt;-</span>
   <span class="va">motive_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/clean_viewr.html">clean_viewr</a></span><span class="op">(</span>
     relabel_viewr_axes <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -519,7 +513,7 @@
 <span class="co">## Quick plot</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">motive_allinone</span><span class="op">$</span><span class="va">position_length</span>,
      <span class="va">motive_allinone</span><span class="op">$</span><span class="va">position_width</span>,
-     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_allinone</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">motive_allinone</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="data-import-cleaning_files/figure-html/all-in-one-1.png" width="700"></p>
 <p>That’s all!</p>
 <p>🐢</p>
@@ -542,7 +536,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
