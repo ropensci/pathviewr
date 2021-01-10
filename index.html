@@ -100,7 +100,7 @@
   <div class="contents col-md-9">
 <div id="pathviewr-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#pathviewr-" class="anchor"></a>pathviewR <a href="https://vbaliga.github.io/pathviewR"><img src="reference/figures/logo.png" align="right" height="133"></a>
+<a href="#pathviewr-" class="anchor"></a>pathviewR <a href="https://vbaliga.github.io/pathviewR"><img src="https://github.com/vbaliga/pathviewR/raw/master/images/pathviewrhex_300dpi_trns.png" align="right" height="150px"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -200,7 +200,7 @@
 <span class="co">#&gt;  - attr(*, ".internal.selfref")=&lt;externalptr&gt; </span>
 <span class="co">#&gt;  - attr(*, "pathviewR_steps")= chr "viewr"</span>
 <span class="co">#&gt;  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"</span>
-<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 22:11:27"</span>
+<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-09 16:14:48"</span>
 <span class="co">#&gt;  - attr(*, "frame_rate")= num 100</span>
 <span class="co">#&gt;  - attr(*, "header")='data.frame':   11 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...</span>
@@ -243,7 +243,7 @@
 <span class="co">#&gt;  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...</span>
 <span class="co">#&gt;  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...</span>
 <span class="co">#&gt;  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"</span>
-<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2020-12-28 22:11:27"</span>
+<span class="co">#&gt;  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-09 16:14:48"</span>
 <span class="co">#&gt;  - attr(*, "frame_rate")= num 100</span>
 <span class="co">#&gt;  - attr(*, "header")='data.frame':   11 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...</span>
@@ -281,30 +281,32 @@
 <p>The data from this example were recorded in a V-shaped tunnel. Accordingly, the vertex angle and vertex height of the tunnel, along with information about the visual stimuli used during the experiment, will be added to the data to inform calculations of visual perception (next section).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_V</span> <span class="op">&lt;-</span> 
-  <span class="va">motive_allinone</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/insert_treatments.html">insert_treatments</a></span><span class="op">(</span>vertex_height <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
-                    vertex_angle <span class="op">=</span> <span class="fl">45</span>,
-                    stim_param_pos <span class="op">=</span> <span class="fl">0.1</span>,
-                    stim_param_neg <span class="op">=</span> <span class="fl">0.2</span>,
-                    treatment <span class="op">=</span> <span class="st">"latB"</span><span class="op">)</span></code></pre></div>
+  <span class="va">motive_allinone</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/insert_treatments.html">insert_treatments</a></span><span class="op">(</span>
+    tunnel_config <span class="op">=</span> <span class="st">"v"</span>,
+    perch_2_vertex <span class="op">=</span> <span class="fl">0.4</span>,
+    vertex_angle <span class="op">=</span> <span class="fl">90</span>,
+    tunnel_length <span class="op">=</span> <span class="fl">2</span>,
+    stim_param_lat_pos <span class="op">=</span> <span class="fl">0.1</span>,
+    stim_param_lat_neg <span class="op">=</span> <span class="fl">0.1</span>,
+    stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,
+    stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,
+    treatment <span class="op">=</span> <span class="st">"lat10_end_30"</span>
+  <span class="op">)</span> </code></pre></div>
 </div>
 <div id="estimate-perception-of-visual-stimuli" class="section level4">
 <h4 class="hasAnchor">
 <a href="#estimate-perception-of-visual-stimuli" class="anchor"></a>Estimate perception of visual stimuli</h4>
-<p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code>calc_sf_V()</code>.</p>
-<p>The resulting object contains 10 new variables which are values involved in the calculation of spatial frequency.</p>
+<p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code><a href="reference/get_sf.html">get_sf()</a></code>.</p>
+<p>This will require two intermediate steps: 1) calculating the minimum distance between a subject and each wall (via <code><a href="reference/calc_min_dist_v.html">calc_min_dist_v()</a></code>) and 2) estimating the visual angles from the subject’s perspective (<code><a href="reference/get_vis_angle.html">get_vis_angle()</a></code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_V_sf</span> <span class="op">&lt;-</span> 
   <span class="va">motive_V</span> <span class="op">%&gt;%</span>
-  <span class="fu">calc_sf_V</span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p>To calculate an estimation of the visual angles perceived by the subject, we will use <code>calc_vis_angle_V</code>.</p>
-<p>The resulting object contains 12 new variables which are values involved in the calculation of visual angles.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">motive_V_angle</span> <span class="op">&lt;-</span> 
-  <span class="va">motive_V</span> <span class="op">%&gt;%</span> 
-  <span class="fu">calc_vis_angle_V</span><span class="op">(</span>simplify_output<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="reference/calc_min_dist_v.html">calc_min_dist_v</a></span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/get_vis_angle.html">get_vis_angle</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/get_sf.html">get_sf</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please <a href="https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html">see the Visual Perception Functions vignette</a> for more examples of visualizing calculations.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
