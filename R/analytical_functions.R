@@ -575,7 +575,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #########################         calc_min_dist_v        ########################
 
 #' Calculate minimum distance to lateral and end walls in a V-shaped
-#' experimentaltunnel
+#' experimental tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
 #'   \code{pathviewR_steps} that includes \code{"viewr"} and

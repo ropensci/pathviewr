@@ -49,7 +49,12 @@ library(magrittr)
 ## Data preparation
 Data objects must be prepared as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) pipeline prior to their use with these functions. For a detailed description of the importing and cleaning functions, and when to use them, please see the linked vignette. 
 
-Let's work with a few example datasets included in the package. `pathviewR_motive_example_data.csv` is a .csv file exported from Motive. `pathviewR_flydra_example_data.mat` is a .mat file exported fromFlydra. For more coarse-grained data cleaning tasks, `pathviewR` contains an all-in-one cleaning function `clean_viewr`. We will use this function for the following examples. 
+Let's work with a few example datasets included in the package.
+`pathviewR_motive_example_data.csv` is a .csv file exported from Motive.
+`pathviewR_flydra_example_data.mat` is a .mat file exported from Flydra. For
+more coarse-grained data cleaning tasks, `pathviewR` contains an all-in-one
+cleaning function `clean_viewr`. We will use this function for the following
+examples.
 
 
 ```{r}
