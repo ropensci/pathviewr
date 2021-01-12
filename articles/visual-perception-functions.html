@@ -95,7 +95,7 @@
       <h1 data-toc-skip>Estimating visual perceptions from tracking data</h1>
                         <h4 class="author">Eric R. Press</h4>
             
-            <h4 class="date">2021-01-10</h4>
+            <h4 class="date">2021-01-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewR/blob/master/vignettes/visual-perception-functions.Rmd"><code>vignettes/visual-perception-functions.Rmd</code></a></small>
       <div class="hidden name"><code>visual-perception-functions.Rmd</code></div>
@@ -109,7 +109,7 @@
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>Studies of visually guided locomotion in birds, insects or even humans often involve data gathered from motion capture technologies such as Optitrack’s <a href="https://optitrack.com/software/motive/">(Motive)</a>, or the Straw Lab’s <a href="https://github.com/strawlab/flydra">(Flydra)</a>. For these experiments, it is important to understand how visual stimuli influence behaviour. While is it not possible to measure how subjects directly perceive visual stimuli, it is possible to use motion capture data to calculate estimates of stimulus properties as they are perceived by the subject. With the tools available in pathviewR, researchers in ethology or psychology may provide analyses of both stimulus and response under natural locomotor conditions.</p>
 <p><em>Inherent to estimations of visual perceptions, we make several assumptions, which will be discussed below. We welcome suggestions and aim to address any assumptions that limit the accuracy of these estimates</em>.</p>
-<p>To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject’s retina - the visual angle (θ).</p>
+<p>To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject’s retina - the visual angle (θ). Visual angles can be used to calculate aspects of image motion such as the rate of visual expansion <a href="https://www.pnas.org/content/early/2016/07/15/1603221113">(Dakin <em>et al</em>, 2016)</a>. For a detailed review of different forms of visual motion and how they’re processed by the brain, see <a href="https://www.karger.com/Article/Abstract/314284">(Frost, 2010)</a>.</p>
 <p>Visual angles can be calculated provided there is information about the physical size of the pattern and its distance from the subject’s retina. Because researchers can control or measure the size of a pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by patterns in the visual scene. Therefore, we first need to calculate the distance from the subject’s retina to the pattern.</p>
 <p><em>Currently, we assume the subject’s gaze is directly frontal or lateral to the face, in effect estimating image properties at single points in the frontal and lateral fields of view, respectively. We currently calculate distances to the center of the subject’s head rather than the position of the retina - future versions of pathviewR will include features addressing these limitations, such as including head orientation information and eye position relative to the center of the subject’s head</em>.</p>
 <div class="figure">
