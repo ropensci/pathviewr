@@ -3,7 +3,7 @@
 \name{calc_min_dist_v}
 \alias{calc_min_dist_v}
 \title{Calculate minimum distance to lateral and end walls in a V-shaped
-experimentaltunnel}
+experimental tunnel}
 \usage{
 calc_min_dist_v(obj_name, simplify_output = TRUE)
 }
@@ -24,7 +24,7 @@ A tibble or data.frame with added variables for
 }
 \description{
 Calculate minimum distance to lateral and end walls in a V-shaped
-experimentaltunnel
+experimental tunnel
 }
 \details{
 For tunnels in which \code{vertex_angle} is >90˚, \code{bound_pos}

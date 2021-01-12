@@ -158,8 +158,8 @@ data types?
 
 Items for us:  
 - [x] revise the language of how these experiments are introduced [(97704bc)](https://github.com/vbaliga/pathviewR/commit/97704bcc46d42257aa113562f39297ec619b3a18) 
-- [ ] provide links to Issues page where users can request e.g. different 
-tunnel setups
+- [x] provide links to Issues page where users can request e.g. different 
+tunnel setups [(20bb54a)](https://github.com/vbaliga/pathviewR/commit/20bb54a8b8ec3d5bbe6c8a98033488225ede7bfc)
  
 > More generally, I would have appreciated some definition of what you call
 “spatial frequency” and “visual angle”. Although I understand that these might
@@ -174,7 +174,8 @@ of visual angle. Maybe this info could be included in the vignette (and in the
 Description section of the function help)?
 
 Items for us:   
-- [ ] add definitions and see if we can link to a published review paper
+- [x] add definitions and see if we can link to a published review paper[(5df4083)](https://github.com/vbaliga/pathviewR/commit/5df40835e110b599e38628e68d09e30d10b1aac8)
+*Review articles of this kind go far beyond the topic of spatial frequencies/visual angles. Yet to land on a suitable article*.
 
 
 #### Comments on the code of the visual perception functions

@@ -49,7 +49,12 @@ library(magrittr)
 ## Data preparation
 Data objects must be prepared as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html) pipeline prior to their use with these functions. For a detailed description of the importing and cleaning functions, and when to use them, please see the linked vignette. 
 
-Let's work with a few example datasets included in the package. `pathviewR_motive_example_data.csv` is a .csv file exported from Motive. `pathviewR_flydra_example_data.mat` is a .mat file exported fromFlydra. For more coarse-grained data cleaning tasks, `pathviewR` contains an all-in-one cleaning function `clean_viewr`. We will use this function for the following examples. 
+Let's work with a few example datasets included in the package.
+`pathviewR_motive_example_data.csv` is a .csv file exported from Motive.
+`pathviewR_flydra_example_data.mat` is a .mat file exported from Flydra. For
+more coarse-grained data cleaning tasks, `pathviewR` contains an all-in-one
+cleaning function `clean_viewr`. We will use this function for the following
+examples.
 
 
 ```{r}
@@ -110,6 +115,8 @@ flydra_full <-
 ## Add experiment information with `insert_treatments()`
 Now that our objects have been cleaned, we must use `insert_treatments()` to add information about the experiments, including relevant properties of the visual stimulus and experimental tunnel that are necessary for calculating visual perceptions.
 *`pathviewR` currently supports rectangular (box) or v-shaped experimental tunnels, though we are intrigued to include additional tunnel configurations*.
+
+If you would like to request any additional features such as other tunnel configurations, please create and issue [(here)](https://github.com/vbaliga/pathviewR/issues/new/choose)
 
 #### V-shaped tunnel example
 The data within `motive_full` were collected from birds flying through a 3m long v-shaped tunnel in which the height of the origin `(0,0,0)` was set to the height of the perches that were 0.3855m above the vertex, which was angled at 90˚. The visual stimuli on the positive and negative walls of the tunnel (where `position_width` values > 0 and < 0, respectively) were stationary dot-fields. Each dot was of size 0.05m in diameter. The visual stimuli on the positive and negative end walls of the tunnel (where `position_length` > 0 and < 0, respectively) were dot fields with dots 0.1m in diameter. This treatment was referred to as `"latB"`. 
