@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
  
   *Inherent to estimations of visual perceptions, we make several assumptions, which will be discussed below. We welcome suggestions and aim to address any assumptions that limit the accuracy of these estimates*. 
   
-  To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject's retina - the visual angle (θ). 
+  To bridge the gap between objective measures of subject position and estimates of subjective stimulus perception, we can begin by calculating the angle a visual pattern subtends on the subject's retina - the visual angle (θ). Visual angles can be used to calculate aspects of image motion such as the rate of visual expansion [(Dakin *et al*, 2016)](https://www.pnas.org/content/early/2016/07/15/1603221113). For a detailed review of different forms of visual motion and how they're processed by the brain, see  [(Frost, 2010)](https://www.karger.com/Article/Abstract/314284).
   
   Visual angles can be calculated provided there is information about the physical size of the pattern  and its distance from the subject's retina. Because researchers can control or measure the size of a  pattern, and we can calculate the distance between the subject and pattern using motion capture data, we can further calculate the visual angle produced by patterns in the visual scene. Therefore, we first need to calculate the distance from the subject's retina to the pattern. 
   
