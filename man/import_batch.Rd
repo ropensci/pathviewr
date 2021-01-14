@@ -36,7 +36,7 @@ a file has been imported?}
 }
 \value{
 A list of viewr objects (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}).
+\code{pathviewr_steps} that includes \code{"viewr"}).
 }
 \description{
 Batch import of files for either Motive or Flydra (but not a mix of both)
@@ -47,15 +47,15 @@ details of data import methods.
 }
 \examples{
 ## Since we only have one example file of each type provided
-## in pathviewR, we will simply import the same example multiple
+## in pathviewr, we will simply import the same example multiple
 ## times to simulate batch importing. Replace the contents of
 ## the following list with your own list of files to be imported.
 
 ## Make a list of the same example file 3x
 import_list <-
   c(rep(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr'),
     3
   ))
 

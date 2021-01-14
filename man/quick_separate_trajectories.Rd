@@ -8,16 +8,16 @@ quick_separate_trajectories(obj_name, max_frame_gap = 1, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{max_frame_gap}{Unlike the corresponding parameter in
 \code{separate_trajectories}, must be a single numeric here.}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
+\code{pathviewr_steps} that includes \code{"viewr"}) in which a new column
 \code{file_sub_traj} is added, which labels trajectories within the data by
 concatenating file name, subject name, and a trajectory number (all
 separated by underscores).

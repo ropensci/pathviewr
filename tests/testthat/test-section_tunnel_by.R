@@ -5,15 +5,15 @@
 flydra_data <-
   read_flydra_mat(
     system.file("extdata",
-                "pathviewR_flydra_example_data.mat",
-                package = 'pathviewR'),
+                "pathviewr_flydra_example_data.mat",
+                package = 'pathviewr'),
     subject_name = "birdie_wooster"
   )
 
 ## Load data and run section_tunnel_by()
 test_mat <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                              package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                              package = 'pathviewr'),
                   subject_name = "birdie_wooster") %>%
   redefine_tunnel_center(length_method = "middle",
                          height_method = "user-defined",
@@ -24,8 +24,8 @@ test_mat <-
   section_tunnel_by(number_of_sections = 10)
 
 test_mat2 <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                              package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                              package = 'pathviewr'),
                   subject_name = "birdie_wooster") %>%
   redefine_tunnel_center(length_method = "middle",
                          height_method = "user-defined",

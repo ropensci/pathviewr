@@ -8,7 +8,7 @@ exclude_by_velocity(obj_name, vel_min = NULL, vel_max = NULL)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{vel_min}{Default \code{NULL}. If a numeric is entered, trajectories
 that have at least one observation with velocity less than \code{vel_min}
@@ -32,8 +32,8 @@ known to be spurious.
 ## Import and clean the example Motive data
 motive_import_and_clean <-
   import_and_clean_viewr(
-    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+    file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
     desired_percent = 50,
     max_frame_gap = "autodetect",
     span = 0.95

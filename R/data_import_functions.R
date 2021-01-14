@@ -1,4 +1,4 @@
-## Part of the pathviewR package
+## Part of the pathviewr package
 ## Last updated: 2020-09-17 VBB
 
 
@@ -14,12 +14,12 @@
 #' defaults to \code{basename(file_name)}.
 #' @param simplify_marker_naming If Markers are encountered, should they be
 #' renamed from "Subject:marker" to "marker"? Defaults to TRUE
-#' @param ... Additional arguments passed from other \code{pathviewR} functions
+#' @param ... Additional arguments passed from other \code{pathviewr} functions
 #'
 #' @details Uses \code{data.table::fread()} to import data from a CSV file and
 #' ultimately store it in a tibble. This object is also labeled with the
-#' attribute \code{pathviewR_steps} with value \code{viewr} to indicate that it
-#' has been imported by \code{pathviewR} and should be friendly towards use with
+#' attribute \code{pathviewr_steps} with value \code{viewr} to indicate that it
+#' has been imported by \code{pathviewr} and should be friendly towards use with
 #' other functions in our package. Additionally, the following metadata are
 #' stored in the tibble's attributes: header information from the Motive CSV
 #' file (\code{header}), original IDs for each object (\code{Motive_IDs}), the
@@ -50,18 +50,18 @@
 #' @seealso \code{\link{read_flydra_mat}} for importing Flydra data
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Names of variables in the resulting tibble
 #' names(motive_data)
 #'
 #' ## A variety of metadata are stored as attributes. Of particular interest:
-#' attr(motive_data, "pathviewR_steps")
+#' attr(motive_data, "pathviewr_steps")
 #' attr(motive_data, "file_id")
 #' attr(motive_data, "header")
 #' attr(motive_data, "Motive_IDs")
@@ -298,7 +298,7 @@ problems.",
     data <- tibble::as_tibble(dataz)
 
     ## Add metadata as attributes()
-    attr(data, "pathviewR_steps") <- "viewr"
+    attr(data, "pathviewr_steps") <- "viewr"
     attr(data, "file_id") <- file_id
     attr(data, "file_mtime") <- mtime
     attr(data, "frame_rate") <- header$value[5] %>% as.numeric()
@@ -333,7 +333,7 @@ problems.",
 #' defaults to \code{basename(file_name)}.
 #' @param subject_name Name that will be assigned to the subject
 #' @param frame_rate The capture frame rate of the session
-#' @param ... Additional arguments that may be passed from other pathviewR
+#' @param ... Additional arguments that may be passed from other pathviewr
 #'   functions
 #'
 #' @return A tibble with numerical data in columns. The first two columns will
@@ -350,19 +350,19 @@ problems.",
 #'
 #' @export
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the example Flydra data included in the package
 #' flydra_data <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                              package = 'pathviewR'),
+#'   read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+#'                              package = 'pathviewr'),
 #'                   subject_name = "birdie_wooster")
 #'
 #' ## Names of variables in the resulting tibble
 #' names(flydra_data)
 #'
 #' ## A variety of metadata are stored as attributes. Of particular interest:
-#' attr(flydra_data, "pathviewR_steps")
+#' attr(flydra_data, "pathviewr_steps")
 
 read_flydra_mat <-
   function(mat_file,
@@ -453,7 +453,7 @@ read_flydra_mat <-
       )
 
     ## Add metadata as attributes()
-    attr(data, "pathviewR_steps") <-
+    attr(data, "pathviewr_steps") <-
       c("viewr", "renamed_tunnel", "gathered_tunnel")
     ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
     ## tibble is being created above and we are basically already in gathered
@@ -478,7 +478,7 @@ read_flydra_mat <-
 #'
 #' Should you have data from a non-Motive, non-Flydra source, this function can
 #' be used to ensure your data are put into the right format to work with other
-#' pathviewR functions.
+#' pathviewr functions.
 #'
 #' @param obj_name A tibble or data frame containing movement trajectories
 #' @param frame_rate Must be a single numeric value indicating capture frame
@@ -504,8 +504,8 @@ read_flydra_mat <-
 #'   axis of quaternion rotation data
 #'
 #' @return A tibble that is organized to be compliant with other
-#'   \code{pathviewR} functions and that contains the attributes
-#'   \code{pathviewR_steps} with entries set to \code{c("viewr",
+#'   \code{pathviewr} functions and that contains the attributes
+#'   \code{pathviewr_steps} with entries set to \code{c("viewr",
 #'   "renamed_tunnel", "gathered_tunnel")}
 #'
 #' @export
@@ -579,7 +579,7 @@ as_viewr <- function(obj_name,
   }
 
   ## Add metadata as attributes()
-  attr(data, "pathviewR_steps") <-
+  attr(data, "pathviewr_steps") <-
     c("viewr", "renamed_tunnel", "gathered_tunnel")
   ## Adding "renamed_tunnel" and "gathered" because axes are renamed as the
   ## tibble is being created above and we are basically already in gathered

@@ -6,12 +6,12 @@ calc_s_freq_1 <- function(obj_name,
                           simplify_output = FALSE){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name, "pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_full_trajectories has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "treatments_added")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "treatments_added")){
     stop("Run insert_treatments() prior to use.")
   }
 
@@ -98,7 +98,7 @@ calc_s_freq_1 <- function(obj_name,
   obj_simplify$s_freq_neg <- obj_name$s_freq_neg
 
   ## Leave note that spatial frequencies were calculated on dataset
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                                       "frequencies_calculated")
 
   ## return simple or complete data table based on simplify argument

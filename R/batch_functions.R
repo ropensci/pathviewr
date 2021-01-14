@@ -1,4 +1,4 @@
-## Part of the pathviewR package
+## Part of the pathviewr package
 ## Last updated: 2020-09-11 VBB
 
 
@@ -21,7 +21,7 @@
 #'   details of data import methods.
 #'
 #' @return A list of viewr objects (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}).
+#'   \code{pathviewr_steps} that includes \code{"viewr"}).
 #'
 #' @author Vikram B. Baliga
 #'
@@ -32,15 +32,15 @@
 #'
 #' @examples
 #' ## Since we only have one example file of each type provided
-#' ## in pathviewR, we will simply import the same example multiple
+#' ## in pathviewr, we will simply import the same example multiple
 #' ## times to simulate batch importing. Replace the contents of
 #' ## the following list with your own list of files to be imported.
 #'
 #' ## Make a list of the same example file 3x
 #' import_list <-
 #'   c(rep(
-#'     system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                 package = 'pathviewR'),
+#'     system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                 package = 'pathviewr'),
 #'     3
 #'   ))
 #'
@@ -139,7 +139,7 @@ import_batch <- function(file_path_list,
 #' up through get full trajectories, as desired) via clean_viewr()
 #'
 #' @param obj_list A list of viewr objects (i.e. a list of tibbles that each
-#'   have attribute \code{pathviewR_steps} that includes \code{"viewr"})
+#'   have attribute \code{pathviewr_steps} that includes \code{"viewr"})
 #' @param file_announce Should the function report each time a file is
 #'   processed? Default FALSE; if TRUE, a message will appear in the console
 #'   each time a file has been cleaned successfully.
@@ -153,7 +153,7 @@ import_batch <- function(file_path_list,
 #'   and/or refer to the corresponding cleaning functions themselves.
 #'
 #' @return A list of viewr objects (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) that have been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) that have been passed
 #'   through the corresponding cleaning functions.
 #'
 #' @author Vikram B. Baliga
@@ -210,7 +210,7 @@ clean_viewr_batch <- function(obj_list,
 #' @inherit clean_viewr_batch details
 #'
 #' @return A list of viewr objects (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) that have been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) that have been passed
 #'   through the corresponding cleaning functions.
 #'
 #' @author Vikram B. Baliga
@@ -278,7 +278,7 @@ import_and_clean_batch <- function(file_path_list,
 #' @param obj_list A list of viewr objects
 #'
 #' @return A single viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) that combines all the
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) that combines all the
 #'   rows of the source viewr objects in \code{obj_list}. Metadata may not
 #'   necessarily be retained and therefore \code{attributes} should be used with
 #'   caution.
@@ -305,7 +305,7 @@ bind_viewr_objects <- function(obj_list) {
   bound_obj <- dplyr::bind_rows(obj_list)
 
   ## Attributes
-  attr(bound_obj, "pathviewR_steps") <- c("viewr", "bound_viewr_objects")
+  attr(bound_obj, "pathviewr_steps") <- c("viewr", "bound_viewr_objects")
 
   ## Export
   return(bound_obj)

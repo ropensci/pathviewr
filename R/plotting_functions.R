@@ -1,4 +1,4 @@
-## Part of the pathviewR package
+## Part of the pathviewr package
 ## Last updated: 2020-09-16 VBB & MSA
 
 
@@ -10,7 +10,7 @@
 #' what value to use
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param loops How many total frame gap entries to consider. Each loop will
 #'   increase the \code{max_fram_gap} argument in \code{separate_trajectories}
 #'   by 1.
@@ -34,12 +34,12 @@
 #' @export
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' motive_selected <-
 #'   motive_data %>%
@@ -57,7 +57,7 @@ visualize_frame_gap_choice <- function(obj_name,
                                        ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -103,7 +103,7 @@ visualize_frame_gap_choice <- function(obj_name,
 #' Plot each trajectory within a viewr object
 #'
 #' @param obj_name A viewr object (a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) that has been passed
 #'   through \code{separate_trajectories()} or \code{get_full_trajectories()}.
 #' @param plot_axes Which position axes should be plotted? A character vector
 #'   including exactly two of the following choices must be supplied:
@@ -125,12 +125,12 @@ visualize_frame_gap_choice <- function(obj_name,
 #' @family plotting functions
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' motive_full <-
 #'   motive_data %>%
@@ -306,12 +306,12 @@ plot_viewr_trajectories <- function(obj_name,
 #' from elevation and bird's eye views.
 #'
 #' @param obj_name A viewr object (a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) that has been passed
 #'   through \code{separate_trajectories()} or \code{get_full_trajectories()}.
 #' @param col_by_treat If multiple treatments or sessions, color data per
 #'   treatment or session. Treatments must be levels in a column named
 #'   \code{treatment}.
-#' @param ... Additional arguments passed to/from other pathviewR functions.
+#' @param ... Additional arguments passed to/from other pathviewr functions.
 #'
 #' @details  The input viewr object should have passed through
 #'   \code{separate_trajectories()} or \code{get_full_trajectories()}.
@@ -332,7 +332,7 @@ plot_viewr_trajectories <- function(obj_name,
 #' @family plotting functions
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #' library(ggplot2)
 #' library(magrittr)
 #'
@@ -340,8 +340,8 @@ plot_viewr_trajectories <- function(obj_name,
 #'   ## Import the example Motive data included in the package
 #'   motive_data <-
 #'     read_motive_csv(system.file("extdata",
-#'                                 "pathviewR_motive_example_data.csv",
-#'                                 package = 'pathviewR'))
+#'                                 "pathviewr_motive_example_data.csv",
+#'                                 package = 'pathviewr'))
 #'
 #'   ## Clean, isolate, and label trajectories
 #'   motive_full <-
@@ -369,7 +369,7 @@ plot_by_subject <- function(obj_name,
                             ...) {
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name, "pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 

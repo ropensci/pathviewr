@@ -8,11 +8,11 @@ gather_tunnel_data(obj_name, NA_drop = TRUE, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{NA_drop}{Should rows with NAs be dropped? Defaults to \code{TRUE}}
 
-\item{...}{Additional arguments that can be passed to other \code{pathviewR}
+\item{...}{Additional arguments that can be passed to other \code{pathviewr}
 functions such as \code{relabel_viewr_axes()} or \code{read_motive_csv()}}
 }
 \value{
@@ -38,12 +38,12 @@ or \code{larry_position_height} are acceptable, but \code{bird01_x} or
 \code{bird01_length} are not.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the Motive example data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## First use relabel_viewr_axes() to rename these variables using _length,
 ## _width, and _height instead

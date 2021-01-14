@@ -15,7 +15,7 @@ defaults to \code{basename(file_name)}.}
 \item{simplify_marker_naming}{If Markers are encountered, should they be
 renamed from "Subject:marker" to "marker"? Defaults to TRUE}
 
-\item{...}{Additional arguments passed from other \code{pathviewR} functions}
+\item{...}{Additional arguments passed from other \code{pathviewr} functions}
 }
 \value{
 A tibble with numerical data in columns. The first two columns will
@@ -33,8 +33,8 @@ that additionally has important metadata stored as attributes (see Details).
 \details{
 Uses \code{data.table::fread()} to import data from a CSV file and
 ultimately store it in a tibble. This object is also labeled with the
-attribute \code{pathviewR_steps} with value \code{viewr} to indicate that it
-has been imported by \code{pathviewR} and should be friendly towards use with
+attribute \code{pathviewr_steps} with value \code{viewr} to indicate that it
+has been imported by \code{pathviewr} and should be friendly towards use with
 other functions in our package. Additionally, the following metadata are
 stored in the tibble's attributes: header information from the Motive CSV
 file (\code{header}), original IDs for each object (\code{Motive_IDs}), the
@@ -53,18 +53,18 @@ file an Issue on our Github page if you encounter any problems.
 }
 
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Names of variables in the resulting tibble
 names(motive_data)
 
 ## A variety of metadata are stored as attributes. Of particular interest:
-attr(motive_data, "pathviewR_steps")
+attr(motive_data, "pathviewr_steps")
 attr(motive_data, "file_id")
 attr(motive_data, "header")
 attr(motive_data, "Motive_IDs")

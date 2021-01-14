@@ -1,10 +1,10 @@
 ---
-title: "Basics of data import and cleaning in pathviewR"
+title: "Basics of data import and cleaning in pathviewr"
 author: "Vikram B. Baliga"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basics of data import and cleaning in pathviewR}
+  %\VignetteIndexEntry{Basics of data import and cleaning in pathviewr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteDepends{ggplot2}
   %\VignetteDepends{magrittr}
@@ -27,7 +27,7 @@ itself. Data may not be organized as “tidy” key-value pairs, the axes and
 overall orientation of the environment may not conform to a standard, and
 individual movement trajectories may be ill-defined. 
 
-`pathviewR` provides functions in R to deal with such problems (i.e. "clean"
+`pathviewr` provides functions in R to deal with such problems (i.e. "clean"
 them). This vignette will cover the basics of how to import raw data and how to
 clean data to prepare it for visualization and/or statistical analyses.
 
@@ -42,15 +42,15 @@ ability to track multiple subjects simultaneously, information on subjects'
 rotation, tracking of "rigid body" elements, or even the ability to apply Kalman
 filters.
 
-A central goal of `pathviewR` is to take data from different sources (so far:
+A central goal of `pathviewr` is to take data from different sources (so far:
 Motive and Flydra), re-organize them into a common format that can be wrangled
 in R, clean them up a bit, and get them ready for visualization and/or
 statistical analyses. We'll first cover what's included in Motive and in Flydra
-data and how `pathviewR` handles these. Should you have data from another
+data and how `pathviewr` handles these. Should you have data from another
 source, our `as_viewr()` function will allow you to bring it into the
-`pathviewR` framework.
+`pathviewr` framework.
 
-## Data import via `pathviewR`
+## Data import via `pathviewr`
 
 Data can be imported via one of three functions:  
 
@@ -64,20 +64,20 @@ from [Flydra](https://github.com/strawlab/flydra)
 
 We will showcase examples from each of these methods in this section.
 
-Please feel free to reach out to the `pathviewR` authors via 
-[our Github Issues page](https://github.com/vbaliga/pathviewR/issues/) 
+Please feel free to reach out to the `pathviewr` authors via 
+[our Github Issues page](https://github.com/vbaliga/pathviewr/issues/) 
 should you have trouble with any of our data import options. We are happy to
 work with you to design custom `read_` functions for file types we have not
 encountered ourselves. 
 
-We'll start by loading `pathviewR` and a few of the packages in the `tidyverse`.
+We'll start by loading `pathviewr` and a few of the packages in the `tidyverse`.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
-## If you do not already have pathviewR installed:
+## If you do not already have pathviewr installed:
 # install.packages("devtools")
-# devtools::install_github("vbaliga/pathviewR")
+# devtools::install_github("vbaliga/pathviewr")
 
-library(pathviewR)
+library(pathviewr)
 library(ggplot2)
 library(magrittr)
 ```
@@ -92,8 +92,8 @@ library(magrittr)
 
 motive_data <-
   read_motive_csv(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR')
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr')
   )
 
 ## This produces a tibble 
@@ -126,7 +126,7 @@ attr(motive_data, "data_types_simple")
 attr(motive_data, "frame_rate")
 ```
 
-Storing such metatdata in the attributes is a key feature of `pathviewR`. These
+Storing such metatdata in the attributes is a key feature of `pathviewr`. These
 metadata may not be as immediately as important as the time series of position
 or rotation, but they can provide important experimental information such as the
 date & time of capture and the units of the position data (here, meters).
@@ -144,8 +144,8 @@ be used throughout the resultant `tibble`.
 flydra_data <-
   read_flydra_mat(
     system.file("extdata", 
-                "pathviewR_flydra_example_data.mat",
-                package = 'pathviewR'),
+                "pathviewr_flydra_example_data.mat",
+                package = 'pathviewr'),
     subject_name = "birdie_wooster"
   )
 
@@ -163,9 +163,9 @@ also not included.
 ### Data from other sources
 
 Data from another format can be converted to a `viewr` object via
-`pathviewR::as_viewr()`. Although this function does not handle data import
+`pathviewr::as_viewr()`. Although this function does not handle data import
 per se, it allows data that you may already have imported into R as a `tibble`
-or `data.frame` to then be reformatted for use with `pathviewR` functions.
+or `data.frame` to then be reformatted for use with `pathviewr` functions.
 
 We'll run through a quick example with simulated data:
 
@@ -201,7 +201,7 @@ attr(test, "frame_rate")
 We also welcome you to request custom data import functions, especially if
 `as_viewr()` does not fit your needs . We are interested in expanding our data
 import functions to accommodate additional file types. Please feel free to 
-[file a request for additional import functions](https://github.com/vbaliga/pathviewR/issues/new/choose) 
+[file a request for additional import functions](https://github.com/vbaliga/pathviewr/issues/new/choose) 
 via our Github Issues page.
 
 
@@ -220,7 +220,7 @@ All of the steps in the suggested pipeline are also covered by two all-in-one
 functions: `clean_viewr()` and `import_and_clean_viewr()`. See the section at
 the very end of this vignette for details.
 
-And speaking of pipes, all functions in `pathviewR` are pipe-friendly. We will
+And speaking of pipes, all functions in `pathviewr` are pipe-friendly. We will
 detail each step separately, but each of the subsequent steps may be piped, e.g.
 `data %>% relabel_viewr_axes() %>% gather_tunnel_data()` etc etc
 
@@ -300,9 +300,9 @@ place within the tunnel.
 
 Note that having `(0, 0, 0)` set to the center of the region of interest
 (covered in the next section of this vignette) is required for all subsequent
-`pathviewR` functions to work.
+`pathviewr` functions to work.
 
-`pathviewR` offers three main choices for such standardization:  
+`pathviewr` offers three main choices for such standardization:  
 
 - `redefine_tunnel_center()`: Sets the location of 0 on any or all axes to a new
 location. See the Help page for this function to see the four different methods
@@ -428,20 +428,20 @@ plot(flydra_selected$position_length,
 ```
 
 ### Isolating each trajectory
-The `pathviewR` standard for defining a trajectory is: continuous movement from
+The `pathviewr` standard for defining a trajectory is: continuous movement from
 one side of the tunnel to the other over the span of the region of interest.
 Note that this definition does not strictly require linear movement from one end
 to the other; an animal could make several loops inside the region of interest
 within a given trajectory.  
 
 Isolating trajectories is handled via the `separate_trajectories()` function in
-`pathviewR`. Note that a region of interest must be selected beforehand via
+`pathviewr`. Note that a region of interest must be selected beforehand via
 `select_x_percent()`.  
 
 Because cameras may occasionally drop frames, we allow the user to permit some
 relaxation of how stringent the "continuous movement" criterion is. This is
 handled via the `max_frame_gap` argument within `separate_trajectories()`. For
-more details, please see [the vignette Managing frame gaps with pathviewR](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html).  
+more details, please see [the vignette Managing frame gaps with pathviewr](https://vbaliga.github.io/pathviewr/articles/managing-frame-gaps.html).  
 
 In our Motive example, we'll use the automated feature built into the function
 to guesstimate the best `max_frame_gap` allowed. When frame gaps larger than
@@ -467,7 +467,7 @@ Now that trajectories have been isolated and labeled, the final cleaning step is
 to retain only the trajectories that completely span from one end of the region
 of interest to the other.
 
-This final step is handled via `pathviewR`'s `get_full_trajectories()`.
+This final step is handled via `pathviewr`'s `get_full_trajectories()`.
 
 There is a built-in "fuzziness" feature: because trajectories may not have
 observations exactly at the beginning or the end of the region of interest, it
@@ -507,7 +507,7 @@ plot(flydra_full$position_length,
 ```
 
 ### All-in-one cleaning functions
-All of the above steps can also be done by using `pathviewR`'s designated 
+All of the above steps can also be done by using `pathviewr`'s designated 
 all-in-one functions. `import_and_clean_viewr()` imports raw data and allows
 the user to run through all of the cleaning steps previously covered in this
 vignette. `clean_viewr()` does the same on any object already imported into the
@@ -515,7 +515,7 @@ R environment (i.e. it skips data import).
 
 For both of these functions, all of the cleaning steps are set to `TRUE` by 
 default, but may be turned off by using `FALSE`. Argument names correspond to 
-standalone functions in `pathviewR`, and if the user wants to use non-default values for corresponding arguments, they should also be supplied for any steps 
+standalone functions in `pathviewr`, and if the user wants to use non-default values for corresponding arguments, they should also be supplied for any steps 
 that are set to `TRUE`. 
 
 For example, if the user keeps `select_x_percent = TRUE` as an argument in

@@ -11,7 +11,7 @@ bind_viewr_objects(obj_list)
 }
 \value{
 A single viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) that combines all the
+\code{pathviewr_steps} that includes \code{"viewr"}) that combines all the
 rows of the source viewr objects in \code{obj_list}. Metadata may not
 necessarily be retained and therefore \code{attributes} should be used with
 caution.
@@ -21,15 +21,15 @@ Combine a list of multiple viewr objects into a single viewr object
 }
 \examples{
 ## Since we only have one example file of each type provided
-## in pathviewR, we will simply import the same example multiple
+## in pathviewr, we will simply import the same example multiple
 ## times to simulate batch importing. Replace the contents of
 ## the following list with your own list of files to be imported.
 
 ## Make a list of the same example file 3x
 import_list <-
   c(rep(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr'),
     3
   ))
 

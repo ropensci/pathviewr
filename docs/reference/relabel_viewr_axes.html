@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Relabel the dimensions as length, width, and height — relabel_viewr_axes • pathviewR</title>
+<title>Relabel the dimensions as length, width, and height — relabel_viewr_axes • pathviewr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,10 +48,10 @@
 
 <meta property="og:title" content="Relabel the dimensions as length, width, and height — relabel_viewr_axes" />
 <meta property="og:description" content="Axes are commonly labeled as &quot;x&quot;, &quot;y&quot;, and &quot;z&quot; in recording software yet
-pathviewR functions require these to be labeled as &quot;length&quot;, &quot;width&quot;,
+pathviewr functions require these to be labeled as &quot;length&quot;, &quot;width&quot;,
 and &quot;height&quot;. relabel_viewr_axes() is a function that takes a
 viewr object and allows the user to rename its variables." />
-<meta property="og:image" content="https://vbaliga.github.io/pathviewR/logo.png" />
+<meta property="og:image" content="https://vbaliga.github.io/pathviewr/logo.png" />
 
 
 
@@ -82,7 +82,7 @@ viewr object and allows the user to rename its variables." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">pathviewR</a>
+        <a class="navbar-link" href="../index.html">pathviewr</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4.9000</span>
       </span>
     </div>
@@ -100,10 +100,10 @@ viewr object and allows the user to rename its variables." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/data-import-cleaning.html">Basics of data import and cleaning in pathviewR</a>
+      <a href="../articles/data-import-cleaning.html">Basics of data import and cleaning in pathviewr</a>
     </li>
     <li>
-      <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewR</a>
+      <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewr</a>
     </li>
     <li>
       <a href="../articles/visual-perception-functions.html">Estimating visual perceptions from tracking data</a>
@@ -113,7 +113,7 @@ viewr object and allows the user to rename its variables." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vbaliga/pathviewR/">
+  <a href="https://github.com/vbaliga/pathviewr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -132,13 +132,13 @@ viewr object and allows the user to rename its variables." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Relabel the dimensions as length, width, and height</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewR/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewr/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
     <div class="hidden name"><code>relabel_viewr_axes.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Axes are commonly labeled as "x", "y", and "z" in recording software yet
-<code>pathviewR</code> functions require these to be labeled as "length", "width",
+<code>pathviewr</code> functions require these to be labeled as "length", "width",
 and "height". <code>relabel_viewr_axes()</code> is a function that takes a
 <code>viewr</code> object and allows the user to rename its variables.</p>
     </div>
@@ -158,7 +158,7 @@ and "height". <code>relabel_viewr_axes()</code> is a function that takes a
     <tr>
       <th>obj_name</th>
       <td><p>The input viewr object; a tibble or data.frame with attribute
-<code>pathviewR_steps</code> that includes <code>"viewr"</code></p></td>
+<code>pathviewr_steps</code> that includes <code>"viewr"</code></p></td>
     </tr>
     <tr>
       <th>tunnel_length</th>
@@ -218,12 +218,12 @@ instances of _Y with _length in the names of variables.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/vbaliga/pathviewR'>pathviewR</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/vbaliga/pathviewr'>pathviewr</a></span><span class='op'>)</span>
 
 <span class='co'>## Import the Motive example data included in the package</span>
 <span class='va'>motive_data</span> <span class='op'>&lt;-</span>
-  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                             package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='read_motive_csv.html'>read_motive_csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewr_motive_example_data.csv"</span>,
+                             package <span class='op'>=</span> <span class='st'>'pathviewr'</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## Names of variables are labeled with _x, _y, _z, which we'd like to rename</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>motive_data</span><span class='op'>)</span>

@@ -1,20 +1,20 @@
 ## Tests of import_batch(), clean_batch() and import_and_clean_batch()
 
 motive_test_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 import_list <-
   c(rep(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr'),
     3
   ))
 
 import_list_flydra <-
   c(rep(
-    system.file("extdata", "pathviewR_flydra_example_data.mat",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_flydra_example_data.mat",
+                package = 'pathviewr'),
     3
   ))
 
@@ -148,7 +148,7 @@ test_that("bind_viewr_objects() binds data properly",
 test_that("bind_viewr_objects() handles attributes",
           {
             expect_equal(
-              attr(bind_viewr_objects(motive_batch_cleaned), "pathviewR_steps"),
+              attr(bind_viewr_objects(motive_batch_cleaned), "pathviewr_steps"),
               c("viewr", "bound_viewr_objects")
             )
           })

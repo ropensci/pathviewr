@@ -18,7 +18,7 @@ get_velocity(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{time_col}{Name of the column containing time}
 
@@ -37,7 +37,7 @@ the object? If so, enter a numeric. If not, keep NA.}
 \item{velocity_max}{Should data above a certain velocity be filtered out of
 the object? If so, enter a numeric. If not, keep NA.}
 
-\item{...}{Additional arguments passed to or from other pathviewR functions.}
+\item{...}{Additional arguments passed to or from other pathviewr functions.}
 }
 \value{
 If \code{add_to_viewr} is \code{TRUE}, additional columns are
@@ -61,8 +61,8 @@ the subject.
 \examples{
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "standarization" step before running get_velocity().

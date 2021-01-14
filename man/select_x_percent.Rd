@@ -8,16 +8,16 @@ select_x_percent(obj_name, desired_percent = 33, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{desired_percent}{Numeric, the percent of the total length of the tunnel
 that will define the region of interest. Measured from the center outwards.}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+\code{pathviewr_steps} that includes \code{"viewr"}) in which data outside
 the region of interest have been removed.
 }
 \description{
@@ -25,8 +25,8 @@ Select data in the middle X percent of the length of the tunnel
 }
 \examples{
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "trimmed" step before running rotate_tunnel().

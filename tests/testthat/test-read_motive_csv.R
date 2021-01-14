@@ -10,8 +10,8 @@ test_that("read_motive_csv() fails when no file is supplied",
 
 ## Import the file for other tests (see below)
 motive_test_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 
 ## Test that imported files have the correct structure

@@ -1,8 +1,8 @@
 ## Import flydra data
 flydra_data <-
   read_flydra_mat(
-    system.file("extdata", "pathviewR_flydra_example_data.mat",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_flydra_example_data.mat",
+                package = 'pathviewr'),
     subject_name = "birdie_wooster")
 
 ## Clean flydra data

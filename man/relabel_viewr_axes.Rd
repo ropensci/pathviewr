@@ -15,7 +15,7 @@ relabel_viewr_axes(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{tunnel_length}{The dimension that corresponds to tunnel length. Set to
 \code{tunnel_length = "_z"} by default. Argument should contain a character
@@ -40,7 +40,7 @@ A tibble or data.frame with variables that have been renamed.
 }
 \description{
 Axes are commonly labeled as "x", "y", and "z" in recording software yet
-\code{pathviewR} functions require these to be labeled as "length", "width",
+\code{pathviewr} functions require these to be labeled as "length", "width",
 and "height". \code{relabel_viewr_axes()} is a function that takes a
 \code{viewr} object and allows the user to rename its variables.
 }
@@ -51,12 +51,12 @@ instances of _Y with _length in the names of variables.
 }
 \examples{
 
-library(pathviewR)
+library(pathviewr)
 
 ## Import the Motive example data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Names of variables are labeled with _x, _y, _z, which we'd like to rename
 names(motive_data)

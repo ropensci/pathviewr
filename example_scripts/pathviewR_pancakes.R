@@ -23,12 +23,12 @@ package.check <- lapply(
       install.packages(x, dependencies = TRUE)
       library(x, character.only = TRUE)}})
 
-## Source un-exported pathviewR things too
+## Source un-exported pathviewr things too
 devtools::load_all()
 
 
 ############################## quick data import ###############################
-motive_data_path <- './inst/extdata/pathviewR_motive_example_data.csv'
+motive_data_path <- './inst/extdata/pathviewr_motive_example_data.csv'
 
 motive_data_all_defaults <-
   motive_data_path %>% import_and_clean_viewr()
@@ -51,7 +51,7 @@ motive_data_full <-
   separate_trajectories(max_frame_gap = "autodetect",
                         frame_gap_messaging = TRUE) %>%
   get_full_trajectories(span = 0.95)
-attr(motive_data_full, "pathviewR_steps")
+attr(motive_data_full, "pathviewr_steps")
 plot(motive_data_full$position_length,
      motive_data_full$position_width,
      asp = 1, col = as.factor(motive_data_full$file_sub_traj))
@@ -78,7 +78,7 @@ identical(motive_data_all_defaults, motive_data_all_defaults_explicit)
 ## Test pancake
 test_mat <-
   read_flydra_mat(
-    "./inst/extdata/pathviewR_flydra_example_data.mat",
+    "./inst/extdata/pathviewr_flydra_example_data.mat",
     subject_name = "steve"
   ) %>%
   redefine_tunnel_center(length_method = "middle",

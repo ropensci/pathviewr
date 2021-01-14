@@ -15,7 +15,7 @@ rm_by_trajnum(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+\code{pathviewr_steps} that includes \code{"viewr"}. Trajectories must be
 predefined (i.e. via \code{separate_trajectories()}).}
 
 \item{trajnum}{Minimum number of trajectories; must be numeric.}
@@ -31,11 +31,11 @@ must be met.}
 \item{treatment2}{A second treatment or session during which the threshold
 must be met.}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions.}
+\item{...}{Additional arguments passed to/from other pathviewr functions.}
 }
 \value{
 A viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} that now has fewer
+\code{pathviewr_steps} that includes \code{"viewr"} that now has fewer
 observations (rows) as a result of removal of subjects with too few
 trajectories according to the \code{trajnum} parameter.
 }
@@ -59,12 +59,12 @@ during the \code{"latA"} treatment AND the \code{"latB"} treatment.
 named \code{"treatment"}.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Clean, isolate, and label trajectories
 motive_full <-

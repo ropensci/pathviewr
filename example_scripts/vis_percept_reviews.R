@@ -20,12 +20,12 @@ insert_treatments <- function(obj_name,
                               treatment = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_full_trajectories has been run prior to use
-  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "full_trajectories")){
     stop("Run get_full_trajectories() prior to use")
   }
 
@@ -109,7 +109,7 @@ insert_treatments <- function(obj_name,
   }
 
   ## Leave note that treatments were added
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "treatments_added")
   return(obj_name)
 }
@@ -125,12 +125,12 @@ calc_min_dist_v <- function(obj_name,
                             simplify = TRUE){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
     stop("Please run insert_treatments() prior to use")
   }
 
@@ -217,12 +217,12 @@ calc_min_dist_v <- function(obj_name,
 
   ## return object and add note that minimum distaces were calculated
   if(simplify == TRUE){
-    attr(obj_simplify, "pathviewR_steps") <-
-      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
+    attr(obj_simplify, "pathviewr_steps") <-
+      c(attr(obj_name, "pathviewr_steps"), "min_dist_calculated")
     return(obj_simplify)
   } else {
-    attr(obj_name, "pathviewR_steps") <-
-      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
+    attr(obj_name, "pathviewr_steps") <-
+      c(attr(obj_name, "pathviewr_steps"), "min_dist_calculated")
     return(obj_name)
   }
 }
@@ -233,12 +233,12 @@ calc_min_dist_v <- function(obj_name,
 calc_min_dist_box <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
     stop("Please run insert_treatments() prior to use")
   }
 
@@ -254,7 +254,7 @@ calc_min_dist_box <- function(obj_name){
            obj_name$tunnel_length/2 + obj_name$position_length)
 
   ## Leave note that minimum distances were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "min_dist_calculated")
 
 
@@ -267,12 +267,12 @@ calc_min_dist_box <- function(obj_name){
 get_vis_angle <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that calc_min_dist() has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "min_dist_calculated")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "min_dist_calculated")){
     stop("Please run calc_min_dist_v() or calc_min_dist_box() prior to use")
   }
 
@@ -296,7 +296,7 @@ get_vis_angle <- function(obj_name){
   obj_name$vis_angle_end_deg <- rad_2_deg(obj_name$vis_angle_end_rad)
 
   ## Leave a note that visual angles were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "vis_angles_calculated")
   return(obj_name)
   }
@@ -306,12 +306,12 @@ get_vis_angle <- function(obj_name){
 get_sf <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_vis_angle() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
     stop("Please run get_vis_angle() prior to use")
   }
 
@@ -321,7 +321,7 @@ get_sf <- function(obj_name){
   obj_name$sf_end <- 1/obj_name$vis_angle_end_deg
 
   ## Leave a note that visual angles were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "sf_calculated")
 
 
@@ -334,17 +334,17 @@ get_tf <- function(obj_name,
                    dimensionality = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_vis_angle() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
     stop("Please run get_vis_angle() prior to use")
   }
 
   ## Check that get_velocity() has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "velocity_computed")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "velocity_computed")){
     stop("Please run get_velocity() prior to use")
   }
 
@@ -443,7 +443,7 @@ get_tf <- function(obj_name,
   ### development for V-shaped tunnel configurations
 
   ## Leave a note that temporal frequencies  were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "tf_calculated")
 
   return(obj_name)
@@ -455,19 +455,19 @@ get_tf <- function(obj_name,
 get_pattern_vel <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_vis_angle() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
     stop("Please run get_vis_angle() prior to use")
   }
 
   ## Check that get_sf() and get_tf() have been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "sf_calculated")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "sf_calculated")){
     stop("Please run get_sf() prior to use")
-  } else if (!any(attr(obj_name, "pathviewR_steps") == "tf_calculated")){
+  } else if (!any(attr(obj_name, "pathviewr_steps") == "tf_calculated")){
     stop("Please run get_tf() prior to use")
   }
 
@@ -535,7 +535,7 @@ get_pattern_vel <- function(obj_name){
   }
 
   ## Leave a note that pattern velocities were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "pattern_vel_calculated")
 
   return(obj_name)
@@ -546,12 +546,12 @@ get_pattern_vel <- function(obj_name){
 get_image_expansion <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_vis_angle() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
     stop("Please run get_vis_angle() prior to use")
   }
 
@@ -570,7 +570,7 @@ get_image_expansion <- function(obj_name){
   obj_name$time_diff <- time_diff
 
   ## Leave note that image expansion was calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                               "image_expansion_calculated")
 
   return(as_tibble(obj_name))
@@ -585,12 +585,12 @@ get_image_expansion <- function(obj_name){
 get_pattern_vel_direction <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_velocity() has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "velocity_computed")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "velocity_computed")){
     stop("Please run get_velocity() prior to use")
   }
 
@@ -691,7 +691,7 @@ get_pattern_vel_direction <- function(obj_name){
     }
 
   ## Leave a note that pattern velocity direction was calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "pattern_vel_direction_calculated")
 
   return(obj_name)
@@ -706,7 +706,7 @@ get_pattern_vel_direction <- function(obj_name){
 get_vis_percepts <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 

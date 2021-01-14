@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Calculate minimum distance to lateral and end walls in a box-shaped
-experimental tunnel — calc_min_dist_box • pathviewR</title>
+experimental tunnel — calc_min_dist_box • pathviewr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -51,7 +51,7 @@ experimental tunnel — calc_min_dist_box • pathviewR</title>
 experimental tunnel — calc_min_dist_box" />
 <meta property="og:description" content="Calculate minimum distance to lateral and end walls in a box-shaped
 experimental tunnel" />
-<meta property="og:image" content="https://vbaliga.github.io/pathviewR/logo.png" />
+<meta property="og:image" content="https://vbaliga.github.io/pathviewr/logo.png" />
 
 
 
@@ -82,7 +82,7 @@ experimental tunnel" />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">pathviewR</a>
+        <a class="navbar-link" href="../index.html">pathviewr</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4.9000</span>
       </span>
     </div>
@@ -100,10 +100,10 @@ experimental tunnel" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/data-import-cleaning.html">Basics of data import and cleaning in pathviewR</a>
+      <a href="../articles/data-import-cleaning.html">Basics of data import and cleaning in pathviewr</a>
     </li>
     <li>
-      <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewR</a>
+      <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewr</a>
     </li>
     <li>
       <a href="../articles/visual-perception-functions.html">Estimating visual perceptions from tracking data</a>
@@ -113,7 +113,7 @@ experimental tunnel" />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vbaliga/pathviewR/">
+  <a href="https://github.com/vbaliga/pathviewr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -133,7 +133,7 @@ experimental tunnel" />
     <div class="page-header">
     <h1>Calculate minimum distance to lateral and end walls in a box-shaped
 experimental tunnel</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewR/blob/master/R/analytical_functions.R'><code>R/analytical_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewr/blob/master/R/analytical_functions.R'><code>R/analytical_functions.R</code></a></small>
     <div class="hidden name"><code>calc_min_dist_box.Rd</code></div>
     </div>
 
@@ -150,7 +150,7 @@ experimental tunnel</p>
     <tr>
       <th>obj_name</th>
       <td><p>The input viewr object; a tibble or data.frame with attribute
-<code>pathviewR_steps</code> that include <code>"viewr"</code> and
+<code>pathviewr_steps</code> that include <code>"viewr"</code> and
 <code>treatments_added</code>.</p></td>
     </tr>
     </table>
@@ -177,8 +177,8 @@ All outputs are in meters.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Import sample data from package</span>
  <span class='va'>flydra_data</span> <span class='op'>&lt;-</span>
- <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_flydra_example_data.mat"</span>,
-                               package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+ <span class='fu'><a href='read_flydra_mat.html'>read_flydra_mat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewr_flydra_example_data.mat"</span>,
+                               package <span class='op'>=</span> <span class='st'>'pathviewr'</span><span class='op'>)</span>,
                                subject_name <span class='op'>=</span> <span class='st'>"birdie_sanders"</span><span class='op'>)</span>
 
    <span class='co'>## Process data up to and including insert_treatments()</span>

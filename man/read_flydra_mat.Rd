@@ -16,7 +16,7 @@ defaults to \code{basename(file_name)}.}
 
 \item{frame_rate}{The capture frame rate of the session}
 
-\item{...}{Additional arguments that may be passed from other pathviewR
+\item{...}{Additional arguments that may be passed from other pathviewr
 functions}
 }
 \value{
@@ -32,19 +32,19 @@ that has been exported from Flydra software. The resultant object is a tibble
 that additionally has important metadata stored as attributes (see Details).
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Flydra data included in the package
 flydra_data <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                             package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                             package = 'pathviewr'),
                   subject_name = "birdie_wooster")
 
 ## Names of variables in the resulting tibble
 names(flydra_data)
 
 ## A variety of metadata are stored as attributes. Of particular interest:
-attr(flydra_data, "pathviewR_steps")
+attr(flydra_data, "pathviewr_steps")
 }
 \seealso{
 \code{\link{read_motive_csv}} for importing Motive data

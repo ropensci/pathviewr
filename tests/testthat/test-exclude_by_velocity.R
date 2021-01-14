@@ -2,15 +2,15 @@
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Import and clean the example Motive data
 motive_import_and_clean <-
   suppressMessages(
     import_and_clean_viewr(
-      file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'),
+      file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'),
       desired_percent = 50,
       max_frame_gap = "autodetect",
       span = 0.95

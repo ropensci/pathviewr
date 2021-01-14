@@ -20,10 +20,10 @@ insert_treatments(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{tunnel_config}{The configuration of the experimental tunnel.
-Currently, pathviewR supports rectangular "box" and V-shaped tunnel
+Currently, pathviewr supports rectangular "box" and V-shaped tunnel
 configurations.}
 
 \item{perch_2_vertex}{If using a V-shaped tunnel, this is the vertical
@@ -57,14 +57,14 @@ object.}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"treatments added"}). Depending
+\code{pathviewr_steps} that includes \code{"treatments added"}). Depending
 on the argument \code{tunnel_config}, the viewr object also includes
 columns storing the values of the supplied arguments. This experimental
 information is also stored in the viewr object's metadata
 }
 \description{
 Adds information about treatment and experimental set up to viewr objects for
-analysis in other pathviewR functions
+analysis in other pathviewr functions
 }
 \details{
 All length measurements reported in meters.
@@ -72,11 +72,11 @@ All length measurements reported in meters.
 \examples{
  ## Import sample data from package
  motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
  flydra_data <-
- read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                              package = 'pathviewR'),
+ read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                              package = 'pathviewr'),
                               subject_name = "birdie_sanders")
 
   ## Clean data up to and including get_full_trajectories()

@@ -66,7 +66,7 @@ for (i in 1:length(scripts_list)) {
 # Lets try an examples using the all in one function (import_and_clean_viewr)
 
                    #####   All in one function   #####
-jul_29_path <- './inst/extdata/pathviewR_motive_example_data.csv'
+jul_29_path <- './inst/extdata/pathviewr_motive_example_data.csv'
 
 
 jul_29_all_defaults <-
@@ -80,7 +80,7 @@ jul_29_all_defaults <-
 ## in one function output
 
           #####   Data import   #####
-jul_29 <- read_motive_csv('./inst//extdata/pathviewR_motive_example_data.csv')
+jul_29 <- read_motive_csv('./inst//extdata/pathviewr_motive_example_data.csv')
 
           #####   Rename axes   #####
 jul_29 <- relabel_viewr_axes(jul_29,
@@ -245,7 +245,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
     ## Related to all this, the information of tunnel coordinates can be
     ## inferred from user inputs to cal_vis_angle. I think it would be
     ## nice to add these coordinates in as attributes to the object. That
-    ## way, successive pathviewR functions can make use of these info, and
+    ## way, successive pathviewr functions can make use of these info, and
     ## also they will be available if the user wants to add them to a plot.
 
     ## Also, do you mind if we rename gnd_plane? We are using the ground

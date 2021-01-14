@@ -14,7 +14,7 @@ fill_traj_gaps(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+\code{pathviewr_steps} that includes \code{"viewr"}. Trajectories must be
 predefined (i.e. via \code{separate_trajectories()}).}
 
 \item{loess_degree}{See "degree" argument of fANCOVA::loess.as()}
@@ -27,7 +27,7 @@ predefined (i.e. via \code{separate_trajectories()}).}
 }
 \value{
 A viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} that now includes new
+\code{pathviewr_steps} that includes \code{"viewr"} that now includes new
 observations (rows) as a result of interpolation to fill in missing data. A
 new column \code{gaps_filled} is added to the data to indicate original
 data ("No") vs data that have been inserted to fill gaps ("Yes").
@@ -53,12 +53,12 @@ determined and then inserted into the original data set.
 See \link[fANCOVA]{loess.as} for further details on parameters.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Clean, isolate, and label trajectories
 motive_full <-

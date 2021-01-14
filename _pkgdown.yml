@@ -1,4 +1,4 @@
-url: https://vbaliga.github.io/pathviewR/
+url: https://vbaliga.github.io/pathviewr/
 
 destination: docs
 
@@ -18,9 +18,9 @@ navbar:
     articles:
       text: Vignettes
       menu:
-      - text: 'Basics of data import and cleaning in pathviewR'
+      - text: 'Basics of data import and cleaning in pathviewr'
         href: articles/data-import-cleaning.html
-      - text: 'Managing frame gaps with pathviewR'
+      - text: 'Managing frame gaps with pathviewr'
         href: articles/managing-frame-gaps.html
       - text: 'Estimating visual perceptions from tracking data'
         href: articles/visual-perception-functions.html

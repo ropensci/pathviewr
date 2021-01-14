@@ -1,4 +1,4 @@
-Package: pathviewR
+Package: pathviewr
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
 Version: 0.9.4.9000
 Authors@R: 
@@ -51,5 +51,5 @@ Suggests:
     testthat,
     covr
 VignetteBuilder: knitr
-URL: https://github.com/vbaliga/pathviewR
-BugReports: https://github.com/vbaliga/pathviewR/issues
+URL: https://github.com/vbaliga/pathviewr
+BugReports: https://github.com/vbaliga/pathviewr/issues

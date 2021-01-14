@@ -1,8 +1,8 @@
 ## Import motive data
 motive_data <- # import
   read_motive_csv(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR')
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr')
   )
 ## Clean motive data
 motive_full <-

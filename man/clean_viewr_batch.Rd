@@ -8,7 +8,7 @@ clean_viewr_batch(obj_list, file_announce = FALSE, ...)
 }
 \arguments{
 \item{obj_list}{A list of viewr objects (i.e. a list of tibbles that each
-have attribute \code{pathviewR_steps} that includes \code{"viewr"})}
+have attribute \code{pathviewr_steps} that includes \code{"viewr"})}
 
 \item{file_announce}{Should the function report each time a file is
 processed? Default FALSE; if TRUE, a message will appear in the console
@@ -19,7 +19,7 @@ clean files.}
 }
 \value{
 A list of viewr objects (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) that have been passed
+\code{pathviewr_steps} that includes \code{"viewr"}) that have been passed
 through the corresponding cleaning functions.
 }
 \description{
@@ -35,15 +35,15 @@ and/or refer to the corresponding cleaning functions themselves.
 }
 \examples{
 ## Since we only have one example file of each type provided
-## in pathviewR, we will simply import the same example multiple
+## in pathviewr, we will simply import the same example multiple
 ## times to simulate batch importing. Replace the contents of
 ## the following list with your own list of files to be imported.
 
 ## Make a list of the same example file 3x
 import_list <-
   c(rep(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr'),
     3
   ))
 

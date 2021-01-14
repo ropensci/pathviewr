@@ -8,14 +8,14 @@ plot_by_subject(obj_name, col_by_treat = FALSE, ...)
 }
 \arguments{
 \item{obj_name}{A viewr object (a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+\code{pathviewr_steps} that includes \code{"viewr"}) that has been passed
 through \code{separate_trajectories()} or \code{get_full_trajectories()}.}
 
 \item{col_by_treat}{If multiple treatments or sessions, color data per
 treatment or session. Treatments must be levels in a column named
 \code{treatment}.}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions.}
+\item{...}{Additional arguments passed to/from other pathviewr functions.}
 }
 \value{
 A "bird's eye view" plot and an "elevation view" plot.
@@ -36,7 +36,7 @@ density plots of width or height depending on the view.
 treatment in both the trajectory plots and the density plots.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 library(ggplot2)
 library(magrittr)
 
@@ -44,8 +44,8 @@ if (interactive()) {
   ## Import the example Motive data included in the package
   motive_data <-
     read_motive_csv(system.file("extdata",
-                                "pathviewR_motive_example_data.csv",
-                                package = 'pathviewR'))
+                                "pathviewr_motive_example_data.csv",
+                                package = 'pathviewr'))
 
   ## Clean, isolate, and label trajectories
   motive_full <-

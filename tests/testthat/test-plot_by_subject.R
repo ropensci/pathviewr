@@ -12,8 +12,8 @@ test_that("plot_by_subject() fails when data are missing or nonsense args",
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Clean, isolate, and label trajectories
 motive_full <-

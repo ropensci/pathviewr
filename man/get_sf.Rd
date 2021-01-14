@@ -9,7 +9,7 @@ get_sf(obj_name)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} and
+\code{pathviewr_steps} that includes \code{"viewr"} and
 \code{vis_angles_calculated}.}
 }
 \value{
@@ -28,7 +28,7 @@ perspective in an experimental tunnel.
 that minimizes the distance to visual stimuli and therefore maximizes visual
 angles.
 \item The subject's head is facing parallel to the length axis of the tunnel.
-Visual perception functions in future versions of pathviewR will integrate
+Visual perception functions in future versions of pathviewr will integrate
 head orientation coordinates.
 Spatial frequency is reported in cycles/degree and is the inverse of visual
 angle (degrees/cycle).
@@ -37,11 +37,11 @@ angle (degrees/cycle).
 \examples{
  ## Import sample data from package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 flydra_data <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                              package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                              package = 'pathviewr'),
                               subject_name = "birdie_sanders")
 
  ## Process data up to and including get_vis_angle()

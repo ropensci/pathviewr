@@ -1,147 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//index.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//index.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/as_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/as_viewr.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/bind_viewr_objects.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/bind_viewr_objects.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/calc_min_dist_box.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/calc_min_dist_box.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/calc_min_dist_v.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/calc_min_dist_v.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/clean_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/clean_viewr.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/clean_viewr_batch.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/clean_viewr_batch.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/deg_2_rad.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/deg_2_rad.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/exclude_by_velocity.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/exclude_by_velocity.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/fill_traj_gaps.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/fill_traj_gaps.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/find_curve_elbow.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/find_curve_elbow.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/gather_tunnel_data.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/gather_tunnel_data.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_2d_angle.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_2d_angle.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_3d_angle.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_3d_angle.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_3d_cross_prod.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_3d_cross_prod.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_dist_point_line.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_dist_point_line.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_full_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_full_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_header_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_header_viewr.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_sf.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_sf.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_velocity.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_velocity.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/get_vis_angle.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/get_vis_angle.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/import_and_clean_batch.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/import_and_clean_batch.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/import_and_clean_viewr.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/import_and_clean_viewr.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/import_batch.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/import_batch.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/insert_treatments.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/insert_treatments.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/pathviewR-package.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/pipe.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/plot_by_subject.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/plot_by_subject.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/plot_viewr_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/plot_viewr_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/quick_separate_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/quick_separate_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/rad_2_deg.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/rad_2_deg.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/read_flydra_mat.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/read_flydra_mat.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/read_motive_csv.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/read_motive_csv.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/redefine_tunnel_center.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/redefine_tunnel_center.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/relabel_viewr_axes.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/relabel_viewr_axes.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/rename_viewr_characters.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/rename_viewr_characters.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/rescale_tunnel_data.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/rescale_tunnel_data.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/rm_by_trajnum.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/rm_by_trajnum.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/rotate_tunnel.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/rotate_tunnel.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/section_tunnel_by.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/section_tunnel_by.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/select_x_percent.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/select_x_percent.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/separate_trajectories.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/separate_trajectories.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/standardize_tunnel.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/standardize_tunnel.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/trim_tunnel_outliers.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/trim_tunnel_outliers.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//reference/visualize_frame_gap_choice.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//reference/visualize_frame_gap_choice.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//articles/data-import-cleaning.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//articles/data-import-cleaning.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//articles/managing-frame-gaps.html</loc>
   </url>
   <url>
-    <loc>https://vbaliga.github.io/pathviewR//articles/managing-frame-gaps.html</loc>
-  </url>
-  <url>
-    <loc>https://vbaliga.github.io/pathviewR//articles/visual-perception-functions.html</loc>
+    <loc>https://vbaliga.github.io/pathviewr//articles/visual-perception-functions.html</loc>
   </url>
 </urlset>

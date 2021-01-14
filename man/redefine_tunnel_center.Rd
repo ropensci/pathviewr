@@ -18,7 +18,7 @@ redefine_tunnel_center(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{axes}{Names of axes to be centered}
 
@@ -34,11 +34,11 @@ redefine_tunnel_center(
 
 \item{height_zero}{User-defined value}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+\code{pathviewr_steps} that includes \code{"viewr"}) in which data have
 been translated according to the user's inputs, generally with \code{(0, 0,
   0,)} being relocated to the center of the tunnel.
 }
@@ -61,8 +61,8 @@ customize where the (0, 0, 0) point in the tunnel will end up. Each
 flydra_data <-
   read_flydra_mat(
     system.file("extdata",
-                "pathviewR_flydra_example_data.mat",
-                package = 'pathviewR'),
+                "pathviewr_flydra_example_data.mat",
+                package = 'pathviewr'),
     subject_name = "birdie_wooster"
   )
 

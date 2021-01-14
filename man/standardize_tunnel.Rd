@@ -13,7 +13,7 @@ standardize_tunnel(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+\code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 structured as though it has been passed through those functions).}
 
@@ -21,11 +21,11 @@ structured as though it has been passed through those functions).}
 
 \item{landmark_two}{Subject name of the second landmark}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+\code{pathviewr_steps} that includes \code{"viewr"}) in which data have
 been rotated according to the positions of the landmarks in the data.
 }
 \description{
@@ -53,7 +53,7 @@ the rotation will apply to a mirror-image of the tunnel
 
 \examples{
 ## Example data that would work with this function are
-## not included in this version of pathviewR. Please
+## not included in this version of pathviewr. Please
 ## contact the package authors for further guidance
 ## should you need it.
 }

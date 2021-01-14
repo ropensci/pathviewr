@@ -8,8 +8,8 @@ test_that("get_velocity() fails when non-numerics are supplied", {
 ## Set up for tests of the function value return
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "standarization" step before running get_velocity().

@@ -15,12 +15,12 @@ insert_treatments <- function(obj_name,
                               treatment = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_full_trajectories has been run prior to use
-  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "full_trajectories")){
     stop("Run get_full_trajectories() prior to use")
   }
 
@@ -106,7 +106,7 @@ insert_treatments <- function(obj_name,
   }
 
   ## Leave note that treatments were added
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                                         "treatments_added")
   return(obj_name)
 }

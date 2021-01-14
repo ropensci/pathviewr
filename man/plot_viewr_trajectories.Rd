@@ -12,7 +12,7 @@ plot_viewr_trajectories(
 }
 \arguments{
 \item{obj_name}{A viewr object (a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) that has been passed
+\code{pathviewr_steps} that includes \code{"viewr"}) that has been passed
 through \code{separate_trajectories()} or \code{get_full_trajectories()}.}
 
 \item{plot_axes}{Which position axes should be plotted? A character vector
@@ -32,12 +32,12 @@ A (base-R) series of plots or single plot (if \code{multi_plot =
 Plot each trajectory within a viewr object
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 motive_full <-
   motive_data \%>\%

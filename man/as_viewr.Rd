@@ -58,14 +58,14 @@ axis of quaternion rotation data}
 }
 \value{
 A tibble that is organized to be compliant with other
-\code{pathviewR} functions and that contains the attributes
-\code{pathviewR_steps} with entries set to \code{c("viewr",
+\code{pathviewr} functions and that contains the attributes
+\code{pathviewr_steps} with entries set to \code{c("viewr",
   "renamed_tunnel", "gathered_tunnel")}
 }
 \description{
 Should you have data from a non-Motive, non-Flydra source, this function can
 be used to ensure your data are put into the right format to work with other
-pathviewR functions.
+pathviewr functions.
 }
 \examples{
 

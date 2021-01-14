@@ -14,7 +14,7 @@ calc_s_freq <- function(obj_name,
                            simplify_output = FALSE){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 

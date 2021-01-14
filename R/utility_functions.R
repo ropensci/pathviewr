@@ -1,4 +1,4 @@
-## Part of the pathviewR package
+## Part of the pathviewr package
 ## Last updated: 2020-09-05 VBB
 
 
@@ -6,12 +6,12 @@
 #' Extract header info from imported viewr object
 #'
 #' A function to quickly return the information stored in the header of the
-#' original data file imported via \code{pathviewR}'s \code{read_} functions.
+#' original data file imported via \code{pathviewr}'s \code{read_} functions.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
-#' \code{pathviewR_steps}
-#' @param ... Additional arguments that may be passed to other \code{pathviewR}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
+#' \code{pathviewr_steps}
+#' @param ... Additional arguments that may be passed to other \code{pathviewr}
 #' functions
 #'
 #' @return The value of the \code{header} attribute, or NULL if no exact match
@@ -23,12 +23,12 @@
 #' @family metadata handling functions
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the Motive example data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Now display the Header information
 #' get_header_viewr(motive_data)
@@ -37,7 +37,7 @@
 get_header_viewr <- function(obj_name,
                              ...) {
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -51,12 +51,12 @@ get_header_viewr <- function(obj_name,
 #' Relabel the dimensions as length, width, and height
 #'
 #' Axes are commonly labeled as "x", "y", and "z" in recording software yet
-#' \code{pathviewR} functions require these to be labeled as "length", "width",
+#' \code{pathviewr} functions require these to be labeled as "length", "width",
 #' and "height". \code{relabel_viewr_axes()} is a function that takes a
 #' \code{viewr} object and allows the user to rename its variables.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param tunnel_length The dimension that corresponds to tunnel length. Set to
 #' \code{tunnel_length = "_z"} by default. Argument should contain a character
 #' vector with a leading underscore (see Details)
@@ -84,12 +84,12 @@ get_header_viewr <- function(obj_name,
 #'
 #' @examples
 #'
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the Motive example data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Names of variables are labeled with _x, _y, _z, which we'd like to rename
 #' names(motive_data)
@@ -114,7 +114,7 @@ relabel_viewr_axes <- function(obj_name,
                                real = "_w",
                                ...){
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -151,8 +151,8 @@ relabel_viewr_axes <- function(obj_name,
   namez -> names(obj_name)
 
   ## Leave a note that the axes have been renamed
-  attr(obj_name,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "renamed_tunnel")
+  attr(obj_name,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "renamed_tunnel")
 
   ## Export
   return(obj_name)
@@ -168,9 +168,9 @@ relabel_viewr_axes <- function(obj_name,
 #' observed frame and time.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param NA_drop Should rows with NAs be dropped? Defaults to \code{TRUE}
-#' @param ... Additional arguments that can be passed to other \code{pathviewR}
+#' @param ... Additional arguments that can be passed to other \code{pathviewr}
 #' functions such as \code{relabel_viewr_axes()} or \code{read_motive_csv()}
 #'
 #' @details The tibble or data.frame that is fed in must have variables that
@@ -195,12 +195,12 @@ relabel_viewr_axes <- function(obj_name,
 #' @family data cleaning functions
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the Motive example data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## First use relabel_viewr_axes() to rename these variables using _length,
 #' ## _width, and _height instead
@@ -217,7 +217,7 @@ gather_tunnel_data <- function(obj_name,
                                ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -351,8 +351,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   }
 
   ## Leave a note that we reshaped the data
-  attr(gathered_data,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "gathered_tunnel")
+  attr(gathered_data,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "gathered_tunnel")
 
   ## Export
   return(gathered_data)
@@ -368,13 +368,13 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' found)
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 #'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 #'   structured as though it has been passed through those functions).
 #' @param original_scale The original scale at which data were exported. See
 #'   Details if unknown.
 #' @param desired_scale The desired scale
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details The \code{desired_scale} is divided by the \code{original_scale} to
 #'   determine a \code{scale_ratio} internally. If the \code{original_scale} is
@@ -397,8 +397,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @examples
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "gather" step before running rescale_tunnel_data().
@@ -424,7 +424,7 @@ rescale_tunnel_data <- function(obj_name,
                                 ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
   ## Scales should be numeric
@@ -460,8 +460,8 @@ rescale_tunnel_data <- function(obj_name,
   }
 
   ## Leave a note that we rescaled the data
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "data_rescaled")
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "data_rescaled")
 
   return(obj_new)
 }
@@ -474,7 +474,7 @@ rescale_tunnel_data <- function(obj_name,
 #' rename subjects via pattern detection.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param target_column The target column; defaults to "subject"
 #' @param pattern The (regex) pattern to be replaced
 #' @param replacement The replacement text. Must be a character
@@ -491,8 +491,8 @@ rescale_tunnel_data <- function(obj_name,
 #' @examples
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "gather" step before running rescale_tunnel_data().
@@ -521,12 +521,12 @@ rename_viewr_characters <- function(obj_name,
                                     replacement = ""){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that gather_tunnel_data() has been run on the object
-#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
 #     stop("You must gather your party before venturing forth.
 # Please use gather_tunnel_data() on this object to gather data columns
 # into key-value pairs ")
@@ -558,8 +558,8 @@ rename_viewr_characters <- function(obj_name,
   }
 
   ## Leave a note that we renamed something
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "renamed_characters")
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "renamed_characters")
 
   return(obj_new)
 
@@ -573,7 +573,7 @@ rename_viewr_characters <- function(obj_name,
 #' trims out anything beyond these estimates.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 #'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 #'   structured as though it has been passed through those functions).
 #' @param lengths_min Minimum length
@@ -582,13 +582,13 @@ rename_viewr_characters <- function(obj_name,
 #' @param widths_max Maximum width
 #' @param heights_min Minimum height
 #' @param heights_max Maximum height
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details Anything supplied to _min or _max arguments should be single numeric
 #'   values.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which data outside
 #'   the specified ranges has been excluded.
 #'
 #' @author Vikram B. Baliga
@@ -600,8 +600,8 @@ rename_viewr_characters <- function(obj_name,
 #' @examples
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "gather" step before running trim_tunnel_outliers().
@@ -630,12 +630,12 @@ trim_tunnel_outliers <- function(obj_name,
                                  ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that gather_tunnel_data() has been run on the object
-#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
 #     stop("You must gather your party before venturing forth.
 # Please use gather_tunnel_data() on this object to gather data columns
 # into key-value pairs ")
@@ -698,8 +698,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   attr(obj_name,"import_method") -> attr(filt_widths,"import_method")
 
   ## Leave a note that we trimmed tunnel outliers
-  attr(filt_widths,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "artifacts_removed")
+  attr(filt_widths,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "artifacts_removed")
 
   ## Export
   return(filt_widths)
@@ -714,7 +714,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' width only, i.e. no rotation of height.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 #'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 #'   structured as though it has been passed through those functions).
 #' @param all_heights_min Minimum perch height
@@ -727,7 +727,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param perch1_wid_max Maximum width value of perch 1
 #' @param perch2_wid_min Minimum width value of perch 2
 #' @param perch2_wid_max Maximum width value of perch 2
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details The user first estimates the locations of the perches by specifying
 #'   bounds for where each perch is located. The function then computes the
@@ -741,7 +741,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #'   above the perch and values less than 0 are below the perch level.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which data have
 #'   been rotated according to user specifications.
 #'
 #' @author Vikram B. Baliga
@@ -754,8 +754,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @examples
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "trimmed" step before running rotate_tunnel().
@@ -795,12 +795,12 @@ rotate_tunnel <- function(obj_name,
                           ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that gather_tunnel_data() has been run on the object
-#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
 #     stop("You must gather your party before venturing forth.
 # Please use gather_tunnel_data() on this object to gather data columns
 # into key-value pairs ")
@@ -931,8 +931,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   attr(obj_new,"perch2_midpoint_current") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), c("tunnel_rotated", # rotated
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), c("tunnel_rotated", # rotated
                                           "tunnel_centered") # centered
     )
 
@@ -949,12 +949,12 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' landmarks (specific subjects in the data).
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+#'   \code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 #'   through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 #'   structured as though it has been passed through those functions).
 #' @param landmark_one Subject name of the first landmark
 #' @param landmark_two Subject name of the second landmark
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details The center point of the tunnel is estimated as the point between the
 #'   two landmarks. It is therefore recommended that \code{landmark_one} and
@@ -973,7 +973,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' the rotation will apply to a mirror-image of the tunnel
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which data have
 #'   been rotated according to the positions of the landmarks in the data.
 #'
 #' @author Vikram B. Baliga
@@ -985,7 +985,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #'
 #' @examples
 #' ## Example data that would work with this function are
-#' ## not included in this version of pathviewR. Please
+#' ## not included in this version of pathviewr. Please
 #' ## contact the package authors for further guidance
 #' ## should you need it.
 
@@ -995,12 +995,12 @@ standardize_tunnel <- function(obj_name,
                                ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that gather_tunnel_data() has been run on the object
-#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
 #     stop("You must gather your party before venturing forth.
 # Please use gather_tunnel_data() on this object to gather data columns
 # into key-value pairs ")
@@ -1169,8 +1169,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
   attr(obj_new,"landmark2_midpoint_current") <- perch2_trans_prime
 
   ## Leave a note that we rotated and translated the data set
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), c("tunnel_rotated", # rotated
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), c("tunnel_rotated", # rotated
                                           "tunnel_centered") # centered
     )
 
@@ -1186,7 +1186,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' positions along axes.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param axes Names of axes to be centered
 #' @param length_method Method for length
 #' @param width_method Method for width
@@ -1194,7 +1194,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' @param length_zero User-defined value
 #' @param width_zero User-defined value
 #' @param height_zero User-defined value
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details
 #' For each \code{_method} argument, there are four choices of how centering is
@@ -1206,7 +1206,7 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' \code{_zero} argument is subtracted from its corresponding axis' data.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which data have
 #'   been translated according to the user's inputs, generally with \code{(0, 0,
 #'   0,)} being relocated to the center of the tunnel.
 #'
@@ -1223,8 +1223,8 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
 #' flydra_data <-
 #'   read_flydra_mat(
 #'     system.file("extdata",
-#'                 "pathviewR_flydra_example_data.mat",
-#'                 package = 'pathviewR'),
+#'                 "pathviewr_flydra_example_data.mat",
+#'                 package = 'pathviewr'),
 #'     subject_name = "birdie_wooster"
 #'   )
 #'
@@ -1252,12 +1252,12 @@ redefine_tunnel_center <-
            ...) {
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that gather_tunnel_data() has been run on the object
-#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
 #     stop("You must gather your party before venturing forth.
 # Please use gather_tunnel_data() on this object to gather data columns
 # into key-value pairs ")
@@ -1366,8 +1366,8 @@ This column must be named 'position_height'.")
   ## TO ADD: Note what the original center was in the attributes
 
   ## Leave a note that we translated the data set
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "tunnel_centered") # centered
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "tunnel_centered") # centered
 
 ## Export
 return(obj_new)
@@ -1381,13 +1381,13 @@ return(obj_new)
 #' Select data in the middle X percent of the length of the tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param desired_percent Numeric, the percent of the total length of the tunnel
 #'   that will define the region of interest. Measured from the center outwards.
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which data outside
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which data outside
 #'   the region of interest have been removed.
 #'
 #' @author Vikram B. Baliga
@@ -1399,8 +1399,8 @@ return(obj_new)
 #' @examples
 ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "trimmed" step before running rotate_tunnel().
@@ -1425,12 +1425,12 @@ select_x_percent <- function(obj_name,
                              ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that it's undergone one of our centering steps
-#   if (!any(attr(obj_name,"pathviewR_steps") == "tunnel_centered")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "tunnel_centered")) {
 #     warning("This viewr object does not seem to have been passed through
 # one of our centering options, e.g. rotate_tunnel(), standardize_tunnel(),
 # or center_tunnel(). Please proceed with extreme caution.")
@@ -1469,8 +1469,8 @@ select_x_percent <- function(obj_name,
   attr(obj_name,"selected_tunnel_length") <- tunnel_length * prop
 
   ## Leave a note that we rotated and translated the data set
-  attr(obj_name,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "percent_selected")
+  attr(obj_name,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "percent_selected")
 
   ## Export
   return(obj_name)
@@ -1538,8 +1538,8 @@ quick_separate_trajectories <- function(obj_name,
   attr(obj_new,"max_frame_gap") <- max_frame_gap
 
   ## Leave a note that we rotated and translated the data set
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_new,"pathviewR_steps"), "trajectories_labeled")
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_new,"pathviewr_steps"), "trajectories_labeled")
 
   ## Export
   return(obj_new)
@@ -1551,7 +1551,7 @@ quick_separate_trajectories <- function(obj_name,
 #' Separate rows of data into separately labeled trajectories.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param max_frame_gap Default 1; defines the largest permissible gap in data
 #'   before a new trajectory is forced to be defined. Can be either a numeric
 #'   value or "autodetect". See Details for more.
@@ -1562,7 +1562,7 @@ quick_separate_trajectories <- function(obj_name,
 #'   the console?
 #' @param frame_gap_plotting Default FALSE; should frame gap diagnostic plots be
 #'   shown?
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details This function is designed to separate rows of data into separately
 #'   labeled trajectories.
@@ -1586,7 +1586,7 @@ quick_separate_trajectories <- function(obj_name,
 #'   to find an estimate of the best max frame gap value to use.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which a new column
 #'   \code{file_sub_traj} is added, which labels trajectories within the data by
 #'   concatenating file name, subject name, and a trajectory number (all
 #'   separated by underscores).
@@ -1603,8 +1603,8 @@ quick_separate_trajectories <- function(obj_name,
 #' @examples
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "select" step before running select_x_percent().
@@ -1633,12 +1633,12 @@ separate_trajectories <- function(obj_name,
                                   ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
 #   ## Check that gather_tunnel_data() has been run on the object
-#   if (!any(attr(obj_name,"pathviewR_steps") == "gathered_tunnel")) {
+#   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
 #     stop("You must gather your party before venturing forth.
 # Please use gather_tunnel_data() on this object to gather data columns
 # into key-value pairs ")
@@ -1716,8 +1716,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       attr(obj_new,"max_frame_gap") <- mufasa
 
       ## Leave a note that we rotated and translated the data set
-      attr(obj_new,"pathviewR_steps") <-
-        c(attr(obj_new,"pathviewR_steps"), "trajectories_labeled")
+      attr(obj_new,"pathviewr_steps") <-
+        c(attr(obj_new,"pathviewr_steps"), "trajectories_labeled")
 
       ## Export
       return(obj_new)
@@ -1807,8 +1807,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
       attr(obj_new,"max_frame_gap") <- unlist(mufasa)
 
       ## Leave a note that we rotated and translated the data set
-      attr(obj_new,"pathviewR_steps") <-
-        c(attr(obj_new,"pathviewR_steps"), "trajectories_labeled")
+      attr(obj_new,"pathviewr_steps") <-
+        c(attr(obj_new,"pathviewr_steps"), "trajectories_labeled")
 
       ## Export
       return(obj_new)
@@ -1827,9 +1827,9 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' of the region.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param span Span to use; must be numeric and between 0 and 1
-#' @param ... Additional arguments passed to/from other pathviewR functions
+#' @param ... Additional arguments passed to/from other pathviewr functions
 #'
 #' @details Because trajectories may not have observations exactly at the
 #' beginning or the end of the region of interest, it may be necessary to allow
@@ -1844,7 +1844,7 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' are generally recommended.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}) in which only
+#'   \code{pathviewr_steps} that includes \code{"viewr"}) in which only
 #'   trajectories that span the region of interest are retained. Data are
 #'   labeled by direction  (either "leftwards" or "rightwards") with respect to
 #'   their starting and ending \code{position_length} values in the
@@ -1860,8 +1860,8 @@ Setting max_frame_gap to ", maxFG_across_subjects)
 #' @examples
 ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "separate" step before running select_x_percent().
@@ -1886,12 +1886,12 @@ get_full_trajectories <- function(obj_name,
                                   ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
   # ## Check that its axes have been renamed
-  # if (!any(attr(obj_name,"pathviewR_steps") == "trajectories_labeled")) {
+  # if (!any(attr(obj_name,"pathviewr_steps") == "trajectories_labeled")) {
   #   stop("Please use separate_trajectories() prior to using this")
   # }
 
@@ -1942,8 +1942,8 @@ get_full_trajectories <- function(obj_name,
   attr(obj_defined, "span") <- span
 
   ## Leave a note that full trajectories were retained
-  attr(obj_defined,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "full_trajectories")
+  attr(obj_defined,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "full_trajectories")
 
   ## Leave a note about trajectories removed
   attr(obj_defined, "trajectories_removed") <-
@@ -1962,7 +1962,7 @@ get_full_trajectories <- function(obj_name,
 #' Chop data into X sections (of equal size) along a specified axis
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param axis Chosen axis, must match name of column exactly
 #' @param number_of_sections Total number of sections
 #'
@@ -1979,8 +1979,8 @@ get_full_trajectories <- function(obj_name,
 #' @examples
 #' ## Load data and run section_tunnel_by()
 #' test_mat <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                              package = 'pathviewR'),
+#'   read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+#'                              package = 'pathviewr'),
 #'                   subject_name = "birdie_wooster") %>%
 #'   redefine_tunnel_center(length_method = "middle",
 #'                          height_method = "user-defined",
@@ -2017,8 +2017,8 @@ section_tunnel_by <- function(obj_name,
               ordered_result = TRUE)
 
   ## Leave a note that this was done
-  attr(obj_name, "pathviewR_steps") <-
-    c(attr(obj_name, "pathviewR_steps"), "tunnel_sectioned")
+  attr(obj_name, "pathviewr_steps") <-
+    c(attr(obj_name, "pathviewr_steps"), "tunnel_sectioned")
 
   ## Export
   return(obj_name)
@@ -2033,7 +2033,7 @@ section_tunnel_by <- function(obj_name,
 #' known to be spurious.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param vel_min Default \code{NULL}. If a numeric is entered, trajectories
 #'   that have at least one observation with velocity less than \code{vel_min}
 #'   are removed.
@@ -2053,8 +2053,8 @@ section_tunnel_by <- function(obj_name,
 #' ## Import and clean the example Motive data
 #' motive_import_and_clean <-
 #'   import_and_clean_viewr(
-#'     file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                             package = 'pathviewR'),
+#'     file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                             package = 'pathviewr'),
 #'     desired_percent = 50,
 #'     max_frame_gap = "autodetect",
 #'     span = 0.95
@@ -2078,7 +2078,7 @@ section_tunnel_by <- function(obj_name,
                                  vel_max = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -2148,7 +2148,7 @@ section_tunnel_by <- function(obj_name,
 #' a viewr object
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+#'   \code{pathviewr_steps} that includes \code{"viewr"}. Trajectories must be
 #'   predefined (i.e. via \code{separate_trajectories()}).
 #' @param loess_degree See "degree" argument of fANCOVA::loess.as()
 #' @param loess_criterion See "criterion" argument of fANCOVA::loess.as()
@@ -2171,7 +2171,7 @@ section_tunnel_by <- function(obj_name,
 #'   See \link[fANCOVA]{loess.as} for further details on parameters.
 #'
 #' @return A viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} that now includes new
+#'   \code{pathviewr_steps} that includes \code{"viewr"} that now includes new
 #'   observations (rows) as a result of interpolation to fill in missing data. A
 #'   new column \code{gaps_filled} is added to the data to indicate original
 #'   data ("No") vs data that have been inserted to fill gaps ("Yes").
@@ -2181,12 +2181,12 @@ section_tunnel_by <- function(obj_name,
 #' @author Vikram B. Baliga
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Clean, isolate, and label trajectories
 #' motive_full <-
@@ -2213,7 +2213,7 @@ fill_traj_gaps <- function(obj_name,
 ){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
@@ -2438,8 +2438,8 @@ for (j in seq_len(nrow(new_dat))) {
   obj_new <- dplyr::bind_rows(obj_splits)
 
   ## Leave a note that we smoothed some trajectories
-  attr(obj_new,"pathviewR_steps") <-
-    c(attr(obj_name,"pathviewR_steps"), "traj_gaps_filled")
+  attr(obj_new,"pathviewr_steps") <-
+    c(attr(obj_name,"pathviewr_steps"), "traj_gaps_filled")
 
   ## Export
   return(obj_new)
@@ -2455,7 +2455,7 @@ for (j in seq_len(nrow(new_dat))) {
 #'during a treatment, trial, or session.
 #'
 #'@param obj_name The input viewr object; a tibble or data.frame with attribute
-#'  \code{pathviewR_steps} that includes \code{"viewr"}. Trajectories must be
+#'  \code{pathviewr_steps} that includes \code{"viewr"}. Trajectories must be
 #'  predefined (i.e. via \code{separate_trajectories()}).
 #'@param trajnum Minimum number of trajectories; must be numeric.
 #'@param mirrored Does the data have mirrored treatments? If so, arguments
@@ -2466,7 +2466,7 @@ for (j in seq_len(nrow(new_dat))) {
 #'  must be met.
 #'@param treatment2 A second treatment or session during which the threshold
 #'  must be met.
-#'@param ... Additional arguments passed to/from other pathviewR functions.
+#'@param ... Additional arguments passed to/from other pathviewr functions.
 #'
 #'@details Depending on analysis needs, users may want to remove subjects that
 #'  have not completed a certain number of trajectories during a treatment,
@@ -2483,7 +2483,7 @@ for (j in seq_len(nrow(new_dat))) {
 #'  named \code{"treatment"}.
 #'
 #'@return A viewr object; a tibble or data.frame with attribute
-#'  \code{pathviewR_steps} that includes \code{"viewr"} that now has fewer
+#'  \code{pathviewr_steps} that includes \code{"viewr"} that now has fewer
 #'  observations (rows) as a result of removal of subjects with too few
 #'  trajectories according to the \code{trajnum} parameter.
 #'
@@ -2492,12 +2492,12 @@ for (j in seq_len(nrow(new_dat))) {
 #'@author Melissa S. Armstrong
 #'
 #' @examples
-#' library(pathviewR)
+#' library(pathviewr)
 #'
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #' ## Clean, isolate, and label trajectories
 #' motive_full <-
@@ -2601,12 +2601,12 @@ rm_by_trajnum <- function(obj_name,
 #' Inserts treatment and experiment information
 #'
 #' Adds information about treatment and experimental set up to viewr objects for
-#' analysis in other pathviewR functions
+#' analysis in other pathviewr functions
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param tunnel_config The configuration of the experimental tunnel.
-#' Currently, pathviewR supports rectangular "box" and V-shaped tunnel
+#' Currently, pathviewr supports rectangular "box" and V-shaped tunnel
 #' configurations.
 #' @param perch_2_vertex If using a V-shaped tunnel, this is the vertical
 #' distance between the vertex and the height of the perches. If the tunnel does
@@ -2630,7 +2630,7 @@ rm_by_trajnum <- function(obj_name,
 #' object.
 #'
 #' @return A viewr object (tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"treatments added"}). Depending
+#'   \code{pathviewr_steps} that includes \code{"treatments added"}). Depending
 #'   on the argument \code{tunnel_config}, the viewr object also includes
 #'   columns storing the values of the supplied arguments. This experimental
 #'   information is also stored in the viewr object's metadata
@@ -2646,11 +2646,11 @@ rm_by_trajnum <- function(obj_name,
 #' @examples
 #'  ## Import sample data from package
 #'  motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'  flydra_data <-
-#'  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                               package = 'pathviewR'),
+#'  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+#'                               package = 'pathviewr'),
 #'                               subject_name = "birdie_sanders")
 #'
 #'   ## Clean data up to and including get_full_trajectories()
@@ -2725,12 +2725,12 @@ insert_treatments <- function(obj_name,
                               treatment = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_full_trajectories has been run prior to use
-  if (!any(attr(obj_name, "pathviewR_steps") == "full_trajectories")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "full_trajectories")){
     stop("Run get_full_trajectories() prior to use")
   }
 
@@ -2814,7 +2814,7 @@ insert_treatments <- function(obj_name,
   }
 
   ## Leave note that treatments were added
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "treatments_added")
   return(obj_name)
 }

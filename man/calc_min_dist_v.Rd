@@ -9,7 +9,7 @@ calc_min_dist_v(obj_name, simplify_output = TRUE)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} and
+\code{pathviewr_steps} that includes \code{"viewr"} and
 \code{treatments_added}.}
 
 \item{simplify_output}{If TRUE, the returned object includes only the minimum
@@ -39,8 +39,8 @@ All outputs are in meters.
 \examples{
  ## Import sample data from package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
  ## Process data up to and including insert_treatments()
 motive_data_full <-

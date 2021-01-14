@@ -15,7 +15,7 @@ separate_trajectories(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{max_frame_gap}{Default 1; defines the largest permissible gap in data
 before a new trajectory is forced to be defined. Can be either a numeric
@@ -31,11 +31,11 @@ the console?}
 \item{frame_gap_plotting}{Default FALSE; should frame gap diagnostic plots be
 shown?}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which a new column
+\code{pathviewr_steps} that includes \code{"viewr"}) in which a new column
 \code{file_sub_traj} is added, which labels trajectories within the data by
 concatenating file name, subject name, and a trajectory number (all
 separated by underscores).
@@ -68,8 +68,8 @@ to find an estimate of the best max frame gap value to use.
 \examples{
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "select" step before running select_x_percent().

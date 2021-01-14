@@ -1,10 +1,10 @@
 ---
-title: "Managing frame gaps with pathviewR"
+title: "Managing frame gaps with pathviewr"
 author: "Melissa S. Armstrong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Managing frame gaps with pathviewR}
+  %\VignetteIndexEntry{Managing frame gaps with pathviewr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteDepends{ggplot2}
   %\VignetteDepends{magrittr}
@@ -18,20 +18,20 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Defining trajectories with `pathviewR`
-`pathviewR` defines trajectories as continuous movement from one side of a
+## Defining trajectories with `pathviewr`
+`pathviewr` defines trajectories as continuous movement from one side of a
 region of interest to the other. Before trajectories can be defined, the region
 of interest must be selected via `select_x_percent()` in addition to all the
-previous steps of the data import and cleaning pipeline as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
-We'll start with loading `pathviewR` and a few packages from the `tidyverse`
+previous steps of the data import and cleaning pipeline as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
+We'll start with loading `pathviewr` and a few packages from the `tidyverse`
 and importing our data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
-## If you do not already have pathviewR installed:
+## If you do not already have pathviewr installed:
 # install.packages("devtools")
-# devtools::install_github("vbaliga/pathviewR")
+# devtools::install_github("vbaliga/pathviewr")
 
-library(pathviewR)
+library(pathviewr)
 library(ggplot2)
 library(magrittr)
 
@@ -39,13 +39,13 @@ library(magrittr)
 ## the package
 motive_data <-
   read_motive_csv(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR')
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr')
   )
 ```
 
-We'll quickly run through the cleanup pipeline using one of `pathviewR`'s
-all-in-one cleaning functions as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
+We'll quickly run through the cleanup pipeline using one of `pathviewr`'s
+all-in-one cleaning functions as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
 Since trajectories are defined in the `separate_trajectories()` function, we'll
 stop the all-in-one there by setting it and every step after it to `FALSE` so we
 can take a closer look at how trajectories are defined. Since all steps are set
@@ -146,7 +146,7 @@ plot_viewr_trajectories(motive_mfg5_full,
 
 ### Visualize frame gap choice 
 
-`pathviewR` has several tools to help users decide what frame gap allowances may
+`pathviewr` has several tools to help users decide what frame gap allowances may
 be appropriate depending on their data and resolution needs.
 `visualize_frame_gap_choice()` runs the `separate_trajectories()` function over
 the same data set as many times as the user would like via the `loop` argument,

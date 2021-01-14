@@ -15,8 +15,8 @@ test_that(
   {
     expect_error(
       read_flydra_mat(
-        system.file("extdata", "pathviewR_flydra_example_data.mat",
-                                  package = 'pathviewR')
+        system.file("extdata", "pathviewr_flydra_example_data.mat",
+                                  package = 'pathviewr')
         ),
       "A subject_name is required")
 })
@@ -24,8 +24,8 @@ test_that(
 
 ## Import the file for other tests (see below)
 flydra_test_data <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                             package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                             package = 'pathviewr'),
                   subject_name = "birdie_wooster")
 
 

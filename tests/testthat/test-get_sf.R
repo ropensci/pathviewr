@@ -1,8 +1,8 @@
 ## Import motive data
 motive_data <- # import
   read_motive_csv(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR')
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr')
   )
 ## Clean motive data
 motive_full <-
@@ -44,8 +44,8 @@ motive_test <-
 ## Import flydra data
 flydra_data <-
   read_flydra_mat(
-    system.file("extdata", "pathviewR_flydra_example_data.mat",
-                package = 'pathviewR'),
+    system.file("extdata", "pathviewr_flydra_example_data.mat",
+                package = 'pathviewr'),
     subject_name = "birdie_wooster")
 
 ## Clean flydra data

@@ -8,7 +8,7 @@ rescale_tunnel_data(obj_name, original_scale = 0.5, desired_scale = 1, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+\code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 structured as though it has been passed through those functions).}
 
@@ -17,7 +17,7 @@ Details if unknown.}
 
 \item{desired_scale}{The desired scale}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A \code{viewr} object that has position data (and
@@ -43,8 +43,8 @@ The default arguments of \code{original_scale = 0.5} and
 \examples{
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "gather" step before running rescale_tunnel_data().

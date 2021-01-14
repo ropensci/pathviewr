@@ -24,7 +24,7 @@ package.check <- lapply(packages, # applies the function to a list and returns
                         }
 )
 
-## Source un-exported pathviewR things too
+## Source un-exported pathviewr things too
 devtools::load_all()
 
 ########################### example roz2016 object #############################
@@ -32,7 +32,7 @@ devtools::load_all()
 ## Test pancake
 test_mat <-
   read_flydra_mat(
-    "./inst/extdata/pathviewR_flydra_example_data.mat",
+    "./inst/extdata/pathviewr_flydra_example_data.mat",
     subject_name = "steve")
 
 ## Clean it up -- these are the settings I've been using
@@ -67,12 +67,12 @@ plot(test_cleaned$position_length,
 calc_sf_box <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that insert_treatments has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "treatments_added")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "treatments_added")){
     stop("Please run insert_treatments() prior to use")
   }
 
@@ -90,7 +90,7 @@ calc_sf_box <- function(obj_name){
   obj_name$s_freq_neg <- deg_dist_neg / obj_name$stim_param_neg
 
   ## Leave note that spatial frequencies were calculated on dataset
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "frequencies_calculated")
 
   return(obj_name)

@@ -8,7 +8,7 @@ section_tunnel_by(obj_name, axis = "position_length", number_of_sections = 20)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{axis}{Chosen axis, must match name of column exactly}
 
@@ -28,8 +28,8 @@ The idea is to bin the data along a specified axis, generally
 \examples{
 ## Load data and run section_tunnel_by()
 test_mat <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                             package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                             package = 'pathviewr'),
                   subject_name = "birdie_wooster") \%>\%
   redefine_tunnel_center(length_method = "middle",
                          height_method = "user-defined",

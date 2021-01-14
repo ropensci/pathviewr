@@ -13,8 +13,8 @@ test_that(
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 motive_full <-
   motive_data %>%
@@ -29,7 +29,7 @@ sqrt_traj_count <- ceiling(sqrt(length(obj_name_trajs)))
 test_that("wrangle for plots OK", {
   expect_match(
     unique(motive_full$file_sub_traj)[[6]],
-    "pathviewR_motive_example_data.csv_device03_0"
+    "pathviewr_motive_example_data.csv_device03_0"
   )
   expect_equal(ceiling(sqrt(length(obj_name_trajs))), 4)
 })
@@ -47,7 +47,7 @@ test_that("aspects of plotting loop are functioning as expected", {
 })
 test_that("plot info (axes, titles, etc.) is correct", {
   expect_match(obj_name_trajs[9],
-               "pathviewR_motive_example_data.csv_device05_1")
+               "pathviewr_motive_example_data.csv_device05_1")
   expect_match(paste0("trajectory #", 5), "trajectory #5")
   expect_equal(min(motive_full$position_length), -0.6605554)
 })

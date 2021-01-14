@@ -8,8 +8,8 @@ test_that("relabel_viewr_axes() fails when nonsense is supplied", {
 ## Set up for tests of the function value return
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Test that attributes are read properly
 test_that(

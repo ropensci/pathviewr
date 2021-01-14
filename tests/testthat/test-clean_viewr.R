@@ -1,13 +1,13 @@
 ## Tests of clean_viewr() and import_and_clean_viewr()
 
 motive_test_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Import the example Flydra data included in the package
 flydra_data <-
-  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                              package = 'pathviewR'),
+  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                              package = 'pathviewr'),
                   subject_name = "birdie_wooster")
 
 ## run it through
@@ -45,8 +45,8 @@ flydra_redefined_cleaned <-
 
 motive_import_and_clean <-
   import_and_clean_viewr(
-    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+    file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
     desired_percent = 50,
     max_frame_gap = "autodetect",
     span = 0.95
@@ -54,8 +54,8 @@ motive_import_and_clean <-
 
 motive_import_and_clean2 <-
   import_and_clean_viewr(
-    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+    file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
     fill_traj_gaps = TRUE,
     loess_degree = 1,
     loess_criterion = c("aicc", "gcv"),
@@ -65,8 +65,8 @@ motive_import_and_clean2 <-
 
 motive_import_and_clean3 <-
   import_and_clean_viewr(
-    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+    file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
     rename_viewr_characters = TRUE,
     target_column = "subject",
     pattern = "device",
@@ -79,8 +79,8 @@ test_that("a message is made even if inputs are good",
               motive_import_and_clean <-
                 import_and_clean_viewr(
                   file_name =
-                    system.file("extdata", "pathviewR_motive_example_data.csv",
-                                package = 'pathviewR'),
+                    system.file("extdata", "pathviewr_motive_example_data.csv",
+                                package = 'pathviewr'),
                   desired_percent = 50,
                   max_frame_gap = "autodetect",
                   span = 0.95,
@@ -250,8 +250,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 relabel_viewr_axes = FALSE,
                 tunnel_length = "_z",
                 tunnel_width = "_x",
@@ -265,8 +265,8 @@ test_that(
   has args but is FALSE",
           {
             expect_error(import_and_clean_viewr(
-              system.file("extdata", "pathviewR_motive_example_data.csv",
-                          package = 'pathviewR'),
+              system.file("extdata", "pathviewr_motive_example_data.csv",
+                          package = 'pathviewr'),
               gather_tunnel_data = FALSE,
               NA_drop = TRUE
             ))
@@ -277,8 +277,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 trim_tunnel_outliers = FALSE,
                 lengths_min = 0,
                 lengths_max = 3,
@@ -295,8 +295,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 get_velocity = FALSE,
                 time_col = "time_sec",
                 length_col = "position_length",
@@ -311,8 +311,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 select_x_percent = FALSE,
                 desired_percent = 33
               )
@@ -324,8 +324,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 rename_viewr_characters = FALSE,
                 target_column = "subject",
                 pattern,
@@ -339,8 +339,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 separate_trajectories = FALSE,
                 max_frame_gap = 1,
                 frame_rate_proportion = 0.1
@@ -352,8 +352,8 @@ test_that(
   has args but is FALSE",
           {
             expect_error(import_and_clean_viewr(
-              system.file("extdata", "pathviewR_motive_example_data.csv",
-                          package = 'pathviewR'),
+              system.file("extdata", "pathviewr_motive_example_data.csv",
+                          package = 'pathviewr'),
               get_full_trajectories = FALSE,
               span = 0.8
             ))
@@ -364,8 +364,8 @@ test_that(
           {
             expect_error(
               import_and_clean_viewr(
-                system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+                system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
                 fill_traj_gaps = FALSE,
                 loess_degree = 1,
                 loess_criterion = c("aicc", "gcv"),
@@ -377,8 +377,8 @@ test_that(
 test_that("import_and_clean_viewr() reports when unused params are given",
           {
             expect_message(import_and_clean_viewr(
-              system.file("extdata", "pathviewR_motive_example_data.csv",
-                          package = 'pathviewR'),
+              system.file("extdata", "pathviewr_motive_example_data.csv",
+                          package = 'pathviewr'),
               stuff = "stuff",
               dog = "chewie"
             ))
@@ -388,8 +388,8 @@ test_that(
   "import_and_clean_viewr() fails when standardization option is nonsense",
           {
             expect_error(import_and_clean_viewr(
-              system.file("extdata", "pathviewR_motive_example_data.csv",
-                          package = 'pathviewR'),
+              system.file("extdata", "pathviewr_motive_example_data.csv",
+                          package = 'pathviewr'),
               standardization_option = "chewie"
             ))
           })

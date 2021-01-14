@@ -8,15 +8,15 @@ get_full_trajectories(obj_name, span = 0.8, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{span}{Span to use; must be numeric and between 0 and 1}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which only
+\code{pathviewr_steps} that includes \code{"viewr"}) in which only
 trajectories that span the region of interest are retained. Data are
 labeled by direction  (either "leftwards" or "rightwards") with respect to
 their starting and ending \code{position_length} values in the
@@ -42,8 +42,8 @@ are generally recommended.
 }
 \examples{
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "separate" step before running select_x_percent().

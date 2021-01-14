@@ -21,7 +21,7 @@ rotate_tunnel(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"} that has been passed
+\code{pathviewr_steps} that includes \code{"viewr"} that has been passed
 through \code{relabel_viewr_axes()} and \code{gather_tunnel_data()} (or is
 structured as though it has been passed through those functions).}
 
@@ -45,11 +45,11 @@ structured as though it has been passed through those functions).}
 
 \item{perch2_wid_max}{Maximum width value of perch 2}
 
-\item{...}{Additional arguments passed to/from other pathviewR functions}
+\item{...}{Additional arguments passed to/from other pathviewr functions}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) in which data have
+\code{pathviewr_steps} that includes \code{"viewr"}) in which data have
 been rotated according to user specifications.
 }
 \description{
@@ -71,8 +71,8 @@ above the perch and values less than 0 are below the perch level.
 \examples{
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 ## Clean the file. It is generally recommended to clean up to the
 ## "trimmed" step before running rotate_tunnel().

@@ -21,7 +21,7 @@ clean_viewr(
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{relabel_viewr_axes}{default TRUE, should axes be relabeled?}
 
@@ -50,8 +50,8 @@ retained?}
 }
 \value{
 A viewr object (tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}) that has passed
-through several \code{pathviewR} functions as desired by the user,
+\code{pathviewr_steps} that includes \code{"viewr"}) that has passed
+through several \code{pathviewr} functions as desired by the user,
 resulting in data that have been cleaned and ready for analyses.
 }
 \description{
@@ -59,23 +59,23 @@ For an imported viewr object, run through the cleaning pipeline as desired
 }
 \details{
 Each argument corresponds to a standalone function in
-\code{pathviewR}. E.g. the parameter \code{relabel_viewr_axes} allows a
-user to choose whether \code{pathviewR::relabel_viewr_axes()} is run
+\code{pathviewr}. E.g. the parameter \code{relabel_viewr_axes} allows a
+user to choose whether \code{pathviewr::relabel_viewr_axes()} is run
 internally. Should the user desire to use any non-default parameter values
 for any functions included here, they should be supplied to this function
 as additional arguments formatted exactly as they would appear in their
 corresponding function(s). E.g. if the "autodetect" feature in
-\code{pathviewR::separate_trajectories()} is desired, add an argument
+\code{pathviewr::separate_trajectories()} is desired, add an argument
 \code{max_frame_gap = "autodetect"} to the arguments supplied to this
 function.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 motive_full <-
   motive_data \%>\%
@@ -87,8 +87,8 @@ motive_full <-
 ## function to combine these steps
 motive_import_and_clean <-
   import_and_clean_viewr(
-    file_name = system.file("extdata", "pathviewR_motive_example_data.csv",
-                            package = 'pathviewR'),
+    file_name = system.file("extdata", "pathviewr_motive_example_data.csv",
+                            package = 'pathviewr'),
     desired_percent = 50,
     max_frame_gap = "autodetect",
     span = 0.95

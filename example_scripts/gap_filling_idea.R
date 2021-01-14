@@ -17,11 +17,11 @@ package.check <- lapply(
       install.packages(x, dependencies = TRUE)
       library(x, character.only = TRUE)}})
 
-## Source un-exported pathviewR things too
+## Source un-exported pathviewr things too
 devtools::load_all()
 
 ############################## quick data import ###############################
-motive_data_path <- './inst/extdata/pathviewR_motive_example_data.csv'
+motive_data_path <- './inst/extdata/pathviewr_motive_example_data.csv'
 
 motive_data_mfg_autodetect <-
   motive_data_path %>% import_and_clean_viewr(max_frame_gap = "autodetect",

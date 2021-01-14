@@ -9,7 +9,7 @@ calc_min_dist_box(obj_name)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that include \code{"viewr"} and
+\code{pathviewr_steps} that include \code{"viewr"} and
 \code{treatments_added}.}
 }
 \value{
@@ -29,8 +29,8 @@ All outputs are in meters.
 \examples{
 ## Import sample data from package
  flydra_data <-
- read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-                               package = 'pathviewR'),
+ read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+                               package = 'pathviewr'),
                                subject_name = "birdie_sanders")
 
    ## Process data up to and including insert_treatments()

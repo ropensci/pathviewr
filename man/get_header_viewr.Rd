@@ -8,10 +8,10 @@ get_header_viewr(obj_name, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}
-\code{pathviewR_steps}}
+\code{pathviewr_steps} that includes \code{"viewr"}
+\code{pathviewr_steps}}
 
-\item{...}{Additional arguments that may be passed to other \code{pathviewR}
+\item{...}{Additional arguments that may be passed to other \code{pathviewr}
 functions}
 }
 \value{
@@ -20,15 +20,15 @@ is found and no or more than one partial match is found.
 }
 \description{
 A function to quickly return the information stored in the header of the
-original data file imported via \code{pathviewR}'s \code{read_} functions.
+original data file imported via \code{pathviewr}'s \code{read_} functions.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the Motive example data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 ## Now display the Header information
 get_header_viewr(motive_data)

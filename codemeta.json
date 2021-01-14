@@ -4,11 +4,11 @@
     "http://schema.org"
   ],
   "@type": "SoftwareSourceCode",
-  "identifier": "pathviewR",
+  "identifier": "pathviewr",
   "description": "Tools to import, clean, and visualize movement data,\n    particularly from motion capture systems such as Optitrack's \n    Motive, the Straw Lab's Flydra, or from other sources. We provide \n    functions to remove artifacts, standardize tunnel position and tunnel \n    axes, select a region of interest, isolate specific trajectories, fill\n    gaps in trajectory data, and calculate 3D and per-axis velocity. For \n    experiments of visual guidance, we also provide functions that use \n    subject position to estimate perception of visual stimuli. ",
-  "name": "pathviewR: Wrangle, Analyze, and Visualize Animal Movement Data",
-  "codeRepository": "https://github.com/vbaliga/pathviewR",
-  "issueTracker": "https://github.com/vbaliga/pathviewR/issues",
+  "name": "pathviewr: Wrangle, Analyze, and Visualize Animal Movement Data",
+  "codeRepository": "https://github.com/vbaliga/pathviewr",
+  "issueTracker": "https://github.com/vbaliga/pathviewr/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "0.9.4.9000",
   "programmingLanguage": {
@@ -257,9 +257,9 @@
       "sameAs": "https://CRAN.R-project.org/package=cowplot"
     }
   ],
-  "readme": "https://github.com/vbaliga/pathviewR/blob/master/README.md",
-  "fileSize": "11558.996KB",
-  "contIntegration": "https://codecov.io/gh/vbaliga/pathviewR?branch=master",
+  "readme": "https://github.com/vbaliga/pathviewr/blob/master/README.md",
+  "fileSize": "11553.429KB",
+  "contIntegration": "https://codecov.io/gh/vbaliga/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {

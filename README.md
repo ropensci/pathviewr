@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pathviewR <a href='https://vbaliga.github.io/pathviewR'><img src='https://github.com/vbaliga/pathviewR/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
+# pathviewr <a href='https://vbaliga.github.io/pathviewr'><img src='https://github.com/vbaliga/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
 
 <!-- badges: start -->
 
@@ -9,13 +9,13 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R build
-status](https://github.com/vbaliga/pathviewR/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewR/actions)
+status](https://github.com/vbaliga/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewr/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/vbaliga/pathviewR/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewR?branch=master)
+coverage](https://codecov.io/gh/vbaliga/pathviewr/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewr?branch=master)
 [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)
 <!-- badges: end -->
 
-`pathviewR` offers tools to import, clean, and visualize movement data,
+`pathviewr` offers tools to import, clean, and visualize movement data,
 particularly from motion capture systems such as [Optitrack’s
 Motive](https://optitrack.com/software/motive/), the [Straw Lab’s
 Flydra](https://github.com/strawlab/flydra), or other sources. We
@@ -31,18 +31,18 @@ This package can be installed via:
 
 ``` r
 #install.packages("devtools") # if devtools is not installed
-devtools::install_github("vbaliga/pathviewR")
+devtools::install_github("vbaliga/pathviewr")
 ```
 
 ## Example
 
-#### Data import and cleaning via `pathviewR`
+#### Data import and cleaning via `pathviewr`
 
 We’ll also load two `tidyverse` packages for wrangling & plotting in
 this readme.
 
 ``` r
-library(pathviewR)
+library(pathviewr)
 library(ggplot2)
 library(magrittr)
 ```
@@ -51,7 +51,7 @@ We will import and clean a sample data set from `.csv` files exported by
 [Optitrack’s Motive](https://optitrack.com/software/motive/) software.
 For examples of how to import and clean other types of data, [see the
 Basics of data import and cleaning
-vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
+vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
 
 ``` r
 ## Import the Motive example data included in 
@@ -59,8 +59,8 @@ vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html
 
 motive_data <-
   read_motive_csv(
-    system.file("extdata", "pathviewR_motive_example_data.csv",
-                package = 'pathviewR')
+    system.file("extdata", "pathviewr_motive_example_data.csv",
+                package = 'pathviewr')
   )
 ```
 
@@ -68,7 +68,7 @@ Several functions to clean and wrangle data are available, and we have a
 suggested pipeline for how these steps should be handled. For this
 example, we will use one of two “all-in-one” functions: `clean_viewr()`.
 [See the Basics of data import and cleaning
-vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html)
+vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html)
 for the full pipeline and the other “all-in-one” function.
 
 ``` r
@@ -138,9 +138,9 @@ str(motive_data)
 #>  $ device05_position_z       : num [1:934] 2.66 2.66 2.66 2.66 2.66 ...
 #>  $ device05_mean_marker_error: num [1:934] 0.000241 0.000247 0.000255 0.000244 0.00023 0.000226 0.000231 0.000236 0.000242 0.000263 ...
 #>  - attr(*, ".internal.selfref")=<externalptr> 
-#>  - attr(*, "pathviewR_steps")= chr "viewr"
-#>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:04:23"
+#>  - attr(*, "pathviewr_steps")= chr "viewr"
+#>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:25:31"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -174,7 +174,7 @@ str(motive_allinone)
 #>  $ width_inst_vel   : num [1:449] -0.642 -0.387 -0.58 -1.139 -0.75 ...
 #>  $ height_inst_vel  : num [1:449] 0.184 0.475 0.508 0.379 0.258 ...
 #>  $ traj_id          : int [1:449] 0 0 0 0 0 0 0 0 0 0 ...
-#>  $ file_sub_traj    : chr [1:449] "pathviewR_motive_example_data.csv_device02_0" "pathviewR_motive_example_data.csv_device02_0" "pathviewR_motive_example_data.csv_device02_0" "pathviewR_motive_example_data.csv_device02_0" ...
+#>  $ file_sub_traj    : chr [1:449] "pathviewr_motive_example_data.csv_device02_0" "pathviewr_motive_example_data.csv_device02_0" "pathviewr_motive_example_data.csv_device02_0" "pathviewr_motive_example_data.csv_device02_0" ...
 #>  $ traj_length      : int [1:449] 63 63 63 63 63 63 63 63 63 63 ...
 #>  $ start_length     : num [1:449] 0.647 0.647 0.647 0.647 0.647 ...
 #>  $ end_length       : num [1:449] -0.656 -0.656 -0.656 -0.656 -0.656 ...
@@ -182,8 +182,8 @@ str(motive_allinone)
 #>  $ start_length_sign: num [1:449] 1 1 1 1 1 1 1 1 1 1 ...
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
-#>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:04:23"
+#>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:25:31"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -197,7 +197,7 @@ str(motive_allinone)
 #>  - attr(*, "d1")= chr [1:26] "" "" "Rotation" "Rotation" ...
 #>  - attr(*, "d2")= chr [1:26] "Frame" "Time (Seconds)" "X" "Y" ...
 #>  - attr(*, "import_method")= chr "motive"
-#>  - attr(*, "pathviewR_steps")= chr [1:10] "viewr" "renamed_tunnel" "gathered_tunnel" "artifacts_removed" ...
+#>  - attr(*, "pathviewr_steps")= chr [1:10] "viewr" "renamed_tunnel" "gathered_tunnel" "artifacts_removed" ...
 #>  - attr(*, "perch1_midpoint_original")= num [1:3] 0 0.2 0.205
 #>  - attr(*, "perch2_midpoint_original")= num [1:3] 2.54 0.24 0.205
 #>  - attr(*, "tunnel_centerpoint_original")= num [1:3] 1.27 0.22 0.205
@@ -213,17 +213,17 @@ str(motive_allinone)
 #>  - attr(*, "trajectories_removed")= int 5
 ```
 
-An important aspect of how `pathviewR` defines trajectories is by
+An important aspect of how `pathviewr` defines trajectories is by
 managing gaps in the data. [See the vignette on Managing frame
-gaps](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
+gaps](https://vbaliga.github.io/pathviewr/articles/managing-frame-gaps.html)
 for more information on trajectory definition and frame gaps.
 
-Now that the data is cleaned, `pathviewR` includes functions that
+Now that the data is cleaned, `pathviewr` includes functions that
 estimate visual perceptions based on the distance between the
 subject/observer and visual stimuli on the walls of the experimental
 tunnel. For a complete description of these functions, [see the vignette
 on Estimating visual perceptions from tracking
-data](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
+data](https://vbaliga.github.io/pathviewr/articles/visual-perception-functions.html).
 
 #### Add more info about experiments
 
@@ -275,7 +275,7 @@ Visualizing the calculations provides an more intuitive understanding of
 how these visual perceptions change as the subject moves throughout the
 tunnel. Please [see the vignette on Estimating visual perceptions from
 tracking
-data](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html)
+data](https://vbaliga.github.io/pathviewr/articles/visual-perception-functions.html)
 for more examples of visualizing calculations.
 
 ``` r
@@ -302,20 +302,20 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 
 We welcome feedback on bugs, improvements, and/or feature requests.
 Please [see our Issues templates on
-GitHub](https://github.com/vbaliga/pathviewR/issues/new/choose) to make
+GitHub](https://github.com/vbaliga/pathviewr/issues/new/choose) to make
 a bug fix request or feature request.
 
 To contribute code via a pull request, please consult our [Contributing
-Guide](https://github.com/vbaliga/pathviewR/blob/master/.github/CONTRIBUTING.md)
+Guide](https://github.com/vbaliga/pathviewr/blob/master/.github/CONTRIBUTING.md)
 first.
 
 ## Citation
 
-The preferred way to cite `pathviewR` (but subject to change) is:
+The preferred way to cite `pathviewr` (but subject to change) is:
 
-Baliga VB, Armstrong MS, Press ER (2020). *pathviewR: Tools to import,
+Baliga VB, Armstrong MS, Press ER (2020). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-0.9.4, <https://github.com/vbaliga/pathviewR>.
+0.9.4, <https://github.com/vbaliga/pathviewr>.
 
 ## License
 

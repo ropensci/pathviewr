@@ -8,11 +8,11 @@ test_that("rm_by_trajnum() fails when data are missing or nonsense trajnum", {
 
 # Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                              package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                              package = 'pathviewr'))
 
 #Clean the file.
-#Recommended to use full pathviewR pipeline before rm_by_trajnum()
+#Recommended to use full pathviewr pipeline before rm_by_trajnum()
 motive_full <-
   motive_data %>%
   clean_viewr(desired_percent = 50,

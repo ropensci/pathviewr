@@ -1,4 +1,4 @@
-## Part of the pathviewR package
+## Part of the pathviewr package
 ## Last updated: 2020-09-05 VBB
 
 ################################## get_velocity ################################
@@ -9,7 +9,7 @@
 #' (see Details)
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"}
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
 #' @param time_col Name of the column containing time
 #' @param length_col Name of the column containing length dimension
 #' @param width_col Name of the column containing width dimension
@@ -20,7 +20,7 @@
 #'   the object? If so, enter a numeric. If not, keep NA.
 #' @param velocity_max Should data above a certain velocity be filtered out of
 #'   the object? If so, enter a numeric. If not, keep NA.
-#' @param ... Additional arguments passed to or from other pathviewR functions.
+#' @param ... Additional arguments passed to or from other pathviewr functions.
 #'
 #' @details Instantaneous velocity is not truly "instantaneous" but rather is
 #' approximated as the change in distance divided by change in time from one
@@ -44,8 +44,8 @@
 #' @examples
 #' ## Import the example Motive data included in the package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                              package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                              package = 'pathviewr'))
 #'
 #' ## Clean the file. It is generally recommended to clean up to the
 #' ## "standarization" step before running get_velocity().
@@ -77,7 +77,7 @@ get_velocity <- function(obj_name,
                          ...) {
 
   # ## Check that it's a viewr object
-  # if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
   #   stop("This doesn't seem to be a viewr object")
   # }
 
@@ -141,8 +141,8 @@ Please check that you have entered the name of the height variable correctly.")
     obj_new <- dplyr::bind_cols(obj_name, res)
 
     ## Leave a note that we computed velocity via get_velocity()
-    attr(obj_new,"pathviewR_steps") <-
-      c(attr(obj_name,"pathviewR_steps"), "velocity_computed")
+    attr(obj_new,"pathviewr_steps") <-
+      c(attr(obj_name,"pathviewr_steps"), "velocity_computed")
 
   } else { ## if FALSE
     obj_new <- res
@@ -578,7 +578,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' experimental tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that includes \code{"viewr"} and
+#'   \code{pathviewr_steps} that includes \code{"viewr"} and
 #'   \code{treatments_added}.
 #' @param simplify_output If TRUE, the returned object includes only the minimum
 #'   distance between the subject and the lateral/end walls. If FALSE, the
@@ -607,8 +607,8 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #' @examples
 #'  ## Import sample data from package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #'
 #'  ## Process data up to and including insert_treatments()
 #' motive_data_full <-
@@ -640,12 +640,12 @@ calc_min_dist_v <- function(obj_name,
                             simplify_output = TRUE){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
     stop("Please run insert_treatments() prior to use")
   }
 
@@ -732,12 +732,12 @@ calc_min_dist_v <- function(obj_name,
 
   ## return object and add note that minimum distaces were calculated
   if(simplify_output == TRUE){
-    attr(obj_simplify, "pathviewR_steps") <-
-      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
+    attr(obj_simplify, "pathviewr_steps") <-
+      c(attr(obj_name, "pathviewr_steps"), "min_dist_calculated")
     return(obj_simplify)
   } else {
-    attr(obj_name, "pathviewR_steps") <-
-      c(attr(obj_name, "pathviewR_steps"), "min_dist_calculated")
+    attr(obj_name, "pathviewr_steps") <-
+      c(attr(obj_name, "pathviewr_steps"), "min_dist_calculated")
     return(obj_name)
   }
 }
@@ -749,7 +749,7 @@ calc_min_dist_v <- function(obj_name,
 #' experimental tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#'   \code{pathviewR_steps} that include \code{"viewr"} and
+#'   \code{pathviewr_steps} that include \code{"viewr"} and
 #'   \code{treatments_added}.
 #'
 #' @return A tibble or data.frame with added variables for
@@ -769,8 +769,8 @@ calc_min_dist_v <- function(obj_name,
 #' @examples
 #' ## Import sample data from package
 #'  flydra_data <-
-#'  read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                                package = 'pathviewR'),
+#'  read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+#'                                package = 'pathviewr'),
 #'                                subject_name = "birdie_sanders")
 #'
 #'    ## Process data up to and including insert_treatments()
@@ -802,12 +802,12 @@ calc_min_dist_v <- function(obj_name,
 calc_min_dist_box <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")) {
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "treatments_added")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
     stop("Please run insert_treatments() prior to use")
   }
 
@@ -823,7 +823,7 @@ calc_min_dist_box <- function(obj_name){
            obj_name$tunnel_length/2 + obj_name$position_length)
 
   ## Leave note that minimum distances were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "min_dist_calculated")
 
 
@@ -836,7 +836,7 @@ calc_min_dist_box <- function(obj_name){
 #' Estimate visual angles from a subject's perspective in an experimental tunnel
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with
-#' attributes \code{pathviewR_steps} that include \code{"viewr"}
+#' attributes \code{pathviewr_steps} that include \code{"viewr"}
 #' and \code{min_dist_calculated}.
 #'
 #' @details \code{get_vis_angle()} assumes the following:
@@ -844,7 +844,7 @@ calc_min_dist_box <- function(obj_name){
 #' that minimizes the distance to visual stimuli and therefore maximizes visual
 #' angles.
 #' - The subject's head is facing parallel to the length axis of the tunnel.
-#' Visual perception functions in future versions of pathviewR will integrate
+#' Visual perception functions in future versions of pathviewr will integrate
 #' head orientation coordinates.
 #' Angles are reported in radians/cycle (\code{vis_angle_pos_rad}) and
 #' degrees/cycle (\code{vis_angle_pos_deg}).
@@ -863,11 +863,11 @@ calc_min_dist_box <- function(obj_name){
 #' @examples
 #'  ## Import sample data from package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #' flydra_data <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                               package = 'pathviewR'),
+#'   read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+#'                               package = 'pathviewr'),
 #'                               subject_name = "birdie_sanders")
 #'
 #'  ## Process data up to and including get_min_dist()
@@ -918,12 +918,12 @@ calc_min_dist_box <- function(obj_name){
 get_vis_angle <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that calc_min_dist() has been run
-  if (!any(attr(obj_name, "pathviewR_steps") == "min_dist_calculated")){
+  if (!any(attr(obj_name, "pathviewr_steps") == "min_dist_calculated")){
     stop("Please run calc_min_dist_v() or calc_min_dist_box() prior to use")
   }
 
@@ -947,7 +947,7 @@ get_vis_angle <- function(obj_name){
   obj_name$vis_angle_end_deg <- rad_2_deg(obj_name$vis_angle_end_rad)
 
   ## Leave a note that visual angles were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "vis_angles_calculated")
   return(obj_name)
 }
@@ -959,7 +959,7 @@ get_vis_angle <- function(obj_name){
 #' perspective in an experimental tunnel.
 #'
 #' @param obj_name The input viewr object; a tibble or data.frame with attribute
-#' \code{pathviewR_steps} that includes \code{"viewr"} and
+#' \code{pathviewr_steps} that includes \code{"viewr"} and
 #' \code{vis_angles_calculated}.
 #'
 #' @details \code{get_sf()} assumes the following:
@@ -967,7 +967,7 @@ get_vis_angle <- function(obj_name){
 #' that minimizes the distance to visual stimuli and therefore maximizes visual
 #' angles.
 #' - The subject's head is facing parallel to the length axis of the tunnel.
-#' Visual perception functions in future versions of pathviewR will integrate
+#' Visual perception functions in future versions of pathviewr will integrate
 #' head orientation coordinates.
 #' Spatial frequency is reported in cycles/degree and is the inverse of visual
 #' angle (degrees/cycle).
@@ -985,11 +985,11 @@ get_vis_angle <- function(obj_name){
 #' @examples
 #'  ## Import sample data from package
 #' motive_data <-
-#'   read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-#'                               package = 'pathviewR'))
+#'   read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+#'                               package = 'pathviewr'))
 #' flydra_data <-
-#'   read_flydra_mat(system.file("extdata", "pathviewR_flydra_example_data.mat",
-#'                               package = 'pathviewR'),
+#'   read_flydra_mat(system.file("extdata", "pathviewr_flydra_example_data.mat",
+#'                               package = 'pathviewr'),
 #'                               subject_name = "birdie_sanders")
 #'
 #'  ## Process data up to and including get_vis_angle()
@@ -1042,12 +1042,12 @@ get_vis_angle <- function(obj_name){
 get_sf <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewR_steps") == "viewr")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
     stop("This doesn't seem to be a viewr object")
   }
 
   ## Check that get_vis_angle() has been run
-  if (!any(attr(obj_name,"pathviewR_steps") == "vis_angles_calculated")){
+  if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
     stop("Please run get_vis_angle() prior to use")
   }
 
@@ -1057,7 +1057,7 @@ get_sf <- function(obj_name){
   obj_name$sf_end <- 1/obj_name$vis_angle_end_deg
 
   ## Leave a note that visual angles were calculated
-  attr(obj_name, "pathviewR_steps") <- c(attr(obj_name, "pathviewR_steps"),
+  attr(obj_name, "pathviewr_steps") <- c(attr(obj_name, "pathviewr_steps"),
                                          "sf_calculated")
 
 

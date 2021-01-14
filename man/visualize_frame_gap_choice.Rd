@@ -8,7 +8,7 @@ visualize_frame_gap_choice(obj_name, loops = 20, ...)
 }
 \arguments{
 \item{obj_name}{The input viewr object; a tibble or data.frame with attribute
-\code{pathviewR_steps} that includes \code{"viewr"}}
+\code{pathviewr_steps} that includes \code{"viewr"}}
 
 \item{loops}{How many total frame gap entries to consider. Each loop will
 increase the \code{max_fram_gap} argument in \code{separate_trajectories}
@@ -30,12 +30,12 @@ The input viewr object (\code{obj_name}) should likely be an object
 that has passed through the \code{select_x_percent()} step.
 }
 \examples{
-library(pathviewR)
+library(pathviewr)
 
 ## Import the example Motive data included in the package
 motive_data <-
-  read_motive_csv(system.file("extdata", "pathviewR_motive_example_data.csv",
-                             package = 'pathviewR'))
+  read_motive_csv(system.file("extdata", "pathviewr_motive_example_data.csv",
+                             package = 'pathviewr'))
 
 motive_selected <-
   motive_data \%>\%

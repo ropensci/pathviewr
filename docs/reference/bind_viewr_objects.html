@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bind viewr objects — bind_viewr_objects • pathviewR</title>
+<title>Bind viewr objects — bind_viewr_objects • pathviewr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Bind viewr objects — bind_viewr_objects" />
 <meta property="og:description" content="Combine a list of multiple viewr objects into a single viewr object" />
-<meta property="og:image" content="https://vbaliga.github.io/pathviewR/logo.png" />
+<meta property="og:image" content="https://vbaliga.github.io/pathviewr/logo.png" />
 
 
 
@@ -79,7 +79,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">pathviewR</a>
+        <a class="navbar-link" href="../index.html">pathviewr</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4.9000</span>
       </span>
     </div>
@@ -97,10 +97,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/data-import-cleaning.html">Basics of data import and cleaning in pathviewR</a>
+      <a href="../articles/data-import-cleaning.html">Basics of data import and cleaning in pathviewr</a>
     </li>
     <li>
-      <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewR</a>
+      <a href="../articles/managing-frame-gaps.html">Managing frame gaps with pathviewr</a>
     </li>
     <li>
       <a href="../articles/visual-perception-functions.html">Estimating visual perceptions from tracking data</a>
@@ -110,7 +110,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vbaliga/pathviewR/">
+  <a href="https://github.com/vbaliga/pathviewr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -129,7 +129,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bind viewr objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewR/blob/master/R/batch_functions.R'><code>R/batch_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/vbaliga/pathviewr/blob/master/R/batch_functions.R'><code>R/batch_functions.R</code></a></small>
     <div class="hidden name"><code>bind_viewr_objects.Rd</code></div>
     </div>
 
@@ -151,7 +151,7 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A single viewr object (tibble or data.frame with attribute
-<code>pathviewR_steps</code> that includes <code>"viewr"</code>) that combines all the
+<code>pathviewr_steps</code> that includes <code>"viewr"</code>) that combines all the
 rows of the source viewr objects in <code>obj_list</code>. Metadata may not
 necessarily be retained and therefore <code>attributes</code> should be used with
 caution.</p>
@@ -167,15 +167,15 @@ caution.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Since we only have one example file of each type provided</span>
-<span class='co'>## in pathviewR, we will simply import the same example multiple</span>
+<span class='co'>## in pathviewr, we will simply import the same example multiple</span>
 <span class='co'>## times to simulate batch importing. Replace the contents of</span>
 <span class='co'>## the following list with your own list of files to be imported.</span>
 
 <span class='co'>## Make a list of the same example file 3x</span>
 <span class='va'>import_list</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewR_motive_example_data.csv"</span>,
-                package <span class='op'>=</span> <span class='st'>'pathviewR'</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"pathviewr_motive_example_data.csv"</span>,
+                package <span class='op'>=</span> <span class='st'>'pathviewr'</span><span class='op'>)</span>,
     <span class='fl'>3</span>
   <span class='op'>)</span><span class='op'>)</span>
 
