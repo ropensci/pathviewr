@@ -8,14 +8,14 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Tools to import, clean, and visualize 
-    animal movement data from motion capture systems such as Optitrack's 
+Tools to import, clean, and visualize movement data,
+    particularly from motion capture systems such as Optitrack's 
     Motive, the Straw Lab's Flydra, or from other sources. We provide 
     functions to remove artifacts, standardize tunnel position and tunnel 
     axes, select a region of interest, isolate specific trajectories, fill
     gaps in trajectory data, and calculate 3D and per-axis velocity. For 
     experiments of visual guidance, we also provide functions that use 
-    animal position to estimate perception of visual stimuli.
+    subject position to estimate perception of visual stimuli.
 }
 \seealso{
 Useful links:

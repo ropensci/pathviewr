@@ -22,15 +22,15 @@ knitr::opts_chunk$set(
 [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)
 <!-- badges: end -->
 
-`pathviewR` offers tools to import, clean, and visualize animal movement data
-from motion capture systems such as 
+`pathviewR` offers tools to import, clean, and visualize movement data,
+particularly from motion capture systems such as 
 [Optitrack's Motive](https://optitrack.com/software/motive/), the 
-[Straw Lab's Flydra](https://github.com/strawlab/flydra), 
-or other sources. We provide functions to remove artifacts, standardize
-tunnel position and tunnel axes, select a region of interest, isolate specific
-trajectories, fill gaps in trajectory data, and calculate 3D and per-axis
-velocity. For experiments of visual guidance, we also provide functions that 
-use animal position to estimate perception of visual stimuli.
+[Straw Lab's Flydra](https://github.com/strawlab/flydra), or other sources. We
+provide functions to remove artifacts, standardize tunnel position and tunnel
+axes, select a region of interest, isolate specific trajectories, fill gaps in
+trajectory data, and calculate 3D and per-axis velocity. For experiments of
+visual guidance, we also provide functions that use subject position to estimate
+perception of visual stimuli.
 
 ## Installation
 
@@ -43,7 +43,8 @@ devtools::install_github("vbaliga/pathviewR")
 ## Example
 
 #### Data import and cleaning via `pathviewR`
-We'll also load two `tidyverse` packages for wrangling & plotting.
+We'll also load two `tidyverse` packages for wrangling & plotting in this 
+readme.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewR)
@@ -55,7 +56,7 @@ library(magrittr)
 We will import and clean a sample data set from `.csv` files exported by
 [Optitrack's Motive](https://optitrack.com/software/motive/) software. For
 examples of how to import and clean other types of data, 
-[see the data import and cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
+[see the Basics of data import and cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
 
 ```{r import_motive}
 ## Import the Motive example data included in 
@@ -72,7 +73,7 @@ motive_data <-
 Several functions to clean and wrangle data are available, and we have a
 suggested pipeline for how these steps should be handled. For this example, we
 will use one of two "all-in-one" functions: `clean_viewr()`. 
-[See the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html)
+[See the Basics of data import and cleaning vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html)
 for the full pipeline and the other "all-in-one" function.
 
 ```{r all_in_one, fig.height=3, fig.width=6, dpi=300}
@@ -118,14 +119,14 @@ str(motive_allinone)
 
 An important aspect of how `pathviewR` defines trajectories is by managing gaps
 in the data. 
-[See the Managing Frame Gaps vignette](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
+[See the vignette on Managing frame gaps](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
 for more information on trajectory definition and frame gaps.
 
 Now that the data is cleaned, `pathviewR` includes functions that estimate
 visual perceptions based on the distance between the subject/observer and visual
 stimuli on the walls of the experimental tunnel. For a complete description of
 these functions, 
-[see the Visual Perception Functions vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
+[see the vignette on Estimating visual perceptions from tracking data](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
 
 
 #### Add more info about experiments
@@ -175,8 +176,7 @@ motive_V_sf <-
 
 Visualizing the calculations provides an more intuitive understanding of how
 these visual perceptions change as the subject moves throughout the tunnel.
-Please [see the Visual Perception Functions vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html) 
-for more examples of visualizing calculations.
+Please [see the vignette on Estimating visual perceptions from tracking data](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html)  for more examples of visualizing calculations.
 
 ```{r motive_V_sf_pos, fig.height=3, fig.width=6, dpi=300}
 ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +

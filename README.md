@@ -15,15 +15,15 @@ coverage](https://codecov.io/gh/vbaliga/pathviewR/graph/badge.svg)](https://code
 [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)
 <!-- badges: end -->
 
-`pathviewR` offers tools to import, clean, and visualize animal movement
-data from motion capture systems such as [Optitrack’s
+`pathviewR` offers tools to import, clean, and visualize movement data,
+particularly from motion capture systems such as [Optitrack’s
 Motive](https://optitrack.com/software/motive/), the [Straw Lab’s
 Flydra](https://github.com/strawlab/flydra), or other sources. We
 provide functions to remove artifacts, standardize tunnel position and
 tunnel axes, select a region of interest, isolate specific trajectories,
 fill gaps in trajectory data, and calculate 3D and per-axis velocity.
 For experiments of visual guidance, we also provide functions that use
-animal position to estimate perception of visual stimuli.
+subject position to estimate perception of visual stimuli.
 
 ## Installation
 
@@ -38,7 +38,8 @@ devtools::install_github("vbaliga/pathviewR")
 
 #### Data import and cleaning via `pathviewR`
 
-We’ll also load two `tidyverse` packages for wrangling & plotting.
+We’ll also load two `tidyverse` packages for wrangling & plotting in
+this readme.
 
 ``` r
 library(pathviewR)
@@ -49,7 +50,7 @@ library(magrittr)
 We will import and clean a sample data set from `.csv` files exported by
 [Optitrack’s Motive](https://optitrack.com/software/motive/) software.
 For examples of how to import and clean other types of data, [see the
-data import and cleaning
+Basics of data import and cleaning
 vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html).
 
 ``` r
@@ -66,7 +67,7 @@ motive_data <-
 Several functions to clean and wrangle data are available, and we have a
 suggested pipeline for how these steps should be handled. For this
 example, we will use one of two “all-in-one” functions: `clean_viewr()`.
-[See the Data Import and Cleaning
+[See the Basics of data import and cleaning
 vignette](https://vbaliga.github.io/pathviewR/articles/data-import-cleaning.html)
 for the full pipeline and the other “all-in-one” function.
 
@@ -139,7 +140,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewR_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-09 16:14:48"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:04:23"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -182,7 +183,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewR_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-09 16:14:48"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:04:23"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -213,16 +214,16 @@ str(motive_allinone)
 ```
 
 An important aspect of how `pathviewR` defines trajectories is by
-managing gaps in the data. [See the Managing Frame Gaps
-vignette](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
+managing gaps in the data. [See the vignette on Managing frame
+gaps](https://vbaliga.github.io/pathviewR/articles/managing-frame-gaps.html)
 for more information on trajectory definition and frame gaps.
 
 Now that the data is cleaned, `pathviewR` includes functions that
 estimate visual perceptions based on the distance between the
 subject/observer and visual stimuli on the walls of the experimental
-tunnel. For a complete description of these functions, [see the Visual
-Perception Functions
-vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
+tunnel. For a complete description of these functions, [see the vignette
+on Estimating visual perceptions from tracking
+data](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html).
 
 #### Add more info about experiments
 
@@ -272,8 +273,9 @@ motive_V_sf <-
 
 Visualizing the calculations provides an more intuitive understanding of
 how these visual perceptions change as the subject moves throughout the
-tunnel. Please [see the Visual Perception Functions
-vignette](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html)
+tunnel. Please [see the vignette on Estimating visual perceptions from
+tracking
+data](https://vbaliga.github.io/pathviewR/articles/visual-perception-functions.html)
 for more examples of visualizing calculations.
 
 ``` r
