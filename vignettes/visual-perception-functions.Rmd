@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
   *Currently, we assume the subject's gaze is directly frontal or lateral to the face, in effect estimating image properties at single points in the frontal and lateral fields of view, respectively. We currently calculate distances to the center of the subject's head rather than the position of the retina - future versions of pathviewr will include features addressing these limitations, such as including head orientation information and eye position relative to the center of the subject's head*. 
   
   
-```{r, echo=FALSE, out.width="100%", fig.cap="Visual angles can be calculated using the size of a visual pattern (`stim_param`) and the distance to the pattern. Larger patterns at shorter distances produce larger visual angles. For a given distance to a grating pattern a constant visual angle is produced from a single line of sight while dot fields produce constant visual angles from many lines of sight"}
+```{r, echo=FALSE, out.width="100%", fig.cap="Visual angles can be calculated using the size of a visual pattern (`stim_param`) and the distance to the pattern. Larger patterns at shorter distances produce larger visual angles. For dot stimuli, visual angles can be calculated independent of stimulus orientation."}
 knitr::include_graphics("https://raw.githubusercontent.com/vbaliga/pathviewr/master/images/stim_param_angle.jpeg")
 ```
 
