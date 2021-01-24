@@ -16,7 +16,13 @@ Authors@R:
              family = "Press",
              role = "aut",
              email = "epress12@gmail.com",
-             comment = c(ORCID = "0000-0002-1944-3755"))
+             comment = c(ORCID = "0000-0002-1944-3755")),
+      person(given = "Anne-Sophie", 
+             family = "Bonnet-Lebrun",
+             role = "rev"),
+      person(given = "Marco", 
+             family = "Sciaini",
+             role = "rev")
       )
 Description: Tools to import, clean, and visualize movement data,
     particularly from motion capture systems such as Optitrack's 
