@@ -32,7 +32,7 @@ functions referred to in this reviewer comment have now been replaced or
 renamed.  
 
 - get_sf() [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
-- get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
+- get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)[(6a36758)](https://github.com/vbaliga/pathviewr/commit/6a367587a06a30780cc8568eb19935237aa9ccb8)  
 - get_min_dist_box() [(6a36758)](https://github.com/vbaliga/pathviewr/commit/6a367587a06a30780cc8568eb19935237aa9ccb8)  
 - get_min_dist_v() [(b5f1445)](https://github.com/vbaliga/pathviewr/commit/b5f1445b743695ed27acb607321d71b34a6a689a)  
 
@@ -127,7 +127,7 @@ tunnels with visual stimuli consisting of sine wave gratings on the tunnel
 walls?
 
 Thanks. We have heavily revised the language of the first couple paragraphs 
-accordingly, and a figure has aslo been inserted to hopefully give readers a 
+accordingly, and a figure has also been inserted to hopefully give readers a 
 better sense of the concepts at hand. Please let us know what you think!  [(97704bc)](https://github.com/vbaliga/pathviewr/commit/97704bcc46d42257aa113562f39297ec619b3a18)  
 
 > Also, my understanding is that here you implement only two cases:
@@ -178,7 +178,7 @@ include the end wall towards which the subject is moving towards. Please see
 the changes to following functions:  
 
 - get_sf() [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
-- get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
+- get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)[(6a36758)](https://github.com/vbaliga/pathviewr/commit/6a367587a06a30780cc8568eb19935237aa9ccb8)   
 - get_min_dist_box() [(6a36758)](https://github.com/vbaliga/pathviewr/commit/6a367587a06a30780cc8568eb19935237aa9ccb8)  
 - get_min_dist_v() [(b5f1445)](https://github.com/vbaliga/pathviewr/commit/b5f1445b743695ed27acb607321d71b34a6a689a)  
 
@@ -194,15 +194,15 @@ Thanks! We have now replaced the `ifelse()` lines in the corresponding
 functions, which also have been renamed:  
 
 - get_sf() [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
-- get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
+- get_vis_angle()[(6a36758)](https://github.com/vbaliga/pathviewr/commit/6a367587a06a30780cc8568eb19935237aa9ccb8)   
 
 > Can you please correct the calculations, and adapt the
 test-calc_vis_angle_box.R file?
 
 Thanks sincerely for catching this! We have made corrections to the calculations
-of vis angle and SF  [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
-[(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469).   
-We have also updated `test-calc_vis_angle_box.R` accordingly [(ba8d813)](https://github.com/vbaliga/pathviewr/commit/ba8d813100101304c64e5dd400d28c6476b43af7). Tests were written for all new functions (`calc_min_dist_v()`, `calc_min_dist_box`, `get_vis_angle()`, and `get_sf()`). 
+of vis angle and SF  [(6a36758)](https://github.com/vbaliga/pathviewr/commit/6a367587a06a30780cc8568eb19935237aa9ccb8)[(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469).   
+
+We have also updated `test-get_vis_angle.R` accordingly  Tests were written for all new functions (`calc_min_dist_v()`[(93808ea)](https://github.com/vbaliga/pathviewr/commit/93808eaa71e1cb8ccc333432ce18f0df839cbee5) , `calc_min_dist_box`[(93808ea)](https://github.com/vbaliga/pathviewr/commit/93808eaa71e1cb8ccc333432ce18f0df839cbee5) , `get_vis_angle()`[(ba8d813)](https://github.com/vbaliga/pathviewr/commit/ba8d813100101304c64e5dd400d28c6476b43af7)., and `get_sf()`)[(b4afca9)](https://github.com/vbaliga/pathviewr/commit/b4afca943d5c19a9e03614282f9e772ec5e49202) . 
 
 > And also on this, I noticed that the user can supply negative values for the
 neg_wall and pos_wall arguments in the insert_treatments() function, which in
@@ -210,9 +210,9 @@ this case would lead to spurious distances being calculated. Maybe insert a
 warning/error message if that is the case, and add the appropriate tests?
 
 Great catch! We have now added guidance to the Help file of 
-`insert_treatments()` about feasible `neg_wall` and `pos_wall` values  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87). 
-We also addded a check to `insert_treatments()` that stops the function if 
-faulty `neg_wall` and `pos_wall` values are supplied  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87). 
+`insert_treatments()` about feasible values for all arguments including new tunnel dimensions arguments `tunnel_width` and `tunnel_height`[(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87). 
+This includes a check within `insert_treatments()` that stops the function if 
+faulty argument values are supplied  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87). 
 A test to `test-insert_treatments.R` to check the functionality of the
 above check has also been added [(a9cc804)](https://github.com/vbaliga/pathviewr/commit/a9cc8041bb3d2dbe7cf7a883437b8f5fe8ccd692)  
 
