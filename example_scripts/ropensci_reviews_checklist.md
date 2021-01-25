@@ -1,15 +1,20 @@
-Checklist for rOpenSci reviews - round 1
+Response to reviewers for rOpenSci reviews - round 1
 ================
 
+Hi @asbonnetlebrun, @marcosci, and @maelle,
 
-This Markdown file will contain items from each of our reviews along with a
-checklist to ensure that we address each item. Reviews may not be reproduced in
-full, but all of the items that require action from us should be included here
-(please add to this document if anything is missing).
+Thank you sincerely for taking the time and effort to review our submission. 
 
-Ultimately, the contents of this file will be transformed into our Response to
-Reviews.
+Below, you will find point-by-point responses to each of your comments. Your
+original comments may not appear fully (for sake of concision), but please note
+that we believe that we have addressed each item to the best of our capability.
 
+Since addressing these items was handled over several commits, the most 
+appropriate commit that reflects the change will also be noted within each 
+of our responses.
+
+Please also note that the package is now entitled `pathviewr` instead of the 
+original `pathviewR`, per your advice.
 
 ## Review from Reviewer 1 (asbonnetlebrun)
 
@@ -21,12 +26,10 @@ the calc_sf_box(), calc_sf_V(), calc_vis_angle_box() and calc_vis_angle_V()
 functions (and standardised_tunnel, although there is a reason given in the R
 help – because no example data is provided with pathviewr to run the code on).
 
-Items for us:  
-- [x] consider and/or make examples for calc_sf_box(), calc_sf_V(),
-calc_vis_angle_box() and calc_vis_angle_V() (OR, make examples for whatever
-visual perception function(s) we make).
-  
-*These functions have been replaced/renamed but all have examples provided.*
+We added in examples for each of the following functions. Please note that we
+consoldiated some of the visual guidance functions, so some of the original
+functions referred to in this reviewer comment have now been replaced or 
+renamed.  
 
 - get_sf() [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
 - get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
@@ -38,8 +41,8 @@ visual perception function(s) we make).
 
 > Only in the DESCRIPTION file, but not in the README. 
 
-Items for us:  
-- [x] add contribution guidelines (links to Issues pages) in README. [(f5d47e7)](https://github.com/vbaliga/pathviewr/commit/f5d47e7c473a9dc08331dbe78d882cd6c360bcf8)  
+We have added contribution guidelines (with links to Issues pages) in our 
+README. [(f5d47e7)](https://github.com/vbaliga/pathviewr/commit/f5d47e7c473a9dc08331dbe78d882cd6c360bcf8)  
 
 #### **Functionality**
 *We will address these items in the `Review Comments` section below*
@@ -47,8 +50,10 @@ Items for us:
 > Should the author(s) deem it appropriate, I agree to be acknowledged as a
 package reviewer ("rev" role) in the package DESCRIPTION file.
 
-Items for us:  
-- [ ] add asbonnetlebrun as a "rev" in DESCRIPTION
+We have added you as a "rev" within our description file
+[(5b0661)](https://github.com/vbaliga/pathviewr/commit/5b06610017ac3388e34695eae8fc8e6de69b457c).
+Please let us know if you would like your name to appear differently and/or
+would like to adjust contact info etc.
 
 ### Review Comments
 
@@ -60,9 +65,10 @@ the correct format, and as_viewr(), the function to import other types of data
 also takes data in the correct format and already relabels the columns). Maybe
 this could be made a bit clearer in the vignette?
 
-Items for us:   
-- [x] clarify language of this vignette to indicate that relabeling & gathering
-are only necessary in certain cases (e.g. using Motive data) [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
+We have clarified language of this vignette to indicate that relabeling &
+gathering are only necessary in certain cases (e.g. using Motive data). Please
+let us know what you think.
+[(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)
 
 > Maybe that was me not being very familiar with the kind of experiments the
 package is relevant for, but I had trouble to understand when we would use the
@@ -75,25 +81,22 @@ read_flydra_mat() function allows to input only a single subject_name. Is that
 why it doesn’t need to be rotated, or is that something arising from the Flydra
 software?
 
-Items for us:   
-- [x] in this vignette: clarify the circumstances under which standardization is
-needed and what types of landmarks are appropriate (consider adding a figure?) [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)    
-- [x] in the Help file for `standardize_tunnel()`: clarify this function's use 
-cases and perhaps link to the vignette itself? [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)    
+We have clarified the circumstances under which standardization is
+needed and what types of landmarks are appropriate [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)    
+Additionally, in the Help file for `standardize_tunnel()`, we have clarified this function's use 
+cases [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)    
 
 > Also, considering how the select_x_percent() function works (by selecting a
 certain percentage of the tunnel length on each site of (0,0,0) along the length
 axis), shouldn’t it be more appropriate to say that the (0,0,0) must be at the
 centre of the region of interest, rather than at the centre of the tunnel?
 
-Items for us:   
-- [x] revise language of this vignette on what (0,0,0) represents [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
+Thanks! We have revised language of this vignette on what (0,0,0) represents [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 > Minor point: the link to the vignette for managing frame gaps is missing in
 the text.
 
-Items for us:   
-- [x] add link [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
+Thanks for catching this -- we have added the link  [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 #### Managing frame gaps 
 
@@ -102,18 +105,16 @@ or in the vignette that the loops argument represents the maximum frame gap
 considered (i.e. that each loop represents an increment of 1 on the frame gap
 value)?
 
-Items for us:   
-- [x] add details to vignette [(bcf6424)](https://github.com/vbaliga/pathviewr/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)  
-- [x] add details to Help file [(bcf6424)](https://github.com/vbaliga/pathviewr/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)  
+We have added details of what `loops` means to both the vignette [(bcf6424)](https://github.com/vbaliga/pathviewr/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646) 
+and to the Help file [(bcf6424)](https://github.com/vbaliga/pathviewr/commit/bcf64241867e6da0c96181a4ed11379c4eb5b646)  
 
 > Could there be cases when frame gaps can vary between devices (i.e. if I
 understood well in the case of the Motive data, between subjects)? If so, would
 it be relevant to allow the autodetect approach to be applied to each subject
 separately? (or maybe that is not relevant...)
 
-Items for us:  
-- [x] we already do this. our example includes it so I made a slight modification 
-to the language that will hopefully make it more clear [(62b63b7)](https://github.com/vbaliga/pathviewr/commit/62b63b7c771036b84540ac9a7a5d259cd66fa07b)  
+Sorry for being unclear - this function actually has this feature! We have made
+a slight modification to the language that will hopefully make it more clear [(62b63b7)](https://github.com/vbaliga/pathviewr/commit/62b63b7c771036b84540ac9a7a5d259cd66fa07b)  
 
 #### Visual perception 
 
@@ -125,8 +126,9 @@ start that these functions are relevant for experiments with animals flying in
 tunnels with visual stimuli consisting of sine wave gratings on the tunnel
 walls?
 
-Items for us:   
-- [x] revise the language of the first couple paragraphs accordingly [(97704bc)](https://github.com/vbaliga/pathviewr/commit/97704bcc46d42257aa113562f39297ec619b3a18)  
+Thanks. We have heavily revised the language of the first couple paragraphs 
+accordingly, and a figure has aslo been inserted to hopefully give readers a 
+better sense of the concepts at hand. Please let us know what you think!  [(97704bc)](https://github.com/vbaliga/pathviewr/commit/97704bcc46d42257aa113562f39297ec619b3a18)  
 
 > Also, my understanding is that here you implement only two cases:
 
@@ -142,10 +144,9 @@ from users of other settings, maybe you could say that in the vignette in the
 same way you mention that you are happy to work towards the inclusion of more
 data types?
 
-Items for us:  
-- [x] revise the language of how these experiments are introduced [(97704bc)](https://github.com/vbaliga/pathviewr/commit/97704bcc46d42257aa113562f39297ec619b3a18)  
-- [x] provide links to Issues page where users can request e.g. different 
-tunnel setups [(20bb54a)](https://github.com/vbaliga/pathviewr/commit/20bb54a8b8ec3d5bbe6c8a98033488225ede7bfc)  
+We have revised the language of how these experiments are introduced [(97704bc)](https://github.com/vbaliga/pathviewr/commit/97704bcc46d42257aa113562f39297ec619b3a18). 
+We have also provided links to the Issues page where users can request e.g. 
+different tunnel setups [(20bb54a)](https://github.com/vbaliga/pathviewr/commit/20bb54a8b8ec3d5bbe6c8a98033488225ede7bfc)  
  
 > More generally, I would have appreciated some definition of what you call
 “spatial frequency” and “visual angle”. Although I understand that these might
@@ -159,8 +160,8 @@ seems to mention that the spatial frequency is the number of cycles per degree
 of visual angle. Maybe this info could be included in the vignette (and in the
 Description section of the function help)?
 
-Items for us:   
-- [x] add definitions and see if we can link to a published review paper [(fa7b12e)](https://github.com/vbaliga/pathviewr/commit/fa7b12e2e64477fd106eb2f454136bca8a4629c8)  
+We have added in definitions along with citations of some journal articles
+that provide nice summaries of these topics. [(fa7b12e)](https://github.com/vbaliga/pathviewr/commit/fa7b12e2e64477fd106eb2f454136bca8a4629c8)  
 
 
 #### Comments on the code of the visual perception functions
@@ -171,13 +172,10 @@ am I right? Is there any reason for this? If the front wall is not relevant,
 maybe there is no need to include the option to add parameters for it in the
 insert_treatments() function?
 
-Items for us: 
-
-- [x] consider adding in this functionality, OR state in the Help files for
-these functions that it is something that will be developed in future pathviewr
-updates
-
-*The visual perception functions now include calculations for the end walls, though the outputs from these functions only include the end wall to which the subject is moving towards.* 
+Thanks for the suggestion. The visual perception functions now include 
+calculations for the end walls, though the outputs from these functions only 
+include the end wall towards which the subject is moving towards. Please see
+the changes to following functions:  
 
 - get_sf() [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
 - get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
@@ -185,17 +183,15 @@ updates
 - get_min_dist_v() [(b5f1445)](https://github.com/vbaliga/pathviewr/commit/b5f1445b743695ed27acb607321d71b34a6a689a)  
 
 
-*Note from VBB:* for brevity, the details of the reviewer's calculations will
-not be included here.
+*Note from VBB:* for brevity, the details of your calculations will not be 
+included here.
 
 > On that note, there is no need for an ifelse() to calculate these distances,
 these lines could simply replace these lines and these lines in calc_sf_box()
 and calc_vis_angle_box()
 
-Items for us: 
-
-- [x] replace `ifelse()` statement in `calc_sf_box()`   
-- [x] replace `ifelse()` statement in `calc_vis_angle_box()`  
+Thanks! We have now replaced the `ifelse()` lines in the corresponding 
+functions, which also have been renamed:  
 
 - get_sf() [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
 - get_vis_angle() [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
@@ -203,29 +199,22 @@ Items for us:
 > Can you please correct the calculations, and adapt the
 test-calc_vis_angle_box.R file?
 
-Items for us:  
-
-- [x] make corrections to the calculations of vis angle and SF  [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
-[(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
-- [x] update `test-calc_vis_angle_box.R` [(ba8d813)](https://github.com/vbaliga/pathviewr/commit/ba8d813100101304c64e5dd400d28c6476b43af7)  
-
-*Tests were written for all new functions (`calc_min_dist_v()`, `calc_min_dist_box`, `get_vis_angle()`, and `get_sf()`)*
+Thanks sincerely for catching this! We have made corrections to the calculations
+of vis angle and SF  [(dfd1e2f)](https://github.com/vbaliga/pathviewr/commit/d5d1e2f1726472505d19c091ed4363590fddc855)  
+[(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469).   
+We have also updated `test-calc_vis_angle_box.R` accordingly [(ba8d813)](https://github.com/vbaliga/pathviewr/commit/ba8d813100101304c64e5dd400d28c6476b43af7). Tests were written for all new functions (`calc_min_dist_v()`, `calc_min_dist_box`, `get_vis_angle()`, and `get_sf()`). 
 
 > And also on this, I noticed that the user can supply negative values for the
 neg_wall and pos_wall arguments in the insert_treatments() function, which in
 this case would lead to spurious distances being calculated. Maybe insert a
 warning/error message if that is the case, and add the appropriate tests?
 
-Items for us:
-
-- [x] add guidance to the Help file of `insert_treatments()` about feasible 
-`neg_wall` and `pos_wall` values  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87)  
-
-- [x] add a check to `insert_treatments()` that stops the function if faulty
-`neg_wall` and `pos_wall` values are supplied  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87)  
-
-- [x] add a test to `test-insert_treatments.R` to check the functionality of the
-above check [(a9cc804)](https://github.com/vbaliga/pathviewr/commit/a9cc8041bb3d2dbe7cf7a883437b8f5fe8ccd692)  
+Great catch! We have now added guidance to the Help file of 
+`insert_treatments()` about feasible `neg_wall` and `pos_wall` values  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87). 
+We also addded a check to `insert_treatments()` that stops the function if 
+faulty `neg_wall` and `pos_wall` values are supplied  [(429258b)](https://github.com/vbaliga/pathviewr/commit/429258bf4039cf26671d915d507b48838c1aeb87). 
+A test to `test-insert_treatments.R` to check the functionality of the
+above check has also been added [(a9cc804)](https://github.com/vbaliga/pathviewr/commit/a9cc8041bb3d2dbe7cf7a883437b8f5fe8ccd692)  
 
 
 #### Spatial frequency
@@ -233,28 +222,36 @@ above check [(a9cc804)](https://github.com/vbaliga/pathviewr/commit/a9cc8041bb3d
 number of cycles per degree of visual angle), I think there is an error in these
 lines of calc_sf_V() and these lines of calc_sf_box().
 
-Items for us:  
-
-- [x] make corrections to the calculation of SF [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
+Thanks, we have made corrections to the calculation of SF [(99c9ef5)](https://github.com/vbaliga/pathviewr/commit/99c9ef517e265cd27ba790b1cb28929e1986e469)  
 
 > Just one final broader question, don’t these calculations assume that the bird
 is parallel to the length axis of the tunnel? Is that not important/common
 practice not to use the rotation information?
 
-Items for us:  
+Yes, this is true and a great point. It is actually not common practice in the
+field to use rotation information -- quite a few studies still rely solely on
+positional data. That said, we definitely agree that adding rotation is an
+important way to advance our understanding of visual guidance. At this time, we
+allow for rotation data to be imported & wrangled along with all the positional
+data, but rotation data have not yet been integrated into the visual perception
+functions.  This is largely because how rotation data are encoded can be tricky
+(depending on how the rotation matrix is composed and/or how orientation axes
+are defined on each subject). Accordingly, we are still working on a way that
+will work generically for most use cases.
 
-- [x] in the Help files for each visual perception function: add a note that
-rotation information may be integrated in future pathviewr updates  [(46ba850)](https://github.com/vbaliga/pathviewr/commit/46ba850c9d2b2db453365531280b8dde1ded831a)  
-- [x] in the Visual perception vignette: add a note that rotation information
-may be integrated in future pathviewr updates [(a3a7795)](https://github.com/vbaliga/pathviewr/commit/a3a7795f21d75b8639d2c3dfab18ff789f299ea8)  
+For now, we have added a note in the Help files for each visual perception 
+that rotation information may be integrated in future pathviewr updates  [(46ba850)](https://github.com/vbaliga/pathviewr/commit/46ba850c9d2b2db453365531280b8dde1ded831a). 
+We have also done so in the Visual perception vignette [(a3a7795)](https://github.com/vbaliga/pathviewr/commit/a3a7795f21d75b8639d2c3dfab18ff789f299ea8)  
 
 ## Review from Reviewer 2 (marcosci)
 
 > Should the author(s) deem it appropriate, I agree to be acknowledged as a
 package reviewer ("rev" role) in the package DESCRIPTION file.
 
-Items for us:  
-- [ ] add marcosci as a "rev" in DESCRIPTION
+We have added you as a "rev" within our description file
+[(5b0661)](https://github.com/vbaliga/pathviewr/commit/5b06610017ac3388e34695eae8fc8e6de69b457c).
+Please let us know if you would like your name to appear differently and/or
+would like to adjust contact info etc.
 
 ### Review Comments
 
@@ -263,37 +260,35 @@ movement data" ... Couldn't you make that broader? Part of the package is
 actually capable to handle all kinds of 3D movement data and the visual
 perception function should also be applicable to humans, or?
 
-Items for us:  
-- [ ] consider revising the language of the DESCRIPTION
+Yes thanks, this is a good point and we agree. We have made a slight alteration
+to our description and readme. We don't want to oversell the features of our 
+package, so we hope that where we have landed with the language strikes a nice
+balance. [(deffd9d)](https://github.com/vbaliga/pathviewr/commit/deffd9da937c586a7a8685c7fa17bd8542d7ed21)
 
 > It would actually be quite beneficial to give a short walkthrough of what
 input data can look like. So, you need x,y,z ... but what more. And what defines
 Optitrack and flydra data.
 
-Items for us:  
-- [x] add a short walkthrough of what movement data look like, both generally
-and specifically in Motive and Flydra [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
+We agree and added a short walkthrough of what movement data look like, both 
+generally and specifically in Motive and Flydra [(591dd50)](https://github.com/vbaliga/pathviewr/commit/591dd50dcafb8ff1195ca983cc25170cb49a80dd)  
 
 > I did not see any contribution guidelines, so it would be helpful to include
 those.
 
-Items for us:  
-- [x] add contribution guidelines provided by rOpenSci (with slight 
+We have added contribution guidelines provided by rOpenSci (with slight 
 modification) [(5252918)](https://github.com/vbaliga/pathviewr/commit/5252918ff124a315834dc7e060806c3ada3682dc)  
 
 > The Maintainer field is missing in the DESCRIPTION - altough Vikram is listed
 as CRE.
 
-Items for us:  
-- [x] update the Maintainer field [(9146e09)](https://github.com/vbaliga/pathviewr/commit/9146e099f699425e46ba31b6ff340ef911d11944cont)  
+We've updated the Maintainer field with VBB as the maintainer [(9146e09)](https://github.com/vbaliga/pathviewr/commit/9146e099f699425e46ba31b6ff340ef911d11944cont)  
 
 > pathviewR ... I submitted a package here once and the feedback was to either
 stick with capital letters or just lower case. I don't know if that changed, but
 it makes typing the package name out easier in my opinion. If that is a must
 should probably be addressed by @maelle.
 
-Items for us:  
-- [ ] consider renaming to `pathviewr` or even to another name entirely
+Yeah, we see what you mean and went ahead and changed the name to `pathviewr`. [(52e559c)](https://github.com/vbaliga/pathviewr/commit/52e559cb731907eb258f68b0a986aef0b6c784dc)
 
 
 ## Additional items from the editor (maelle)
@@ -302,7 +297,17 @@ Items for us:
 package isn’t on CRAN yet. I myself renamed my Ropenaq package after review and
 I don’t regret doing it.
 
-Items for us:  
-- [ ] we should do this as a very last step, i.e. once all other feedback has
-been addressed.  
-- [ ] to change a package name, follow [this guide](https://www.njtierney.com/post/2017/10/27/change-pkg-name/)  
+As noted above, we changed the name to `pathviewr`. [(52e559c)](https://github.com/vbaliga/pathviewr/commit/52e559cb731907eb258f68b0a986aef0b6c784dc). 
+In particular, we found [this guide](https://www.njtierney.com/post/2017/10/27/change-pkg-name/) 
+to be very helpful -- we went step-by-step through everything in that page. We 
+figured it would be good to let you know in case you are interested in providing
+that sort of info in the rOpenSci guide for authors, though we understand it may
+not be common enough of a problem to merit adding to the guide.
+
+Thanks again for all your feedback and advice!
+
+And sorry for the slight delay in getting back to you. My (VBB's) wife just
+gave birth to our first child last week -- it's been a pretty wild ride!
+
+Best regards,
+Vikram
