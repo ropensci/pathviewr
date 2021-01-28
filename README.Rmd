@@ -208,7 +208,7 @@ To contribute code via a pull request, please consult our [Contributing Guide](h
 
 The preferred way to cite `pathviewr` (but subject to change) is:
 
-Baliga VB, Armstrong MS, Press ER (2020). _pathviewr: Tools to import, clean, and visualize animal movement data in R_. R package version 0.9.4, [https://github.com/vbaliga/pathviewr](https://github.com/vbaliga/pathviewr).
+Baliga VB, Armstrong MS, Press ER (2020). _pathviewr: Tools to import, clean, and visualize animal movement data in R_. R package version 0.9.5, [https://github.com/vbaliga/pathviewr](https://github.com/vbaliga/pathviewr).
 
 ## License
 
