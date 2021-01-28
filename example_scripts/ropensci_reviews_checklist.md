@@ -301,7 +301,7 @@ As noted above, we changed the name to `pathviewr`. [(52e559c)](https://github.c
 In particular, we found [this guide](https://www.njtierney.com/post/2017/10/27/change-pkg-name/) 
 to be very helpful -- we went step-by-step through everything in that page. We 
 figured it would be good to let you know in case you are interested in providing
-that sort of info in the rOpenSci guide for authors, though we understand it may
+that sort of info in the rOpenSci Guide for Authors, though we understand it may
 not be common enough of a problem to merit adding to the guide.
 
 Thanks again for all your feedback and advice!
@@ -311,3 +311,4 @@ gave birth to our first child last week -- it's been a pretty wild ride!
 
 Best regards,
 Vikram
+🐢
