@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.5</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
       <h1 data-toc-skip>Managing frame gaps with pathviewr</h1>
                         <h4 class="author">Melissa S. Armstrong</h4>
             
-            <h4 class="date">2021-01-24</h4>
+            <h4 class="date">2021-01-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vbaliga/pathviewr/blob/master/vignettes/managing-frame-gaps.Rmd"><code>vignettes/managing-frame-gaps.Rmd</code></a></small>
       <div class="hidden name"><code>managing-frame-gaps.Rmd</code></div>
@@ -138,7 +138,7 @@
 <div id="inspecting-the-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#inspecting-the-data" class="anchor"></a>Inspecting the data</h3>
-<p>We’ve cleaned up our data and are ready to link individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data is fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
+<p>We’ve cleaned up our data and are ready to link individual data points into continuous trajectories. Deciding exactly how to define a trajectory will depend largely on the quality of data collected and the resolution required to answer a given question about the data. If the data are fairly continuous and high resolution is required, the default <code>max_frame_gap = 1</code> will not allow any frame gaps–movement must be continuous.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="va">motive_mfg1</span> <span class="op">&lt;-</span> 
   <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 
@@ -241,7 +241,9 @@
 <div id="autodetect" class="section level3">
 <h3 class="hasAnchor">
 <a href="#autodetect" class="anchor"></a>Autodetect</h3>
-<p>Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>. In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, “autodetect” does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set since frame gaps can vary between subjects. The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to <code>.10</code>.</p>
+<p>Setting <code>max_frame_gap = "autodetect"</code> rather than a numeric value uses the “elbow” of the plots from <code><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice()</a></code> to guesstimate the best value(s) for <code>max_frame_gap</code>.</p>
+<p><strong>In addition to automatically selecting the <code>max_frame_gap</code> depending on the data, <code>autodetect</code> does so on a per subject basis rather than applying the same allowable frame gap to all data in the data set since frame gaps can vary between subjects.</strong></p>
+<p>The cap on how high the <code>max_frame_gap</code> can go is defined as a proportion of the capture frame rate and set by the <code>frame_rate_proportion</code> argument, which defaults to <code>.10</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">motive_auto</span> <span class="op">&lt;-</span> 
   <span class="va">motive_cleaned</span> <span class="op">%&gt;%</span> 

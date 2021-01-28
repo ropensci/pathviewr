@@ -23,13 +23,13 @@ knitr::opts_chunk$set(
 Raw movement data, including those from motion capture systems, may have a
 variety of issues. These raw data often contain noise or artifacts from the
 recording session, which may not be easily removed via the recording software
-itself. Data may not be organized as “tidy” key-value pairs, the axes and
-overall orientation of the environment may not conform to a standard, and
-individual movement trajectories may be ill-defined. 
+itself. Data may not be organized as “tidy” key-value pairs (making plotting
+more difficult), the axes and overall orientation of the environment may not
+conform to a standard, and individual movement trajectories may be ill-defined.
 
-`pathviewr` provides functions in R to deal with such problems (i.e. "clean"
-them). This vignette will cover the basics of how to import raw data and how to
-clean data to prepare it for visualization and/or statistical analyses.
+`pathviewr` provides functions in R to deal with such problems (i.e.
+"cleaning"). This vignette will cover the basics of how to import raw data and
+how to clean data to prepare it for visualization and/or statistical analyses.
 
 
 ## What do movement data sets look like?
@@ -55,7 +55,7 @@ source, our `as_viewr()` function will allow you to bring it into the
 Data can be imported via one of three functions:  
 
 - `read_motive_csv()` imports data from `.csv` files that have been exported
-from [Optitrack's Motive](https://optitrack.com/software/motive/) software
+from Optitrack's [Motive](https://optitrack.com/software/motive/) software
 
 - `read_flydra_mat()` imports data from  `.mat` files that have been exported
 from [Flydra](https://github.com/strawlab/flydra)
@@ -135,7 +135,8 @@ date & time of capture and the units of the position data (here, meters).
 
 `.mat` files exported from Flydra can be imported via `read_flydra_mat()`.
 
-Note that a `subject_name` is required. Only one name can be added and it will
+Note that you must supply a `subject_name` for Flydra data, as subject names 
+are not embedded in the `.mat` files. Only one name can be added and it will
 be used throughout the resultant `tibble`.
 
 ```{r import_flydra}
@@ -199,7 +200,7 @@ attr(test, "frame_rate")
 ```
 
 We also welcome you to request custom data import functions, especially if
-`as_viewr()` does not fit your needs . We are interested in expanding our data
+`as_viewr()` does not fit your needs. We are interested in expanding our data
 import functions to accommodate additional file types. Please feel free to 
 [file a request for additional import functions](https://github.com/vbaliga/pathviewr/issues/new/choose) 
 via our Github Issues page.
@@ -229,7 +230,7 @@ Axis labels (x, y, z) may be applied in arbitrary ways by software. A user might
 intuitively think the z axis represents height, but the original software may
 label it as the y axis instead.
 
-`relabel_viewr_axes` provides a means to relabel axes with  "tunnel_length",
+`relabel_viewr_axes` provides a means to relabel axes with "tunnel_length",
 "tunnel_width", and "tunnel_height". **These axis labels will be expected by
 subsequent functions, so skipping this step is ill-advised.**
 

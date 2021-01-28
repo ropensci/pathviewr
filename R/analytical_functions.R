@@ -572,7 +572,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 }
 
 
-#########################         calc_min_dist_v        ########################
+#########################         calc_min_dist_v        #######################
 
 #' Calculate minimum distance to lateral and end walls in a V-shaped
 #' experimental tunnel
@@ -743,7 +743,7 @@ calc_min_dist_v <- function(obj_name,
 }
 
 
-#########################       calc_min_dist_box      ##########################
+#########################       calc_min_dist_box      #########################
 
 #' Calculate minimum distance to lateral and end walls in a box-shaped
 #' experimental tunnel

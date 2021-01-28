@@ -48,7 +48,7 @@ library(magrittr)
 ```
 
 We will import and clean a sample data set from `.csv` files exported by
-[Optitrack’s Motive](https://optitrack.com/software/motive/) software.
+Optitrack’s [Motive](https://optitrack.com/software/motive/) software.
 For examples of how to import and clean other types of data, [see the
 Basics of data import and cleaning
 vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
@@ -140,7 +140,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:25:31"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-27 16:02:01"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -183,7 +183,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-14 11:25:31"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-27 16:02:01"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...

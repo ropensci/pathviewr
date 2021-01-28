@@ -54,7 +54,7 @@ library(magrittr)
 ```
 
 We will import and clean a sample data set from `.csv` files exported by
-[Optitrack's Motive](https://optitrack.com/software/motive/) software. For
+Optitrack's [Motive](https://optitrack.com/software/motive/) software. For
 examples of how to import and clean other types of data, 
 [see the Basics of data import and cleaning vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
 
