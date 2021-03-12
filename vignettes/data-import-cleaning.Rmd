@@ -65,7 +65,7 @@ from [Flydra](https://github.com/strawlab/flydra)
 We will showcase examples from each of these methods in this section.
 
 Please feel free to reach out to the `pathviewr` authors via 
-[our Github Issues page](https://github.com/vbaliga/pathviewr/issues/) 
+[our Github Issues page](https://github.com/ropensci/pathviewr/issues/) 
 should you have trouble with any of our data import options. We are happy to
 work with you to design custom `read_` functions for file types we have not
 encountered ourselves. 
@@ -75,7 +75,7 @@ We'll start by loading `pathviewr` and a few of the packages in the `tidyverse`.
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewr installed:
 # install.packages("devtools")
-# devtools::install_github("vbaliga/pathviewr")
+# devtools::install_github("ropensci/pathviewr")
 
 library(pathviewr)
 library(ggplot2)
@@ -202,7 +202,7 @@ attr(test, "frame_rate")
 We also welcome you to request custom data import functions, especially if
 `as_viewr()` does not fit your needs. We are interested in expanding our data
 import functions to accommodate additional file types. Please feel free to 
-[file a request for additional import functions](https://github.com/vbaliga/pathviewr/issues/new/choose) 
+[file a request for additional import functions](https://github.com/ropensci/pathviewr/issues/new/choose) 
 via our Github Issues page.
 
 
@@ -442,7 +442,7 @@ Isolating trajectories is handled via the `separate_trajectories()` function in
 Because cameras may occasionally drop frames, we allow the user to permit some
 relaxation of how stringent the "continuous movement" criterion is. This is
 handled via the `max_frame_gap` argument within `separate_trajectories()`. For
-more details, please see [the vignette Managing frame gaps with pathviewr](https://vbaliga.github.io/pathviewr/articles/managing-frame-gaps.html).  
+more details, please see [the vignette Managing frame gaps with pathviewr](https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html).  
 
 In our Motive example, we'll use the automated feature built into the function
 to guesstimate the best `max_frame_gap` allowed. When frame gaps larger than

@@ -60,7 +60,7 @@ as including head orientation information and eye position relative to the
 center of the subject's head*.
   
 ```{r, echo=FALSE, out.width="100%", fig.cap="Visual angles can be calculated using the size of a visual pattern (`stim_param`) and the distance to the pattern. Larger patterns at shorter distances produce larger visual angles. For dot stimuli, visual angles can be calculated independent of stimulus orientation."}
-knitr::include_graphics("https://raw.githubusercontent.com/vbaliga/pathviewr/master/images/stim_param_angle.jpeg")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/pathviewr/master/images/stim_param_angle.jpeg")
 ```
 
 ## Loading packages
@@ -75,7 +75,7 @@ library(magrittr)
 
 ## Data preparation
 Data objects must be prepared as described in [the Data Import and Cleaning
-vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html)
+vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html)
 pipeline prior to their use with these functions. For a detailed description of
 the importing and cleaning functions, and when to use them, please see the
 linked vignette.
@@ -153,7 +153,7 @@ perceptions.
 tunnels, though we are interested in including additional tunnel
 configurations*.
 
-If you would like to request any additional features such as other tunnel configurations, please create an issue [(here)](https://github.com/vbaliga/pathviewr/issues/new/choose)
+If you would like to request any additional features such as other tunnel configurations, please create an issue [(here)](https://github.com/ropensci/pathviewr/issues/new/choose)
 
 #### V-shaped tunnel example
 The data within `motive_full` were collected from birds flying through a 3m long

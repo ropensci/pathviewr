@@ -20,7 +20,7 @@ bibentry(bibtype = "Manual",
              role = "aut",
              comment = c(ORCID = "0000-0002-1944-3755"))
           ),
-         year = year,
+         year = 2021,
          note = note,
          publisher = "Github",
          journal = "Github repository",

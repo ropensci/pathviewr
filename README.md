@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pathviewr <a href='https://vbaliga.github.io/pathviewr'><img src='https://github.com/vbaliga/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
+# pathviewr <a href='https://docs.ropensci.org/pathviewr'><img src='https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
 
 <!-- badges: start -->
 
@@ -9,9 +9,9 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R build
-status](https://github.com/vbaliga/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/vbaliga/pathviewr/actions)
+status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/vbaliga/pathviewr/graph/badge.svg)](https://codecov.io/gh/vbaliga/pathviewr?branch=master)
+coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master)
 [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)
 <!-- badges: end -->
 
@@ -31,7 +31,7 @@ This package can be installed via:
 
 ``` r
 #install.packages("devtools") # if devtools is not installed
-devtools::install_github("vbaliga/pathviewr")
+devtools::install_github("ropensci/pathviewr")
 ```
 
 ## Example
@@ -51,7 +51,7 @@ We will import and clean a sample data set from `.csv` files exported by
 Optitrack’s [Motive](https://optitrack.com/software/motive/) software.
 For examples of how to import and clean other types of data, [see the
 Basics of data import and cleaning
-vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
+vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html).
 
 ``` r
 ## Import the Motive example data included in 
@@ -68,7 +68,7 @@ Several functions to clean and wrangle data are available, and we have a
 suggested pipeline for how these steps should be handled. For this
 example, we will use one of two “all-in-one” functions: `clean_viewr()`.
 [See the Basics of data import and cleaning
-vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html)
+vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html)
 for the full pipeline and the other “all-in-one” function.
 
 ``` r
@@ -140,7 +140,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-27 16:36:37"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-03-12 13:47:35"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -183,7 +183,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-01-27 16:36:37"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-03-12 13:47:35"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -215,7 +215,7 @@ str(motive_allinone)
 
 An important aspect of how `pathviewr` defines trajectories is by
 managing gaps in the data. [See the vignette on Managing frame
-gaps](https://vbaliga.github.io/pathviewr/articles/managing-frame-gaps.html)
+gaps](https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html)
 for more information on trajectory definition and frame gaps.
 
 Now that the data is cleaned, `pathviewr` includes functions that
@@ -223,7 +223,7 @@ estimate visual perceptions based on the distance between the
 subject/observer and visual stimuli on the walls of the experimental
 tunnel. For a complete description of these functions, [see the vignette
 on Estimating visual perceptions from tracking
-data](https://vbaliga.github.io/pathviewr/articles/visual-perception-functions.html).
+data](https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html).
 
 #### Add more info about experiments
 
@@ -275,7 +275,7 @@ Visualizing the calculations provides an more intuitive understanding of
 how these visual perceptions change as the subject moves throughout the
 tunnel. Please [see the vignette on Estimating visual perceptions from
 tracking
-data](https://vbaliga.github.io/pathviewr/articles/visual-perception-functions.html)
+data](https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html)
 for more examples of visualizing calculations.
 
 ``` r
@@ -302,20 +302,20 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 
 We welcome feedback on bugs, improvements, and/or feature requests.
 Please [see our Issues templates on
-GitHub](https://github.com/vbaliga/pathviewr/issues/new/choose) to make
+GitHub](https://github.com/ropensci/pathviewr/issues/new/choose) to make
 a bug fix request or feature request.
 
 To contribute code via a pull request, please consult our [Contributing
-Guide](https://github.com/vbaliga/pathviewr/blob/master/.github/CONTRIBUTING.md)
+Guide](https://github.com/ropensci/pathviewr/blob/master/.github/CONTRIBUTING.md)
 first.
 
 ## Citation
 
 The preferred way to cite `pathviewr` (but subject to change) is:
 
-Baliga VB, Armstrong MS, Press ER (2020). *pathviewr: Tools to import,
+Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-0.9.5, <https://github.com/vbaliga/pathviewr>.
+1.0.0, <https://github.com/ropensci/pathviewr>.
 
 ## License
 

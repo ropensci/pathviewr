@@ -23,14 +23,14 @@ knitr::opts_chunk$set(
 region of interest to the other. Before trajectories can be defined, the region
 of interest must be selected via `select_x_percent()` in addition to all the
 previous steps of the data import and cleaning pipeline as described in 
-[the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
+[the Data Import and Cleaning vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html).
 We'll start with loading `pathviewr` and a few packages from the `tidyverse` and
 importing our data.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 ## If you do not already have pathviewr installed:
 # install.packages("devtools")
-# devtools::install_github("vbaliga/pathviewr")
+# devtools::install_github("ropensci/pathviewr")
 
 library(pathviewr)
 library(ggplot2)
@@ -46,7 +46,7 @@ motive_data <-
 ```
 
 We'll quickly run through the cleanup pipeline using one of `pathviewr`'s
-all-in-one cleaning functions as described in [the Data Import and Cleaning vignette](https://vbaliga.github.io/pathviewr/articles/data-import-cleaning.html).
+all-in-one cleaning functions as described in [the Data Import and Cleaning vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html).
 Since trajectories are defined in the `separate_trajectories()` function, we'll
 stop the all-in-one there by setting it and every step after it to `FALSE` so we
 can take a closer look at how trajectories are defined. Since all steps are set
