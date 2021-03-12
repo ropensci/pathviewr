@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "11561.432KB",
+  "fileSize": "11561.812KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
@@ -303,5 +303,17 @@
     "provider": "https://ropensci.org"
   },
   "relatedLink": "https://docs.ropensci.org/pathviewr",
-  "keywords": ["movement-data", "motion", "animal-movement", "optitrack", "flydra", "visual-guidance", "visual-perception", "rstats", "rstats-package", "trajectory-analysis", "trajectories"]
+  "keywords": [
+    "movement-data",
+    "motion",
+    "animal-movement",
+    "optitrack",
+    "flydra",
+    "visual-guidance",
+    "visual-perception",
+    "rstats",
+    "rstats-package",
+    "trajectory-analysis",
+    "trajectories"
+  ]
 }
