@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "11562.271KB",
+  "fileSize": "11573.957KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
@@ -286,7 +286,10 @@
         }
       ],
       "name": "pathviewR: Tools to import, clean, and visualize animal movement data in R",
-      "url": "https://github.com/vbaliga/pathviewR",
+      "identifier": "10.5281/zenodo.4270187",
+      "url": "https://github.com/ropensci/pathviewR",
+      "@id": "https://doi.org/10.5281/zenodo.4270187",
+      "sameAs": "https://doi.org/10.5281/zenodo.4270187",
       "isPartOf": {
         "@type": "PublicationIssue",
         "datePublished": "2021",
@@ -315,5 +318,6 @@
     "rstats-package",
     "trajectory-analysis",
     "trajectories"
-  ]
+  ],
+  "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md"
 }
