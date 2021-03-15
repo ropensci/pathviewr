@@ -24,5 +24,6 @@ bibentry(bibtype = "Manual",
          note = note,
          publisher = "Github",
          journal = "Github repository",
-         url = "https://github.com/vbaliga/pathviewR"
+         url = "https://github.com/ropensci/pathviewR",
+         doi = "10.5281/zenodo.4270187"
          )
