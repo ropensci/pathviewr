@@ -20,9 +20,10 @@ bibentry(bibtype = "Manual",
              role = "aut",
              comment = c(ORCID = "0000-0002-1944-3755"))
           ),
-         year = year,
+         year = 2021,
          note = note,
          publisher = "Github",
          journal = "Github repository",
-         url = "https://github.com/vbaliga/pathviewR"
+         url = "https://github.com/ropensci/pathviewR",
+         doi = "10.5281/zenodo.4270187"
          )

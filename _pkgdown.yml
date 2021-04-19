@@ -1,15 +1,12 @@
-url: https://vbaliga.github.io/pathviewr/
+url: https://docs.ropensci.org/pathviewr
 
 destination: docs
 
-template:
-package: rotemplate
-
 authors:
-  Melissa S. Armstrong:
-    href: https://melissasarmstrong.com
   Vikram B. Baliga:
     href: https://www.vikram-baliga.com/
+  Melissa S. Armstrong:
+    href: https://melissasarmstrong.com
   Eric R. Press:
     href: https://www.grad.ubc.ca/campus-community/meet-our-students/press-eric
 
