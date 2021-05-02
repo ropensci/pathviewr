@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "11634.912KB",
+  "fileSize": "11635.282KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
@@ -305,7 +305,10 @@
     "url": "https://github.com/ropensci/software-review/issues/409",
     "provider": "https://ropensci.org"
   },
-  "relatedLink": ["https://docs.ropensci.org/pathviewr", "https://docs.ropensci.org/pathviewr/"],
+  "relatedLink": [
+    "https://docs.ropensci.org/pathviewr",
+    "https://docs.ropensci.org/pathviewr/"
+  ],
   "keywords": [
     "movement-data",
     "motion",
