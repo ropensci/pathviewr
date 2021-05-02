@@ -9,5 +9,5 @@ details: ropensci/software-review#409
 
 # pathviewr 0.9.4
 * We are targeting a submission to rOpenSci in the near future (hopefully
-today). This version of pathviewR has been prepped according to rOpenSci's
+today). This version of pathviewr has been prepped according to rOpenSci's
 "Packages: Development, Maintenance, and Peer Review" guide.
