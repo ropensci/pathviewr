@@ -13,3 +13,5 @@
 ^doc$
 ^Meta$
 ^images$
+^CRAN-RELEASE$
+^cran-comments\.md$

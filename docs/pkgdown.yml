@@ -1,11 +1,11 @@
-pandoc: 2.3.1
-pkgdown: 1.6.1.9000
-pkgdown_sha: e1e46f2e13c7efdb17bc4eae40bc3779c2b0b517
+pandoc: 2.11.4
+pkgdown: 1.6.1
+pkgdown_sha: ~
 articles:
   data-import-cleaning: data-import-cleaning.html
   managing-frame-gaps: managing-frame-gaps.html
   visual-perception-functions: visual-perception-functions.html
-last_built: 2021-03-15T23:44Z
+last_built: 2021-05-02T22:25Z
 urls:
   reference: https://docs.ropensci.org/pathviewr/reference
   article: https://docs.ropensci.org/pathviewr/articles

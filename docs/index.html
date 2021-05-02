@@ -52,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -79,7 +85,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/pathviewr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -95,9 +101,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="pathviewr" class="section level1">
+<div id="pathviewr-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#pathviewr" class="anchor"></a>pathviewr <a href="https://docs.ropensci.org/pathviewr"><img src="https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png" align="right" height="150px"></a>
+<a href="#pathviewr-" class="anchor"></a>pathviewr <a href="https://docs.ropensci.org/pathviewr"><img src="https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png" align="right" height="150px"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -106,9 +112,9 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>This package can be installed via:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co">#install.packages("devtools") # if devtools is not installed</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/pathviewr"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#install.packages("devtools") # if devtools is not installed</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/pathviewr"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -118,23 +124,23 @@
 <a href="#data-import-and-cleaning-via-pathviewr" class="anchor"></a>Data import and cleaning via <code>pathviewr</code>
 </h4>
 <p>We’ll also load two <code>tidyverse</code> packages for wrangling &amp; plotting in this readme.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></code></pre></div>
 <p>We will import and clean a sample data set from <code>.csv</code> files exported by Optitrack’s <a href="https://optitrack.com/software/motive/">Motive</a> software. For examples of how to import and clean other types of data, <a href="https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html">see the Basics of data import and cleaning vignette</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co">## Import the Motive example data included in </span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Import the Motive example data included in </span>
 <span class="co">## the package</span>
 
 <span class="va">motive_data</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="reference/read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,
                 package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>
-  <span class="op">)</span></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p>Several functions to clean and wrangle data are available, and we have a suggested pipeline for how these steps should be handled. For this example, we will use one of two “all-in-one” functions: <code><a href="reference/clean_viewr.html">clean_viewr()</a></code>. <a href="https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html">See the Basics of data import and cleaning vignette</a> for the full pipeline and the other “all-in-one” function.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">motive_allinone</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_allinone</span> <span class="op">&lt;-</span>
   <span class="va">motive_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/clean_viewr.html">clean_viewr</a></span><span class="op">(</span>
     relabel_viewr_axes <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -161,11 +167,11 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
     legend.position <span class="op">=</span> <span class="st">"none"</span>
-  <span class="op">)</span></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-all_in_one-1.png" width="100%"></p>
 <p>To get a sense of what we’ve done, compare the data before and after it has passed through the pipeline.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co">## Check out the data's structure before cleaning and wrangling:</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Check out the data's structure before cleaning and wrangling:</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">motive_data</span><span class="op">)</span>
 <span class="co">#&gt; tibble [934 × 26] (S3: tbl_df/tbl/data.frame)</span>
 <span class="co">#&gt;  $ frame                     : int [1:934] 72210 72211 72212 72213 72214 72215 72216 72217 72218 72219 ...</span>
@@ -267,7 +273,7 @@
 <span class="co">#&gt;  - attr(*, "selected_tunnel_length")= num 1.32</span>
 <span class="co">#&gt;  - attr(*, "max_frame_gap")= int [1:3] 1 1 2</span>
 <span class="co">#&gt;  - attr(*, "span")= num 0.95</span>
-<span class="co">#&gt;  - attr(*, "trajectories_removed")= int 5</span></pre></div>
+<span class="co">#&gt;  - attr(*, "trajectories_removed")= int 5</span></code></pre></div>
 <p>An important aspect of how <code>pathviewr</code> defines trajectories is by managing gaps in the data. <a href="https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html">See the vignette on Managing frame gaps</a> for more information on trajectory definition and frame gaps.</p>
 <p>Now that the data is cleaned, <code>pathviewr</code> includes functions that estimate visual perceptions based on the distance between the subject/observer and visual stimuli on the walls of the experimental tunnel. For a complete description of these functions, <a href="https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html">see the vignette on Estimating visual perceptions from tracking data</a>.</p>
 </div>
@@ -276,8 +282,8 @@
 <a href="#add-more-info-about-experiments" class="anchor"></a>Add more info about experiments</h4>
 <p>Now that our objects have been cleaned, we will use <code><a href="reference/insert_treatments.html">insert_treatments()</a></code> to add information about the experiments that are necessary for calculating visual perceptions.</p>
 <p>The data from this example were recorded in a V-shaped tunnel. Accordingly, the vertex angle and vertex height of the tunnel, along with information about the visual stimuli used during the experiment, will be added to the data to inform calculations of visual perception (next section).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">motive_V</span> <span class="op">&lt;-</span> 
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_V</span> <span class="op">&lt;-</span> 
   <span class="va">motive_allinone</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/insert_treatments.html">insert_treatments</a></span><span class="op">(</span>
     tunnel_config <span class="op">=</span> <span class="st">"v"</span>,
@@ -289,22 +295,22 @@
     stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,
     stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,
     treatment <span class="op">=</span> <span class="st">"lat10_end_30"</span>
-  <span class="op">)</span> </pre></div>
+  <span class="op">)</span> </code></pre></div>
 </div>
 <div id="estimate-perception-of-visual-stimuli" class="section level4">
 <h4 class="hasAnchor">
 <a href="#estimate-perception-of-visual-stimuli" class="anchor"></a>Estimate perception of visual stimuli</h4>
 <p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code><a href="reference/get_sf.html">get_sf()</a></code>.</p>
 <p>This will require two intermediate steps: 1) calculating the minimum distance between a subject and each wall (via <code><a href="reference/calc_min_dist_v.html">calc_min_dist_v()</a></code>) and 2) estimating the visual angles from the subject’s perspective (<code><a href="reference/get_vis_angle.html">get_vis_angle()</a></code>).</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">motive_V_sf</span> <span class="op">&lt;-</span> 
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">motive_V_sf</span> <span class="op">&lt;-</span> 
   <span class="va">motive_V</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/calc_min_dist_v.html">calc_min_dist_v</a></span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/get_vis_angle.html">get_vis_angle</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/get_sf.html">get_sf</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="reference/get_sf.html">get_sf</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please <a href="https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html">see the vignette on Estimating visual perceptions from tracking data</a> for more examples of visualizing calculations.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">motive_V_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position_width</span>, y <span class="op">=</span> <span class="va">position_height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sf_pos</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">1</span>, size<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># dimensions of the positive wall</span>
                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,
@@ -318,7 +324,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
     legend.position <span class="op">=</span> <span class="st">"none"</span>
-  <span class="op">)</span></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-motive_V_sf_pos-1.png" width="100%"></p>
 </div>
 </div>
@@ -349,7 +355,7 @@
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/ropensci/pathviewr/">https://​github.com/​ropensci/​pathviewr/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/ropensci/pathviewr/issues">https://​github.com/​ropensci/​pathviewr/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/ropensci/pathviewr/issues/">https://​github.com/​ropensci/​pathviewr/​issues/​</a>
 </li>
 </ul>
 </div>
@@ -404,7 +410,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

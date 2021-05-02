@@ -7,8 +7,8 @@
   "identifier": "pathviewr",
   "description": "Tools to import, clean, and visualize movement data,\n    particularly from motion capture systems such as Optitrack's \n    Motive, the Straw Lab's Flydra, or from other sources. We provide \n    functions to remove artifacts, standardize tunnel position and tunnel \n    axes, select a region of interest, isolate specific trajectories, fill\n    gaps in trajectory data, and calculate 3D and per-axis velocity. For \n    experiments of visual guidance, we also provide functions that use \n    subject position to estimate perception of visual stimuli. ",
   "name": "pathviewr: Wrangle, Analyze, and Visualize Animal Movement Data",
-  "codeRepository": "https://github.com/ropensci/pathviewr",
-  "issueTracker": "https://github.com/ropensci/pathviewr/issues",
+  "codeRepository": "https://github.com/ropensci/pathviewr/",
+  "issueTracker": "https://github.com/ropensci/pathviewr/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
   "version": "1.0.0",
   "programmingLanguage": {
@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "11573.957KB",
+  "fileSize": "11634.912KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
@@ -305,7 +305,7 @@
     "url": "https://github.com/ropensci/software-review/issues/409",
     "provider": "https://ropensci.org"
   },
-  "relatedLink": "https://docs.ropensci.org/pathviewr",
+  "relatedLink": ["https://docs.ropensci.org/pathviewr", "https://docs.ropensci.org/pathviewr/"],
   "keywords": [
     "movement-data",
     "motion",

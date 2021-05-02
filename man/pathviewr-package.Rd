@@ -20,7 +20,8 @@ Tools to import, clean, and visualize movement data,
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/ropensci/pathviewr  https://docs.ropensci.org/pathviewr}
+  \item \url{https://github.com/ropensci/pathviewr/}
+  \item \url{https://docs.ropensci.org/pathviewr/}
   \item Report bugs at \url{https://github.com/ropensci/pathviewr/issues}
 }
 
