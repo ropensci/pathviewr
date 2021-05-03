@@ -116,12 +116,12 @@ calc_vis_angle_1.1 <- function(obj_name,
 #################        calc_vis_angle_2        ###################
 
 ## Assuming gaze is fixed at the closest point of the screen on either side of
-## the tunnel (45˚ down from horizontal), calculate the visual angle subtended 
+## the tunnel (45 degree down from horizontal), calculate the visual angle subtended 
 ## by the length of a stimulus feature on either side of the screen and the eye 
 ## of the bird. Positive and negative sides of the tunnel reflect positive and 
 ## negative values of "Position_widths"
 ## 
-# # # # #  NOTE THIS FUNCTION ONLY WORKS WITH VERTEX ANGLE IS 45˚  # # # # # # 
+# # # # #  NOTE THIS FUNCTION ONLY WORKS WITH VERTEX ANGLE IS 45 degree  # # # # # # 
 
 calc_vis_angle_2 <- function(obj_name,
                              gnd_plane,
@@ -159,7 +159,7 @@ calc_vis_angle_2 <- function(obj_name,
   
   ## Part 3. Introduce variable min_dist on positive and negative sides of the
   ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45˚ down 
+  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45 degree down 
   ## from horizontal)
   
   obj_name$min_dist_pos <- 
@@ -253,7 +253,7 @@ calc_vis_angle_2.1 <- function(obj_name,
 #################        calc_vis_angle_mod       ###################
 
 ## Assuming gaze is fixed at the closest point of the screen on either side of
-## the tunnel (45˚ down from horizontal), calculate the visual angle subtended 
+## the tunnel (45 degree down from horizontal), calculate the visual angle subtended 
 ## by the length of a stimulus feature on either side of the screen and the eye 
 ## of the bird. Positive and negative sides of the tunnel reflect positive and 
 ## negative values of "Position_widths"
@@ -299,7 +299,7 @@ calc_vis_angle_mod <- function(obj_name,
   
   ## Part 4. Introduce variable min_dist on positive and negative sides of the
   ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45˚ down 
+  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45 degree down 
   ## from horizontal)
   obj_name$min_dist_pos <- 
     obj_name$width_2_screen_pos * sin((pi/2) - vertex_angle) 
@@ -373,7 +373,7 @@ calc_vis_angle_mod.1 <- function(obj_name,
   
   ## Part 4. Introduce variable min_dist on positive and negative sides of the
   ## tunnel. min_dist refers to the minimum distance between the bird and either
-  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45˚ down 
+  ## screen (axis of gaze is orthogonal to plane of each screen, i.e. 45 degree down 
   ## from horizontal)
   min_dist_pos <- width_2_screen_pos * sin((pi/2) - vertex_angle) 
   # min_dist to positive screen

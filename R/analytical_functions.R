@@ -589,7 +589,7 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'   \code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
 #'   \code{min_dist_end}, \code{bound_pos}, and \code{bound_neg}.
 #'
-#' @details For tunnels in which \code{vertex_angle} is >90˚, \code{bound_pos}
+#' @details For tunnels in which \code{vertex_angle} is >90 degree, \code{bound_pos}
 #' and \code{bound_neg} represent a planes orthogonal to the lateral walls and
 #' are used to modify \code{min_dist_pos} and \code{min_dist_neg} calculations
 #' to prevent erroneous outputs.

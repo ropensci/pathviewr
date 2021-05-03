@@ -119,7 +119,7 @@ identical(jul_29_all_defaults, jul_29_full)
 
         ################    calc_vis_angle      #############
 
-## For an experiment with the ground plane set 50cm above the bottom of a 45˚
+## For an experiment with the ground plane set 50cm above the bottom of a 45 degree
 ## "V" and sine-wave gratings with a period of 10cm displayed on either side of
 ## the tunnel, the following arguments would be used.
 ## NOTE: in this case, the position of the grounding tool was unknown and
@@ -263,7 +263,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
       ## measuring the tunnel again to make it's accurate. I can do that
       ## next time I go to the lab.
       ## The TV model dimensions are ~ 1.46m length x 0.83m height. Angled
-      ## at 45˚ meaning the top corners are:
+      ## at 45 degree meaning the top corners are:
   0.83 * cos(pi/4) # vertical distance  from (0, 0) = 0.5869m
       ## gnd_plane  = 0.5, therefore the height is +0.0869m w.r.t the perches
   0.83 * sin(pi/4) # horizontal distance from (0, 0) is also 0.5869m (duhh
@@ -279,7 +279,7 @@ ggplot(full60, aes(x = position_width, y = position_height)) +
            y2 = -0.5,
            x3 = 0.5869,  ## (x3, y3) is topmost on positive side
            y3 = 0.0869)
-      ## shows the tunnel angles at 90˚ which is correct since vertex_angle is
+      ## shows the tunnel angles at 90 degree which is correct since vertex_angle is
       ## the angle of the "V" divided by 2 (stupid system I know but we'll chat
       ## about it)
 

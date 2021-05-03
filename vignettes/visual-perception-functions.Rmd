@@ -159,7 +159,7 @@ If you would like to request any additional features such as other tunnel config
 The data within `motive_full` were collected from birds flying through a 3m long
 V-shaped tunnel in which the height of the origin `(0,0,0)` was set to the
 height of the perches that were 0.3855m above the vertex, which was angled at
-90˚. The visual stimuli on the positive and negative walls of the tunnel (where
+90 degree. The visual stimuli on the positive and negative walls of the tunnel (where
 `position_width` values > 0 and < 0, respectively) were stationary dot-fields.
 Each dot was of size 0.05m in diameter. The visual stimuli on the positive and
 negative end walls of the tunnel (where `position_length` > 0 and < 0,
@@ -325,7 +325,7 @@ moving towards.
 With visual angles, we can now determine the spatial frequency of a visual
 pattern as it is perceived by the subject. Spatial frequency refers to the size
 of the pattern in visual space. It's often reported as the number of cycles of a
-visual pattern per 1˚ of the visual field (cycles/degree). Here, we will define
+visual pattern per 1 degree of the visual field (cycles/degree). Here, we will define
 a cycle length as the length used for the `stim_param`. For a given distance
 from the subject, a larger visual pattern produces a smaller spatial frequency,
 whereas a smaller visual pattern produces a larger spatial frequency.

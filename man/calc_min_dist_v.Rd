@@ -27,7 +27,7 @@ Calculate minimum distance to lateral and end walls in a V-shaped
 experimental tunnel
 }
 \details{
-For tunnels in which \code{vertex_angle} is >90˚, \code{bound_pos}
+For tunnels in which \code{vertex_angle} is >90 degree, \code{bound_pos}
 and \code{bound_neg} represent a planes orthogonal to the lateral walls and
 are used to modify \code{min_dist_pos} and \code{min_dist_neg} calculations
 to prevent erroneous outputs.

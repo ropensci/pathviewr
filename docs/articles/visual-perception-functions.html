@@ -98,7 +98,7 @@
       <h1 data-toc-skip>Estimating visual perceptions from tracking data</h1>
                         <h4 class="author">Eric R. Press</h4>
             
-            <h4 class="date">2021-05-02</h4>
+            <h4 class="date">2021-05-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/pathviewr/blob/master/vignettes/visual-perception-functions.Rmd"><code>vignettes/visual-perception-functions.Rmd</code></a></small>
       <div class="hidden name"><code>visual-perception-functions.Rmd</code></div>
@@ -197,7 +197,7 @@ Visual angles can be calculated using the size of a visual pattern (<code>stim_p
 <div id="v-shaped-tunnel-example" class="section level4">
 <h4 class="hasAnchor">
 <a href="#v-shaped-tunnel-example" class="anchor"></a>V-shaped tunnel example</h4>
-<p>The data within <code>motive_full</code> were collected from birds flying through a 3m long V-shaped tunnel in which the height of the origin <code>(0,0,0)</code> was set to the height of the perches that were 0.3855m above the vertex, which was angled at 90˚. The visual stimuli on the positive and negative walls of the tunnel (where <code>position_width</code> values &gt; 0 and &lt; 0, respectively) were stationary dot-fields. Each dot was of size 0.05m in diameter. The visual stimuli on the positive and negative end walls of the tunnel (where <code>position_length</code> &gt; 0 and &lt; 0, respectively) were dot fields with dots 0.1m in diameter. This treatment was referred to as <code>"latB"</code>.</p>
+<p>The data within <code>motive_full</code> were collected from birds flying through a 3m long V-shaped tunnel in which the height of the origin <code>(0,0,0)</code> was set to the height of the perches that were 0.3855m above the vertex, which was angled at 90 degree. The visual stimuli on the positive and negative walls of the tunnel (where <code>position_width</code> values &gt; 0 and &lt; 0, respectively) were stationary dot-fields. Each dot was of size 0.05m in diameter. The visual stimuli on the positive and negative end walls of the tunnel (where <code>position_length</code> &gt; 0 and &lt; 0, respectively) were dot fields with dots 0.1m in diameter. This treatment was referred to as <code>"latB"</code>.</p>
 <p>Therefore we will use the following code:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_treatments</span> <span class="op">&lt;-</span> 
@@ -346,7 +346,7 @@ Visual angles can be calculated using the size of a visual pattern (<code>stim_p
 <div id="calculating-spatial-frequency" class="section level2">
 <h2 class="hasAnchor">
 <a href="#calculating-spatial-frequency" class="anchor"></a>Calculating spatial frequency</h2>
-<p>With visual angles, we can now determine the spatial frequency of a visual pattern as it is perceived by the subject. Spatial frequency refers to the size of the pattern in visual space. It’s often reported as the number of cycles of a visual pattern per 1˚ of the visual field (cycles/degree). Here, we will define a cycle length as the length used for the <code>stim_param</code>. For a given distance from the subject, a larger visual pattern produces a smaller spatial frequency, whereas a smaller visual pattern produces a larger spatial frequency.</p>
+<p>With visual angles, we can now determine the spatial frequency of a visual pattern as it is perceived by the subject. Spatial frequency refers to the size of the pattern in visual space. It’s often reported as the number of cycles of a visual pattern per 1 degree of the visual field (cycles/degree). Here, we will define a cycle length as the length used for the <code>stim_param</code>. For a given distance from the subject, a larger visual pattern produces a smaller spatial frequency, whereas a smaller visual pattern produces a larger spatial frequency.</p>
 <p>To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use <code><a href="../reference/get_sf.html">get_sf()</a></code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">motive_sf</span> <span class="op">&lt;-</span> 

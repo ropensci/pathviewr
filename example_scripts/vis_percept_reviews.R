@@ -594,7 +594,7 @@ get_pattern_vel_direction <- function(obj_name){
     stop("Please run get_velocity() prior to use")
   }
 
-  ## For lateral walls, forward pattern velocity is 0˚/360˚ and intermediate
+  ## For lateral walls, forward pattern velocity is 0 degree/360 degree and intermediate
   ## angles fill the circle counter-clockwise.
   ## The direction of pattern velocity depends on the end wall to which the
   ## subject is facing and whether it's moving forward or backward.
@@ -626,7 +626,7 @@ get_pattern_vel_direction <- function(obj_name){
                                     obj_name$length_inst_vel)))) %% 360
     )
 
-  ## For end wall, rightward pattern velocity is 0˚ or 360˚ and intermediate
+  ## For end wall, rightward pattern velocity is 0 degree or 360 degree and intermediate
   ## angles fill the circle counter-clockwise.
   ## The direction of pattern velocity depends on the end wall to which the
   ## subject is facing and whether it's moving towards the positive or negative
@@ -658,7 +658,7 @@ get_pattern_vel_direction <- function(obj_name){
     )} else if (
        ## For v-shaped tunnel configurations
     attr(obj_name, "tunnel_config") == "v"){
-      ## For end wall, rightward pattern velocity is 0˚ or 360˚ and intermediate
+      ## For end wall, rightward pattern velocity is 0 degree or 360 degree and intermediate
       ## angles fill the circle counter-clockwise.
       ## The direction of pattern velocity depends on the end wall to which the
       ## subject is facing and whether it's moving towards the positive or negative

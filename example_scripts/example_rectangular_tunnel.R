@@ -80,11 +80,11 @@ calc_sf_box <- function(obj_name){
   obj_name$min_dist_pos <- abs(obj_name$pos_wall - obj_name$position_width)
   obj_name$min_dist_neg <- abs(obj_name$neg_wall - obj_name$position_width)
 
-  ## Calculate distance along plane of the wall equal to 1˚ of visual angle.
+  ## Calculate distance along plane of the wall equal to 1 degree of visual angle.
   deg_dist_pos <- 2 * obj_name$min_dist_pos * tan(deg_2_rad(1))
   deg_dist_neg <- 2 * obj_name$min_dist_neg * tan(deg_2_rad(1))
 
-  ## Calculate spatial frequency as number of cycles of stimulus per 1˚ of
+  ## Calculate spatial frequency as number of cycles of stimulus per 1 degree of
   ## visual angle.
   obj_name$s_freq_pos <- deg_dist_pos / obj_name$stim_param_pos
   obj_name$s_freq_neg <- deg_dist_neg / obj_name$stim_param_neg
