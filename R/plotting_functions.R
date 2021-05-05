@@ -154,6 +154,8 @@ plot_viewr_trajectories <- function(obj_name,
   if (plot_axes[1] == "length"){
     if (plot_axes[2] == "width") {
       if (multi_plot == TRUE) {
+        oldpar <- par(no.readonly = TRUE)
+        on.exit(par(oldpar))
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
@@ -176,6 +178,8 @@ plot_viewr_trajectories <- function(obj_name,
     }
     if (plot_axes[2] == "height") {
       if (multi_plot == TRUE) {
+        oldpar <- par(no.readonly = TRUE)
+        on.exit(par(oldpar))
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
@@ -201,6 +205,8 @@ plot_viewr_trajectories <- function(obj_name,
   if (plot_axes[1] == "width"){
     if (plot_axes[2] == "length") {
       if (multi_plot == TRUE) {
+        oldpar <- par(no.readonly = TRUE)
+        on.exit(par(oldpar))
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
@@ -223,6 +229,8 @@ plot_viewr_trajectories <- function(obj_name,
     }
     if (plot_axes[2] == "height") {
       if (multi_plot == TRUE) {
+        oldpar <- par(no.readonly = TRUE)
+        on.exit(par(oldpar))
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
@@ -247,6 +255,8 @@ plot_viewr_trajectories <- function(obj_name,
 
   if (plot_axes[1] == "height"){
     if (plot_axes[2] == "length") {
+      oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
       if (multi_plot == TRUE) {
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
@@ -270,6 +280,8 @@ plot_viewr_trajectories <- function(obj_name,
     }
     if (plot_axes[2] == "width") {
       if (multi_plot == TRUE) {
+        oldpar <- par(no.readonly = TRUE)
+        on.exit(par(oldpar))
         par(mar = c(0, 0, 0, 0))
         par(mfrow = c(sqrt_traj_count, sqrt_traj_count))
       }
@@ -293,8 +305,7 @@ plot_viewr_trajectories <- function(obj_name,
   }
 
   ## reset back to default
-  par(mar = c(5, 4, 4, 2))
-  par(mfrow = c(1, 1))
+  on.exit(par(oldpar))
 
 }
 
