@@ -151,6 +151,9 @@ plot_viewr_trajectories <- function(obj_name,
   ## of trajectories is. This will be used to set par(mfrow()).
   sqrt_traj_count <- ceiling(sqrt(length(obj_name_trajs)))
 
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   if (plot_axes[1] == "length"){
     if (plot_axes[2] == "width") {
       if (multi_plot == TRUE) {

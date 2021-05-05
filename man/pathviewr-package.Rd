@@ -10,7 +10,7 @@
 
 Tools to import, clean, and visualize movement data,
     particularly from motion capture systems such as Optitrack's 
-    Motive, the Straw Lab's Flydra, or from other sources. We provide 
+    'Motive', the Straw Lab's 'Flydra', or from other sources. We provide 
     functions to remove artifacts, standardize tunnel position and tunnel 
     axes, select a region of interest, isolate specific trajectories, fill
     gaps in trajectory data, and calculate 3D and per-axis velocity. For 
