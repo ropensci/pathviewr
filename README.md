@@ -14,6 +14,8 @@ status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](
 coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master)
 [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)  
 [![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/pathviewr)](https://CRAN.R-project.org/package=pathviewr)
 <!-- badges: end -->
 
 `pathviewr` offers tools to import, clean, and visualize movement data,
@@ -28,10 +30,15 @@ subject position to estimate perception of visual stimuli.
 
 ## Installation
 
-This package can be installed via:
+You can install `pathviewr` from CRAN via:
 
 ``` r
-#install.packages("devtools") # if devtools is not installed
+install.packages("pathviewr")
+```
+
+Or to get the latest (developmental) version through GitHub, use:
+
+``` r
 devtools::install_github("ropensci/pathviewr")
 ```
 
@@ -111,7 +118,7 @@ has passed through the pipeline.
 ``` r
 ## Check out the data's structure before cleaning and wrangling:
 str(motive_data)
-#> tibble [934 × 26] (S3: tbl_df/tbl/data.frame)
+#> tibble[,26] [934 x 26] (S3: tbl_df/tbl/data.frame)
 #>  $ frame                     : int [1:934] 72210 72211 72212 72213 72214 72215 72216 72217 72218 72219 ...
 #>  $ time_sec                  : num [1:934] 722 722 722 722 722 ...
 #>  $ device02_rotation_x       : num [1:934] 0.1346 0.0819 0.2106 0.1961 0.1305 ...
@@ -141,7 +148,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-03-15 16:34:52"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-06 08:57:14"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -158,7 +165,7 @@ str(motive_data)
 
 ## Check out the data's structure after cleaning and wrangling:
 str(motive_allinone)
-#> tibble [449 × 24] (S3: tbl_df/tbl/data.frame)
+#> tibble[,24] [449 x 24] (S3: tbl_df/tbl/data.frame)
 #>  $ frame            : int [1:449] 72213 72214 72215 72216 72217 72218 72219 72220 72221 72222 ...
 #>  $ time_sec         : num [1:449] 722 722 722 722 722 ...
 #>  $ subject          : chr [1:449] "device02" "device02" "device02" "device02" ...
@@ -184,7 +191,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-03-15 16:34:52"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-06 08:57:14"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -321,6 +328,6 @@ clean, and visualize animal movement data in R*. R package version
 
 ## License
 
-GPL (\>= 3) + file LICENSE
+GPL (&gt;= 3) + file LICENSE
 
 🐢

@@ -20,7 +20,8 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master)
 [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)  
-[![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628) 
+[![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628)
+[![CRAN status](https://www.r-pkg.org/badges/version/pathviewr)](https://CRAN.R-project.org/package=pathviewr)
 <!-- badges: end -->
 
 `pathviewr` offers tools to import, clean, and visualize movement data,
@@ -35,9 +36,15 @@ perception of visual stimuli.
 
 ## Installation
 
-This package can be installed via:
-``` r
-#install.packages("devtools") # if devtools is not installed
+You can install `pathviewr` from CRAN via:
+
+``` {r install_cran, eval = FALSE}
+install.packages("pathviewr")
+```
+
+Or to get the latest (developmental) version through GitHub, use:
+  
+``` {r install_github, eval = FALSE}
 devtools::install_github("ropensci/pathviewr")
 ```
 

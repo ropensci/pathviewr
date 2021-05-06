@@ -258,7 +258,7 @@
     }
   ],
   "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "11637.19KB",
+  "fileSize": "10753.257KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
@@ -307,7 +307,8 @@
   },
   "relatedLink": [
     "https://docs.ropensci.org/pathviewr",
-    "https://docs.ropensci.org/pathviewr/"
+    "https://docs.ropensci.org/pathviewr/",
+    "https://CRAN.R-project.org/package=pathviewr"
   ],
   "keywords": [
     "movement-data",
@@ -322,5 +323,11 @@
     "trajectory-analysis",
     "trajectories"
   ],
-  "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md"
+  "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  }
 }
