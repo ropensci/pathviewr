@@ -197,6 +197,128 @@ Please check that you have entered the name of the height variable correctly.")
 
 }
 
+############################## get_traj_velocities #############################
+## Similar to get_velocity(), but can be done on a per-trajectory basis on
+## a combined object
+##
+## set_init_vel_zero = should the first value be zero or can it be a duplicate
+## of the second velocity value
+
+#' Recompute trajectory-specific velocities
+#'
+#' @inheritParams get_velocity
+#' @param set_init_vel_zero Should the first value be zero or can it be a
+#'   duplicate of the second velocity value? Defaults to FALSE.
+#'
+#' @details Instantaneous velocity is not truly "instantaneous" but rather is
+#' approximated as the change in distance divided by change in time from one
+#' observation (row) to the previous observation (row). Each component of
+#' velocity is computed (i.e. per axis) along with the overall velocity of
+#' the subject.
+#'
+#' @return If \code{add_to_viewr} is \code{TRUE}, additional columns are
+#'   appended to the input viewr object. If \code{FALSE}, a standalone tibble is
+#'   created. Either way, an "instantaneous" velocity is computed as the
+#'   difference in position divided by the difference in time as each successive
+#'   row is encountered. Additionally, velocities along each of the three
+#'   position axes are computed and provided as additional columns.
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family mathematical functions
+#'
+#' @export
+
+get_traj_velocities <- function(obj_name,
+                                time_col = "time_sec",
+                                length_col = "position_length",
+                                width_col = "position_width",
+                                height_col = "position_height",
+                                set_init_vel_zero = FALSE,
+                                velocity_min = NA,
+                                velocity_max = NA) {
+
+  if (!any(grepl(time_col, colnames(obj_name), ignore.case = FALSE))) {
+    stop(
+      "time_col not found.\nPlease check that you have entered the name of the time variable correctly.")
+  }
+  if (!any(grepl(length_col, colnames(obj_name), ignore.case = FALSE))) {
+    stop(
+      "length_col not found.\nPlease check that you have entered the name of the length variable correctly.")
+  }
+  if (!any(grepl(width_col, colnames(obj_name), ignore.case = FALSE))) {
+    stop(
+      "width_col not found.\nPlease check that you have entered the name of the width variable correctly.")
+  }
+  if (!any(grepl(height_col, colnames(obj_name), ignore.case = FALSE))) {
+    stop(
+      "height_col not found.\nPlease check that you have entered the name of the height variable correctly.")
+  }
+
+  ## ADD BLOCK HERE TO DROP VELOCITIES IF DETECTED
+
+  ## split
+  traj_tibbles <-
+    obj_name %>%
+    dplyr::group_by(file_sub_traj) %>%
+    dplyr::group_split()
+
+  updated_tibs <- list()
+  ## compute per trajectory set
+  for (i in seq_along(traj_tibbles)) {
+    df <- as.data.frame(traj_tibbles[[i]])
+    time_diffs <- diff(df[, time_col])
+    length_inst <- c(0, diff(df[, length_col])/time_diffs)
+    width_inst <- c(0, diff(df[, width_col])/time_diffs)
+    height_inst <- c(0, diff(df[, height_col])/time_diffs)
+    vel <- sqrt((length_inst^2) + (width_inst^2) + (height_inst^2))
+    if (set_init_vel_zero == FALSE) {
+      ## replace each starting value with the succeeding one as an approximation
+      ## that is likely more valid than zero
+      length_inst[1] <- length_inst[2]
+      width_inst[1] <- width_inst[2]
+      height_inst[1] <- height_inst[2]
+      vel[1] <- vel[2]
+    }
+    res <- tibble::tibble(velocity = vel, length_inst_vel = length_inst,
+                          width_inst_vel = width_inst, height_inst_vel = height_inst)
+
+    updated_tibs[[i]] <- dplyr::bind_cols(traj_tibbles[[i]], res)
+  }
+
+  ## stitch back together
+  obj_new <-
+    updated_tibs %>%
+    dplyr::bind_rows()
+
+  ## filter by velocity, if user desires
+  if (is.numeric(velocity_min)) {
+    obj_new <- obj_new %>% dplyr::filter(velocity > velocity_min)
+    attr(obj_new, "velocity_min") <- velocity_min
+  }
+  else {
+    obj_new <- obj_new
+    if (is.character(velocity_min)) {
+      stop(
+        "velocity_min is character.\n    Please check that you have entered the velocity_min variable correctly.")
+    }
+  }
+  if (is.numeric(velocity_max)) {
+    obj_new <- obj_new %>% dplyr::filter(velocity < velocity_max)
+    attr(obj_new, "velocity_max") <- velocity_max
+  }
+  else {
+    obj_new <- obj_new
+    if (is.character(velocity_max)) {
+      stop(
+        "velocity_max is character.\n    Please check that you have entered the velocity_max variable correctly.")
+    }
+  }
+
+  ## export
+  return(obj_new)
+
+}
 
 ############################## get_dist_point_line #############################
 

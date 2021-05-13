@@ -138,6 +138,13 @@ flydra_box <-
 names(motive_v)
 names(flydra_box)
 }
+\seealso{
+Other utility functions: 
+\code{\link{clean_by_span}()},
+\code{\link{remove_duplicate_frames}()},
+\code{\link{remove_vel_anomalies}()},
+\code{\link{set_traj_frametime}()}
+}
 \author{
 Eric R. Press
 }

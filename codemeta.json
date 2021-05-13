@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/ropensci/pathviewr/",
   "issueTracker": "https://github.com/ropensci/pathviewr/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -255,10 +255,34 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=cowplot"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "anomalize",
+      "name": "anomalize",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=anomalize"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "lubridate",
+      "name": "lubridate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=lubridate"
     }
   ],
   "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "10753.257KB",
+  "fileSize": "10831.204KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [

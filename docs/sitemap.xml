@@ -16,6 +16,9 @@
     <loc>https://docs.ropensci.org/pathviewr/reference/calc_min_dist_v.html</loc>
   </url>
   <url>
+    <loc>https://docs.ropensci.org/pathviewr/reference/clean_by_span.html</loc>
+  </url>
+  <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/clean_viewr.html</loc>
   </url>
   <url>
@@ -56,6 +59,9 @@
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/get_sf.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/reference/get_traj_velocities.html</loc>
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/get_velocity.html</loc>
@@ -106,6 +112,12 @@
     <loc>https://docs.ropensci.org/pathviewr/reference/relabel_viewr_axes.html</loc>
   </url>
   <url>
+    <loc>https://docs.ropensci.org/pathviewr/reference/remove_duplicate_frames.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/reference/remove_vel_anomalies.html</loc>
+  </url>
+  <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/rename_viewr_characters.html</loc>
   </url>
   <url>
@@ -125,6 +137,9 @@
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/separate_trajectories.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/reference/set_traj_frametime.html</loc>
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/standardize_tunnel.html</loc>

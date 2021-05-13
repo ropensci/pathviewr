@@ -1,6 +1,6 @@
 Package: pathviewr
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: 
     c(person(given = "Vikram B.",
              family = "Baliga", 
@@ -49,7 +49,9 @@ Imports:
     purrr (>= 0.3.3),
     ggplot2 (>= 3.3.0),
     tidyselect (>= 1.1.0),
-    cowplot
+    cowplot,
+    anomalize,
+    lubridate
 Suggests: 
     knitr,
     rmarkdown,

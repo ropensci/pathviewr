@@ -2818,3 +2818,278 @@ insert_treatments <- function(obj_name,
                                          "treatments_added")
   return(obj_name)
 }
+
+
+############################## set_traj_frametime ##############################
+
+#' Redefine frames and time stamps on a per-trajectory basis
+#'
+#' After a data set has been separated into trajectories, find the earliest
+#' frame in each trajectory and set the corresponding time to 0. All subsequent
+#' time_sec stamps are computed according to successive frame numbering.
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewr_steps}. New columns include traj_time (the
+#'   trajectory-specific time values) and traj_frame (the trajectory-specific
+#'   frame numbering).
+#'
+#' @details The separate_trajectories() and get_full_trajectories() must be
+#' run prior to use. The initial traj_time and traj_frame values are set to 0
+#' within each trajectory.
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family utility functions
+
+set_traj_frametime <- function(obj_name) {
+
+  ## INSERT USUAL CHECKS AT SOME POINT
+
+  ## get time differential, assuming constant frame rate
+  time_diff <- diff(obj_name$time_sec[1:2])
+
+  ## compute
+  traj_frametimes <-
+    obj_name %>%
+    dplyr::group_by(file_sub_traj) %>%
+    dplyr::summarise(
+      traj_time = seq(from = 0,
+                      to = (time_diff*dplyr::n() - time_diff),
+                      by = time_diff),
+      traj_frame = frame - min(frame)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-file_sub_traj)
+
+  ## add back in
+  obj_name <-
+    dplyr::bind_cols(obj_name, traj_frametimes)
+
+  ## export
+  return(obj_name)
+
+}
+
+################################# clean_by_span ################################
+## Clean up file_sub_traj entries that do not span the full
+## region of interest
+
+## obj_name = object name
+## axis = which axis enforce restrictions along
+## min_value and max_value are the actual values to use as restriction criteria
+## tolerance = fudge factor, as a proportion of axis values
+
+#' Remove file_sub_traj entries that do not span the full region of interest
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
+#' @param axis Along which axis should restrictions be enforced?
+#' @param min_value Minimum coordinate value; setting this to NULL will
+#'   auto-compute the best value
+#' @param max_value Maximum coordinate; setting this to NULL will auto-compute
+#'   the best value
+#' @param tolerance As a proporiton of axis value
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewr_steps}. Trajectories that do not span the full region of
+#'   interest have been removed; trajectory identities (file_sub_traj) have
+#'   not been changed.
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family utility functions
+
+clean_by_span <- function(obj_name,
+                          axis = "position_length",
+                          min_value = NULL,
+                          max_value = NULL,
+                          tolerance = 0.1
+) {
+
+  ## INSERT USUAL CHECKS AT SOME POINT
+
+  ## auto insert if no values supplied
+  if(is.null(min_value)) {
+    min_value <- min(obj_name[,axis])
+  }
+
+  if(is.null(max_value)) {
+    max_value <- max(obj_name[,axis])
+  }
+
+  ## use tolerance to set acceptable ranges
+  min_1 <- min_value - (tolerance * min_value)
+  #min_2 <- min_value + (tolerance * min_value)
+  max_1 <- max_value - (tolerance * max_value)
+  #max_2 <- max_value + (tolerance * max_value)
+
+  ## split
+  traj_tibbles <-
+    obj_name %>%
+    dplyr::group_by(file_sub_traj) %>%
+    dplyr::group_split()
+
+  ## generate list of tibbles to remove
+  rm_list <- NULL
+  for (i in seq_along(traj_tibbles)) {
+    if (min(traj_tibbles[[i]][,axis]) > min_1) {
+      rm_list[i] <- "remove"
+    }
+    if (max(traj_tibbles[[i]][,axis]) < max_1) {
+      rm_list[i] <- "remove"
+    }
+  }
+  dex <- which(rm_list == "remove")
+
+  ## chop
+  traj_restricted <-
+    traj_tibbles[-dex] %>%
+    dplyr::bind_rows()
+
+  ## export
+  return(traj_restricted)
+}
+
+############################ remove_duplicate_frames ###########################
+## remove any duplicates or aliased frames
+
+#' Remove any duplicates or aliased frames within trajectories
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewr_steps}.
+#'
+#' @details The separate_trajectories() and get_full_trajectories() must be
+#' run prior to use.
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family utility functions
+
+remove_duplicate_frames <- function(obj_name) {
+
+  ## INSERT USUAL CHECKS AT SOME POINT
+
+  ## split
+  traj_tibbles <-
+    obj_name %>%
+    dplyr::group_by(file_sub_traj) %>%
+    dplyr::group_split()
+
+  ## look within each tibble to see if massive frame drops or jumps occur
+  rm_list <- NULL
+  for (i in seq_along(traj_tibbles)) {
+    frame_diff <- diff(traj_tibbles[[i]]$frame)
+    if (any(frame_diff != 1)) {
+      ## mark for removal
+      rm_list[i] <- "remove"
+    }
+  }
+  dex <- which(rm_list == "remove")
+
+  ## chop
+  traj_restricted <-
+    traj_tibbles[-dex] %>%
+    dplyr::bind_rows()
+
+  ## export
+  return(traj_restricted)
+}
+
+############################# remove_vel_anomalies ############################
+## remove any instances of sharp shifts in velocity that are likely due to
+## tracking errors
+
+## RELIES ON ANOMALIZE!!!
+
+#' Remove any rows which show sharp shifts in velocity that are likely due to
+#' tracking errors
+#'
+#' @param obj_name The input viewr object; a tibble or data.frame with attribute
+#'   \code{pathviewr_steps} that includes \code{"viewr"}
+#' @param target The column to target; defaults to "velocity"
+#' @param method The anomaly detection method; see anomalize::anomalize()
+#' @param alpha The width of the "normal" range; see anomalize::anomalize()
+#' @param max_anoms The max proportion of anomalies; see anomalize::anomalize()
+#'
+#' @return A viewr object (tibble or data.frame with attribute
+#'   \code{pathviewr_steps}. Rows in which large anomalies were detected have
+#'   been removed. No additional columns are created.
+#'
+#' @details This function runs anomalize::anomalize() on a per-trajectory basis.
+#'   The separate_trajectories() and get_full_trajectories() must be run prior
+#'   to use.
+#'
+#' @export
+#'
+#' @author Vikram B. Baliga
+#'
+#' @family utility functions
+
+remove_vel_anomalies <- function(obj_name,
+                                 target = "velocity",
+                                 method = "gesd",
+                                 alpha = 0.05,
+                                 max_anoms = 0.2) {
+
+  ## INSERT USUAL CHECKS AT SOME POINT
+
+  ## split
+  traj_tibbles <-
+    obj_name %>%
+    dplyr::group_by(file_sub_traj) %>%
+    dplyr::group_split()
+
+  ## look for anomalies via anomalize::anomalize()
+  for (i in seq_along(traj_tibbles)) {
+    dat <- traj_tibbles[[i]]
+    date <- lubridate::as_date(dat$traj_time*100)
+    # seq.Date(from = as.Date("1910/1/1"),
+    #                length.out = nrow(dat),
+    #                by = "day")
+    anm <-
+      dat %>%
+      dplyr::mutate(
+        date = date
+      ) %>%
+      anomalize::time_decompose(target = target,
+                                method = "twitter",
+                                frequency = "auto",
+                                message = FALSE) %>%
+      anomalize::anomalize(
+        target = "remainder",
+        method = method,
+        alpha = alpha,
+        max_anoms = max_anoms,
+        verbose = FALSE)
+    # anm <-
+    #   anomalize::anomalize(
+    #     data = dat,
+    #     target = target,
+    #     method = method,
+    #     alpha = alpha,
+    #     max_anoms = max_anoms,
+    #     verbose = verbose)
+    dex <- which(anm$anomaly == "Yes")
+    names(dex) <- NULL
+    traj_tibbles[[i]] <- traj_tibbles[[i]][-dex,]
+  }
+
+  ## stitch
+  obj_new <-
+    traj_tibbles %>%
+    dplyr::bind_rows()
+
+  ## export
+  return(obj_new)
+}

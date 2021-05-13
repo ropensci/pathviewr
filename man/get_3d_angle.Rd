@@ -50,6 +50,7 @@ Other mathematical functions:
 \code{\link{get_2d_angle}()},
 \code{\link{get_3d_cross_prod}()},
 \code{\link{get_dist_point_line}()},
+\code{\link{get_traj_velocities}()},
 \code{\link{get_velocity}()},
 \code{\link{rad_2_deg}()}
 }

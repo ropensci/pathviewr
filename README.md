@@ -148,7 +148,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-06 08:57:14"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-13 14:51:31"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -191,7 +191,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-06 08:57:14"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-13 14:51:31"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -323,7 +323,7 @@ The preferred way to cite `pathviewr` (but subject to change) is:
 
 Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-1.0.0, <https://github.com/ropensci/pathviewr>. doi:
+1.1.0, <https://github.com/ropensci/pathviewr>. doi:
 10.5281/zenodo.4270187.
 
 ## License

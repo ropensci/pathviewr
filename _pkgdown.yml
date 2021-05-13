@@ -50,11 +50,16 @@ reference:
   - fill_traj_gaps
   - rm_by_trajnum
   - insert_treatments
+  - set_traj_frametime
+  - clean_by_span
+  - remove_duplicate_frames
+  - remove_vel_anomalies
 - title: Analytical functions
   desc:  Functions for quantitative analysis
   contents:
   - find_curve_elbow
   - get_velocity
+  - get_traj_velocities
   - calc_min_dist_box
   - calc_min_dist_v
   - get_vis_angle

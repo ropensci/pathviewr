@@ -1,3 +1,10 @@
+# pathviewr 1.1.0
+* New data cleaning functions added: set_traj_frametime(),
+get_traj_velocities(), clean_by_span(), remove_duplicate_frames(), and
+remove_vel_anomalies()
+* These new functions have not been thoroughly vetted nor have unit tests
+been written for them -- please use with caution and report issues.
+
 # pathviewr 1.0.0
 * Package has been accepted by rOpenSci and is now hosted on ropensci/pathviewr
 * No changes to code since v0.9.5

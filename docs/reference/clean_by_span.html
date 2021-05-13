@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>pathviewr: Wrangle, Analyze, and Visualize Animal Movement Data — pathviewr-package • pathviewr</title>
+<title>Remove file_sub_traj entries that do not span the full region of interest — clean_by_span • pathviewr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,16 +46,8 @@
 
 
 
-<meta property="og:title" content="pathviewr: Wrangle, Analyze, and Visualize Animal Movement Data — pathviewr-package" />
-<meta property="og:description" content="
-Tools to import, clean, and visualize movement data,
-    particularly from motion capture systems such as Optitrack's 
-    'Motive', the Straw Lab's 'Flydra', or from other sources. We provide 
-    functions to remove artifacts, standardize tunnel position and tunnel 
-    axes, select a region of interest, isolate specific trajectories, fill
-    gaps in trajectory data, and calculate 3D and per-axis velocity. For 
-    experiments of visual guidance, we also provide functions that use 
-    subject position to estimate perception of visual stimuli." />
+<meta property="og:title" content="Remove file_sub_traj entries that do not span the full region of interest — clean_by_span" />
+<meta property="og:description" content="Remove file_sub_traj entries that do not span the full region of interest" />
 <meta property="og:image" content="https://docs.ropensci.org/pathviewr/logo.png" />
 
 
@@ -145,48 +137,67 @@ Tools to import, clean, and visualize movement data,
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>pathviewr: Wrangle, Analyze, and Visualize Animal Movement Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/pathviewr/blob/master/R/pathviewr.R'><code>R/pathviewr.R</code></a></small>
-    <div class="hidden name"><code>pathviewr-package.Rd</code></div>
+    <h1>Remove file_sub_traj entries that do not span the full region of interest</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/pathviewr/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
+    <div class="hidden name"><code>clean_by_span.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><img src='figures/logo.png' align='right' alt='logo' width='120' /></p>
-<p>Tools to import, clean, and visualize movement data,
-    particularly from motion capture systems such as Optitrack's 
-    'Motive', the Straw Lab's 'Flydra', or from other sources. We provide 
-    functions to remove artifacts, standardize tunnel position and tunnel 
-    axes, select a region of interest, isolate specific trajectories, fill
-    gaps in trajectory data, and calculate 3D and per-axis velocity. For 
-    experiments of visual guidance, we also provide functions that use 
-    subject position to estimate perception of visual stimuli.</p>
+    <p>Remove file_sub_traj entries that do not span the full region of interest</p>
     </div>
 
+    <pre class="usage"><span class='fu'>clean_by_span</span><span class='op'>(</span>
+  <span class='va'>obj_name</span>,
+  axis <span class='op'>=</span> <span class='st'>"position_length"</span>,
+  min_value <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_value <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tolerance <span class='op'>=</span> <span class='fl'>0.1</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>obj_name</th>
+      <td><p>The input viewr object; a tibble or data.frame with attribute
+<code>pathviewr_steps</code> that includes <code>"viewr"</code></p></td>
+    </tr>
+    <tr>
+      <th>axis</th>
+      <td><p>Along which axis should restrictions be enforced?</p></td>
+    </tr>
+    <tr>
+      <th>min_value</th>
+      <td><p>Minimum coordinate value; setting this to NULL will
+auto-compute the best value</p></td>
+    </tr>
+    <tr>
+      <th>max_value</th>
+      <td><p>Maximum coordinate; setting this to NULL will auto-compute
+the best value</p></td>
+    </tr>
+    <tr>
+      <th>tolerance</th>
+      <td><p>As a proporiton of axis value</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A viewr object (tibble or data.frame with attribute
+<code>pathviewr_steps</code>. Trajectories that do not span the full region of
+interest have been removed; trajectory identities (file_sub_traj) have
+not been changed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://github.com/ropensci/pathviewr/'>https://github.com/ropensci/pathviewr/</a></p></li>
-<li><p><a href='https://docs.ropensci.org/pathviewr/'>https://docs.ropensci.org/pathviewr/</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/ropensci/pathviewr/issues/'>https://github.com/ropensci/pathviewr/issues/</a></p></li>
-</ul>
-
-</div>
+    <div class='dont-index'><p>Other utility functions: 
+<code><a href='insert_treatments.html'>insert_treatments</a>()</code>,
+<code><a href='remove_duplicate_frames.html'>remove_duplicate_frames</a>()</code>,
+<code><a href='remove_vel_anomalies.html'>remove_vel_anomalies</a>()</code>,
+<code><a href='set_traj_frametime.html'>set_traj_frametime</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p><strong>Maintainer</strong>: Vikram B. Baliga <a href='mailto:vbaliga87@gmail.com'>vbaliga87@gmail.com</a> (<a href='https://orcid.org/0000-0002-9367-8974'>ORCID</a>)</p>
-<p>Authors:</p><ul>
-<li><p>Melissa S. Armstrong <a href='mailto:melissa.armstrong@gmail.com'>melissa.armstrong@gmail.com</a> (<a href='https://orcid.org/0000-0002-3059-0094'>ORCID</a>)</p></li>
-<li><p>Eric R. Press <a href='mailto:epress12@gmail.com'>epress12@gmail.com</a> (<a href='https://orcid.org/0000-0002-1944-3755'>ORCID</a>)</p></li>
-</ul>
-
-<p>Other contributors:</p><ul>
-<li><p>Anne-Sophie Bonnet-Lebrun [reviewer]</p></li>
-<li><p>Marco Sciaini [reviewer]</p></li>
-</ul>
-
-
+    <p>Vikram B. Baliga</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
