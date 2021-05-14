@@ -97,14 +97,14 @@ test_that("get_sf() fails when nonsense is supplied", {
 ## Test output data frame
 test_that("get_sf() adds variables appropriately",{
   # output has correct variable names
-  expect_equal(names(flydra_sf[c(33:35)]),
+  expect_equal(names(flydra_sf[c(37:39)]),
                c("sf_pos", "sf_neg", "sf_end")
   )
   expect_equal(names(motive_sf[c(43:45)]),
                c("sf_pos", "sf_neg", "sf_end")
   )
   # output has correct dimensions
-  expect_equal(dim(flydra_sf), c(381,35))
+  expect_equal(dim(flydra_sf), c(381,39))
   expect_equal(dim(motive_sf), c(449,45))
   })
 
@@ -137,3 +137,4 @@ test_that("get_sf makes correct calculations based on position_width",{
                tolerance = 1e-5
   )
 })
+

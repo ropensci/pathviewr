@@ -403,7 +403,10 @@ read_flydra_mat <-
         kalman.frame = mat_read$kalman.frame,
         kalman.x = mat_read$kalman.x,
         kalman.y = mat_read$kalman.y,
-        kalman.z = mat_read$kalman.z
+        kalman.z = mat_read$kalman.z,
+        kalman.xvel = mat_read$kalman.xvel,
+        kalman.yvel = mat_read$kalman.yvel,
+        kalman.zvel = mat_read$kalman.zvel,
       ) %>%
       ## For some reason, frames may be out of order
       ## So sort this tibble by kalman.frame
@@ -449,7 +452,15 @@ read_flydra_mat <-
         subject = subject_name,
         position_length = as.numeric(kalm_distinct$kalman.x),
         position_width  = as.numeric(kalm_distinct$kalman.y),
-        position_height = as.numeric(kalm_distinct$kalman.z)
+        position_height = as.numeric(kalm_distinct$kalman.z),
+        velocity = as.numeric(
+          sqrt((kalm_distinct$kalman.xvel ^ 2) +
+                 (kalm_distinct$kalman.yvel ^ 2) +
+                 (kalm_distinct$kalman.zvel ^ 2))
+        ),
+        length_inst_vel = as.numeric(kalm_distinct$kalman.xvel),
+        width_inst_vel  = as.numeric(kalm_distinct$kalman.yvel),
+        height_inst_vel = as.numeric(kalm_distinct$kalman.zvel)
       )
 
     ## Add metadata as attributes()

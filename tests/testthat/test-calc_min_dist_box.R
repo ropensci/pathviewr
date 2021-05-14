@@ -52,11 +52,11 @@ test_that("calc_min_dist_box() fails when nonsense is supplied", {
 ## Test output data frame
 test_that("calc_min_dist_box() adds variables appropriately",{
   # output has correct variable names
-  expect_equal(names(flydra_min_dist)[24:26],
+  expect_equal(names(flydra_min_dist)[28:30],
                c("min_dist_pos", "min_dist_neg", "min_dist_end")
   )
   # output has correct dimensions
-  expect_equal(dim(flydra_min_dist), c(381, 26)
+  expect_equal(dim(flydra_min_dist), c(381, 30)
   )
 })
 
@@ -78,3 +78,4 @@ test_that(
                  tolerance = 1e-5
     )
   })
+

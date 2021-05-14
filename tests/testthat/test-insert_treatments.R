@@ -123,5 +123,5 @@ test_that("insert_treatments() adds variables appropriately", {
                )
   ## output objects are of correct dimensions
   expect_equal(dim(motive_treat), c(449, 33))
-  expect_equal(dim(flydra_treat), c(381, 23))
+  expect_equal(dim(flydra_treat), c(381, 27))
 })

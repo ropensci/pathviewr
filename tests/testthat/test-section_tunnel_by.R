@@ -44,7 +44,7 @@ test_that("section_tunnel_by() fails when nonsense is supplied", {
 })
 
 test_that("section_tunnel_by() produces correct output", {
-  expect_equal(as.numeric(test_mat[1,16]),
+  expect_equal(as.numeric(test_mat[1,20]),
                10,
                tolerance = 1e-5)
 })

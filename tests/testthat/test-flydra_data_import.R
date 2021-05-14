@@ -34,7 +34,9 @@ test_that("read_flydra_mat() reads data in correctly", {
   ## Check that the column names appear correctly
   expect_equal(names(flydra_test_data), c("frame", "time_sec", "subject",
                                           "position_length", "position_width",
-                                          "position_height"))
+                                          "position_height", "velocity",
+                                          "length_inst_vel",
+                                          "width_inst_vel", "height_inst_vel"))
   ## Check that all data were imported
-  expect_equal(dim(flydra_test_data), c(7744, 6))
+  expect_equal(dim(flydra_test_data), c(7744, 10))
 })

@@ -209,8 +209,9 @@ already been gathered into key-value pairs based on subject.</p>
 
 <span class='co'>## Names of variables in the resulting tibble</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>flydra_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "frame"           "time_sec"        "subject"         "position_length"
-#&gt; [5] "position_width"  "position_height"</div><div class='input'>
+</div><div class='output co'>#&gt;  [1] "frame"           "time_sec"        "subject"         "position_length"
+#&gt;  [5] "position_width"  "position_height" "velocity"        "length_inst_vel"
+#&gt;  [9] "width_inst_vel"  "height_inst_vel"</div><div class='input'>
 <span class='co'>## A variety of metadata are stored as attributes. Of particular interest:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>flydra_data</span>, <span class='st'>"pathviewr_steps"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "viewr"           "renamed_tunnel"  "gathered_tunnel"</div></pre>

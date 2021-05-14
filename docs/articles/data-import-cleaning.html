@@ -230,7 +230,7 @@
 <span class="co">## Similarly, this produces a tibble with important </span>
 <span class="co">## metadata as attributes</span>
 <span class="va">flydra_data</span>
-<span class="co">#&gt; # A tibble: 7,744 x 6</span>
+<span class="co">#&gt; # A tibble: 7,744 x 10</span>
 <span class="co">#&gt;    frame time_sec subject        position_length position_width position_height</span>
 <span class="co">#&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                    &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;</span>
 <span class="co">#&gt;  1   746     0    birdie_wooster           0.869       -0.00417            1.31</span>
@@ -243,7 +243,8 @@
 <span class="co">#&gt;  8   753     0.07 birdie_wooster           0.864       -0.00712            1.31</span>
 <span class="co">#&gt;  9   754     0.08 birdie_wooster           0.865       -0.00727            1.31</span>
 <span class="co">#&gt; 10   755     0.09 birdie_wooster           0.865       -0.00760            1.31</span>
-<span class="co">#&gt; # ... with 7,734 more rows</span>
+<span class="co">#&gt; # ... with 7,734 more rows, and 4 more variables: velocity &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   length_inst_vel &lt;dbl&gt;, width_inst_vel &lt;dbl&gt;, height_inst_vel &lt;dbl&gt;</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">flydra_data</span>, <span class="st">"frame_rate"</span><span class="op">)</span>
 <span class="co">#&gt; [1] 100</span></code></pre></div>

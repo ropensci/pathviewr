@@ -95,7 +95,7 @@ test_that("get_vis_angle() fails when nonsense is supplied", {
 ## Test output data frame
 test_that("get_vis_angle() adds variables appropriately",{
   # output has correct variable names
-  expect_equal(names(flydra_vis_angle)[27:32],
+  expect_equal(names(flydra_vis_angle)[31:36],
                c("vis_angle_pos_rad", "vis_angle_neg_rad", "vis_angle_end_rad",
                  "vis_angle_pos_deg", "vis_angle_neg_deg", "vis_angle_end_deg")
   )
@@ -104,7 +104,7 @@ test_that("get_vis_angle() adds variables appropriately",{
                  "vis_angle_pos_deg", "vis_angle_neg_deg", "vis_angle_end_deg")
   )
   # output has correct dimensions
-  expect_equal(dim(flydra_vis_angle), c(381, 32)
+  expect_equal(dim(flydra_vis_angle), c(381, 36)
   )
   expect_equal(dim(motive_vis_angle), c(449, 48)
   )
