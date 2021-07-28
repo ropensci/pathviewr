@@ -15,3 +15,4 @@
 ^images$
 ^CRAN-RELEASE$
 ^cran-comments\.md$
+^CITATION\.cff$
