@@ -281,8 +281,7 @@
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     }
   ],
-  "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
-  "fileSize": "10834.151KB",
+  "fileSize": "10834.695KB",
   "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
