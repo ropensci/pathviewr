@@ -57,9 +57,9 @@ visualize_frame_gap_choice <- function(obj_name,
                                        ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   # make a bunch of empty vectors to dump info
   mfg <- vector("list", loops)
@@ -383,9 +383,9 @@ plot_by_subject <- function(obj_name,
                             ...) {
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name, "pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name, "pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   #set axes limits based on data
   height_limits <- c(max(abs(range(

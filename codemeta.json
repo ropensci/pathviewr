@@ -1,22 +1,26 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "pathviewr",
-  "description": "Tools to import, clean, and visualize movement data,\n    particularly from motion capture systems such as Optitrack's \n    'Motive', the Straw Lab's 'Flydra', or from other sources. We provide \n    functions to remove artifacts, standardize tunnel position and tunnel \n    axes, select a region of interest, isolate specific trajectories, fill\n    gaps in trajectory data, and calculate 3D and per-axis velocity. For \n    experiments of visual guidance, we also provide functions that use \n    subject position to estimate perception of visual stimuli. ",
+  "description": "Tools to import, clean, and visualize movement data, particularly from motion capture systems such as Optitrack's 'Motive', the Straw Lab's 'Flydra', or from other sources. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use subject position to estimate perception of visual stimuli. ",
   "name": "pathviewr: Wrangle, Analyze, and Visualize Animal Movement Data",
+  "relatedLink": ["https://docs.ropensci.org/pathviewr/", "https://CRAN.R-project.org/package=pathviewr"],
   "codeRepository": "https://github.com/ropensci/pathviewr/",
   "issueTracker": "https://github.com/ropensci/pathviewr/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+  "runtimePlatform": "R version 4.2.0 (2022-04-22 ucrt)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -40,9 +44,6 @@
       "@id": "https://orcid.org/0000-0002-1944-3755"
     }
   ],
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -102,8 +103,8 @@
       "sameAs": "https://CRAN.R-project.org/package=covr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R.matlab",
       "name": "R.matlab",
@@ -115,7 +116,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R.matlab"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "data.table",
       "name": "data.table",
@@ -128,7 +129,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=data.table"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -141,7 +142,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -154,7 +155,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -167,7 +168,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -180,7 +181,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -193,7 +194,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "fANCOVA",
       "name": "fANCOVA",
@@ -205,7 +206,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=fANCOVA"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -218,7 +219,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -231,7 +232,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "tidyselect",
       "name": "tidyselect",
@@ -244,7 +245,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyselect"
     },
-    {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "cowplot",
       "name": "cowplot",
@@ -256,7 +257,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=cowplot"
     },
-    {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "anomalize",
       "name": "anomalize",
@@ -268,7 +269,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=anomalize"
     },
-    {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -279,11 +280,10 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
-    }
-  ],
-  "fileSize": "10834.695KB",
-  "contIntegration": "https://codecov.io/gh/ropensci/pathviewr?branch=master",
-  "developmentStatus": "https://www.repostatus.org/#active",
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "1472.883KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -311,6 +311,7 @@
       "name": "pathviewR: Tools to import, clean, and visualize animal movement data in R",
       "identifier": "10.5281/zenodo.4270187",
       "url": "https://github.com/ropensci/pathviewR",
+      "description": "R package version 1.1.1",
       "@id": "https://doi.org/10.5281/zenodo.4270187",
       "sameAs": "https://doi.org/10.5281/zenodo.4270187",
       "isPartOf": {
@@ -323,34 +324,12 @@
       }
     }
   ],
+  "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md",
+  "contIntegration": ["https://github.com/ropensci/pathviewr/actions", "https://codecov.io/gh/ropensci/pathviewr?branch=master"],
+  "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
     "url": "https://github.com/ropensci/software-review/issues/409",
     "provider": "https://ropensci.org"
-  },
-  "relatedLink": [
-    "https://docs.ropensci.org/pathviewr",
-    "https://docs.ropensci.org/pathviewr/",
-    "https://CRAN.R-project.org/package=pathviewr"
-  ],
-  "keywords": [
-    "movement-data",
-    "motion",
-    "animal-movement",
-    "optitrack",
-    "flydra",
-    "visual-guidance",
-    "visual-perception",
-    "rstats",
-    "rstats-package",
-    "trajectory-analysis",
-    "trajectories"
-  ],
-  "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md",
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
   }
 }

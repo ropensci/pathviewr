@@ -37,9 +37,9 @@
 get_header_viewr <- function(obj_name,
                              ...) {
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Get the header
   return(attr(obj_name,"header"))
@@ -114,9 +114,9 @@ relabel_viewr_axes <- function(obj_name,
                                real = "_w",
                                ...){
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Inputs should be character vectors
   if (!is.character(tunnel_length)) {
@@ -217,9 +217,9 @@ gather_tunnel_data <- function(obj_name,
                                ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## NOTE: I know that the following 3 blocks of code can be written more
   ## efficiently, but I would rather split them up explicitly so that a user
@@ -424,9 +424,9 @@ rescale_tunnel_data <- function(obj_name,
                                 ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
   ## Scales should be numeric
   if (!is.numeric(original_scale)) {
     stop("original_scale should be numeric")
@@ -521,9 +521,9 @@ rename_viewr_characters <- function(obj_name,
                                     replacement = ""){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that gather_tunnel_data() has been run on the object
 #   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
@@ -630,9 +630,9 @@ trim_tunnel_outliers <- function(obj_name,
                                  ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that gather_tunnel_data() has been run on the object
 #   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
@@ -795,9 +795,9 @@ rotate_tunnel <- function(obj_name,
                           ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that gather_tunnel_data() has been run on the object
 #   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
@@ -995,9 +995,9 @@ standardize_tunnel <- function(obj_name,
                                ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that gather_tunnel_data() has been run on the object
 #   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
@@ -1252,9 +1252,9 @@ redefine_tunnel_center <-
            ...) {
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that gather_tunnel_data() has been run on the object
 #   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
@@ -1425,9 +1425,9 @@ select_x_percent <- function(obj_name,
                              ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that it's undergone one of our centering steps
 #   if (!any(attr(obj_name,"pathviewr_steps") == "tunnel_centered")) {
@@ -1633,9 +1633,9 @@ separate_trajectories <- function(obj_name,
                                   ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
 #   ## Check that gather_tunnel_data() has been run on the object
 #   if (!any(attr(obj_name,"pathviewr_steps") == "gathered_tunnel")) {
@@ -1886,9 +1886,9 @@ get_full_trajectories <- function(obj_name,
                                   ...){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   # ## Check that its axes have been renamed
   # if (!any(attr(obj_name,"pathviewr_steps") == "trajectories_labeled")) {
@@ -2078,9 +2078,9 @@ section_tunnel_by <- function(obj_name,
                                  vel_max = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Get a list of all the unique trajectories
   unique_trajs <- base::unique(obj_name$file_sub_traj)
@@ -2213,9 +2213,9 @@ fill_traj_gaps <- function(obj_name,
 ){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Split the object by file_sub_traj
   obj_splits <-
@@ -2725,14 +2725,14 @@ insert_treatments <- function(obj_name,
                               treatment = NULL){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Check that get_full_trajectories has been run prior to use
-  if (!any(attr(obj_name, "pathviewr_steps") == "full_trajectories")){
-    stop("Run get_full_trajectories() prior to use")
-  }
+  # if (!any(attr(obj_name, "pathviewr_steps") == "full_trajectories")){
+  #   stop("Run get_full_trajectories() prior to use")
+  # }
 
   ## Translate arguments into variables at beginning of data frame
   if (tunnel_config == "v"){

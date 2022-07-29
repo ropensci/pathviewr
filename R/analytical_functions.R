@@ -762,14 +762,14 @@ calc_min_dist_v <- function(obj_name,
                             simplify_output = TRUE){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
-    stop("Please run insert_treatments() prior to use")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
+  #   stop("Please run insert_treatments() prior to use")
+  # }
 
   ## duplicate object for simplify_output = TRUE
   obj_simplify <- obj_name
@@ -924,14 +924,14 @@ calc_min_dist_v <- function(obj_name,
 calc_min_dist_box <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")) {
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Check that insert_treatments() has been run
-  if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
-    stop("Please run insert_treatments() prior to use")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "treatments_added")){
+  #   stop("Please run insert_treatments() prior to use")
+  # }
 
   ## Calculate minimum distance to each wall from positive or negative sides of
   ## tunnel
@@ -1040,14 +1040,14 @@ calc_min_dist_box <- function(obj_name){
 get_vis_angle <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Check that calc_min_dist() has been run
-  if (!any(attr(obj_name, "pathviewr_steps") == "min_dist_calculated")){
-    stop("Please run calc_min_dist_v() or calc_min_dist_box() prior to use")
-  }
+  # if (!any(attr(obj_name, "pathviewr_steps") == "min_dist_calculated")){
+  #   stop("Please run calc_min_dist_v() or calc_min_dist_box() prior to use")
+  # }
 
   ## Calculate visual angles (radians and degrees) using distance to
   ## positive and negative screens. Add these variables into the dataframe.
@@ -1164,14 +1164,14 @@ get_vis_angle <- function(obj_name){
 get_sf <- function(obj_name){
 
   ## Check that it's a viewr object
-  if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
-    stop("This doesn't seem to be a viewr object")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "viewr")){
+  #   stop("This doesn't seem to be a viewr object")
+  # }
 
   ## Check that get_vis_angle() has been run
-  if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
-    stop("Please run get_vis_angle() prior to use")
-  }
+  # if (!any(attr(obj_name,"pathviewr_steps") == "vis_angles_calculated")){
+  #   stop("Please run get_vis_angle() prior to use")
+  # }
 
   ## spatial frequency (cycles/rad) is the inverse of visual angle (rad/cycle)
   obj_name$sf_pos <- 1/obj_name$vis_angle_pos_deg

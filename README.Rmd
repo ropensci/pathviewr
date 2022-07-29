@@ -216,7 +216,7 @@ To contribute code via a pull request, please consult our [Contributing Guide](h
 
 The preferred way to cite `pathviewr` (but subject to change) is:
 
-Baliga VB, Armstrong MS, Press ER (2021). _pathviewr: Tools to import, clean, and visualize animal movement data in R_. R package version 1.1.0, [https://github.com/ropensci/pathviewr](https://github.com/ropensci/pathviewr). doi: 10.5281/zenodo.4270187.
+Baliga VB, Armstrong MS, Press ER (2021). _pathviewr: Tools to import, clean, and visualize animal movement data in R_. R package version 1.1.1, [https://github.com/ropensci/pathviewr](https://github.com/ropensci/pathviewr). doi: 10.5281/zenodo.4270187.
 
 ## License
 

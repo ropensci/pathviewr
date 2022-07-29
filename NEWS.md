@@ -1,3 +1,6 @@
+# pathviewr 1.1.1
+* Remove viewr attribute requirements. Work in progress
+
 # pathviewr 1.1.0
 * New data cleaning functions added: set_traj_frametime(),
 get_traj_velocities(), clean_by_span(), remove_duplicate_frames(), and

@@ -118,7 +118,7 @@ has passed through the pipeline.
 ``` r
 ## Check out the data's structure before cleaning and wrangling:
 str(motive_data)
-#> tibble[,26] [934 x 26] (S3: tbl_df/tbl/data.frame)
+#> tibble [934 × 26] (S3: tbl_df/tbl/data.frame)
 #>  $ frame                     : int [1:934] 72210 72211 72212 72213 72214 72215 72216 72217 72218 72219 ...
 #>  $ time_sec                  : num [1:934] 722 722 722 722 722 ...
 #>  $ device02_rotation_x       : num [1:934] 0.1346 0.0819 0.2106 0.1961 0.1305 ...
@@ -148,7 +148,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-13 14:51:31"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2022-07-29 14:34:28"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -165,7 +165,7 @@ str(motive_data)
 
 ## Check out the data's structure after cleaning and wrangling:
 str(motive_allinone)
-#> tibble[,24] [449 x 24] (S3: tbl_df/tbl/data.frame)
+#> tibble [449 × 24] (S3: tbl_df/tbl/data.frame)
 #>  $ frame            : int [1:449] 72213 72214 72215 72216 72217 72218 72219 72220 72221 72222 ...
 #>  $ time_sec         : num [1:449] 722 722 722 722 722 ...
 #>  $ subject          : chr [1:449] "device02" "device02" "device02" "device02" ...
@@ -191,7 +191,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2021-05-13 14:51:31"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2022-07-29 14:34:28"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -323,11 +323,11 @@ The preferred way to cite `pathviewr` (but subject to change) is:
 
 Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-1.1.0, <https://github.com/ropensci/pathviewr>. doi:
+1.1.1, <https://github.com/ropensci/pathviewr>. doi:
 10.5281/zenodo.4270187.
 
 ## License
 
-GPL (&gt;= 3) + file LICENSE
+GPL (\>= 3) + file LICENSE
 
 🐢
