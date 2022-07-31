@@ -1,9 +1,9 @@
 ## Tests of get_header_viewr() are in this file
 
-test_that("get_header_viewr() fails when nonsense is supplied", {
-  expect_error(get_header_viewr("steve"))
-  expect_error(get_header_viewr(c("a", "b", "c")))
-})
+# test_that("get_header_viewr() fails when nonsense is supplied", {
+#   expect_error(get_header_viewr("steve"))
+#   expect_error(get_header_viewr(c("a", "b", "c")))
+# })
 
 ## Set up for tests of the function value return
 ## Import the example Motive data included in the package

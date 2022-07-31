@@ -1,3 +1,11 @@
+# pathviewr 1.1.2
+* `viewr` attribute requirements have been largely relaxed. This is intended
+to provide better flexibility of using functions at arbitrary points within the
+"data analysis pipeline". 
+* Users should be advised that since some safeguards have been removed, objects
+passed through most `pathviewr` functions are not checked as thoroughly for all
+formatting requirements.
+
 # pathviewr 1.1.1
 * Remove viewr attribute requirements. Work in progress
 

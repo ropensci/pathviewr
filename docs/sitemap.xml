@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://docs.ropensci.org/pathviewr/404.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/CONTRIBUTING.html</loc>
+  </url>
+  <url>
     <loc>https://docs.ropensci.org/pathviewr/index.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/pull_request_template.html</loc>
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/as_viewr.html</loc>
@@ -79,6 +109,9 @@
     <loc>https://docs.ropensci.org/pathviewr/reference/import_batch.html</loc>
   </url>
   <url>
+    <loc>https://docs.ropensci.org/pathviewr/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/insert_treatments.html</loc>
   </url>
   <url>
@@ -149,14 +182,5 @@
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/visualize_frame_gap_choice.html</loc>
-  </url>
-  <url>
-    <loc>https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html</loc>
-  </url>
-  <url>
-    <loc>https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html</loc>
-  </url>
-  <url>
-    <loc>https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html</loc>
   </url>
 </urlset>

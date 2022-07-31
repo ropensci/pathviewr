@@ -44,7 +44,7 @@ test_that("calc_min_dist_box() fails when nonsense is supplied", {
   expect_error(calc_min_dist_box("steve"))
   expect_error(calc_min_dist_box(c("a", "b", "c")))
   expect_error(calc_min_dist_box())
-  expect_error(calc_min_dist_box(flydra_full)) ## no insert treatments
+  #expect_error(calc_min_dist_box(flydra_full)) ## no insert treatments
   expect_error(calc_min_dist_box(data.frame(rnorm(100))))
 })
 

@@ -29,7 +29,6 @@ test_that("exclude_by_velocity() fails when nonsense is supplied", {
   expect_error(exclude_by_velocity("steve"))
   expect_error(exclude_by_velocity(c("a", "b", "c")))
   expect_error(exclude_by_velocity())
-  expect_error(exclude_by_velocity(data.frame(rnorm(100))))
   expect_error(exclude_by_velocity(motive_import_and_clean,
                                    vel_min = "6"))
   expect_error(exclude_by_velocity(motive_import_and_clean,

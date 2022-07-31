@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pathviewr <a href='https://docs.ropensci.org/pathviewr'><img src='https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
+# pathviewr
+
+<a href='https://docs.ropensci.org/pathviewr'><img src="https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png" align="right" height="150px"/></a>
 
 <!-- badges: start -->
 
@@ -16,6 +18,7 @@ coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://cod
 [![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pathviewr)](https://CRAN.R-project.org/package=pathviewr)
+
 <!-- badges: end -->
 
 `pathviewr` offers tools to import, clean, and visualize movement data,
@@ -148,7 +151,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2022-07-29 14:34:28"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2022-07-31 10:43:24"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -191,7 +194,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2022-07-29 14:34:28"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2022-07-31 10:43:24"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -323,7 +326,7 @@ The preferred way to cite `pathviewr` (but subject to change) is:
 
 Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-1.1.1, <https://github.com/ropensci/pathviewr>. doi:
+1.1.2, <https://github.com/ropensci/pathviewr>. doi:
 10.5281/zenodo.4270187.
 
 ## License

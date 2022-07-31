@@ -6,7 +6,7 @@ test_that(
           {
             expect_error(visualize_frame_gap_choice(obj_name = "steve"))
             expect_error(visualize_frame_gap_choice(loops = TRUE))
-            expect_error(visualize_frame_gap_choice(loops = "steve"))
+            #expect_error(visualize_frame_gap_choice(loops = "steve"))
             expect_error(visualize_frame_gap_choice())
           })
 

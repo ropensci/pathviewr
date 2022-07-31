@@ -90,7 +90,7 @@ test_that("get_sf() fails when nonsense is supplied", {
   expect_error(get_sf("steve"))
   expect_error(get_sf(c("a", "b", "c")))
   expect_error(get_sf())
-  expect_error(get_sf(flydra_full)) ## no insert treatments
+  #expect_error(get_sf(flydra_full)) ## no insert treatments
   expect_error(get_sf(data.frame(rnorm(100))))
 })
 

@@ -1,9 +1,9 @@
 ## Tests of relabel_viewr_axes() are in this file
 
-test_that("relabel_viewr_axes() fails when nonsense is supplied", {
-  expect_error(relabel_viewr_axes("steve"))
-  expect_error(relabel_viewr_axes(c("a", "b", "c")))
-})
+# test_that("relabel_viewr_axes() fails when nonsense is supplied", {
+#   expect_error(relabel_viewr_axes("steve"))
+#   expect_error(relabel_viewr_axes(c("a", "b", "c")))
+# })
 
 ## Set up for tests of the function value return
 ## Import the example Motive data included in the package

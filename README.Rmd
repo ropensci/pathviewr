@@ -13,46 +13,38 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pathviewr <a href='https://docs.ropensci.org/pathviewr'><img src='https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png' align="right" height="150px" /></a>
+# pathviewr
+
+<a href='https://docs.ropensci.org/pathviewr'><img src="https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns.png" align="right" height="150px"/></a>
 
 <!-- badges: start -->
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![R build status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions)
-[![Codecov test coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master)
-[![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)  
-[![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628)
-[![CRAN status](https://www.r-pkg.org/badges/version/pathviewr)](https://CRAN.R-project.org/package=pathviewr)
+
+[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R build status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions) [![Codecov test coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master) [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)\
+[![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628) [![CRAN status](https://www.r-pkg.org/badges/version/pathviewr)](https://CRAN.R-project.org/package=pathviewr)
+
 <!-- badges: end -->
 
-`pathviewr` offers tools to import, clean, and visualize movement data,
-particularly from motion capture systems such as 
-[Optitrack's Motive](https://optitrack.com/software/motive/), the 
-[Straw Lab's Flydra](https://github.com/strawlab/flydra), or other sources. We
-provide functions to remove artifacts, standardize tunnel position and tunnel
-axes, select a region of interest, isolate specific trajectories, fill gaps in
-trajectory data, and calculate 3D and per-axis velocity. For experiments of
-visual guidance, we also provide functions that use subject position to estimate
-perception of visual stimuli.
+`pathviewr` offers tools to import, clean, and visualize movement data, particularly from motion capture systems such as [Optitrack's Motive](https://optitrack.com/software/motive/), the [Straw Lab's Flydra](https://github.com/strawlab/flydra), or other sources. We provide functions to remove artifacts, standardize tunnel position and tunnel axes, select a region of interest, isolate specific trajectories, fill gaps in trajectory data, and calculate 3D and per-axis velocity. For experiments of visual guidance, we also provide functions that use subject position to estimate perception of visual stimuli.
 
 ## Installation
 
 You can install `pathviewr` from CRAN via:
 
-``` {r install_cran, eval = FALSE}
+```{r install_cran, eval = FALSE}
 install.packages("pathviewr")
 ```
 
 Or to get the latest (developmental) version through GitHub, use:
-  
-``` {r install_github, eval = FALSE}
+
+```{r install_github, eval = FALSE}
 devtools::install_github("ropensci/pathviewr")
 ```
 
 ## Example
 
 #### Data import and cleaning via `pathviewr`
-We'll also load two `tidyverse` packages for wrangling & plotting in this 
-readme.
+
+We'll also load two `tidyverse` packages for wrangling & plotting in this readme.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewr)
@@ -61,10 +53,7 @@ library(magrittr)
 
 ```
 
-We will import and clean a sample data set from `.csv` files exported by
-Optitrack's [Motive](https://optitrack.com/software/motive/) software. For
-examples of how to import and clean other types of data, 
-[see the Basics of data import and cleaning vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html).
+We will import and clean a sample data set from `.csv` files exported by Optitrack's [Motive](https://optitrack.com/software/motive/) software. For examples of how to import and clean other types of data, [see the Basics of data import and cleaning vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html).
 
 ```{r import_motive}
 ## Import the Motive example data included in 
@@ -76,13 +65,9 @@ motive_data <-
                 package = 'pathviewr')
   )
 
-``` 
+```
 
-Several functions to clean and wrangle data are available, and we have a
-suggested pipeline for how these steps should be handled. For this example, we
-will use one of two "all-in-one" functions: `clean_viewr()`. 
-[See the Basics of data import and cleaning vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html)
-for the full pipeline and the other "all-in-one" function.
+Several functions to clean and wrangle data are available, and we have a suggested pipeline for how these steps should be handled. For this example, we will use one of two "all-in-one" functions: `clean_viewr()`. [See the Basics of data import and cleaning vignette](https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html) for the full pipeline and the other "all-in-one" function.
 
 ```{r all_in_one, fig.height=3, fig.width=6, dpi=300}
 motive_allinone <-
@@ -125,27 +110,15 @@ str(motive_data)
 str(motive_allinone)
 ```
 
-An important aspect of how `pathviewr` defines trajectories is by managing gaps
-in the data. 
-[See the vignette on Managing frame gaps](https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html)
-for more information on trajectory definition and frame gaps.
+An important aspect of how `pathviewr` defines trajectories is by managing gaps in the data. [See the vignette on Managing frame gaps](https://docs.ropensci.org/pathviewr/articles/managing-frame-gaps.html) for more information on trajectory definition and frame gaps.
 
-Now that the data is cleaned, `pathviewr` includes functions that estimate
-visual perceptions based on the distance between the subject/observer and visual
-stimuli on the walls of the experimental tunnel. For a complete description of
-these functions, 
-[see the vignette on Estimating visual perceptions from tracking data](https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html).
-
+Now that the data is cleaned, `pathviewr` includes functions that estimate visual perceptions based on the distance between the subject/observer and visual stimuli on the walls of the experimental tunnel. For a complete description of these functions, [see the vignette on Estimating visual perceptions from tracking data](https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html).
 
 #### Add more info about experiments
-Now that our objects have been cleaned, we will use `insert_treatments()` to add
-information about the experiments that are necessary for calculating visual
-perceptions.
 
-The data from this example were recorded in a V-shaped tunnel. Accordingly,
-the vertex angle and vertex height of the tunnel, along with information about
-the visual stimuli used during the experiment, will be added to the data
-to inform calculations of visual perception (next section).
+Now that our objects have been cleaned, we will use `insert_treatments()` to add information about the experiments that are necessary for calculating visual perceptions.
+
+The data from this example were recorded in a V-shaped tunnel. Accordingly, the vertex angle and vertex height of the tunnel, along with information about the visual stimuli used during the experiment, will be added to the data to inform calculations of visual perception (next section).
 
 ```{r insert_treats}
 motive_V <- 
@@ -163,15 +136,11 @@ motive_V <-
   ) 
 ```
 
-
 #### Estimate perception of visual stimuli
-To calculate the spatial frequency of the visual stimuli as perceived by the
-subject some distance from the stimuli, we will use `get_sf()`.
 
-This will require two intermediate steps: 1) calculating the minimum distance
-between a subject and each wall (via `calc_min_dist_v()`) and 2) estimating
-the visual angles from the subject's perspective (`get_vis_angle()`).
+To calculate the spatial frequency of the visual stimuli as perceived by the subject some distance from the stimuli, we will use `get_sf()`.
 
+This will require two intermediate steps: 1) calculating the minimum distance between a subject and each wall (via `calc_min_dist_v()`) and 2) estimating the visual angles from the subject's perspective (`get_vis_angle()`).
 
 ```{r calc_sf_V}
 motive_V_sf <- 
@@ -181,10 +150,7 @@ motive_V_sf <-
   get_sf()
 ```
 
-
-Visualizing the calculations provides an more intuitive understanding of how
-these visual perceptions change as the subject moves throughout the tunnel.
-Please [see the vignette on Estimating visual perceptions from tracking data](https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html)  for more examples of visualizing calculations.
+Visualizing the calculations provides an more intuitive understanding of how these visual perceptions change as the subject moves throughout the tunnel. Please [see the vignette on Estimating visual perceptions from tracking data](https://docs.ropensci.org/pathviewr/articles/visual-perception-functions.html) for more examples of visualizing calculations.
 
 ```{r motive_V_sf_pos, fig.height=3, fig.width=6, dpi=300}
 ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
@@ -206,9 +172,8 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
 ```
 
 ## Contributing and/or raising Issues
-We welcome feedback on bugs, improvements, and/or feature requests. Please
-[see our Issues templates on GitHub](https://github.com/ropensci/pathviewr/issues/new/choose) to make a bug
-fix request or feature request. 
+
+We welcome feedback on bugs, improvements, and/or feature requests. Please [see our Issues templates on GitHub](https://github.com/ropensci/pathviewr/issues/new/choose) to make a bug fix request or feature request.
 
 To contribute code via a pull request, please consult our [Contributing Guide](https://github.com/ropensci/pathviewr/blob/master/.github/CONTRIBUTING.md) first.
 
@@ -216,10 +181,10 @@ To contribute code via a pull request, please consult our [Contributing Guide](h
 
 The preferred way to cite `pathviewr` (but subject to change) is:
 
-Baliga VB, Armstrong MS, Press ER (2021). _pathviewr: Tools to import, clean, and visualize animal movement data in R_. R package version 1.1.1, [https://github.com/ropensci/pathviewr](https://github.com/ropensci/pathviewr). doi: 10.5281/zenodo.4270187.
+Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import, clean, and visualize animal movement data in R*. R package version 1.1.2, <https://github.com/ropensci/pathviewr>. doi: 10.5281/zenodo.4270187.
 
 ## License
 
-GPL (>= 3) + file LICENSE
+GPL (\>= 3) + file LICENSE
 
 🐢

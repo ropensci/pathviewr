@@ -88,7 +88,7 @@ test_that("get_vis_angle() fails when nonsense is supplied", {
   expect_error(get_vis_angle("steve"))
   expect_error(get_vis_angle(c("a", "b", "c")))
   expect_error(get_vis_angle())
-  expect_error(get_vis_angle(flydra_full)) ## no insert treatments
+  #expect_error(get_vis_angle(flydra_full)) ## no insert treatments
   expect_error(get_vis_angle(data.frame(rnorm(100))))
 })
 
