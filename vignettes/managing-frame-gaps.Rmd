@@ -53,7 +53,7 @@ can take a closer look at how trajectories are defined. Since all steps are set
 to `TRUE` by default, we don't actually need to list them in the function, just
 those we want to switch to `FALSE` or those that require additional arguments.
 
-```{r cleanup data}
+```{r cleanup_data}
 motive_cleaned <-
   motive_data %>%
   clean_viewr(
