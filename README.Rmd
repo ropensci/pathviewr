@@ -15,8 +15,6 @@ knitr::opts_chunk$set(
 
 # pathviewr
 
-<a href='https://docs.ropensci.org/pathviewr'><img src="https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns_150p.png" style="text-align: right;"/></a>
-
 <!-- badges: start -->
 
 [![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R build status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions) [![Codecov test coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master) [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)\
@@ -181,7 +179,7 @@ To contribute code via a pull request, please consult our [Contributing Guide](h
 
 The preferred way to cite `pathviewr` (but subject to change) is:
 
-Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import, clean, and visualize animal movement data in R*. R package version 1.1.3, <https://github.com/ropensci/pathviewr>. doi: 10.5281/zenodo.4270187.
+Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import, clean, and visualize animal movement data in R*. R package version 1.1.3, <https://github.com/ropensci/pathviewr>. doi: 10.5281/zenodo.4270187
 
 ## License
 

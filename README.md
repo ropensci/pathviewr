@@ -3,8 +3,6 @@
 
 # pathviewr
 
-<a href='https://docs.ropensci.org/pathviewr'><img src="https://github.com/ropensci/pathviewr/raw/master/images/pathviewrhex_300dpi_trns_150p.png" style='text-align: right;' height="150"/></a>
-
 <!-- badges: start -->
 
 [![Project Status: Active – The project has reached a stable, usable
@@ -327,7 +325,7 @@ The preferred way to cite `pathviewr` (but subject to change) is:
 Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
 1.1.3, <https://github.com/ropensci/pathviewr>. doi:
-10.5281/zenodo.4270187.
+10.5281/zenodo.4270187
 
 ## License
 
