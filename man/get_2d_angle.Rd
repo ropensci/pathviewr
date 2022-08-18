@@ -26,9 +26,9 @@ A numeric vector that provides the angular measurement in degrees.
 Compute an angle in 2D space
 }
 \details{
-Everything supplied to arguments must be singular numeric values.
-The second point (x2, y2) is treated as the vertex, and the angle between
-the three points in 2D space is computed.
+Everything supplied to arguments must be numeric values or vectors
+of numeric values. The second point (x2, y2) is treated as the vertex, and
+the angle between the three points in 2D space is computed.
 }
 \examples{
 get_2d_angle(

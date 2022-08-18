@@ -1,3 +1,7 @@
+# pathviewr 1.1.3
+* `get_2d_angle()` now accepts numeric vectors for each argument and will 
+return a vector of angles of equal length
+
 # pathviewr 1.1.2
 * `viewr` attribute requirements have been largely relaxed. This is intended
 to provide better flexibility of using functions at arbitrary points within the

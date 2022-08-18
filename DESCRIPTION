@@ -1,6 +1,6 @@
 Package: pathviewr
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
-Version: 1.1.2
+Version: 1.1.3
 Authors@R: 
     c(person(given = "Vikram B.",
              family = "Baliga", 
@@ -36,7 +36,7 @@ Maintainer: Vikram B. Baliga <vbaliga87@gmail.com>
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0.9000
+RoxygenNote: 7.2.1
 Imports: 
     R.matlab,
     data.table (>= 1.12.2),

@@ -512,9 +512,9 @@ deg_2_rad <- function(deg) {
 #' @param x3 x-coordinate of third point
 #' @param y3 y-coordinate of third point
 #'
-#' @details Everything supplied to arguments must be singular numeric values.
-#' The second point (x2, y2) is treated as the vertex, and the angle between
-#' the three points in 2D space is computed.
+#' @details Everything supplied to arguments must be numeric values or vectors
+#'   of numeric values. The second point (x2, y2) is treated as the vertex, and
+#'   the angle between the three points in 2D space is computed.
 #'
 #' @return A numeric vector that provides the angular measurement in degrees.
 #'
@@ -534,19 +534,17 @@ get_2d_angle <- function(x1, y1,
                          x2, y2,
                          x3, y3) {
 
-  ## re-assignment, to avoid confusion
-  i1 <- x1
-  i2 <- x2
-  i3 <- x3
-  j1 <- y1
-  j2 <- y2
-  j3 <- y3
-
   ## compute angle
-  a <- c(i1, j1) - c(i2, j2)
-  b <- c(i3, j3) - c(i2, j2)
-  theta <- acos(sum(a * b) / (sqrt(sum(a * a)) * sqrt(sum(b * b)))) * (180 /
-                                                                         pi)
+  a <- data.frame(x1, y1) - data.frame(x2, y2)
+  b <- data.frame(x3, y3) - data.frame(x2, y2)
+
+  theta <- NULL
+  for (i in seq_len(nrow(a))) {
+    theta[i] <-
+      acos(sum(a[i,] * b[i,]) / (sqrt(
+        sum(a[i,] * a[i,])) * sqrt(sum(b[i,] * b[i,])))) * (180 / pi)
+  }
+
   ## export
   return(theta)
 }
@@ -566,9 +564,9 @@ get_2d_angle <- function(x1, y1,
 #' @param y3 y-coordinate of third point
 #' @param z3 z-coordinate of third point
 #'
-#' @details Everything supplied to arguments must be singular numeric values.
-#' The second point (x2, y2, z2) is treated as the vertex, and the angle between
-#' the three points in 3D space is computed.
+#' @details Everything supplied to arguments must be numeric values or vectors
+#'   of numeric values. The second point (x2, y2, z2) is treated as the vertex,
+#'   and the angle between the three points in 3D space is computed.
 #'
 #' @return A numeric vector that provides the angular measurement in degrees.
 #'
