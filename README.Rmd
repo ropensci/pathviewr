@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R build status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions) [![Codecov test coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://codecov.io/gh/ropensci/pathviewr?branch=master) [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)\
+[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R build status](https://github.com/ropensci/pathviewr/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/pathviewr/actions) [![Codecov test coverage](https://codecov.io/gh/ropensci/pathviewr/graph/badge.svg)](https://app.codecov.io/gh/ropensci/pathviewr?branch=master) [![](https://badges.ropensci.org/409_status.svg)](https://github.com/ropensci/software-review/issues/409)\
 [![DOI](https://zenodo.org/badge/268906628.svg)](https://zenodo.org/badge/latestdoi/268906628) [![CRAN status](https://www.r-pkg.org/badges/version/pathviewr)](https://CRAN.R-project.org/package=pathviewr)
 
 <!-- badges: end -->

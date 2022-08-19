@@ -283,7 +283,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "1469.606KB",
+  "fileSize": "1469.61KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -325,7 +325,7 @@
     }
   ],
   "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md",
-  "contIntegration": ["https://github.com/ropensci/pathviewr/actions", "https://codecov.io/gh/ropensci/pathviewr?branch=master"],
+  "contIntegration": ["https://github.com/ropensci/pathviewr/actions", "https://app.codecov.io/gh/ropensci/pathviewr?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
