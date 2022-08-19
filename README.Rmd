@@ -42,7 +42,8 @@ devtools::install_github("ropensci/pathviewr")
 
 #### Data import and cleaning via `pathviewr`
 
-We'll also load two `tidyverse` packages for wrangling & plotting in this readme.
+We'll also load two `tidyverse` packages for wrangling & plotting in this
+readme.
 
 ```{r package_loading, message=FALSE, warning=FALSE}
 library(pathviewr)

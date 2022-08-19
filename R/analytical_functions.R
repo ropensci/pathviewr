@@ -240,19 +240,19 @@ get_traj_velocities <- function(obj_name,
 
   if (!any(grepl(time_col, colnames(obj_name), ignore.case = FALSE))) {
     stop(
-      "time_col not found.\nPlease check that you have entered the name of the time variable correctly.")
+      "time_col not found.\nPlease check the name of the time variable.")
   }
   if (!any(grepl(length_col, colnames(obj_name), ignore.case = FALSE))) {
     stop(
-      "length_col not found.\nPlease check that you have entered the name of the length variable correctly.")
+      "length_col not found.\nPlease check the name of the length variable.")
   }
   if (!any(grepl(width_col, colnames(obj_name), ignore.case = FALSE))) {
     stop(
-      "width_col not found.\nPlease check that you have entered the name of the width variable correctly.")
+      "width_col not found.\nPlease check the name of the width variable.")
   }
   if (!any(grepl(height_col, colnames(obj_name), ignore.case = FALSE))) {
     stop(
-      "height_col not found.\nPlease check that you have entered the name of the height variable correctly.")
+      "height_col not found.\nPlease check the name of the height variable.")
   }
 
   ## ADD BLOCK HERE TO DROP VELOCITIES IF DETECTED
@@ -280,8 +280,13 @@ get_traj_velocities <- function(obj_name,
       height_inst[1] <- height_inst[2]
       vel[1] <- vel[2]
     }
-    res <- tibble::tibble(velocity = vel, length_inst_vel = length_inst,
-                          width_inst_vel = width_inst, height_inst_vel = height_inst)
+    res <-
+      tibble::tibble(
+        velocity = vel,
+        length_inst_vel = length_inst,
+        width_inst_vel = width_inst,
+        height_inst_vel = height_inst
+      )
 
     updated_tibs[[i]] <- dplyr::bind_cols(traj_tibbles[[i]], res)
   }
@@ -300,7 +305,7 @@ get_traj_velocities <- function(obj_name,
     obj_new <- obj_new
     if (is.character(velocity_min)) {
       stop(
-        "velocity_min is character.\n    Please check that you have entered the velocity_min variable correctly.")
+        "velocity_min is character but should be numeric.")
     }
   }
   if (is.numeric(velocity_max)) {
@@ -311,7 +316,7 @@ get_traj_velocities <- function(obj_name,
     obj_new <- obj_new
     if (is.character(velocity_max)) {
       stop(
-        "velocity_max is character.\n    Please check that you have entered the velocity_max variable correctly.")
+        "velocity_max is character but should be numeric.")
     }
   }
 
@@ -616,7 +621,8 @@ get_3d_angle <- function(x1, y1, z1,
 #' that line and each observation is calculated. The "elbow" of the curve is the
 #' observation that maximizes this distance.
 #'
-#' @param data_frame A two-column data frame (numeric entries only)
+#' @param data_frame A two-column data frame (numeric entries only), ordered
+#'   x-axis first, y-axis second.
 #' @param export_type If "row_num" (the default), the row number of the elbow
 #'   point is returned. If anything else, the entire row of the original data
 #'   frame is returned.
@@ -646,8 +652,7 @@ find_curve_elbow <- function(data_frame,
 
   ## Check that there are exactly two columns provided
   if (!dim(data_frame)[2] == 2) {
-    stop("The input data has more than two columns.
-Please ensure there are only two columns, ordered x-axis first, y-axis second")
+    stop("The input data has more than two columns.")
   }
 
   ## Convert to matrix for speedier handling
@@ -709,14 +714,14 @@ Please ensure there are only two columns, ordered x-axis first, y-axis second")
 #'   \code{width_2_screen_neg}, \code{min_dist_pos}, \code{min_dist_neg},
 #'   \code{min_dist_end}, \code{bound_pos}, and \code{bound_neg}.
 #'
-#' @details For tunnels in which \code{vertex_angle} is >90 degree, \code{bound_pos}
-#' and \code{bound_neg} represent a planes orthogonal to the lateral walls and
-#' are used to modify \code{min_dist_pos} and \code{min_dist_neg} calculations
-#' to prevent erroneous outputs.
-#' \code{calc_min_dist_v()} assumes the subject locomotes facing forward,
-#' therefore \code{min_dist_end} represents the minimum distance between the
-#' subject and the end wall to which it is moving towards
-#' All outputs are in meters.
+#' @details For tunnels in which \code{vertex_angle} is >90 degree,
+#'   \code{bound_pos} and \code{bound_neg} represent a planes orthogonal to the
+#'   lateral walls and are used to modify \code{min_dist_pos} and
+#'   \code{min_dist_neg} calculations to prevent erroneous outputs.
+#'   \code{calc_min_dist_v()} assumes the subject locomotes facing forward,
+#'   therefore \code{min_dist_end} represents the minimum distance between the
+#'   subject and the end wall to which it is moving towards All outputs are in
+#'   meters.
 #'
 #' @author Eric R. Press
 #'

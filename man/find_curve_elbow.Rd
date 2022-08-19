@@ -7,7 +7,8 @@
 find_curve_elbow(data_frame, export_type = "row_num", plot_curve = FALSE)
 }
 \arguments{
-\item{data_frame}{A two-column data frame (numeric entries only)}
+\item{data_frame}{A two-column data frame (numeric entries only), ordered
+x-axis first, y-axis second.}
 
 \item{export_type}{If "row_num" (the default), the row number of the elbow
 point is returned. If anything else, the entire row of the original data
