@@ -5,7 +5,7 @@ articles:
   data-import-cleaning: data-import-cleaning.html
   managing-frame-gaps: managing-frame-gaps.html
   visual-perception-functions: visual-perception-functions.html
-last_built: 2022-08-19T21:35Z
+last_built: 2022-08-21T01:56Z
 urls:
   reference: https://docs.ropensci.org/pathviewr/reference
   article: https://docs.ropensci.org/pathviewr/articles
