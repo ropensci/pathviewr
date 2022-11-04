@@ -1,3 +1,7 @@
+# pathviewr 1.1.4
+* `gather_tunnel_data()` now checks to see if mean marker error is present in
+the data and skips such columns if they are absent
+
 # pathviewr 1.1.3
 * `get_2d_angle()` now accepts numeric vectors for each argument and will 
 return a vector of angles of equal length

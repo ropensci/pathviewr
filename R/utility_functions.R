@@ -321,12 +321,15 @@ Please use relabel_viewr_axes() to rename variables as necessary.")
       tidyr::gather()
     gathered_data$rotation_real <- tmp_rotw$value
 
-  ## Gather mean marker error
-    tmp_mark <-
-      obj_name[,grepl("mean_marker_error", colnames(obj_name),
-                      ignore.case = FALSE)] %>%
-      tidyr::gather()
-    gathered_data$mean_marker_error <- tmp_mark$value
+    ## Gather mean marker error if it exists
+    if (ncol(obj_name[,grepl("mean_marker_error", colnames(obj_name),
+                             ignore.case = FALSE)]) > 0) {
+      tmp_mark <-
+        obj_name[,grepl("mean_marker_error", colnames(obj_name),
+                        ignore.case = FALSE)] %>%
+        tidyr::gather()
+      gathered_data$mean_marker_error <- tmp_mark$value
+    }
 
   ## Drop NAs if desired
     if (NA_drop == TRUE) {

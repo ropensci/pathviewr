@@ -18,7 +18,8 @@ treatment or session. Treatments must be levels in a column named
 \item{...}{Additional arguments passed to/from other pathviewr functions.}
 }
 \value{
-A "bird's eye view" plot and an "elevation view" plot.
+A "bird's eye view" plot and an "elevation view" plot, made via
+ggplot2.
 }
 \description{
 Plots all trajectories and generates density plots of position by subject
@@ -30,7 +31,7 @@ The input viewr object should have passed through
 Optionally, treatments should have been added as levels in a column named
 \code{treatment}. Two plots will be produced, one from a "bird's eye view"
 of width against length and one from an "elevation view" of height against
-length. All trajectories will be plotted on a per subject basis as well as
+length. All trajectories will be plotted on a per subject basis, along with
 density plots of width or height depending on the view.
 \code{col_by_treat = TRUE}, data will be plotted by color according to
 treatment in both the trajectory plots and the density plots.

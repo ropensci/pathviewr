@@ -332,12 +332,13 @@ plot_viewr_trajectories <- function(obj_name,
 #'   Optionally, treatments should have been added as levels in a column named
 #'   \code{treatment}. Two plots will be produced, one from a "bird's eye view"
 #'   of width against length and one from an "elevation view" of height against
-#'   length. All trajectories will be plotted on a per subject basis as well as
+#'   length. All trajectories will be plotted on a per subject basis, along with
 #'   density plots of width or height depending on the view.
 #'   \code{col_by_treat = TRUE}, data will be plotted by color according to
 #'   treatment in both the trajectory plots and the density plots.
 #'
-#' @return A "bird's eye view" plot and an "elevation view" plot.
+#' @return A "bird's eye view" plot and an "elevation view" plot, made via
+#'   ggplot2.
 #'
 #' @importFrom graphics plot
 #'
