@@ -1,3 +1,7 @@
+# pathviewr 1.1.5
+* Bug fixes to `plot_by_subject()` and other plotting functions to ensure 
+compliance with ggplot2 v.3.4.0
+
 # pathviewr 1.1.4
 * `gather_tunnel_data()` now checks to see if mean marker error is present in
 the data and skips such columns if they are absent

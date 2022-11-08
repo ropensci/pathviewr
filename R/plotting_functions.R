@@ -414,22 +414,22 @@ plot_by_subject <- function(obj_name,
             position_length,
             position_width
           )) +
-            geom_point(alpha = .1, show.legend = FALSE) +
-            ylim(width_limits) +
-            geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1)
+            ggplot2::geom_point(alpha = .1, show.legend = FALSE) +
+            ggplot2::ylim(width_limits) +
+            ggplot2::geom_hline(yintercept = 0, linetype = "dotted") +
+            ggplot2::coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
           ~ ggplot2::ggplot(., aes(x = position_width)) +
-            geom_density(
+            ggplot2::geom_density(
               alpha = .5,
               position = "identity",
               show.legend = FALSE
             ) +
-            xlim(width_limits) +
-            geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip()
+            ggplot2::xlim(width_limits) +
+            ggplot2::geom_vline(xintercept = 0, linetype = "dotted") +
+            ggplot2::coord_flip()
         )
       )
 
@@ -460,22 +460,22 @@ plot_by_subject <- function(obj_name,
           ~ ggplot2::ggplot(., aes(
             position_length, position_height
           )) +
-            geom_point(alpha = .1, show.legend = FALSE) +
-            ylim(height_limits) +
-            geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1)
+            ggplot2::geom_point(alpha = .1, show.legend = FALSE) +
+            ggplot2::ylim(height_limits) +
+            ggplot2::geom_hline(yintercept = 0, linetype = "dotted") +
+            ggplot2::coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
           ~ ggplot2::ggplot(., aes(position_height)) +
-            geom_density(
+            ggplot2::geom_density(
               alpha = .5,
               position = "identity",
               show.legend = FALSE
             ) +
-            xlim(height_limits) +
-            geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip()
+            ggplot2::xlim(height_limits) +
+            ggplot2::geom_vline(xintercept = 0, linetype = "dotted") +
+            ggplot2::coord_flip()
         )
       )
 
@@ -510,23 +510,23 @@ plot_by_subject <- function(obj_name,
             position_width,
             colour = treatment
           )) +
-            geom_point(alpha = .1, show.legend = FALSE) +
-            ylim(width_limits) +
-            geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1)
+            ggplot2::geom_point(alpha = .1, show.legend = FALSE) +
+            ggplot2::ylim(width_limits) +
+            ggplot2::geom_hline(yintercept = 0, linetype = "dotted") +
+            ggplot2::coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
           ~ ggplot2::ggplot(., aes(x = position_width,
                                    fill = treatment)) +
-            geom_density(
+            ggplot2::geom_density(
               alpha = .5,
               position = "identity",
               show.legend = FALSE
             ) +
-            xlim(width_limits) +
-            geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip()
+            ggplot2::xlim(width_limits) +
+            ggplot2::geom_vline(xintercept = 0, linetype = "dotted") +
+            ggplot2::coord_flip()
         )
       )
 
@@ -557,22 +557,22 @@ plot_by_subject <- function(obj_name,
           ~ ggplot2::ggplot(., aes(
             position_length, position_height, colour = treatment
           )) +
-            geom_point(alpha = .1, show.legend = FALSE) +
-            ylim(height_limits) +
-            geom_hline(yintercept = 0, linetype = "dotted") +
-            coord_fixed(ratio = 1)
+            ggplot2::geom_point(alpha = .1, show.legend = FALSE) +
+            ggplot2::ylim(height_limits) +
+            ggplot2::geom_hline(yintercept = 0, linetype = "dotted") +
+            ggplot2::coord_fixed(ratio = 1)
         ),
         hist = purrr::map(
           data,
           ~ ggplot2::ggplot(., aes(position_height, fill = treatment)) +
-            geom_density(
+            ggplot2::geom_density(
               alpha = .5,
               position = "identity",
               show.legend = FALSE
             ) +
-            xlim(height_limits) +
-            geom_vline(xintercept = 0, linetype = "dotted") +
-            coord_flip()
+            ggplot2::xlim(height_limits) +
+            ggplot2::geom_vline(xintercept = 0, linetype = "dotted") +
+            ggplot2::coord_flip()
         )
       )
 
