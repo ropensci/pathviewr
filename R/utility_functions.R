@@ -3000,10 +3000,16 @@ remove_duplicate_frames <- function(obj_name) {
   }
   dex <- which(rm_list == "remove")
 
-  ## chop
-  traj_restricted <-
-    traj_tibbles[-dex] %>%
-    dplyr::bind_rows()
+  if (length(dex > 0)) {
+    ## chop
+    traj_restricted <-
+      traj_tibbles[[-dex]] %>%
+      dplyr::bind_rows()
+  } else {
+    traj_restricted <-
+      traj_tibbles %>%
+      dplyr::bind_rows()
+  }
 
   ## export
   return(traj_restricted)

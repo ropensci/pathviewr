@@ -324,7 +324,7 @@ The preferred way to cite `pathviewr` (but subject to change) is:
 
 Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-1.1.5, <https://github.com/ropensci/pathviewr>. doi:
+1.1.6, <https://github.com/ropensci/pathviewr>. doi:
 10.5281/zenodo.4270187
 
 ## License
