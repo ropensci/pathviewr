@@ -11,7 +11,7 @@ authors:
   given-names: "Eric R."
   orcid: "https://orcid.org/0000-0002-1944-3755"
 title: "pathviewr"
-version: 1.1.2
+version: 1.1.7
 doi: 10.5281/zenodo.4270187
 date-released: 2021-05-06
 url: "https://github.com/ropensci/pathviewr"
