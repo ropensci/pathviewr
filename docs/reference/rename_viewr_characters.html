@@ -18,7 +18,7 @@ rename subjects via pattern detection."><meta property="og:image" content="https
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -71,12 +71,12 @@ rename subjects via pattern detection.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rename_viewr_characters</span><span class="op">(</span>
-  <span class="va">obj_name</span>,
-  target_column <span class="op">=</span> <span class="st">"subject"</span>,
-  <span class="va">pattern</span>,
-  replacement <span class="op">=</span> <span class="st">""</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rename_viewr_characters</span><span class="op">(</span></span>
+<span>  <span class="va">obj_name</span>,</span>
+<span>  target_column <span class="op">=</span> <span class="st">"subject"</span>,</span>
+<span>  <span class="va">pattern</span>,</span>
+<span>  replacement <span class="op">=</span> <span class="st">""</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -127,32 +127,32 @@ to the <code>pattern</code> and <code>replacement</code> supplied by the user.</
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Import the example Motive data included in the package</span></span>
-<span class="r-in"><span class="va">motive_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Clean the file. It is generally recommended to clean up to the</span></span>
-<span class="r-in"><span class="co">## "gather" step before running rescale_tunnel_data().</span></span>
-<span class="r-in"> <span class="va">motive_gathered</span> <span class="op">&lt;-</span></span>
-<span class="r-in">   <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">   <span class="fu"><a href="relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">   <span class="fu"><a href="gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## See the subject names</span></span>
-<span class="r-in"> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">motive_gathered</span><span class="op">$</span><span class="va">subject</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Import the example Motive data included in the package</span></span></span>
+<span class="r-in"><span><span class="va">motive_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Clean the file. It is generally recommended to clean up to the</span></span></span>
+<span class="r-in"><span><span class="co">## "gather" step before running rescale_tunnel_data().</span></span></span>
+<span class="r-in"><span> <span class="va">motive_gathered</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>   <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## See the subject names</span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">motive_gathered</span><span class="op">$</span><span class="va">subject</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "device02" "device03" "device05"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Now rename the subjects. We'll get rid of "device" and replace it</span></span>
-<span class="r-in"><span class="co">## with "subject"</span></span>
-<span class="r-in"><span class="va">motive_renamed</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">motive_gathered</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">rename_viewr_characters</span><span class="op">(</span>target_column <span class="op">=</span> <span class="st">"subject"</span>,</span>
-<span class="r-in">                          pattern <span class="op">=</span> <span class="st">"device"</span>,</span>
-<span class="r-in">                          replacement <span class="op">=</span> <span class="st">"subject"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## See the new subject names</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">motive_renamed</span><span class="op">$</span><span class="va">subject</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Now rename the subjects. We'll get rid of "device" and replace it</span></span></span>
+<span class="r-in"><span><span class="co">## with "subject"</span></span></span>
+<span class="r-in"><span><span class="va">motive_renamed</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_gathered</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">rename_viewr_characters</span><span class="op">(</span>target_column <span class="op">=</span> <span class="st">"subject"</span>,</span></span>
+<span class="r-in"><span>                          pattern <span class="op">=</span> <span class="st">"device"</span>,</span></span>
+<span class="r-in"><span>                          replacement <span class="op">=</span> <span class="st">"subject"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## See the new subject names</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">motive_renamed</span><span class="op">$</span><span class="va">subject</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "subject02" "subject03" "subject05"</span>
 </code></pre></div>
     </div>
@@ -168,7 +168,7 @@ to the <code>pattern</code> and <code>replacement</code> supplied by the user.</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

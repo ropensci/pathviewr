@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">section_tunnel_by</span><span class="op">(</span><span class="va">obj_name</span>, axis <span class="op">=</span> <span class="st">"position_length"</span>, number_of_sections <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">section_tunnel_by</span><span class="op">(</span><span class="va">obj_name</span>, axis <span class="op">=</span> <span class="st">"position_length"</span>, number_of_sections <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -106,23 +106,23 @@ which is an ordered factor that indicates grouping.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load data and run section_tunnel_by()</span></span>
-<span class="r-in"><span class="va">test_mat</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span>
-<span class="r-in">                  subject_name <span class="op">=</span> <span class="st">"birdie_wooster"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="redefine_tunnel_center.html">redefine_tunnel_center</a></span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,</span>
-<span class="r-in">                         height_method <span class="op">=</span> <span class="st">"user-defined"</span>,</span>
-<span class="r-in">                         height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">section_tunnel_by</span><span class="op">(</span>number_of_sections <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot; color by section ID</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_mat</span><span class="op">$</span><span class="va">position_length</span>,</span>
-<span class="r-in">     <span class="va">test_mat</span><span class="op">$</span><span class="va">position_width</span>,</span>
-<span class="r-in">     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">test_mat</span><span class="op">$</span><span class="va">section_id</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load data and run section_tunnel_by()</span></span></span>
+<span class="r-in"><span><span class="va">test_mat</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  subject_name <span class="op">=</span> <span class="st">"birdie_wooster"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="redefine_tunnel_center.html">redefine_tunnel_center</a></span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,</span></span>
+<span class="r-in"><span>                         height_method <span class="op">=</span> <span class="st">"user-defined"</span>,</span></span>
+<span class="r-in"><span>                         height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">section_tunnel_by</span><span class="op">(</span>number_of_sections <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot; color by section ID</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_mat</span><span class="op">$</span><span class="va">position_length</span>,</span></span>
+<span class="r-in"><span>     <span class="va">test_mat</span><span class="op">$</span><span class="va">position_width</span>,</span></span>
+<span class="r-in"><span>     asp <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">test_mat</span><span class="op">$</span><span class="va">section_id</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="section_tunnel_by-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -138,7 +138,7 @@ which is an ordered factor that indicates grouping.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -69,20 +69,20 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">clean_viewr</span><span class="op">(</span>
-  <span class="va">obj_name</span>,
-  relabel_viewr_axes <span class="op">=</span> <span class="cn">TRUE</span>,
-  gather_tunnel_data <span class="op">=</span> <span class="cn">TRUE</span>,
-  trim_tunnel_outliers <span class="op">=</span> <span class="cn">TRUE</span>,
-  standardization_option <span class="op">=</span> <span class="st">"rotate_tunnel"</span>,
-  get_velocity <span class="op">=</span> <span class="cn">TRUE</span>,
-  select_x_percent <span class="op">=</span> <span class="cn">TRUE</span>,
-  rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,
-  separate_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
-  get_full_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,
-  fill_traj_gaps <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">clean_viewr</span><span class="op">(</span></span>
+<span>  <span class="va">obj_name</span>,</span>
+<span>  relabel_viewr_axes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  gather_tunnel_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  trim_tunnel_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardization_option <span class="op">=</span> <span class="st">"rotate_tunnel"</span>,</span>
+<span>  get_velocity <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  select_x_percent <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rename_viewr_characters <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  separate_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  get_full_trajectories <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  fill_traj_gaps <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -173,30 +173,30 @@ function.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Import the example Motive data included in the package</span></span>
-<span class="r-in"><span class="va">motive_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">motive_full</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">clean_viewr</span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">              max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span>
-<span class="r-in">              span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Import the example Motive data included in the package</span></span></span>
+<span class="r-in"><span><span class="va">motive_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">motive_full</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">clean_viewr</span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>              max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span></span>
+<span class="r-in"><span>              span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Alternatively, used the import_and_clean_viewr()</span></span>
-<span class="r-in"><span class="co">## function to combine these steps</span></span>
-<span class="r-in"><span class="va">motive_import_and_clean</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="import_and_clean_viewr.html">import_and_clean_viewr</a></span><span class="op">(</span></span>
-<span class="r-in">    file_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                            package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span>
-<span class="r-in">    desired_percent <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span>
-<span class="r-in">    span <span class="op">=</span> <span class="fl">0.95</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Alternatively, used the import_and_clean_viewr()</span></span></span>
+<span class="r-in"><span><span class="co">## function to combine these steps</span></span></span>
+<span class="r-in"><span><span class="va">motive_import_and_clean</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="import_and_clean_viewr.html">import_and_clean_viewr</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    file_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                            package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    desired_percent <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span></span>
+<span class="r-in"><span>    span <span class="op">=</span> <span class="fl">0.95</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
 </code></pre></div>
     </div>
@@ -212,7 +212,7 @@ function.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

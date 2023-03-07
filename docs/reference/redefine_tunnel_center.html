@@ -18,7 +18,7 @@ positions along axes."><meta property="og:image" content="https://docs.ropensci.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -71,17 +71,17 @@ positions along axes.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">redefine_tunnel_center</span><span class="op">(</span>
-  <span class="va">obj_name</span>,
-  axes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"position_length"</span>, <span class="st">"position_width"</span>, <span class="st">"position_height"</span><span class="op">)</span>,
-  length_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"middle"</span>, <span class="st">"median"</span>, <span class="st">"user-defined"</span><span class="op">)</span>,
-  width_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"middle"</span>, <span class="st">"median"</span>, <span class="st">"user-defined"</span><span class="op">)</span>,
-  height_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"middle"</span>, <span class="st">"median"</span>, <span class="st">"user-defined"</span><span class="op">)</span>,
-  length_zero <span class="op">=</span> <span class="cn">NA</span>,
-  width_zero <span class="op">=</span> <span class="cn">NA</span>,
-  height_zero <span class="op">=</span> <span class="cn">NA</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">redefine_tunnel_center</span><span class="op">(</span></span>
+<span>  <span class="va">obj_name</span>,</span>
+<span>  axes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"position_length"</span>, <span class="st">"position_width"</span>, <span class="st">"position_height"</span><span class="op">)</span>,</span>
+<span>  length_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"middle"</span>, <span class="st">"median"</span>, <span class="st">"user-defined"</span><span class="op">)</span>,</span>
+<span>  width_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"middle"</span>, <span class="st">"median"</span>, <span class="st">"user-defined"</span><span class="op">)</span>,</span>
+<span>  height_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"original"</span>, <span class="st">"middle"</span>, <span class="st">"median"</span>, <span class="st">"user-defined"</span><span class="op">)</span>,</span>
+<span>  length_zero <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  width_zero <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  height_zero <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -167,26 +167,26 @@ customize where the (0, 0, 0) point in the tunnel will end up. Each
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Import the Flydra example data included in</span></span>
-<span class="r-in"><span class="co">## the package</span></span>
-<span class="r-in"><span class="va">flydra_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
-<span class="r-in">                <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span>
-<span class="r-in">                package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span>
-<span class="r-in">    subject_name <span class="op">=</span> <span class="st">"birdie_wooster"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Re-center the Flydra data set.</span></span>
-<span class="r-in"><span class="co">## Width will be untouched</span></span>
-<span class="r-in"><span class="co">## Length will use the "middle" definition</span></span>
-<span class="r-in"><span class="co">## And height will be user-defined to be</span></span>
-<span class="r-in"><span class="co">## zeroed at 1.44 on the original axis</span></span>
-<span class="r-in"><span class="va">flydra_centered</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">flydra_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">redefine_tunnel_center</span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,</span>
-<span class="r-in">                         height_method <span class="op">=</span> <span class="st">"user-defined"</span>,</span>
-<span class="r-in">                         height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Import the Flydra example data included in</span></span></span>
+<span class="r-in"><span><span class="co">## the package</span></span></span>
+<span class="r-in"><span><span class="va">flydra_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span></span>
+<span class="r-in"><span>                <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span></span>
+<span class="r-in"><span>                package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    subject_name <span class="op">=</span> <span class="st">"birdie_wooster"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Re-center the Flydra data set.</span></span></span>
+<span class="r-in"><span><span class="co">## Width will be untouched</span></span></span>
+<span class="r-in"><span><span class="co">## Length will use the "middle" definition</span></span></span>
+<span class="r-in"><span><span class="co">## And height will be user-defined to be</span></span></span>
+<span class="r-in"><span><span class="co">## zeroed at 1.44 on the original axis</span></span></span>
+<span class="r-in"><span><span class="va">flydra_centered</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">flydra_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">redefine_tunnel_center</span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,</span></span>
+<span class="r-in"><span>                         height_method <span class="op">=</span> <span class="st">"user-defined"</span>,</span></span>
+<span class="r-in"><span>                         height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -201,7 +201,7 @@ customize where the (0, 0, 0) point in the tunnel will end up. Each
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

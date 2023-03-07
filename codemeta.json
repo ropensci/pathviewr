@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/pathviewr/",
   "issueTracker": "https://github.com/ropensci/pathviewr/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.0 (2022-04-22 ucrt)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -89,6 +89,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "anomalize",
+      "name": "anomalize",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=anomalize"
     },
     {
       "@type": "SoftwareApplication",
@@ -259,18 +271,6 @@
     },
     "13": {
       "@type": "SoftwareApplication",
-      "identifier": "anomalize",
-      "name": "anomalize",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=anomalize"
-    },
-    "14": {
-      "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
       "provider": {
@@ -283,7 +283,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "1468.574KB",
+  "fileSize": "1468.677KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -311,7 +311,7 @@
       "name": "pathviewR: Tools to import, clean, and visualize animal movement data in R",
       "identifier": "10.5281/zenodo.4270187",
       "url": "https://github.com/ropensci/pathviewR",
-      "description": "R package version 1.1.6",
+      "description": "R package version 1.1.7",
       "@id": "https://doi.org/10.5281/zenodo.4270187",
       "sameAs": "https://doi.org/10.5281/zenodo.4270187",
       "isPartOf": {
@@ -325,11 +325,13 @@
     }
   ],
   "releaseNotes": "https://github.com/ropensci/pathviewr/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/pathviewr/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/pathviewr/actions", "https://app.codecov.io/gh/ropensci/pathviewr?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",
     "url": "https://github.com/ropensci/software-review/issues/409",
     "provider": "https://ropensci.org"
-  }
+  },
+  "keywords": ["movement-data", "motion", "animal-movement", "optitrack", "flydra", "visual-guidance", "visual-perception", "rstats", "rstats-package", "trajectory-analysis", "trajectories"]
 }

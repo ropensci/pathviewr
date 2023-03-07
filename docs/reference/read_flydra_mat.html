@@ -19,7 +19,7 @@ that additionally has important metadata stored as attributes (see Details)."><m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@ that additionally has important metadata stored as attributes (see Details).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_flydra_mat</span><span class="op">(</span><span class="va">mat_file</span>, file_id <span class="op">=</span> <span class="cn">NA</span>, <span class="va">subject_name</span>, frame_rate <span class="op">=</span> <span class="fl">100</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_flydra_mat</span><span class="op">(</span><span class="va">mat_file</span>, file_id <span class="op">=</span> <span class="cn">NA</span>, <span class="va">subject_name</span>, frame_rate <span class="op">=</span> <span class="fl">100</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -126,22 +126,22 @@ already been gathered into key-value pairs based on subject.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Import the example Flydra data included in the package</span></span>
-<span class="r-in"><span class="va">flydra_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">read_flydra_mat</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span>
-<span class="r-in">                  subject_name <span class="op">=</span> <span class="st">"birdie_wooster"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Names of variables in the resulting tibble</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flydra_data</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Import the example Flydra data included in the package</span></span></span>
+<span class="r-in"><span><span class="va">flydra_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">read_flydra_mat</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  subject_name <span class="op">=</span> <span class="st">"birdie_wooster"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Names of variables in the resulting tibble</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flydra_data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "frame"           "time_sec"        "subject"         "position_length"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "position_width"  "position_height" "velocity"        "length_inst_vel"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "width_inst_vel"  "height_inst_vel"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## A variety of metadata are stored as attributes. Of particular interest:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">flydra_data</span>, <span class="st">"pathviewr_steps"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## A variety of metadata are stored as attributes. Of particular interest:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">flydra_data</span>, <span class="st">"pathviewr_steps"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "viewr"           "renamed_tunnel"  "gathered_tunnel"</span>
 </code></pre></div>
     </div>
@@ -157,7 +157,7 @@ already been gathered into key-value pairs based on subject.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

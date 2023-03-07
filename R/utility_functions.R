@@ -3039,7 +3039,6 @@ remove_duplicate_frames <- function(obj_name) {
 #'   The separate_trajectories() and get_full_trajectories() must be run prior
 #'   to use.
 #'
-#' @export
 #'
 #' @author Vikram B. Baliga
 #'

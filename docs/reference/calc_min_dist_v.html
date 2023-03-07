@@ -20,7 +20,7 @@ experimental tunnel"><meta property="og:image" content="https://docs.ropensci.or
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -74,7 +74,7 @@ experimental tunnel</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calc_min_dist_v</span><span class="op">(</span><span class="va">obj_name</span>, simplify_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calc_min_dist_v</span><span class="op">(</span><span class="va">obj_name</span>, simplify_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -131,37 +131,37 @@ meters.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"> <span class="co">## Import sample data from package</span></span>
-<span class="r-in"><span class="va">motive_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                              package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"> <span class="co">## Process data up to and including insert_treatments()</span></span>
-<span class="r-in"><span class="va">motive_data_full</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="trim_tunnel_outliers.html">trim_tunnel_outliers</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="rotate_tunnel.html">rotate_tunnel</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="insert_treatments.html">insert_treatments</a></span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"v"</span>,</span>
-<span class="r-in">                   perch_2_vertex <span class="op">=</span> <span class="fl">0.4</span>,</span>
-<span class="r-in">                   vertex_angle <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">                   tunnel_length <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                   stim_param_lat_pos <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">                   stim_param_lat_neg <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">                   stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">                   stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">                   treatment <span class="op">=</span> <span class="st">"lat10_end_30"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"> <span class="co">## Now calculate the minimum distances to each wall</span></span>
-<span class="r-in">  <span class="fu">calc_min_dist_v</span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="co">## Import sample data from package</span></span></span>
+<span class="r-in"><span><span class="va">motive_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                              package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="co">## Process data up to and including insert_treatments()</span></span></span>
+<span class="r-in"><span><span class="va">motive_data_full</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="trim_tunnel_outliers.html">trim_tunnel_outliers</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="rotate_tunnel.html">rotate_tunnel</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="insert_treatments.html">insert_treatments</a></span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"v"</span>,</span></span>
+<span class="r-in"><span>                   perch_2_vertex <span class="op">=</span> <span class="fl">0.4</span>,</span></span>
+<span class="r-in"><span>                   vertex_angle <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>                   tunnel_length <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                   stim_param_lat_pos <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>                   stim_param_lat_neg <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>                   stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>                   stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>                   treatment <span class="op">=</span> <span class="st">"lat10_end_30"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="co">## Now calculate the minimum distances to each wall</span></span></span>
+<span class="r-in"><span>  <span class="fu">calc_min_dist_v</span><span class="op">(</span>simplify_output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co">## See 3 new variables for calculations to lateral and end walls</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">motive_data_full</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## See 3 new variables for calculations to lateral and end walls</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">motive_data_full</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "tunnel_config"      "perch_2_vertex"     "vertex_angle"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "tunnel_length"      "stim_param_lat_pos" "stim_param_lat_neg"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "stim_param_end_pos" "stim_param_end_neg" "treatment"         </span>
@@ -187,7 +187,7 @@ meters.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

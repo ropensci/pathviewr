@@ -18,7 +18,7 @@ original data file imported via pathviewr's read_ functions."><meta property="og
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ original data file imported via <code>pathviewr</code>'s <code>read_</code> func
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_header_viewr</span><span class="op">(</span><span class="va">obj_name</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_header_viewr</span><span class="op">(</span><span class="va">obj_name</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -101,15 +101,15 @@ is found and no or more than one partial match is found.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Import the Motive example data included in the package</span></span>
-<span class="r-in"><span class="va">motive_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Now display the Header information</span></span>
-<span class="r-in"><span class="fu">get_header_viewr</span><span class="op">(</span><span class="va">motive_data</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Import the Motive example data included in the package</span></span></span>
+<span class="r-in"><span><span class="va">motive_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Now display the Header information</span></span></span>
+<span class="r-in"><span><span class="fu">get_header_viewr</span><span class="op">(</span><span class="va">motive_data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 metadata                      value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         Format Version                       1.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2              Take Name  sept-18_mixed-group_16-30</span>
@@ -136,7 +136,7 @@ is found and no or more than one partial match is found.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

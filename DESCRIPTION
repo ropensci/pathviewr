@@ -1,6 +1,6 @@
 Package: pathviewr
 Title: Wrangle, Analyze, and Visualize Animal Movement Data
-Version: 1.1.6
+Version: 1.1.7
 Authors@R: 
     c(person(given = "Vikram B.",
              family = "Baliga", 
@@ -36,7 +36,7 @@ Maintainer: Vikram B. Baliga <vbaliga87@gmail.com>
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports: 
     R.matlab,
     data.table (>= 1.12.2),
@@ -50,12 +50,12 @@ Imports:
     ggplot2 (>= 3.4.0),
     tidyselect (>= 1.1.0),
     cowplot,
-    anomalize,
     lubridate
 Suggests: 
     knitr,
     rmarkdown,
     testthat,
+    anomalize,
     covr
 VignetteBuilder: knitr
 URL: https://github.com/ropensci/pathviewr/,  https://docs.ropensci.org/pathviewr/

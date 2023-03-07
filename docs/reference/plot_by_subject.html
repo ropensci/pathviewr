@@ -18,7 +18,7 @@ from elevation and bird's eye views."><meta property="og:image" content="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ from elevation and bird's eye views.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_by_subject</span><span class="op">(</span><span class="va">obj_name</span>, col_by_treat <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_by_subject</span><span class="op">(</span><span class="va">obj_name</span>, col_by_treat <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -124,36 +124,36 @@ treatment in both the trajectory plots and the density plots.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="co">## Import the example Motive data included in the package</span></span>
-<span class="r-in">  <span class="va">motive_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">    <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
-<span class="r-in">                                <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                                package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co">## Clean, isolate, and label trajectories</span></span>
-<span class="r-in">  <span class="va">motive_full</span> <span class="op">&lt;-</span></span>
-<span class="r-in">    <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="clean_viewr.html">clean_viewr</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">                max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span>
-<span class="r-in">                span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co">## Plot all trajectories by subject</span></span>
-<span class="r-in">  <span class="va">motive_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">plot_by_subject</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co">## Add treatment information</span></span>
-<span class="r-in">  <span class="va">motive_full</span><span class="op">$</span><span class="va">treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latA"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latB"</span>, <span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">                             <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latA"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latB"</span>, <span class="fl">149</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co">## Plot all trajectories by subject, color by treatment</span></span>
-<span class="r-in">  <span class="va">motive_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">plot_by_subject</span><span class="op">(</span>col_by_treat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/pathviewr">pathviewr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co">## Import the example Motive data included in the package</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span></span>
+<span class="r-in"><span>                                <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                                package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## Clean, isolate, and label trajectories</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_full</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>    <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="clean_viewr.html">clean_viewr</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>                max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span></span>
+<span class="r-in"><span>                span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## Plot all trajectories by subject</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">plot_by_subject</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## Add treatment information</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_full</span><span class="op">$</span><span class="va">treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latA"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latB"</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                             <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latA"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"latB"</span>, <span class="fl">149</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## Plot all trajectories by subject, color by treatment</span></span></span>
+<span class="r-in"><span>  <span class="va">motive_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">plot_by_subject</span><span class="op">(</span>col_by_treat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -168,7 +168,7 @@ treatment in both the trajectory plots and the density plots.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

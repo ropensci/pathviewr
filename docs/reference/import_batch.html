@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -69,16 +69,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">import_batch</span><span class="op">(</span>
-  <span class="va">file_path_list</span>,
-  import_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flydra"</span>, <span class="st">"motive"</span><span class="op">)</span>,
-  file_id <span class="op">=</span> <span class="cn">NA</span>,
-  subject_name <span class="op">=</span> <span class="cn">NULL</span>,
-  frame_rate <span class="op">=</span> <span class="cn">NULL</span>,
-  simplify_marker_naming <span class="op">=</span> <span class="cn">TRUE</span>,
-  import_messaging <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">import_batch</span><span class="op">(</span></span>
+<span>  <span class="va">file_path_list</span>,</span>
+<span>  import_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flydra"</span>, <span class="st">"motive"</span><span class="op">)</span>,</span>
+<span>  file_id <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  subject_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  frame_rate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  simplify_marker_naming <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  import_messaging <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -148,75 +148,75 @@ details of data import methods.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Since we only have one example file of each type provided</span></span>
-<span class="r-in"><span class="co">## in pathviewr, we will simply import the same example multiple</span></span>
-<span class="r-in"><span class="co">## times to simulate batch importing. Replace the contents of</span></span>
-<span class="r-in"><span class="co">## the following list with your own list of files to be imported.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Make a list of the same example file 3x</span></span>
-<span class="r-in"><span class="va">import_list</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="fl">3</span></span>
-<span class="r-in">  <span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Batch import</span></span>
-<span class="r-in"><span class="va">motive_batch_imports</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">import_batch</span><span class="op">(</span><span class="va">import_list</span>,</span>
-<span class="r-in">               import_method <span class="op">=</span> <span class="st">"motive"</span>,</span>
-<span class="r-in">               import_messaging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Since we only have one example file of each type provided</span></span></span>
+<span class="r-in"><span><span class="co">## in pathviewr, we will simply import the same example multiple</span></span></span>
+<span class="r-in"><span><span class="co">## times to simulate batch importing. Replace the contents of</span></span></span>
+<span class="r-in"><span><span class="co">## the following list with your own list of files to be imported.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Make a list of the same example file 3x</span></span></span>
+<span class="r-in"><span><span class="va">import_list</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">3</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Batch import</span></span></span>
+<span class="r-in"><span><span class="va">motive_batch_imports</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">import_batch</span><span class="op">(</span><span class="va">import_list</span>,</span></span>
+<span class="r-in"><span>               import_method <span class="op">=</span> <span class="st">"motive"</span>,</span></span>
+<span class="r-in"><span>               import_messaging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 1 imported.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 2 imported.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 3 imported.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Batch cleaning of these imported files</span></span>
-<span class="r-in"><span class="co">## via clean_viewr_batch()</span></span>
-<span class="r-in"><span class="va">motive_batch_cleaned</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="clean_viewr_batch.html">clean_viewr_batch</a></span><span class="op">(</span></span>
-<span class="r-in">    file_announce <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    <span class="va">motive_batch_imports</span>,</span>
-<span class="r-in">    desired_percent <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span>
-<span class="r-in">    span <span class="op">=</span> <span class="fl">0.95</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Batch cleaning of these imported files</span></span></span>
+<span class="r-in"><span><span class="co">## via clean_viewr_batch()</span></span></span>
+<span class="r-in"><span><span class="va">motive_batch_cleaned</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="clean_viewr_batch.html">clean_viewr_batch</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    file_announce <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    <span class="va">motive_batch_imports</span>,</span></span>
+<span class="r-in"><span>    desired_percent <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span></span>
+<span class="r-in"><span>    span <span class="op">=</span> <span class="fl">0.95</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 1 has been cleaned successfully.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 2 has been cleaned successfully.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 3 has been cleaned successfully.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Alternatively, use import_and_clean_batch() to</span></span>
-<span class="r-in"><span class="co">## combine import with cleaning on a batch of files</span></span>
-<span class="r-in"><span class="va">motive_batch_import_and_clean</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="import_and_clean_batch.html">import_and_clean_batch</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">import_list</span>,</span>
-<span class="r-in">    import_method <span class="op">=</span> <span class="st">"motive"</span>,</span>
-<span class="r-in">    import_messaging <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    <span class="va">motive_batch_imports</span>,</span>
-<span class="r-in">    desired_percent <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span>
-<span class="r-in">    span <span class="op">=</span> <span class="fl">0.95</span></span>
-<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Alternatively, use import_and_clean_batch() to</span></span></span>
+<span class="r-in"><span><span class="co">## combine import with cleaning on a batch of files</span></span></span>
+<span class="r-in"><span><span class="va">motive_batch_import_and_clean</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="import_and_clean_batch.html">import_and_clean_batch</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">import_list</span>,</span></span>
+<span class="r-in"><span>    import_method <span class="op">=</span> <span class="st">"motive"</span>,</span></span>
+<span class="r-in"><span>    import_messaging <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    <span class="va">motive_batch_imports</span>,</span></span>
+<span class="r-in"><span>    desired_percent <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>    max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span>,</span></span>
+<span class="r-in"><span>    span <span class="op">=</span> <span class="fl">0.95</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 1 imported.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 2 imported.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> File 3 imported.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Each of these lists of objects can be bound into</span></span>
-<span class="r-in"><span class="co">## one viewr object (i.e. one tibble) via</span></span>
-<span class="r-in"><span class="co">## bind_viewr_objects()</span></span>
-<span class="r-in"><span class="va">motive_bound_one</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="bind_viewr_objects.html">bind_viewr_objects</a></span><span class="op">(</span><span class="va">motive_batch_cleaned</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">motive_bound_two</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="bind_viewr_objects.html">bind_viewr_objects</a></span><span class="op">(</span><span class="va">motive_batch_import_and_clean</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Either route results in the same object ultimately:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">motive_bound_one</span>, <span class="va">motive_bound_two</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Each of these lists of objects can be bound into</span></span></span>
+<span class="r-in"><span><span class="co">## one viewr object (i.e. one tibble) via</span></span></span>
+<span class="r-in"><span><span class="co">## bind_viewr_objects()</span></span></span>
+<span class="r-in"><span><span class="va">motive_bound_one</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="bind_viewr_objects.html">bind_viewr_objects</a></span><span class="op">(</span><span class="va">motive_batch_cleaned</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">motive_bound_two</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="bind_viewr_objects.html">bind_viewr_objects</a></span><span class="op">(</span><span class="va">motive_batch_import_and_clean</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Either route results in the same object ultimately:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">motive_bound_one</span>, <span class="va">motive_bound_two</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>
@@ -232,7 +232,7 @@ details of data import methods.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

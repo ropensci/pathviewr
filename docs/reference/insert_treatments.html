@@ -18,7 +18,7 @@ analysis in other pathviewr functions"><meta property="og:image" content="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
       </span>
     </div>
 
@@ -71,19 +71,19 @@ analysis in other pathviewr functions</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">insert_treatments</span><span class="op">(</span>
-  <span class="va">obj_name</span>,
-  tunnel_config <span class="op">=</span> <span class="st">"box"</span>,
-  perch_2_vertex <span class="op">=</span> <span class="cn">NULL</span>,
-  vertex_angle <span class="op">=</span> <span class="cn">NULL</span>,
-  tunnel_width <span class="op">=</span> <span class="cn">NULL</span>,
-  tunnel_length <span class="op">=</span> <span class="cn">NULL</span>,
-  stim_param_lat_pos <span class="op">=</span> <span class="cn">NULL</span>,
-  stim_param_lat_neg <span class="op">=</span> <span class="cn">NULL</span>,
-  stim_param_end_pos <span class="op">=</span> <span class="cn">NULL</span>,
-  stim_param_end_neg <span class="op">=</span> <span class="cn">NULL</span>,
-  treatment <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">insert_treatments</span><span class="op">(</span></span>
+<span>  <span class="va">obj_name</span>,</span>
+<span>  tunnel_config <span class="op">=</span> <span class="st">"box"</span>,</span>
+<span>  perch_2_vertex <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  vertex_angle <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tunnel_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tunnel_length <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stim_param_lat_pos <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stim_param_lat_neg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stim_param_end_pos <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stim_param_end_neg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  treatment <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -175,74 +175,74 @@ information is also stored in the viewr object's metadata</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"> <span class="co">## Import sample data from package</span></span>
-<span class="r-in"> <span class="va">motive_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span>
-<span class="r-in">                              package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"> <span class="va">flydra_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in"> <span class="fu"><a href="read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span>
-<span class="r-in">                              package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span>
-<span class="r-in">                              subject_name <span class="op">=</span> <span class="st">"birdie_sanders"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co">## Clean data up to and including get_full_trajectories()</span></span>
-<span class="r-in"><span class="va">motive_data_full</span> <span class="op">&lt;-</span></span>
-<span class="r-in"> <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="trim_tunnel_outliers.html">trim_tunnel_outliers</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="rotate_tunnel.html">rotate_tunnel</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="co">## Import sample data from package</span></span></span>
+<span class="r-in"><span> <span class="va">motive_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="read_motive_csv.html">read_motive_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_motive_example_data.csv"</span>,</span></span>
+<span class="r-in"><span>                              package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="va">flydra_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="read_flydra_mat.html">read_flydra_mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pathviewr_flydra_example_data.mat"</span>,</span></span>
+<span class="r-in"><span>                              package <span class="op">=</span> <span class="st">'pathviewr'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                              subject_name <span class="op">=</span> <span class="st">"birdie_sanders"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co">## Clean data up to and including get_full_trajectories()</span></span></span>
+<span class="r-in"><span><span class="va">motive_data_full</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span> <span class="va">motive_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="relabel_viewr_axes.html">relabel_viewr_axes</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="gather_tunnel_data.html">gather_tunnel_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="trim_tunnel_outliers.html">trim_tunnel_outliers</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="rotate_tunnel.html">rotate_tunnel</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
-<span class="r-in"></span>
-<span class="r-in"> <span class="va">flydra_data_full</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">flydra_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="redefine_tunnel_center.html">redefine_tunnel_center</a></span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,</span>
-<span class="r-in">                        height_method <span class="op">=</span> <span class="st">"user-defined"</span>,</span>
-<span class="r-in">                        height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="va">flydra_data_full</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">flydra_data</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="redefine_tunnel_center.html">redefine_tunnel_center</a></span><span class="op">(</span>length_method <span class="op">=</span> <span class="st">"middle"</span>,</span></span>
+<span class="r-in"><span>                        height_method <span class="op">=</span> <span class="st">"user-defined"</span>,</span></span>
+<span class="r-in"><span>                        height_zero <span class="op">=</span> <span class="fl">1.44</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="select_x_percent.html">select_x_percent</a></span><span class="op">(</span>desired_percent <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span>max_frame_gap <span class="op">=</span> <span class="st">"autodetect"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="get_full_trajectories.html">get_full_trajectories</a></span><span class="op">(</span>span <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> autodetect is an experimental feature -- please report issues.</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Now add information about the experimental configuration. In this example,</span></span>
-<span class="r-in"><span class="co">## a V-shaped tunnel in which the vertex is 90deg and lies 0.40m below the</span></span>
-<span class="r-in"><span class="co">## origin. The visual stimuli on the lateral and end walls have a cycle</span></span>
-<span class="r-in"><span class="co">## length of 0.1m and 0.3m respectively, and the treatment is labeled</span></span>
-<span class="r-in"><span class="co">## "lat10_end30"</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">motive_v</span> <span class="op">&lt;-</span></span>
-<span class="r-in"><span class="va">motive_data_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu">insert_treatments</span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"v"</span>,</span>
-<span class="r-in">                   perch_2_vertex <span class="op">=</span> <span class="fl">0.4</span>,</span>
-<span class="r-in">                   vertex_angle <span class="op">=</span> <span class="fl">90</span>,</span>
-<span class="r-in">                   tunnel_length <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                   stim_param_lat_pos <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">                   stim_param_lat_neg <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span class="r-in">                   stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">                   stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">                   treatment <span class="op">=</span> <span class="st">"lat10_end_30"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># For an experiment using the box-shaped configuration where the tunnel is 1m</span></span>
-<span class="r-in"><span class="co"># wide and 3m long and the visual stimuli on the lateral and end walls have a</span></span>
-<span class="r-in"><span class="co"># cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled</span></span>
-<span class="r-in"><span class="co"># "lat20_end30".</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">flydra_box</span> <span class="op">&lt;-</span></span>
-<span class="r-in"> <span class="va">flydra_data_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu">insert_treatments</span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"box"</span>,</span>
-<span class="r-in">                   tunnel_width <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                   tunnel_length <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">                   stim_param_lat_pos <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span class="r-in">                   stim_param_lat_neg <span class="op">=</span> <span class="fl">0.2</span>,</span>
-<span class="r-in">                   stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">                   stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span class="r-in">                   treatment <span class="op">=</span> <span class="st">"lat20_end30"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Check out the new columns in the resulting objects</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">motive_v</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Now add information about the experimental configuration. In this example,</span></span></span>
+<span class="r-in"><span><span class="co">## a V-shaped tunnel in which the vertex is 90deg and lies 0.40m below the</span></span></span>
+<span class="r-in"><span><span class="co">## origin. The visual stimuli on the lateral and end walls have a cycle</span></span></span>
+<span class="r-in"><span><span class="co">## length of 0.1m and 0.3m respectively, and the treatment is labeled</span></span></span>
+<span class="r-in"><span><span class="co">## "lat10_end30"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">motive_v</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span><span class="va">motive_data_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu">insert_treatments</span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"v"</span>,</span></span>
+<span class="r-in"><span>                   perch_2_vertex <span class="op">=</span> <span class="fl">0.4</span>,</span></span>
+<span class="r-in"><span>                   vertex_angle <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>                   tunnel_length <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                   stim_param_lat_pos <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>                   stim_param_lat_neg <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>                   stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>                   stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>                   treatment <span class="op">=</span> <span class="st">"lat10_end_30"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># For an experiment using the box-shaped configuration where the tunnel is 1m</span></span></span>
+<span class="r-in"><span><span class="co"># wide and 3m long and the visual stimuli on the lateral and end walls have a</span></span></span>
+<span class="r-in"><span><span class="co"># cycle length of 0.2 and 0.3m, respectively, and the treatment is labeled</span></span></span>
+<span class="r-in"><span><span class="co"># "lat20_end30".</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">flydra_box</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span> <span class="va">flydra_data_full</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu">insert_treatments</span><span class="op">(</span>tunnel_config <span class="op">=</span> <span class="st">"box"</span>,</span></span>
+<span class="r-in"><span>                   tunnel_width <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                   tunnel_length <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                   stim_param_lat_pos <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>                   stim_param_lat_neg <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>                   stim_param_end_pos <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>                   stim_param_end_neg <span class="op">=</span> <span class="fl">0.3</span>,</span></span>
+<span class="r-in"><span>                   treatment <span class="op">=</span> <span class="st">"lat20_end30"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Check out the new columns in the resulting objects</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">motive_v</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "tunnel_config"      "perch_2_vertex"     "vertex_angle"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "tunnel_length"      "stim_param_lat_pos" "stim_param_lat_neg"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "stim_param_end_pos" "stim_param_end_neg" "treatment"         </span>
@@ -253,7 +253,7 @@ information is also stored in the viewr object's metadata</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [22] "file_sub_traj"      "traj_length"        "start_length"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [25] "end_length"         "length_diff"        "start_length_sign" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [28] "end_length_sign"    "direction"         </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flydra_box</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">flydra_box</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "tunnel_config"      "tunnel_width"       "tunnel_length"     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "stim_param_lat_pos" "stim_param_lat_neg" "stim_param_end_pos"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "stim_param_end_neg" "treatment"          "frame"             </span>
@@ -277,7 +277,7 @@ information is also stored in the viewr object's metadata</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
