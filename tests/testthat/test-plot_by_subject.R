@@ -89,7 +89,12 @@ test_that("top views created correctly via purrr::map", {
 test_that("top views wrangled correctly via tidyverse", {
   expect_match(top_all_plots$plot_type[[1]], "paths")
   expect_match(top_all_plots$subject[[5]], "device03")
-  expect_match(top_all_plots[[3]][[4]][["labels"]][["x"]], "position_width")
+  labels <- if ("get_labs" %in% getNamespaceExports("ggplot2")) {
+    ggplot2::get_labs(top_all_plots[[3]][[4]])
+  } else {
+    top_all_plots[[3]][[4]][["labels"]]
+  }
+  expect_match(labels[["x"]], "position_width")
 })
 
 #test that plotting works?
@@ -165,7 +170,12 @@ test_that("elev views created correctly via purrr::map", {
 test_that("elev views wrangled correctly via tidyverse", {
   expect_match(elev_all_plots$plot_type[[3]], "paths")
   expect_match(elev_all_plots$subject[[4]], "device02")
-  expect_match(elev_all_plots[[3]][[4]][["labels"]][["x"]], "position_height")
+  labels <- if ("get_labs" %in% getNamespaceExports("ggplot2")) {
+    ggplot2::get_labs(elev_all_plots[[3]][[4]])
+  } else {
+    elev_all_plots[[3]][[4]][["labels"]]
+  }
+  expect_match(labels[["x"]], "position_height")
 })
 
 ## Test that plotting works?
