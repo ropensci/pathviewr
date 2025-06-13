@@ -1,3 +1,6 @@
+# pathviewr 1.1.8
+* Very minor change to internal testing to comply with recent changes to ggplot2
+
 # pathviewr 1.1.7
 * Remove dependency on `anomalize` package by electing to not export 
 `remove_vel_anomalies()` as the package is loaded.

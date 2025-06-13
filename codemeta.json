@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/pathviewr/",
   "issueTracker": "https://github.com/ropensci/pathviewr/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31 ucrt)",
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -283,7 +283,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "1468.677KB",
+  "fileSize": "58611.291KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -311,7 +311,7 @@
       "name": "pathviewR: Tools to import, clean, and visualize animal movement data in R",
       "identifier": "10.5281/zenodo.4270187",
       "url": "https://github.com/ropensci/pathviewR",
-      "description": "R package version 1.1.7",
+      "description": "R package version 1.1.8",
       "@id": "https://doi.org/10.5281/zenodo.4270187",
       "sameAs": "https://doi.org/10.5281/zenodo.4270187",
       "isPartOf": {

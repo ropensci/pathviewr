@@ -1,9 +1,9 @@
 ## Test environments
-* local R installation, R 4.2.2
+* local R installation, R 4.4.0
 * windows-latest (release) on GitHub Actions
 * macOS-latest (release) on GitHub Actions
-* ubuntu-20.04 (release) on GitHub Actions
-* ubuntu-20.04 (devel) on GitHub Actions
+* ubuntu-latest (release) on GitHub Actions
+* ubuntu-latest (devel) on GitHub Actions
 
 ## R CMD check results
 

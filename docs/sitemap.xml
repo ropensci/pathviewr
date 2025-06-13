@@ -4,6 +4,12 @@
     <loc>https://docs.ropensci.org/pathviewr/404.html</loc>
   </url>
   <url>
+    <loc>https://docs.ropensci.org/pathviewr/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/pathviewr/LICENSE.html</loc>
+  </url>
+  <url>
     <loc>https://docs.ropensci.org/pathviewr/articles/data-import-cleaning.html</loc>
   </url>
   <url>
@@ -19,13 +25,7 @@
     <loc>https://docs.ropensci.org/pathviewr/authors.html</loc>
   </url>
   <url>
-    <loc>https://docs.ropensci.org/pathviewr/CONTRIBUTING.html</loc>
-  </url>
-  <url>
     <loc>https://docs.ropensci.org/pathviewr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://docs.ropensci.org/pathviewr/LICENSE.html</loc>
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/news/index.html</loc>
@@ -115,7 +115,7 @@
     <loc>https://docs.ropensci.org/pathviewr/reference/insert_treatments.html</loc>
   </url>
   <url>
-    <loc>https://docs.ropensci.org/pathviewr/reference/pathviewr-package.html</loc>
+    <loc>https://docs.ropensci.org/pathviewr/reference/pathviewR-package.html</loc>
   </url>
   <url>
     <loc>https://docs.ropensci.org/pathviewr/reference/pipe.html</loc>

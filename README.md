@@ -97,6 +97,9 @@ motive_allinone <-
     span = 0.95
   )
 #> autodetect is an experimental feature -- please report issues.
+```
+
+``` r
 
 ## Quick plot
 ## Colors correspond to unique trajectories (file_sub_traj)
@@ -149,7 +152,7 @@ str(motive_data)
 #>  - attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "pathviewr_steps")= chr "viewr"
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2023-03-07 11:12:49"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2025-06-13 10:44:21"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -163,6 +166,9 @@ str(motive_data)
 #>  - attr(*, "d1")= chr [1:26] "" "" "Rotation" "Rotation" ...
 #>  - attr(*, "d2")= chr [1:26] "Frame" "Time (Seconds)" "X" "Y" ...
 #>  - attr(*, "import_method")= chr "motive"
+```
+
+``` r
 
 ## Check out the data's structure after cleaning and wrangling:
 str(motive_allinone)
@@ -192,7 +198,7 @@ str(motive_allinone)
 #>  $ end_length_sign  : num [1:449] -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
 #>  $ direction        : chr [1:449] "leftwards" "leftwards" "leftwards" "leftwards" ...
 #>  - attr(*, "file_id")= chr "pathviewr_motive_example_data.csv"
-#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2023-03-07 11:12:49"
+#>  - attr(*, "file_mtime")= POSIXct[1:1], format: "2025-06-13 10:44:21"
 #>  - attr(*, "frame_rate")= num 100
 #>  - attr(*, "header")='data.frame':   11 obs. of  2 variables:
 #>   ..$ metadata: chr [1:11] "Format Version" "Take Name" "Take Notes" "Capture Frame Rate" ...
@@ -303,6 +309,12 @@ ggplot(motive_V_sf, aes(x = position_width, y = position_height)) +
   theme(
     legend.position = "none"
   )
+#> Warning in geom_segment(aes(x = 0, y = -0.3855, xend = 0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.
+#> ℹ Please consider using `annotate()` or provide this layer with data containing
+#>   a single row.
+#> Warning in geom_segment(aes(x = 0, y = -0.3855, xend = -0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.
+#> ℹ Please consider using `annotate()` or provide this layer with data containing
+#>   a single row.
 ```
 
 <img src="man/figures/README-motive_V_sf_pos-1.png" width="100%" />
@@ -324,7 +336,7 @@ The preferred way to cite `pathviewr` (but subject to change) is:
 
 Baliga VB, Armstrong MS, Press ER (2021). *pathviewr: Tools to import,
 clean, and visualize animal movement data in R*. R package version
-1.1.7, <https://github.com/ropensci/pathviewr>. doi:
+1.1.8, <https://github.com/ropensci/pathviewr>. doi:
 10.5281/zenodo.4270187
 
 ## License

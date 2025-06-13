@@ -10,3 +10,4 @@ Meta
 tests/testthat/Rplots.pdf
 tests/figs
 CRAN-RELEASE
+revdep

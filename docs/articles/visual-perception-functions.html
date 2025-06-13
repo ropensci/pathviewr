@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.8</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ data</h1>
                         <h4 data-toc-skip class="author">Eric R.
 Press</h4>
             
-            <h4 data-toc-skip class="date">2023-03-07</h4>
+            <h4 data-toc-skip class="date">2025-06-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/pathviewr/blob/HEAD/vignettes/visual-perception-functions.Rmd" class="external-link"><code>vignettes/visual-perception-functions.Rmd</code></a></small>
       <div class="hidden name"><code>visual-perception-functions.Rmd</code></div>
@@ -357,7 +357,13 @@ is facing.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># negative wall</span></span>
 <span>                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,</span>
-<span>                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = 0, y = -0.3855, xend = 0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = 0, y = -0.3855, xend = -0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_min_dist_pos-1.png" width="672"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flydra_min_dist</span> <span class="op">&lt;-</span> </span>
@@ -378,7 +384,13 @@ is facing.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,         <span class="co"># positive wall</span></span>
 <span>                   y <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                   yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                   yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = -1, y = -0.5, xend = 1, yend = -0.5)): All aesthetics have length 1, but the data has 381 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = -1, y = 0.5, xend = 1, yend = 0.5)): All aesthetics have length 1, but the data has 381 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_min_dist_end-1.png" width="672"></p>
 </div>
 <div class="section level3">
@@ -403,7 +415,13 @@ is facing.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># negative wall</span></span>
 <span>                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,</span>
-<span>                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = 0, y = -0.3855, xend = 0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = 0, y = -0.3855, xend = -0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_vis_angle_pos-1.png" width="672"></p>
 <p>Notice larger visual angles as the subject approaches the positive
 wall.</p>
@@ -426,7 +444,13 @@ wall.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,        <span class="co"># positive wall</span></span>
 <span>                   y <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                   yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                   yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = -1, y = -0.5, xend = 1, yend = -0.5)): All aesthetics have length 1, but the data has 381 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = -1, y = 0.5, xend = 1, yend = 0.5)): All aesthetics have length 1, but the data has 381 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_vis_angle_end-1.png" width="672"></p>
 <p>Notice larger visual angles as the subject approaches the end wall
 that it is moving towards.</p>
@@ -466,7 +490,13 @@ by the subject some distance from the stimuli, we will use
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>,         <span class="co"># negative wall</span></span>
 <span>                   y <span class="op">=</span> <span class="op">-</span><span class="fl">0.3855</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="op">-</span><span class="fl">0.5869</span>,</span>
-<span>                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                   yend <span class="op">=</span> <span class="fl">0.2014</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = 0, y = -0.3855, xend = 0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = 0, y = -0.3855, xend = -0.5869, yend = 0.2014)): All aesthetics have length 1, but the data has 449 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/motive_sf_pos-1.png" width="672"></p>
 <p>Notice the spatial frequency increases the further the subject
 recedes from positive wall.</p>
@@ -489,7 +519,13 @@ recedes from positive wall.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,        <span class="co"># positive wall</span></span>
 <span>                   y <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>                   xend <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                   yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                   yend <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = -1, y = -0.5, xend = 1, yend = -0.5)): All aesthetics have length 1, but the data has 381 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span>
+<span><span class="co">#&gt; Warning in geom_segment(aes(x = -1, y = 0.5, xend = 1, yend = 0.5)): All aesthetics have length 1, but the data has 381 rows.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span></span>
+<span><span class="co">#&gt;   a single row.</span></span></code></pre></div>
 <p><img src="visual-perception-functions_files/figure-html/flydra_sf_end-1.png" width="672"></p>
 <p>Notice the spatial frequency decreases as the subject approaches the
 end wall that it is moving towards.</p>
@@ -518,7 +554,7 @@ coming soon!<a class="anchor" aria-label="anchor" href="#stay-tuned-as-additiona
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

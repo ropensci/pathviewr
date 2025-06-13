@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pathviewr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.8</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
                         <h4 data-toc-skip class="author">Melissa S.
 Armstrong</h4>
             
-            <h4 data-toc-skip class="date">2023-03-07</h4>
+            <h4 data-toc-skip class="date">2025-06-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/pathviewr/blob/HEAD/vignettes/managing-frame-gaps.Rmd" class="external-link"><code>vignettes/managing-frame-gaps.Rmd</code></a></small>
       <div class="hidden name"><code>managing-frame-gaps.Rmd</code></div>
@@ -232,8 +232,9 @@ can be computationally expensive depending on your data set.</p>
 <code class="sourceCode R"><span></span>
 <span><span class="co">## How many trajectories do we end up with?</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">motive_mfg5_full</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 10</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co">## Plot each trajectory</span></span>
 <span><span class="fu"><a href="../reference/plot_viewr_trajectories.html">plot_viewr_trajectories</a></span><span class="op">(</span><span class="va">motive_mfg5_full</span>,</span>
 <span>                        plot_axes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"length"</span>, <span class="st">"width"</span><span class="op">)</span>,</span>
@@ -253,7 +254,7 @@ loop represents an increase in the max frame gap value of 1. For example
 the default of <code>loops = 20</code> will run
 <code><a href="../reference/separate_trajectories.html">separate_trajectories()</a></code> over the data set 20 times, with an
 increase in the <code>max_frame_gap</code> argument of 1 each time.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">motive_cleaned</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/visualize_frame_gap_choice.html">visualize_frame_gap_choice</a></span><span class="op">(</span></span>
 <span>    loops <span class="op">=</span> <span class="fl">20</span></span>
@@ -314,7 +315,7 @@ frame gaps can vary between subjects.</strong></p>
 as a proportion of the capture frame rate and set by the
 <code>frame_rate_proportion</code> argument, which defaults to
 <code>.10</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">motive_auto</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">motive_cleaned</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/separate_trajectories.html">separate_trajectories</a></span><span class="op">(</span></span>
@@ -329,7 +330,7 @@ as a proportion of the capture frame rate and set by the
 <p><img src="managing-frame-gaps_files/figure-html/max_frame_gap_auto-1.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; For subject: device05, estimated best value for max_frame_gap: 2</span></span></code></pre>
 <p><img src="managing-frame-gaps_files/figure-html/max_frame_gap_auto-2.png" width="700"><img src="managing-frame-gaps_files/figure-html/max_frame_gap_auto-3.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">## How many trajectories do we end up with?</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">motive_auto</span><span class="op">$</span><span class="va">file_sub_traj</span><span class="op">)</span><span class="op">)</span></span>
@@ -360,7 +361,7 @@ each subject, but also defaults to <code>FALSE</code>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
